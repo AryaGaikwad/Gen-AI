@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using the express.ui.input_password function in Shiny for Python?",
+  "What are the available options for the 'update_on' parameter in the express.ui.input_password function?",
+  "How can the CSS width of the password input be specified in the express.ui.input_password function?",
+  "What does the express.ui.input_password function return?",
+  "In what scenarios would using \"update_on='blur'\" be preferred over \"update_on='change'\" in the express.ui.input_password function?"
+]

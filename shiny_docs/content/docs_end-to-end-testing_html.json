@@ -1,0 +1,527 @@
+{
+  "metadata": {
+    "title": "End-to-End Testing Your App – Shiny for Python",
+    "description": "",
+    "url": "docs/end-to-end-testing.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🧪 Testing",
+        "End-to-End Testing Your App"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "End-to-End Testing Your App"
+    },
+    {
+      "type": "h3",
+      "text": "What is End-to-End Testing (and Why Should You Care)?"
+    },
+    {
+      "type": "p",
+      "text": "Imagine you’ve built a beautiful, interactive Shiny app. You want to make sure everything works exactly as expected, every time, for every user. That’s where end-to-end testing comes in."
+    },
+    {
+      "type": "p",
+      "text": "What it is:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "End-to-end testing checks your entire Shiny app, from start to finish, as if a real person were using it.",
+        "It simulates user actions like clicking buttons, filling in forms, and navigating between different parts of your app.",
+        "It verifies that the app’s outputs (like graphs, tables, and text) are correct based on those actions."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Why it’s awesome:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Early bug detection: Find problems before your users do! No more embarrassing surprises.",
+        "Confidence in changes: When you update your app, tests make sure you haven’t accidentally broken anything.",
+        "Time saver: Instead of manually clicking through your app every time you make a change, tests automate the process.",
+        "Peace of mind: Know that your app is working reliably, so you can focus on building new features."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Introducing Playwright: A Comprehensive Automated Testing Solution for Web Applications"
+    },
+    {
+      "type": "p",
+      "text": "Playwright is a robust, open-source automation framework developed by Microsoft that enables programmatic control of web browsers. This tool provides developers with the capability to automate interactions with web applications across Chrome, Firefox, and Safari, simulating user behavior in a controlled, reproducible environment."
+    },
+    {
+      "type": "p",
+      "text": "Why Playwright is perfect for Shiny:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Handles interactivity: It can interact with all those cool Shiny widgets like sliders, dropdowns, and buttons.",
+        "Cross-browser testing: Make sure your app works flawlessly on different browsers.",
+        "Smart waiting: Playwright automatically waits for your app to load and for elements to be ready, so your tests are reliable.",
+        "Easy to learn: The code is relatively straightforward, and we’ll walk you through it."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Learn more at the official Playwright documentation."
+    },
+    {
+      "type": "h3",
+      "text": "Let’s Build and Test a Simple Shiny App!"
+    },
+    {
+      "type": "p",
+      "text": "We’ll start with a super simple example to show you the basics. Follow along, and you’ll be writing your own tests in no time!"
+    },
+    {
+      "type": "h4",
+      "text": "Step 1: Create Your First Shiny App"
+    },
+    {
+      "type": "p",
+      "text": "First, let’s create a tiny Shiny app with just a slider and some text."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Create a new file: Create a file named app.py.",
+        "Copy and paste this code:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.panel_title(\"Hello Shiny!\")\nui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.text\ndef txt():\n    return f\"n*2 is {input.n() * 2}\""
+    },
+    {
+      "type": "ol",
+      "items": [
+        "What this app does: This app displays a slider (labeled “N”) that goes from 0 to 100. Below the slider, it shows the text “n*2 is [value]“, where [value] is twice the current slider value."
+      ]
+    },
+    {
+      "type": "h4",
+      "text": "Step 2: What Are We Testing?"
+    },
+    {
+      "type": "p",
+      "text": "Our goal is to write a test that does the following:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Opens the app: Starts the Shiny app in a browser.",
+        "Moves the slider: Sets the slider to a specific value (55 in this case).",
+        "Checks the output: Verifies that the text below the slider displays the correct result (“n*2 is 110”)."
+      ]
+    },
+    {
+      "type": "h4",
+      "text": "Step 3: Write Your First Test!"
+    },
+    {
+      "type": "p",
+      "text": "Now for the exciting part – writing the test code!"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Create a new file: Create a new file named test_basic_app.py in the same directory as your app.py file. Remember, test file names must start with test_.",
+        "Copy and paste this code:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.playwright import controller\nfrom shiny.run import ShinyAppProc\nfrom playwright.sync_api import Page\n\ndef test_basic_app(page: Page, local_app: ShinyAppProc) -> None:\n    # Navigate to the app URL when it's ready\n    page.goto(local_app.url)\n\n    # Controller objects for interacting with specific Shiny components\n    txt = controller.OutputText(page, \"txt\")\n    slider = controller.InputSlider(page, \"n\")\n\n    # Move the slider to position 55\n    slider.set(\"55\")\n\n    # Verify that the output text shows \"n*2 is 110\"\n    # (since 55 * 2 = 110)\n    txt.expect_value(\"n*2 is 110\")"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Understand role of Fixtures ShinyAppProc: Manages a Shiny application subprocess, handling lifecycle (startup, shutdown) and providing access to output streams. page: Playwright object representing the browser tab. local_app: Running instance of the Shiny application.",
+        "Understand role of Controllers Controllers such as OutputText and InputSlider provide abstraction over Playwright’s low-level interactions by: Automatically handling element waiting and state changes Offering specialized interfaces for specific Shiny component types Managing Shiny-specific behaviors without additional code Providing consistent patterns for testing similar components"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Understand role of Fixtures"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ShinyAppProc: Manages a Shiny application subprocess, handling lifecycle (startup, shutdown) and providing access to output streams.",
+        "page: Playwright object representing the browser tab.",
+        "local_app: Running instance of the Shiny application."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Understand role of Controllers"
+    },
+    {
+      "type": "p",
+      "text": "Controllers such as OutputText and InputSlider provide abstraction over Playwright’s low-level interactions by:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Automatically handling element waiting and state changes",
+        "Offering specialized interfaces for specific Shiny component types",
+        "Managing Shiny-specific behaviors without additional code",
+        "Providing consistent patterns for testing similar components"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "And visually, this is what happens when the test runs:"
+    },
+    {
+      "type": "h4",
+      "text": "Step 4: Run Your Test!"
+    },
+    {
+      "type": "p",
+      "text": "Before you run the test, you need to install a couple of things:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install pytest and pytest-playwright: Open your terminal (or command prompt) and type:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "pip install pytest pytest-playwright"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Navigate to your app’s directory: In the terminal, use the cd command to go to the folder where you saved app.py and test_basic_app.py.",
+        "Run the test: Type the following command and press Enter:"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Navigate to your app’s directory: In the terminal, use the cd command to go to the folder where you saved app.py and test_basic_app.py."
+    },
+    {
+      "type": "p",
+      "text": "Run the test: Type the following command and press Enter:"
+    },
+    {
+      "type": "code",
+      "text": "pytest"
+    },
+    {
+      "type": "p",
+      "text": "You should see output similar to this:"
+    },
+    {
+      "type": "code",
+      "text": "======== test session starts ========\n... (some details about your setup)\n.\n======== 1 passed in 3.05s ========"
+    },
+    {
+      "type": "p",
+      "text": "What does this mean?"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The . (dot) means your test passed!",
+        "If you see an F, it means the test failed. Double-check your code and make sure you followed all the steps."
+      ]
+    },
+    {
+      "type": "h4",
+      "text": "Visualize Your Test (Optional)"
+    },
+    {
+      "type": "p",
+      "text": "If you want to see what Playwright is doing, you can run the test in “headed” mode. This will open a browser window and show you the interactions."
+    },
+    {
+      "type": "code",
+      "text": "pytest --headed"
+    },
+    {
+      "type": "p",
+      "text": "You can also specify a particular browser:"
+    },
+    {
+      "type": "code",
+      "text": "pytest --browser firefox"
+    },
+    {
+      "type": "h3",
+      "text": "Adding Tests to an Existing Shiny App"
+    },
+    {
+      "type": "p",
+      "text": "If you already have a Shiny app, you can easily add tests:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Open your terminal: Navigate to your app’s directory.",
+        "Run the shiny add test command:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny add test"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Answer the prompts: It will ask for the path to your app file (e.g., app.py) and a name for your test file (e.g., test_myapp.py). Remember, the test file name must start with test_.",
+        "Edit the generated test file: This command creates a basic test file. You’ll need to modify it to add your specific test scenarios (like the slider example above)."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Answer the prompts: It will ask for the path to your app file (e.g., app.py) and a name for your test file (e.g., test_myapp.py). Remember, the test file name must start with test_."
+    },
+    {
+      "type": "p",
+      "text": "Edit the generated test file: This command creates a basic test file. You’ll need to modify it to add your specific test scenarios (like the slider example above)."
+    },
+    {
+      "type": "h3",
+      "text": "Troubleshooting Common Issues"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Test fails with an error about finding an element: Make sure the IDs you’re using in your test code (e.g., “txt”, “n”) match the IDs in your Shiny app code. Inspect your app’s HTML in the browser’s developer tools if you’re unsure.",
+        "Test is flaky (sometimes passes, sometimes fails): This can happen if your app takes a while to load or if there are timing issues. Playwright has built-in waiting mechanisms, but you might need to add explicit waits in some cases. See the Playwright documentation on waiting."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Test fails with an error about finding an element: Make sure the IDs you’re using in your test code (e.g., “txt”, “n”) match the IDs in your Shiny app code. Inspect your app’s HTML in the browser’s developer tools if you’re unsure."
+    },
+    {
+      "type": "p",
+      "text": "Test is flaky (sometimes passes, sometimes fails): This can happen if your app takes a while to load or if there are timing issues. Playwright has built-in waiting mechanisms, but you might need to add explicit waits in some cases. See the Playwright documentation on waiting."
+    },
+    {
+      "type": "h3",
+      "text": "Keep Exploring!"
+    },
+    {
+      "type": "p",
+      "text": "You’ve taken your first steps into the world of Shiny app testing! Here are some resources to help you learn more:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Shiny testing API documentation - This is your go-to guide for all the available testing methods in Shiny.",
+        "Playwright documentation - Learn more about Playwright’s powerful features.",
+        "pytest documentation"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Happy testing! You’re now well-equipped to build more robust and reliable Shiny apps."
+    }
+  ],
+  "code_examples": [
+    "from shiny.express import input, render, ui\n\nui.panel_title(\"Hello Shiny!\")\nui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.text\ndef txt():\n    return f\"n*2 is {input.n() * 2}\"",
+    "from shiny.express import input, render, ui\n\nui.panel_title(\"Hello Shiny!\")\nui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.text\ndef txt():\n    return f\"n*2 is {input.n() * 2}\"",
+    "from shiny.playwright import controller\nfrom shiny.run import ShinyAppProc\nfrom playwright.sync_api import Page\n\ndef test_basic_app(page: Page, local_app: ShinyAppProc) -> None:\n    # Navigate to the app URL when it's ready\n    page.goto(local_app.url)\n\n    # Controller objects for interacting with specific Shiny components\n    txt = controller.OutputText(page, \"txt\")\n    slider = controller.InputSlider(page, \"n\")\n\n    # Move the slider to position 55\n    slider.set(\"55\")\n\n    # Verify that the output text shows \"n*2 is 110\"\n    # (since 55 * 2 = 110)\n    txt.expect_value(\"n*2 is 110\")",
+    "from shiny.playwright import controller\nfrom shiny.run import ShinyAppProc\nfrom playwright.sync_api import Page\n\ndef test_basic_app(page: Page, local_app: ShinyAppProc) -> None:\n    # Navigate to the app URL when it's ready\n    page.goto(local_app.url)\n\n    # Controller objects for interacting with specific Shiny components\n    txt = controller.OutputText(page, \"txt\")\n    slider = controller.InputSlider(page, \"n\")\n\n    # Move the slider to position 55\n    slider.set(\"55\")\n\n    # Verify that the output text shows \"n*2 is 110\"\n    # (since 55 * 2 = 110)\n    txt.expect_value(\"n*2 is 110\")",
+    "pip install pytest pytest-playwright",
+    "pip install pytest pytest-playwright",
+    "pytest",
+    "pytest",
+    "pytest --headed",
+    "pytest --headed",
+    "pytest --browser firefox",
+    "pytest --browser firefox",
+    "shiny add test",
+    "shiny add test"
+  ],
+  "toc": [
+    {
+      "title": "What is End-to-End Testing (and Why Should You Care)?",
+      "url": "docs/#what-is-end-to-end-testing-and-why-should-you-care"
+    },
+    {
+      "title": "Introducing Playwright: A Comprehensive Automated Testing Solution for Web Applications",
+      "url": "docs/#introducing-playwright-a-comprehensive-automated-testing-solution-for-web-applications"
+    },
+    {
+      "title": "Let’s Build and Test a Simple Shiny App!",
+      "url": "docs/#lets-build-and-test-a-simple-shiny-app"
+    },
+    {
+      "title": "Adding Tests to an Existing Shiny App",
+      "url": "docs/#adding-tests-to-an-existing-shiny-app"
+    },
+    {
+      "title": "Troubleshooting Common Issues",
+      "url": "docs/#troubleshooting-common-issues"
+    },
+    {
+      "title": "Keep Exploring!",
+      "url": "docs/#keep-exploring"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

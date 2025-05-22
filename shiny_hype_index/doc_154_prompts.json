@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the express.ui.accordion function in Shiny for Python?",
+  "How can I determine which accordion_panels are currently active using the input.id() in the server logic?",
+  "What is the default behavior of the accordion_panel values if not explicitly provided?",
+  "Is it possible to have more than one accordion_panel open at the same time, and if so, how can this be achieved?",
+  "What are some of the parameters that can be customized when using express.ui.accordion in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "How can I create an interactive map using ipyleaflet in Shiny for Python?",
+  "What is the purpose of using shinywidgets.output_widget() in the UI of a Shiny app when working with ipyleaflet?",
+  "In what way can I identify a map in the server function when using ipyleaflet with Shiny for Python?",
+  "Is it necessary to create an ipyleaflet map within a nested function in the server() function when using Shiny for Python components?",
+  "How can I add country boundaries from a GeoJSON file and markers to an interactive map created with ipyleaflet in Shiny for Python?"
+]

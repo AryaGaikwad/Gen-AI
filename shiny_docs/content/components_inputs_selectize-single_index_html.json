@@ -1,0 +1,309 @@
+{
+  "metadata": {
+    "title": "Selectize (Single) – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/selectize-single/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "Selectize (Single)"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Selectize (Single)"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_selectize(  \n    \"selectize\",  \n    \"Select an option below:\",  \n    {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n)  \n\n@render.text\ndef value():\n    return f\"{input.selectize()}\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_selectize ui.input_selectize(id, label, choices, *, selected=None, multiple=False, width=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_selectize ui.input_selectize(id, label, choices, *, selected=None, multiple=False, width=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A selectize list creates a way to select one or more items from a list."
+    },
+    {
+      "type": "p",
+      "text": "To use a selectize list that allows you to select a single item:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_selectize() to the UI of your app to create a selectize list. Where you call this function will determine where the selectize list appears within the app’s layout.",
+        "Specify the id and label parameters of ui.input_selectize() to define the identifier and label of the select list.",
+        "Supply the choices parameter with either a list or dictionary of choices. If choices is a list, its elements become the select list values and labels. If choices is a dictionary, ui.input_selectize() uses the dictionary keys as the list values and the dictionary values as the list labels."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_selectize() to the UI of your app to create a selectize list. Where you call this function will determine where the selectize list appears within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_selectize() to define the identifier and label of the select list."
+    },
+    {
+      "type": "p",
+      "text": "Supply the choices parameter with either a list or dictionary of choices. If choices is a list, its elements become the select list values and labels. If choices is a dictionary, ui.input_selectize() uses the dictionary keys as the list values and the dictionary values as the list labels."
+    },
+    {
+      "type": "p",
+      "text": "You can also supply with choices a dictionary of dictionaries. ui.input_selectize() will use the top-level keys as group labels. See Selectize with grouped choices variation."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The multiple parameter controls whether you can select multiple items at once. By default, multiple is False and the user can only select one value at a time."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of a selectize list:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<selectize_id>() (e.g., input.selectize()) to access the selected value. The server value of a selectize list is a list of strings. When multiple=False, this list will have length 1."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "See also: Selectize (Multiple) and Select (Single). Select inputs and selectize inputs are similar, but have different interfaces and provide different ways of selecting multiple options. Selectize inputs also allow you to deselect items."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Selectize with grouped choices"
+    },
+    {
+      "type": "p",
+      "text": "To group the choices into categories, supply the choices argument with a dictionary of dictionaries. ui.input_selectize() will use the top-level keys as group labels."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_selectize(\n    \"selectize\",\n    \"Select an option below:\",\n    {\n        \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n        \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n    },\n)\n\n@render.text\ndef value():\n    return f\"{input.selectize()}\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_selectize(  \n    \"selectize\",  \n    \"Select an option below:\",  \n    {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n)  \n\n@render.text\ndef value():\n    return f\"{input.selectize()}\"",
+    "from shiny.express import input, render, ui\n\nui.input_selectize(  \n    \"selectize\",  \n    \"Select an option below:\",  \n    {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n)  \n\n@render.text\ndef value():\n    return f\"{input.selectize()}\"",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(  \n        \"selectize\",  \n        \"Select an option below:\",  \n        {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},  \n    ),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_selectize(\n    \"selectize\",\n    \"Select an option below:\",\n    {\n        \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n        \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n    },\n)\n\n@render.text\ndef value():\n    return f\"{input.selectize()}\"",
+    "from shiny.express import input, render, ui\n\nui.input_selectize(\n    \"selectize\",\n    \"Select an option below:\",\n    {\n        \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n        \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n    },\n)\n\n@render.text\ndef value():\n    return f\"{input.selectize()}\"",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_selectize(\n        \"selectize\",\n        \"Select an option below:\",\n        {\n            \"1\": {\"1A\": \"Choice 1A\", \"1B\": \"Choice 1B\", \"1C\": \"Choice 1C\"},\n            \"2\": {\"2A\": \"Choice 2A\", \"2B\": \"Choice 2B\", \"2C\": \"Choice 2C\"},\n        },\n    ),\n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.selectize()}\"\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

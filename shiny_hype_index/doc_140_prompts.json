@@ -1,0 +1,7 @@
+[
+  "What does the @express.render.download decorator do in Shiny for Python?",
+  "How should the decorated function handle a download in Shiny for Python?",
+  "When should a function return a string when using the @express.render.download decorator in Shiny for Python?",
+  "What parameters can be specified when using the @express.render.download decorator in Shiny for Python?",
+  "Why is it important to have a filename argument when using the yield method with the @express.render.download decorator in Shiny for Python?"
+]

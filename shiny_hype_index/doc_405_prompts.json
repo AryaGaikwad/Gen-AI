@@ -1,0 +1,7 @@
+[
+  "What is the purpose of types.SilentException in Shiny for Python?",
+  "How does types.SilentCancelOutputException differ from types.SilentException in Shiny for Python?",
+  "What is the behavior of the application when an exception is raised from shiny.reactive.effect in Shiny for Python?",
+  "In which scenarios would types.SafeException be useful in a Shiny application developed in Python?",
+  "When is it appropriate to use types.SafeException in a Shiny application where shiny.App.SANITIZE_ERRORS is set to True?"
+]

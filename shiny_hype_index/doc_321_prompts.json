@@ -1,0 +1,7 @@
+[
+  "What parameters can be customized using the ui.busy_indicators.options function in Shiny for Python?",
+  "How can a custom SVG file be used as a spinning busy indicator in Shiny for Python?",
+  "What is the default color for the spinner if Bootstrap is present on the page in Shiny for Python?",
+  "How can the time delay before showing the spinner be adjusted in Shiny for Python?",
+  "How can the fade customization be scoped using the ui.busy_indicators.options function in Shiny for Python?"
+]

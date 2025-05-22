@@ -1,0 +1,7 @@
+[
+  "How can I reactively render HTML content in Shiny for Python using the render.ui function?",
+  "What should my function return when using the render.ui function in Shiny for Python?",
+  "When should I use the express function instead of the render.ui function in Shiny for Python?",
+  "What type of object should a function return when using the render.ui function in Shiny for Python?",
+  "How should the name of a decorated function or @output(id=...) be related to the id of an output_ui container when using the render.ui function in Shiny for Python?"
+]

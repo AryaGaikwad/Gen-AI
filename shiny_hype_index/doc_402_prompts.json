@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the reactive.ExtendedTask class in Shiny for Python?",
+  "How can one cancel a computation using the reactive.ExtendedTask class?",
+  "What is the difference between the cancel and invoke methods in the reactive.ExtendedTask class?",
+  "How can one retrieve the result of a computation using the result method in the reactive.ExtendedTask class?",
+  "What are the possible outcomes when calling the result method in the reactive.ExtendedTask class?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `App` constructor in Shiny for Python?",
+  "How can a callback be registered to be called when the app is shutting down in Shiny for Python?",
+  "What is the purpose of the `run` method in Shiny for Python?",
+  "How can static files be served by a Shiny app instance in Shiny for Python?",
+  "Why is the `call_pyodide` method in Shiny for Python not intended for public usage?"
+]

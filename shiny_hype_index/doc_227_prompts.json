@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the express.ui.remove_ui function in Shiny for Python?",
+  "What are the parameters required by the express.ui.remove_ui function in Shiny for Python?",
+  "How does the 'multiple' parameter in the express.ui.remove_ui function affect the behavior of removing UI objects in Shiny for Python?",
+  "How does the 'immediate' parameter in the express.ui.remove_ui function control when the UI object is removed in Shiny for Python?",
+  "How can the express.ui.remove_ui function be used to remove Shiny inputs or outputs wrapped in <div> elements in Shiny for Python?"
+]

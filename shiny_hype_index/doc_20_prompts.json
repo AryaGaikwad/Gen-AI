@@ -1,0 +1,7 @@
+[
+  "What convenience does Shiny provide for creating HTML elements like div, span, p, and h2?",
+  "How can one add or remove HTML attributes like class and style when working with HTML tag objects in Shiny?",
+  "What is the purpose of head_content() in Shiny for adding content to the <head> section of an HTML document?",
+  "How can HTMLDependencies be useful in Shiny applications, especially when creating UI components for others to use?",
+  "When creating a collection of HTML tags in Shiny, what is the benefit of using a TagList over a Python list or tuple?"
+]

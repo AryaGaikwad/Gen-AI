@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Hello AI Chatbot",
+    "description": "Use the basic-chat template as a foundation for your next Shiny app.",
+    "url": "templates/basic-chatbot/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Hello AI Chatbot"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-chat --mode express --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-chat --mode core --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "p",
+      "text": "A basic chatbot powered by an Large Language Model (LLM) from Anthropic. To learn more, see the article on Gen AI chatbots."
+    },
+    {
+      "type": "p",
+      "text": "This particular template uses chatlas.ChatAnthropic() to do response generation via Anthropic. With chatlas, it’s easy to switch to other providers. Just change ChatAnthropic() with another provider (e.g., ChatOpenAI())."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Chat"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "p",
+      "text": "chatlas"
+    }
+  ],
+  "code_examples": [
+    "shiny create --template basic-chat --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-chat --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-chat --mode core --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-chat --mode core --github posit-dev/py-shiny-templates/gen-ai"
+  ],
+  "toc": []
+}

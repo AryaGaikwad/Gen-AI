@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Basic dashboard",
+    "description": "Use the dashboard template as a foundation for your next Shiny app.",
+    "url": "templates/dashboard/index.html"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Basic dashboard"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "A basic dashboard with input filters, value boxes, a plot, and table. This particular dashboard visualizes the palmerpenguins dataset. In addition to demonstrating the basics visual components of a dashboard, it also demonstrates how to leverage reactive calculations to filter the data once and use it as needed in multiple places."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Slider input",
+        "Checkbox group input",
+        "Value box",
+        "Plot output",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "pandas",
+        "seaborn"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template dashboard --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

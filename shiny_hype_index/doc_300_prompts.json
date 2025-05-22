@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.panel_fixed` function in Shiny for Python?",
+  "How does `ui.panel_fixed` differ from `panel_absolute` in terms of positioning?",
+  "What are the parameters that can be passed to the `ui.panel_fixed` function in Shiny for Python?",
+  "Does `ui.panel_fixed` return a UI element? If so, what type of UI element does it return?",
+  "In what scenario would setting the `fixed` parameter to `True` be useful when using the `ui.panel_fixed` function in Shiny for Python?"
+]

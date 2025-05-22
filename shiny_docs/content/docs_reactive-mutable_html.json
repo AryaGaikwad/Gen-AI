@@ -1,0 +1,404 @@
+{
+  "metadata": {
+    "title": "Mutable objects – Shiny for Python",
+    "description": "",
+    "url": "docs/reactive-mutable.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "⚡ Reactivity",
+        "Mutable objects"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Mutable objects"
+    },
+    {
+      "type": "p",
+      "text": "To write robust Shiny applications, it is important to understand mutability in Python objects. Simple objects like numbers, strings, bools, and even tuples are immutable, but most other objects in Python, like lists and dicts, are mutable. This means that they can be modified in place—modifying an object in one part of a program can cause it to be (unexpectedly) different in another part of the program. That makes mutable objects dangerous, and they are everywhere in Python."
+    },
+    {
+      "type": "p",
+      "text": "In this article, you’ll learn exactly why mutable objects can cause problems for Shiny reactivity, and techniques for solving them."
+    },
+    {
+      "type": "h2",
+      "text": "The problem"
+    },
+    {
+      "type": "p",
+      "text": "Let’s first look at an example featuring (immutable) integer objects."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = 1\nb = a\n\na += 1\nb"
+    },
+    {
+      "type": "p",
+      "text": "Initially, b gets its value from a. Then, the value of a changes. This doesn’t affect b, which retains its original value."
+    },
+    {
+      "type": "p",
+      "text": "Now, what happens if a and b both point to the same (mutable) list object, and then we change that list in-place?"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a\n\na.append(3)\nb"
+    },
+    {
+      "type": "p",
+      "text": "If our goal is to end up with a == [1, 2, 3] and b == [1, 2], then we’ve failed."
+    },
+    {
+      "type": "p",
+      "text": "Mutability can cause unexpected behavior in any Python program, but especially so in reactive programming. For example, if you modify a mutable object stored in a reactive.value, or one returned from a reactive.calc, other consumers of those values will have their values changed. This can cause two different problems. First, the altered value will probably be unexpected. Second, even if the change in value is expected and desired, it will not trigger downstream reactive objects to re-execute."
+    },
+    {
+      "type": "h2",
+      "text": "Solutions"
+    },
+    {
+      "type": "p",
+      "text": "There are a few ways to fix this problem and end up with the results we want (b == [1, 2])."
+    },
+    {
+      "type": "h3",
+      "text": "Copy on assignment"
+    },
+    {
+      "type": "p",
+      "text": "The first way is to avoid having two variables point to the same object in the first place, by copying the object every time you use it in a new context:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a.copy()\n\na.append(3)\nb"
+    },
+    {
+      "type": "h3",
+      "text": "Copy on update"
+    },
+    {
+      "type": "p",
+      "text": "The second way is to be disciplined about never mutating the object in question, but using methods and operators that create a copy. For example, there are two ways to add an item to an existing list: x.append(value) which mutates the existing list, as we saw above; and x + [value], which leaves the original list x unchanged and creates a new list object that has the results we want."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a\n\na = a + [3]\nb"
+    },
+    {
+      "type": "p",
+      "text": "The advantage to this approach is not eagerly creating defensive copies all the time, as we must in the “copy on assignment” approach. However, if you are performing more updates than assignments, this approach actually makes more copies, plus it gives you more opportunities to slip up and forget not to mutate the object."
+    },
+    {
+      "type": "h3",
+      "text": "Python operations that create copies"
+    },
+    {
+      "type": "p",
+      "text": "We’ve seen that x + [value] creates a new list object and that x.copy() creates a new list object. There are some other common operations that create copies. You can use these patterns to avoid mutating reactive values in place."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "List comprehensions: [x for x in a] creates a new list with the same elements as a. This approach is particularly useful when you need to transform the elements of a list in some way, as in [x*2 for x in a].",
+        "Slicing: a[:] creates a new list with the same elements as a. This is useful when you need to copy the entire list, or a subset of it.",
+        "Star operator: [*a, value] creates a new list with the same elements as a, with the additional value appended after them. This is an easy way to add a single element to the end or start of a list ([value, *a]).",
+        "Double star operator: {**a, key: value} creates a new dictionary with the same key-value pairs as a, with the additional key-value pair key: value added. This is an easy way to add a single key-value pair to a dictionary."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "List comprehensions: [x for x in a] creates a new list with the same elements as a. This approach is particularly useful when you need to transform the elements of a list in some way, as in [x*2 for x in a]."
+    },
+    {
+      "type": "p",
+      "text": "Slicing: a[:] creates a new list with the same elements as a. This is useful when you need to copy the entire list, or a subset of it."
+    },
+    {
+      "type": "p",
+      "text": "Star operator: [*a, value] creates a new list with the same elements as a, with the additional value appended after them. This is an easy way to add a single element to the end or start of a list ([value, *a])."
+    },
+    {
+      "type": "p",
+      "text": "Double star operator: {**a, key: value} creates a new dictionary with the same key-value pairs as a, with the additional key-value pair key: value added. This is an easy way to add a single key-value pair to a dictionary."
+    },
+    {
+      "type": "h3",
+      "text": "Use immutable objects"
+    },
+    {
+      "type": "p",
+      "text": "The third way is to use a different data structure entirely. Instead of list, we will use tuple, which is immutable. Immutable objects do not provide any way to change their values “in place”, even if we wanted to. Therefore, we can be confident that nothing we do to tuple variable a could ever affect tuple variable b."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = (1, 2)\nb = a\n\na = (*a, 3)  # alternatively, a = a + (3,)\nb"
+    },
+    {
+      "type": "p",
+      "text": "For this simple example, a tuple was an adequate substitute for a list, but this won’t always be the case. The pyrsistent Python package provides immutable versions of several common data structures including list, dict, and set; using these objects in conjunction with reactive.value and reactive.calc is much safer than mutable versions."
+    },
+    {
+      "type": "h2",
+      "text": "Examples in Shiny"
+    },
+    {
+      "type": "p",
+      "text": "The rest of this article demonstrates these problems, and their solutions, in the context of a minimal Shiny app."
+    },
+    {
+      "type": "h3",
+      "text": "Example 1: Lack of reactive invalidation"
+    },
+    {
+      "type": "p",
+      "text": "This demo app demonstrates that when an object that is stored in a reactive.value is mutated, the change is not visible to the reactive.value and no reactive invalidation occurs. Below, the add_value_to_list effect retrieves the list stored in user_provided_values and appends an item to it."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"Values: {user_provided_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    # WATCHOUT! This doesn't work as expected!\n    values = user_provided_values()\n    values.append(input.x())"
+    },
+    {
+      "type": "p",
+      "text": "Each time the button is clicked, a new item is added to the list; but the reactive.value has no way to know anything has changed. (Surprisingly, even adding user_provided_values.set(values) to the end of add_value_to_list will not help; the reactive value will see that the identity of the new object is the same as its existing object, and ignore the change.)"
+    },
+    {
+      "type": "p",
+      "text": "Switching to the “copy on update” technique fixes the problem. The app below is identical to the one above, except for the body of add_value_to_list. Click on the button a few times–the results now appear correctly."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"Values: {user_provided_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    # This works by creating a new list object\n    user_provided_values.set(user_provided_values() + [input.x()])"
+    },
+    {
+      "type": "h3",
+      "text": "Example 2: Leaky changes"
+    },
+    {
+      "type": "p",
+      "text": "Let’s further modify our example; now, we will output not just the values entered by the user, but also a parallel list of those values after being doubled. This example is the same as the last one, with the addition of the @reactive.calc called doubled_values, which is then included in the text output."
+    },
+    {
+      "type": "p",
+      "text": "In the example below, if you click the button three times, you’d expect the user values to be [1, 1, 1] and the doubled values to be [2, 2, 2]. Click the button below three times. What values do you actually get?"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"User Values: {user_provided_values()}\\n\" + f\"Doubled: {doubled_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    user_provided_values.set(user_provided_values() + [input.x()])\n\n@reactive.calc\ndef doubled_values():\n    values = user_provided_values()\n    for i in range(len(values)):\n        values[i] *= 2\n    return values"
+    },
+    {
+      "type": "p",
+      "text": "By the third click, the user input that should be [1, 1, 1] is instead [4, 2, 1]! This is because doubled_values does its doubling by modifying the values of the list in place, causing these changes to “leak” back into user_provided_values."
+    },
+    {
+      "type": "p",
+      "text": "We could fix this by having doubled_values call user_provided_values().copy(). Or we can use a list comprehension, which creates a new list in the process. The second option is shown below."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"User Values: {user_provided_values()}\\n\" + f\"Doubled: {doubled_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    user_provided_values.set(user_provided_values() + [input.x()])\n\n@reactive.calc\ndef doubled_values():\n    return [x*2 for x in user_provided_values()]"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = 1\nb = a\n\na += 1\nb",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a\n\na.append(3)\nb",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a.copy()\n\na.append(3)\nb",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = [1, 2]\nb = a\n\na = a + [3]\nb",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\n\na = (1, 2)\nb = a\n\na = (*a, 3)  # alternatively, a = a + (3,)\nb",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"Values: {user_provided_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    # WATCHOUT! This doesn't work as expected!\n    values = user_provided_values()\n    values.append(input.x())",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"Values: {user_provided_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    # This works by creating a new list object\n    user_provided_values.set(user_provided_values() + [input.x()])",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"User Values: {user_provided_values()}\\n\" + f\"Doubled: {doubled_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    user_provided_values.set(user_provided_values() + [input.x()])\n\n@reactive.calc\ndef doubled_values():\n    values = user_provided_values()\n    for i in range(len(values)):\n        values[i] *= 2\n    return values",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_numeric(\"x\", \"Enter a value to add to the list:\", 1)\nui.input_action_button(\"submit\", \"Add Value\")\n\n@render.code\ndef out():\n    return f\"User Values: {user_provided_values()}\\n\" + f\"Doubled: {doubled_values()}\"\n\n# Stores all the values the user has submitted so far\nuser_provided_values =  reactive.value([])\n\n@reactive.effect\n@reactive.event(input.submit)\ndef add_value_to_list():\n    user_provided_values.set(user_provided_values() + [input.x()])\n\n@reactive.calc\ndef doubled_values():\n    return [x*2 for x in user_provided_values()]"
+  ],
+  "toc": [
+    {
+      "title": "The problem",
+      "url": "docs/#the-problem"
+    },
+    {
+      "title": "Solutions",
+      "url": "docs/#solutions"
+    },
+    {
+      "title": "Copy on assignment",
+      "url": "docs/#copy-on-assignment"
+    },
+    {
+      "title": "Copy on update",
+      "url": "docs/#copy-on-update"
+    },
+    {
+      "title": "Python operations that create copies",
+      "url": "docs/#python-operations-that-create-copies"
+    },
+    {
+      "title": "Use immutable objects",
+      "url": "docs/#use-immutable-objects"
+    },
+    {
+      "title": "Examples in Shiny",
+      "url": "docs/#examples-in-shiny"
+    },
+    {
+      "title": "Example 1: Lack of reactive invalidation",
+      "url": "docs/#example-1-lack-of-reactive-invalidation"
+    },
+    {
+      "title": "Example 2: Leaky changes",
+      "url": "docs/#example-2-leaky-changes"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

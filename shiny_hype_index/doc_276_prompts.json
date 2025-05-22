@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a password input control using ui.input_password in Shiny for Python?",
+  "How can the timing of updating the input value be controlled when using ui.input_password in Shiny for Python?",
+  "What is the default behavior for updating the input value when using ui.input_password in Shiny for Python?",
+  "What is the purpose of the 'update_on' parameter in the ui.input_password function in Shiny for Python?",
+  "What does the ui.input_password function return when used in Shiny for Python?"
+]

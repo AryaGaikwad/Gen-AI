@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the express.ui.update_date function in Shiny for Python?",
+  "What is the purpose of the Session instance parameter in the express.ui.update_date function?",
+  "How does express.ui.update_date handle the starting date if no value is provided?",
+  "What note should developers keep in mind regarding the input updater functions in Shiny for Python?",
+  "How can the choices be cleared for update_radio_buttons, update_checkbox_group, and update_select functions in Shiny for Python?"
+]

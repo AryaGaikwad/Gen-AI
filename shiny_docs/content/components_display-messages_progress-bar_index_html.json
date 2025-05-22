@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "title": "Progress Bar – Shiny for Python",
+    "description": "",
+    "url": "components/display-messages/progress-bar/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Display Messages",
+        "Progress Bar"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Progress Bar"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nimport asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import asyncio\n\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"do_compute\", \"Compute\")\n\n@render.ui\n@reactive.event(input.do_compute)\nasync def compute():\n    with ui.Progress(min=1, max=15) as p:\n        p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n        for i in range(1, 15):\n            p.set(i, message=\"Computing\")\n            await asyncio.sleep(0.1)\n\n    return \"Done computing!\""
+    },
+    {
+      "type": "code",
+      "text": "import asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.Progress ui.Progress(self, min=0, max=1, session=None)",
+        "ui.Progress.close ui.Progress.close(self)",
+        "ui.Progress.inc ui.Progress.inc(self, amount=0.1, message=None, detail=None)",
+        "ui.Progress.set ui.Progress.set(self, value=None, message=None, detail=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.Progress ui.Progress(self, min=0, max=1, session=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.Progress.close ui.Progress.close(self)"
+    },
+    {
+      "type": "p",
+      "text": "ui.Progress.inc ui.Progress.inc(self, amount=0.1, message=None, detail=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.Progress.set ui.Progress.set(self, value=None, message=None, detail=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "With Shiny, you can display a progress bar while a computation runs by running the computation bar within a special computation manager. Here’s how:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use ui.Progress() to create a computation manager, and use with to run the computation within the manager. For example, you might set up a progress bar like this:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "def compute():\n  with ui.Progress(min=1, max=15) as p:\n      #  computation"
+    },
+    {
+      "type": "p",
+      "text": "ui.Progress() creates a progress bar object that you can use to update the progress bar that is displayed during the computation."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Set the minimum and maximum values of the progress bar when you call ui.Progress(). These provide the outer bounds for the progress to display. For example, in the code above, when the bar is at 1, it would appear empty. When it is at 8, it would appear half full. When it is at 15, it would appear complete.",
+        "Update the progress bar object as the computation runs. Updating the object is simple: you can call its set() method to change the location of the progress bar, as well as the message it displays. For example the code below would update the progress bar above to half finished, and change the message that accompanies the bar to “Almost there!”."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Set the minimum and maximum values of the progress bar when you call ui.Progress(). These provide the outer bounds for the progress to display. For example, in the code above, when the bar is at 1, it would appear empty. When it is at 8, it would appear half full. When it is at 15, it would appear complete."
+    },
+    {
+      "type": "p",
+      "text": "Update the progress bar object as the computation runs. Updating the object is simple: you can call its set() method to change the location of the progress bar, as well as the message it displays. For example the code below would update the progress bar above to half finished, and change the message that accompanies the bar to “Almost there!”."
+    },
+    {
+      "type": "code",
+      "text": "p.set(8, message=\"Almost there\")"
+    },
+    {
+      "type": "p",
+      "text": "Finding opportunities to update the bar while the computation runs is more tricky. To have a responsive bar, you will need to interlace set() calls with the computation that runs. If the computation is a function from an external package, you may only be able to alert the user when the computation begins and when it finishes, which is unlikely to be satisfying:"
+    },
+    {
+      "type": "code",
+      "text": "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation()\n    p.set(15, message=\"Finished!\")"
+    },
+    {
+      "type": "p",
+      "text": "If the computation involves separate functions run in sequence, you can update the progress bar after each function:"
+    },
+    {
+      "type": "code",
+      "text": "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation1()\n    p.set(5, message=\"Working hard\")\n    # computation2()\n    p.set(10, message=\"Almost there\")\n    # computation3()\n    p.set(15, message=\"Finished!\")"
+    },
+    {
+      "type": "p",
+      "text": "If the computation is a function that you have written, you can write the function to accept a progress bar object to update as it runs."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nimport asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nimport asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)",
+    "import asyncio\n\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"do_compute\", \"Compute\")\n\n@render.ui\n@reactive.event(input.do_compute)\nasync def compute():\n    with ui.Progress(min=1, max=15) as p:\n        p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n        for i in range(1, 15):\n            p.set(i, message=\"Computing\")\n            await asyncio.sleep(0.1)\n\n    return \"Done computing!\"",
+    "import asyncio\n\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"do_compute\", \"Compute\")\n\n@render.ui\n@reactive.event(input.do_compute)\nasync def compute():\n    with ui.Progress(min=1, max=15) as p:\n        p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n        for i in range(1, 15):\n            p.set(i, message=\"Computing\")\n            await asyncio.sleep(0.1)\n\n    return \"Done computing!\"",
+    "import asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)",
+    "import asyncio\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"button\", \"Compute\"),\n    ui.output_ui(\"compute\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.ui\n    @reactive.event(input.button)\n    async def compute():\n        with ui.Progress(min=1, max=15) as p:\n            p.set(message=\"Calculation in progress\", detail=\"This may take a while...\")\n\n            for i in range(1, 15):\n                p.set(i, message=\"Computing\")\n                await asyncio.sleep(0.1)\n\n        return \"Done computing!\"\n\napp = App(app_ui, server)",
+    "def compute():\n  with ui.Progress(min=1, max=15) as p:\n      #  computation",
+    "def compute():\n  with ui.Progress(min=1, max=15) as p:\n      #  computation",
+    "p.set(8, message=\"Almost there\")",
+    "p.set(8, message=\"Almost there\")",
+    "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation()\n    p.set(15, message=\"Finished!\")",
+    "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation()\n    p.set(15, message=\"Finished!\")",
+    "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation1()\n    p.set(5, message=\"Working hard\")\n    # computation2()\n    p.set(10, message=\"Almost there\")\n    # computation3()\n    p.set(15, message=\"Finished!\")",
+    "async def compute():\nwith ui.Progress(min=1, max=15) as p:\n    p.set(1, message=\"Here we go\")\n    # computation1()\n    p.set(5, message=\"Working hard\")\n    # computation2()\n    p.set(10, message=\"Almost there\")\n    # computation3()\n    p.set(15, message=\"Finished!\")"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

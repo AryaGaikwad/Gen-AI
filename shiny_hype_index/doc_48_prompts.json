@@ -1,0 +1,7 @@
+[
+  "How can I deploy Shiny apps to Posit Connect using command line deployment?",
+  "How can I set up automatic deployment from git to Posit Connect?",
+  "What are the system requirements for deploying Shiny for Python apps on Shiny Server?",
+  "How can I configure Python for Shiny Server to find the necessary Python packages?",
+  "What are the key considerations for deploying Shiny apps on hosting platforms other than Posit Connect or Shiny Server?"
+]

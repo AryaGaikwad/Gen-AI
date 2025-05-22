@@ -1,0 +1,7 @@
+[
+  "What does the ui.output_text function in Shiny Python do?",
+  "What parameters does the ui.output_text function accept?",
+  "What is the purpose of the \"inline\" parameter in the ui.output_text function?",
+  "What is the return type of the ui.output_text function?",
+  "How is text handled before rendering in the ui.output_text function?"
+]

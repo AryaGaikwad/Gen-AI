@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using the get_html_string method in express.ui.TagList?",
+  "What method in express.ui.TagList can be used to append an iterable of children to the existing list of tag children?",
+  "How can one save a TagList object to an HTML file using the save_html method?",
+  "Which method in express.ui.TagList is used to convert tagifiable children to Tag/TagList objects?",
+  "What does the get_dependencies method in express.ui.TagList return and what parameter can be specified to control deduplication?"
+]

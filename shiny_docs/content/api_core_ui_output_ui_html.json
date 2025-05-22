@@ -1,0 +1,853 @@
+{
+  "metadata": {
+    "title": "ui.output_ui – Shiny for Python",
+    "description": "",
+    "url": "api/core/ui.output_ui.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Rendering outputs",
+        "ui.output_ui"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "ui.output_ui"
+    },
+    {
+      "type": "code",
+      "text": "ui.output_ui(\n    id,\n    inline=False,\n    container=None,\n    fill=False,\n    fillable=False,\n    **kwargs,\n)"
+    },
+    {
+      "type": "p",
+      "text": "Create a output container for a UI (i.e., HTML) element."
+    },
+    {
+      "type": "h2",
+      "text": "Parameters"
+    },
+    {
+      "type": "p",
+      "text": "An output id."
+    },
+    {
+      "type": "p",
+      "text": "If True, the result is displayed inline."
+    },
+    {
+      "type": "p",
+      "text": "A Callable that returns the output container."
+    },
+    {
+      "type": "p",
+      "text": "Whether or not to allow the UI output to grow/shrink to fit a fillable container with an opinionated height (e.g., page_fillable)."
+    },
+    {
+      "type": "p",
+      "text": "Whether or not the UI output area should be considered a fillable (i.e., flexbox) container."
+    },
+    {
+      "type": "p",
+      "text": "Attributes to be applied to the output container."
+    },
+    {
+      "type": "h2",
+      "text": "Returns"
+    },
+    {
+      "type": "p",
+      "text": "A UI element"
+    },
+    {
+      "type": "h2",
+      "text": "See Also"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui",
+        "output_text"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Examples"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny import App, Inputs, Outputs, Session, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"add\", \"Add more controls\"),\n    ui.output_ui(\"moreControls\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.ui\n    @reactive.event(input.add)\n    def moreControls():\n        return ui.TagList(\n            ui.input_slider(\"n\", \"N\", min=1, max=1000, value=500),\n            ui.input_text(\"label\", \"Label\"),\n        )\n\n\napp = App(app_ui, server)\n\n"
+    }
+  ],
+  "code_examples": [
+    "ui.output_ui(\n    id,\n    inline=False,\n    container=None,\n    fill=False,\n    fillable=False,\n    **kwargs,\n)",
+    "ui.output_ui(\n    id,\n    inline=False,\n    container=None,\n    fill=False,\n    fillable=False,\n    **kwargs,\n)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny import App, Inputs, Outputs, Session, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"add\", \"Add more controls\"),\n    ui.output_ui(\"moreControls\"),\n)\n\n\ndef server(input: Inputs, output: Outputs, session: Session):\n    @render.ui\n    @reactive.event(input.add)\n    def moreControls():\n        return ui.TagList(\n            ui.input_slider(\"n\", \"N\", min=1, max=1000, value=500),\n            ui.input_text(\"label\", \"Label\"),\n        )\n\n\napp = App(app_ui, server)\n\n"
+  ],
+  "toc": [
+    {
+      "title": "ui.output_ui",
+      "url": "api/core/#shiny.ui.output_ui"
+    },
+    {
+      "title": "Parameters",
+      "url": "api/core/#parameters"
+    },
+    {
+      "title": "Returns",
+      "url": "api/core/#returns"
+    },
+    {
+      "title": "See Also",
+      "url": "api/core/#see-also"
+    },
+    {
+      "title": "Examples",
+      "url": "api/core/#examples"
+    },
+    {
+      "title": "Shiny Core API",
+      "url": "api/core/index.html"
+    },
+    {
+      "title": "Page containers"
+    },
+    {
+      "title": "ui.page_sidebar",
+      "url": "api/core/ui.page_sidebar.html"
+    },
+    {
+      "title": "ui.page_navbar",
+      "url": "api/core/ui.page_navbar.html"
+    },
+    {
+      "title": "ui.page_sidebar",
+      "url": "api/core/ui.page_sidebar.html"
+    },
+    {
+      "title": "ui.page_fillable",
+      "url": "api/core/ui.page_fillable.html"
+    },
+    {
+      "title": "ui.page_fluid",
+      "url": "api/core/ui.page_fluid.html"
+    },
+    {
+      "title": "ui.page_fixed",
+      "url": "api/core/ui.page_fixed.html"
+    },
+    {
+      "title": "ui.page_bootstrap",
+      "url": "api/core/ui.page_bootstrap.html"
+    },
+    {
+      "title": "ui.page_auto",
+      "url": "api/core/ui.page_auto.html"
+    },
+    {
+      "title": "ui.page_output",
+      "url": "api/core/ui.page_output.html"
+    },
+    {
+      "title": "UI Layouts"
+    },
+    {
+      "title": "ui.sidebar",
+      "url": "api/core/ui.sidebar.html"
+    },
+    {
+      "title": "ui.layout_sidebar",
+      "url": "api/core/ui.layout_sidebar.html"
+    },
+    {
+      "title": "ui.layout_columns",
+      "url": "api/core/ui.layout_columns.html"
+    },
+    {
+      "title": "ui.layout_column_wrap",
+      "url": "api/core/ui.layout_column_wrap.html"
+    },
+    {
+      "title": "ui.card",
+      "url": "api/core/ui.card.html"
+    },
+    {
+      "title": "ui.card_header",
+      "url": "api/core/ui.card_header.html"
+    },
+    {
+      "title": "ui.card_footer",
+      "url": "api/core/ui.card_footer.html"
+    },
+    {
+      "title": "ui.popover",
+      "url": "api/core/ui.popover.html"
+    },
+    {
+      "title": "ui.tooltip",
+      "url": "api/core/ui.tooltip.html"
+    },
+    {
+      "title": "ui.accordion",
+      "url": "api/core/ui.accordion.html"
+    },
+    {
+      "title": "ui.accordion_panel",
+      "url": "api/core/ui.accordion_panel.html"
+    },
+    {
+      "title": "ui.column",
+      "url": "api/core/ui.column.html"
+    },
+    {
+      "title": "ui.row",
+      "url": "api/core/ui.row.html"
+    },
+    {
+      "title": "UI Inputs"
+    },
+    {
+      "title": "ui.input_select",
+      "url": "api/core/ui.input_select.html"
+    },
+    {
+      "title": "ui.input_selectize",
+      "url": "api/core/ui.input_selectize.html"
+    },
+    {
+      "title": "ui.input_slider",
+      "url": "api/core/ui.input_slider.html"
+    },
+    {
+      "title": "ui.input_dark_mode",
+      "url": "api/core/ui.input_dark_mode.html"
+    },
+    {
+      "title": "ui.input_date",
+      "url": "api/core/ui.input_date.html"
+    },
+    {
+      "title": "ui.input_date_range",
+      "url": "api/core/ui.input_date_range.html"
+    },
+    {
+      "title": "ui.input_checkbox",
+      "url": "api/core/ui.input_checkbox.html"
+    },
+    {
+      "title": "ui.input_checkbox_group",
+      "url": "api/core/ui.input_checkbox_group.html"
+    },
+    {
+      "title": "ui.input_switch",
+      "url": "api/core/ui.input_switch.html"
+    },
+    {
+      "title": "ui.input_radio_buttons",
+      "url": "api/core/ui.input_radio_buttons.html"
+    },
+    {
+      "title": "ui.input_numeric",
+      "url": "api/core/ui.input_numeric.html"
+    },
+    {
+      "title": "ui.input_text",
+      "url": "api/core/ui.input_text.html"
+    },
+    {
+      "title": "ui.input_text_area",
+      "url": "api/core/ui.input_text_area.html"
+    },
+    {
+      "title": "ui.input_password",
+      "url": "api/core/ui.input_password.html"
+    },
+    {
+      "title": "ui.input_action_button",
+      "url": "api/core/ui.input_action_button.html"
+    },
+    {
+      "title": "ui.input_action_link",
+      "url": "api/core/ui.input_action_link.html"
+    },
+    {
+      "title": "ui.input_task_button",
+      "url": "api/core/ui.input_task_button.html"
+    },
+    {
+      "title": "Value boxes"
+    },
+    {
+      "title": "ui.value_box",
+      "url": "api/core/ui.value_box.html"
+    },
+    {
+      "title": "ui.value_box_theme",
+      "url": "api/core/ui.value_box_theme.html"
+    },
+    {
+      "title": "ui.showcase_bottom",
+      "url": "api/core/ui.showcase_bottom.html"
+    },
+    {
+      "title": "ui.showcase_left_center",
+      "url": "api/core/ui.showcase_left_center.html"
+    },
+    {
+      "title": "ui.showcase_top_right",
+      "url": "api/core/ui.showcase_top_right.html"
+    },
+    {
+      "title": "Navigation (tab) panels"
+    },
+    {
+      "title": "ui.nav_panel",
+      "url": "api/core/ui.nav_panel.html"
+    },
+    {
+      "title": "ui.nav_spacer",
+      "url": "api/core/ui.nav_spacer.html"
+    },
+    {
+      "title": "ui.nav_menu",
+      "url": "api/core/ui.nav_menu.html"
+    },
+    {
+      "title": "ui.nav_control",
+      "url": "api/core/ui.nav_control.html"
+    },
+    {
+      "title": "ui.navset_bar",
+      "url": "api/core/ui.navset_bar.html"
+    },
+    {
+      "title": "ui.navset_tab",
+      "url": "api/core/ui.navset_tab.html"
+    },
+    {
+      "title": "ui.navset_pill",
+      "url": "api/core/ui.navset_pill.html"
+    },
+    {
+      "title": "ui.navset_underline",
+      "url": "api/core/ui.navset_underline.html"
+    },
+    {
+      "title": "ui.navset_card_tab",
+      "url": "api/core/ui.navset_card_tab.html"
+    },
+    {
+      "title": "ui.navset_card_pill",
+      "url": "api/core/ui.navset_card_pill.html"
+    },
+    {
+      "title": "ui.navset_card_underline",
+      "url": "api/core/ui.navset_card_underline.html"
+    },
+    {
+      "title": "ui.navset_pill_list",
+      "url": "api/core/ui.navset_pill_list.html"
+    },
+    {
+      "title": "ui.navset_hidden",
+      "url": "api/core/ui.navset_hidden.html"
+    },
+    {
+      "title": "ui.navbar_options",
+      "url": "api/core/ui.navbar_options.html"
+    },
+    {
+      "title": "UI panels"
+    },
+    {
+      "title": "ui.panel_absolute",
+      "url": "api/core/ui.panel_absolute.html"
+    },
+    {
+      "title": "ui.panel_fixed",
+      "url": "api/core/ui.panel_fixed.html"
+    },
+    {
+      "title": "ui.panel_conditional",
+      "url": "api/core/ui.panel_conditional.html"
+    },
+    {
+      "title": "ui.panel_title",
+      "url": "api/core/ui.panel_title.html"
+    },
+    {
+      "title": "ui.panel_well",
+      "url": "api/core/ui.panel_well.html"
+    },
+    {
+      "title": "Uploads & downloads"
+    },
+    {
+      "title": "ui.input_file",
+      "url": "api/core/ui.input_file.html"
+    },
+    {
+      "title": "ui.download_button",
+      "url": "api/core/ui.download_button.html"
+    },
+    {
+      "title": "ui.download_link",
+      "url": "api/core/ui.download_link.html"
+    },
+    {
+      "title": "Chat interface"
+    },
+    {
+      "title": "ui.Chat",
+      "url": "api/core/ui.Chat.html"
+    },
+    {
+      "title": "ui.chat_ui",
+      "url": "api/core/ui.chat_ui.html"
+    },
+    {
+      "title": "Streaming markdown"
+    },
+    {
+      "title": "ui.MarkdownStream",
+      "url": "api/core/ui.MarkdownStream.html"
+    },
+    {
+      "title": "ui.output_markdown_stream",
+      "url": "api/core/ui.output_markdown_stream.html"
+    },
+    {
+      "title": "Custom UI"
+    },
+    {
+      "title": "ui.Theme",
+      "url": "api/core/ui.Theme.html"
+    },
+    {
+      "title": "ui.HTML",
+      "url": "api/core/ui.HTML.html"
+    },
+    {
+      "title": "ui.TagList",
+      "url": "api/core/ui.TagList.html"
+    },
+    {
+      "title": "ui.tags",
+      "url": "api/core/ui.tags.html"
+    },
+    {
+      "title": "ui.markdown",
+      "url": "api/core/ui.markdown.html"
+    },
+    {
+      "title": "ui.include_css",
+      "url": "api/core/ui.include_css.html"
+    },
+    {
+      "title": "ui.include_js",
+      "url": "api/core/ui.include_js.html"
+    },
+    {
+      "title": "ui.insert_ui",
+      "url": "api/core/ui.insert_ui.html"
+    },
+    {
+      "title": "ui.remove_ui",
+      "url": "api/core/ui.remove_ui.html"
+    },
+    {
+      "title": "ui.busy_indicators.use",
+      "url": "api/core/ui.busy_indicators.use.html"
+    },
+    {
+      "title": "ui.busy_indicators.options",
+      "url": "api/core/ui.busy_indicators.options.html"
+    },
+    {
+      "title": "ui.fill.as_fillable_container",
+      "url": "api/core/ui.fill.as_fillable_container.html"
+    },
+    {
+      "title": "ui.fill.as_fill_item",
+      "url": "api/core/ui.fill.as_fill_item.html"
+    },
+    {
+      "title": "ui.fill.remove_all_fill",
+      "url": "api/core/ui.fill.remove_all_fill.html"
+    },
+    {
+      "title": "ui.css.as_css_unit",
+      "url": "api/core/ui.css.as_css_unit.html"
+    },
+    {
+      "title": "ui.css.as_css_padding",
+      "url": "api/core/ui.css.as_css_padding.html"
+    },
+    {
+      "title": "Update inputs"
+    },
+    {
+      "title": "ui.update_select",
+      "url": "api/core/ui.update_select.html"
+    },
+    {
+      "title": "ui.update_selectize",
+      "url": "api/core/ui.update_selectize.html"
+    },
+    {
+      "title": "ui.update_slider",
+      "url": "api/core/ui.update_slider.html"
+    },
+    {
+      "title": "ui.update_dark_mode",
+      "url": "api/core/ui.update_dark_mode.html"
+    },
+    {
+      "title": "ui.update_date",
+      "url": "api/core/ui.update_date.html"
+    },
+    {
+      "title": "ui.update_date_range",
+      "url": "api/core/ui.update_date_range.html"
+    },
+    {
+      "title": "ui.update_checkbox",
+      "url": "api/core/ui.update_checkbox.html"
+    },
+    {
+      "title": "ui.update_checkbox_group",
+      "url": "api/core/ui.update_checkbox_group.html"
+    },
+    {
+      "title": "ui.update_switch",
+      "url": "api/core/ui.update_switch.html"
+    },
+    {
+      "title": "ui.update_radio_buttons",
+      "url": "api/core/ui.update_radio_buttons.html"
+    },
+    {
+      "title": "ui.update_numeric",
+      "url": "api/core/ui.update_numeric.html"
+    },
+    {
+      "title": "ui.update_text",
+      "url": "api/core/ui.update_text.html"
+    },
+    {
+      "title": "ui.update_text_area",
+      "url": "api/core/ui.update_text_area.html"
+    },
+    {
+      "title": "ui.update_navs",
+      "url": "api/core/ui.update_navs.html"
+    },
+    {
+      "title": "ui.update_action_button",
+      "url": "api/core/ui.update_action_button.html"
+    },
+    {
+      "title": "ui.update_action_link",
+      "url": "api/core/ui.update_action_link.html"
+    },
+    {
+      "title": "ui.update_task_button",
+      "url": "api/core/ui.update_task_button.html"
+    },
+    {
+      "title": "Update UI Layouts"
+    },
+    {
+      "title": "ui.update_sidebar",
+      "url": "api/core/ui.update_sidebar.html"
+    },
+    {
+      "title": "ui.update_tooltip",
+      "url": "api/core/ui.update_tooltip.html"
+    },
+    {
+      "title": "ui.update_popover",
+      "url": "api/core/ui.update_popover.html"
+    },
+    {
+      "title": "ui.update_accordion",
+      "url": "api/core/ui.update_accordion.html"
+    },
+    {
+      "title": "ui.update_accordion_panel",
+      "url": "api/core/ui.update_accordion_panel.html"
+    },
+    {
+      "title": "ui.insert_accordion_panel",
+      "url": "api/core/ui.insert_accordion_panel.html"
+    },
+    {
+      "title": "ui.remove_accordion_panel",
+      "url": "api/core/ui.remove_accordion_panel.html"
+    },
+    {
+      "title": "Rendering outputs"
+    },
+    {
+      "title": "ui.output_plot",
+      "url": "api/core/ui.output_plot.html"
+    },
+    {
+      "title": "ui.output_image",
+      "url": "api/core/ui.output_image.html"
+    },
+    {
+      "title": "ui.output_table",
+      "url": "api/core/ui.output_table.html"
+    },
+    {
+      "title": "ui.output_data_frame",
+      "url": "api/core/ui.output_data_frame.html"
+    },
+    {
+      "title": "ui.output_text",
+      "url": "api/core/ui.output_text.html"
+    },
+    {
+      "title": "ui.output_code",
+      "url": "api/core/ui.output_code.html"
+    },
+    {
+      "title": "ui.output_text_verbatim",
+      "url": "api/core/ui.output_text_verbatim.html"
+    },
+    {
+      "title": "ui.output_ui",
+      "url": "api/core/ui.output_ui.html"
+    },
+    {
+      "title": "render.plot",
+      "url": "api/core/render.plot.html"
+    },
+    {
+      "title": "render.image",
+      "url": "api/core/render.image.html"
+    },
+    {
+      "title": "render.table",
+      "url": "api/core/render.table.html"
+    },
+    {
+      "title": "render.text",
+      "url": "api/core/render.text.html"
+    },
+    {
+      "title": "render.code",
+      "url": "api/core/render.code.html"
+    },
+    {
+      "title": "render.ui",
+      "url": "api/core/render.ui.html"
+    },
+    {
+      "title": "render.express",
+      "url": "api/core/render.express.html"
+    },
+    {
+      "title": "render.download",
+      "url": "api/core/render.download.html"
+    },
+    {
+      "title": "render.data_frame",
+      "url": "api/core/render.data_frame.html"
+    },
+    {
+      "title": "render.DataGrid",
+      "url": "api/core/render.DataGrid.html"
+    },
+    {
+      "title": "render.DataTable",
+      "url": "api/core/render.DataTable.html"
+    },
+    {
+      "title": "Reactive programming"
+    },
+    {
+      "title": "reactive.calc",
+      "url": "api/core/reactive.calc.html"
+    },
+    {
+      "title": "reactive.effect",
+      "url": "api/core/reactive.effect.html"
+    },
+    {
+      "title": "reactive.value",
+      "url": "api/core/reactive.value.html"
+    },
+    {
+      "title": "reactive.Calc",
+      "url": "api/core/reactive.Calc.html"
+    },
+    {
+      "title": "reactive.Effect",
+      "url": "api/core/reactive.Effect.html"
+    },
+    {
+      "title": "reactive.Value",
+      "url": "api/core/reactive.Value.html"
+    },
+    {
+      "title": "reactive.event",
+      "url": "api/core/reactive.event.html"
+    },
+    {
+      "title": "reactive.isolate",
+      "url": "api/core/reactive.isolate.html"
+    },
+    {
+      "title": "reactive.invalidate_later",
+      "url": "api/core/reactive.invalidate_later.html"
+    },
+    {
+      "title": "reactive.extended_task",
+      "url": "api/core/reactive.extended_task.html"
+    },
+    {
+      "title": "reactive.flush",
+      "url": "api/core/reactive.flush.html"
+    },
+    {
+      "title": "reactive.poll",
+      "url": "api/core/reactive.poll.html"
+    },
+    {
+      "title": "reactive.file_reader",
+      "url": "api/core/reactive.file_reader.html"
+    },
+    {
+      "title": "reactive.lock",
+      "url": "api/core/reactive.lock.html"
+    },
+    {
+      "title": "req",
+      "url": "api/core/req.html"
+    },
+    {
+      "title": "Create and run applications"
+    },
+    {
+      "title": "run_app",
+      "url": "api/core/run_app.html"
+    },
+    {
+      "title": "App",
+      "url": "api/core/App.html"
+    },
+    {
+      "title": "Inputs",
+      "url": "api/core/Inputs.html"
+    },
+    {
+      "title": "Outputs",
+      "url": "api/core/Outputs.html"
+    },
+    {
+      "title": "Session",
+      "url": "api/core/Session.html"
+    },
+    {
+      "title": "Display messages"
+    },
+    {
+      "title": "ui.help_text",
+      "url": "api/core/ui.help_text.html"
+    },
+    {
+      "title": "ui.notification_show",
+      "url": "api/core/ui.notification_show.html"
+    },
+    {
+      "title": "ui.notification_remove",
+      "url": "api/core/ui.notification_remove.html"
+    },
+    {
+      "title": "ui.modal",
+      "url": "api/core/ui.modal.html"
+    },
+    {
+      "title": "ui.modal_show",
+      "url": "api/core/ui.modal_show.html"
+    },
+    {
+      "title": "ui.modal_remove",
+      "url": "api/core/ui.modal_remove.html"
+    },
+    {
+      "title": "ui.modal_button",
+      "url": "api/core/ui.modal_button.html"
+    },
+    {
+      "title": "ui.Progress",
+      "url": "api/core/ui.Progress.html"
+    },
+    {
+      "title": "Modules"
+    },
+    {
+      "title": "module.ui",
+      "url": "api/core/module.ui.html"
+    },
+    {
+      "title": "module.server",
+      "url": "api/core/module.server.html"
+    },
+    {
+      "title": "Developer facing tools"
+    },
+    {
+      "title": "Session",
+      "url": "api/core/Session.html"
+    },
+    {
+      "title": "Create output renderers",
+      "url": "api/core/Renderer.html"
+    },
+    {
+      "title": "htmltools methods",
+      "url": "api/core/Htmltools.html"
+    },
+    {
+      "title": "ExtendedTask",
+      "url": "api/core/ExtendedTask.html"
+    },
+    {
+      "title": "Types"
+    },
+    {
+      "title": "Miscellaneous types",
+      "url": "api/core/MiscTypes.html"
+    },
+    {
+      "title": "Tag types",
+      "url": "api/core/TagTypes.html"
+    },
+    {
+      "title": "Exception types",
+      "url": "api/core/ExceptionTypes.html"
+    },
+    {
+      "title": "Deprecated"
+    },
+    {
+      "title": "render.transformer.output_transformer",
+      "url": "api/core/render.transformer.output_transformer.html"
+    },
+    {
+      "title": "render.transformer.resolve_value_fn",
+      "url": "api/core/render.transformer.resolve_value_fn.html"
+    },
+    {
+      "title": "Experimental"
+    },
+    {
+      "title": "Card",
+      "url": "api/core/ExCard.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What happens when a user clicks on the input_task_button in Shiny for Python?",
+  "How can a task button be kept in its busy state even after reactive processing has completed in Shiny for Python?",
+  "What are the parameters required for creating an input_task_button in Shiny for Python?",
+  "How can additional states be added to an input_task_button in Shiny for Python?",
+  "In Shiny for Python, how can the button appearance be customized based on different states like \"ready\" and \"busy\"?"
+]

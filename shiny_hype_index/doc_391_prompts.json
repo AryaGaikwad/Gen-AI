@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.notification_show` function in Shiny for Python?",
+  "What parameters can be specified when using the `ui.notification_show` function?",
+  "How can I control the duration for which a notification message is displayed using `ui.notification_show`?",
+  "What options are available for the `type` parameter that controls the color of the notification in `ui.notification_show`?",
+  "In what scenario should I provide an optional unique identifier for a notification when using `ui.notification_show`?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the output_transformer decorator in Shiny for Python?",
+  "How should the transform function be defined in order to work with the output_transformer decorator?",
+  "What are the parameters required when using the render.transformer.output_transformer method?",
+  "How does the transform function handle the app-supplied output value function and keyword arguments?",
+  "In what situations should the transform function be defined as an asynchronous function in Shiny for Python?"
+]

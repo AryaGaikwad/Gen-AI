@@ -1,0 +1,352 @@
+{
+  "metadata": {
+    "title": "Patterns – Shiny for Python",
+    "description": "",
+    "url": "docs/reactive-patterns.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "⚡ Reactivity",
+        "Patterns"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Patterns"
+    },
+    {
+      "type": "p",
+      "text": "In the previous article, we learned the foundations of reactive programming in Shiny. Here we’ll learn about some useful utilities that make reactive programming easier in certain situations."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Isolation & Events Ignore changes in certain reactive dependencies.",
+        "Requiring input Require an input before executing a reactive function.",
+        "Scheduled invalidation Invalidate a reactive function on a schedule.",
+        "Reactive file reading Invalidate a reactive function when a file changes.",
+        "Reactive polling Periodically check for changes to a reactive dependency."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Ignore changes in certain reactive dependencies."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Require an input before executing a reactive function."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Invalidate a reactive function on a schedule."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Invalidate a reactive function when a file changes."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Periodically check for changes to a reactive dependency."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Isolation & Events"
+    },
+    {
+      "type": "p",
+      "text": "Normally, a reactive function re-executes when any of its reactive dependencies change. Sometimes this leads to a function re-executing too often. Shiny provides two ways to ignore changes in reactive dependencies: @reactive.event() and with isolate(). The former is more convenient when you want “event-like” behavior (i.e., do something on button click)."
+    },
+    {
+      "type": "p",
+      "text": "For example, suppose we have an output that depends on the value of a slider, but is computationally expensive. We might want it to re-execute it only when the user presses a button. In other words, we want to ignore changes in the slider until the button is pressed. The more idiomatic way to do this is with @reactive.event():"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "reactive.event",
+        "reactive.isolate"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The @reactive.event() decorator restricts re-execution to only changes in one (or more) reactive dependency. Any other reactive dependencies inside the function being decorated are ignored."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\nimport asyncio\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"N\", min=1, max=100, value=1)\nui.input_action_button(\"compute\", \"Compute!\")\n\n@render.text\n@reactive.event(input.compute) # Take a dependency on the button\nasync def result():\n    # Any reactive dependencies inside this function are ignored.\n    await asyncio.sleep(2) # Simulate a long computation\n    return f\"Result: {input.n()}\""
+    },
+    {
+      "type": "p",
+      "text": "In the @reactive.event() example above, the function does not execute the first time when the session starts; it will wait until the user presses the button. If you want it to execute once when the session starts, you can use @reactive.event(input.compute, ignore_none=False)."
+    },
+    {
+      "type": "p",
+      "text": "Using with isolate(), a block of code is run inside a reactive function, but without taking a reactive dependency on the code inside the block. This means that any reactive inputs in that block will not cause the function to re-execute. In the example below, the result takes a dependency on input.button(), but not input.x():"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\nimport asyncio\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"N\", min=1, max=100, value=1)\nui.input_action_button(\"compute\", \"Compute!\")\n\n@render.text\nasync def result():\n    input.compute()        # Take a dependency on the button\n    await asyncio.sleep(2) # Simulate a long computation\n    with reactive.isolate():\n        # Read input.n() without taking a dependency on it\n        return f\"Result: {input.n()}\""
+    },
+    {
+      "type": "h2",
+      "text": "Requiring input"
+    },
+    {
+      "type": "p",
+      "text": "When input must be provided or a certain condition must be met before displaying output, you can use req() to effectively stop execution for the current reactive cycle. For example, the app below allows a user to upload a csv file, which is then used to render a table. Notice how the reactive calculation, df, uses req() to stop execution until the user has uploaded a file."
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom shiny import reactive, req\nfrom shiny.express import input, render, ui\n\nui.input_file(\"file\", \"Upload a csv file\", accept=\".csv\")\n\n@reactive.calc\ndef df():\n    # req() stops execution until input.file() is truthy\n    f = req(input.file())\n    return pd.read_csv(f[0]['datapath'])\n\n@render.data_frame\ndef table():\n    # Output won't render until input.file() is truthy\n    return render.DataGrid(df())"
+    },
+    {
+      "type": "p",
+      "text": "Video"
+    },
+    {
+      "type": "h2",
+      "text": "Scheduled invalidation"
+    },
+    {
+      "type": "p",
+      "text": "To repeatedly invalidate a reactive function on a schedule, use reactive.invalidate_later(). This is useful for implementing things like streaming data, or updating a clock. For example, to implement a clock that updates every second, you can use reactive.invalidate_later(1):"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import render\n\n# Get the current time every second\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(1)\n    return datetime.now().strftime('%H:%M:%S')\n\n@render.ui\ndef clock():\n    return f\"Current time: {cur_time()}\""
+    },
+    {
+      "type": "h2",
+      "text": "Reactive file reading"
+    },
+    {
+      "type": "p",
+      "text": "If your app reads input files, you can use @reactive.file_reader() to invalidate the result when the file changes. For example, lets extend the example from above to write the current time to a file every second, and then read and display the contents of that file:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import render\n\n# Get the current time every second\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(1)\n    return datetime.now().strftime('%H:%M:%S')\n\n# Write cur_time() to a file (every second)\n@reactive.effect\ndef _():\n    with open(\"time.txt\", \"w\") as f:\n        f.write(cur_time())\n\nf = open(\"time.txt\", \"w\")  # Create the file if it doesn't exist\n\n# Read and display whenever the file changes\n@render.ui\n@reactive.file_reader(\"time.txt\")\ndef time():\n    with open(\"time.txt\") as f:\n        return f\"Current time {f.read()}\""
+    },
+    {
+      "type": "p",
+      "text": "See here for a more compelling example of monitoring a file for changes."
+    },
+    {
+      "type": "h2",
+      "text": "Reactive polling"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes it’s useful to invalidate a reactive function on a schedule, but only if a certain condition is met. For example, suppose we want to check if a (potentially large) file (or database) has changed/updated every so often, and if it has, re-read it. The @reactive.poll() decorator is designed for this purpose. When applying the decorator, make sure to provide a function that is relatively cheap to execute, since it will be executed repeatedly on an interval. And, in the event that that function’s value changes, the reactive function will be invalidated and re-executed."
+    },
+    {
+      "type": "p",
+      "text": "For example, lets extend the example from above to write the current time to a file every 0.5 seconds, but only read and display the contents every 2 seconds:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nimport os\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\n# Get the current time every 0.5 seconds\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(0.5)\n    return datetime.now().strftime('%H:%M:%S')\n\n# Write cur_time() to a file (every 0.5 seconds)\n@reactive.effect\ndef _():\n    with open(\"time2.txt\", \"w\") as f:\n        f.write(cur_time())\n\nf = open(\"time2.txt\", \"w\")  # Create the file if it doesn't exist\n\n# Every 2 seconds, check if the file has changed.\n# If it has, re-read it, and display the contents.\n# Note: checking for the modified time of a file is cheap\n# compared to reading the file contents\n@render.ui\n@reactive.poll(lambda: os.path.getmtime(\"time2.txt\"), 2)\ndef time():\n    with open(\"time2.txt\") as f:\n        return f\"Current time {f.read()}\""
+    },
+    {
+      "type": "p",
+      "text": "See here for an example of monitoring a database for changes."
+    },
+    {
+      "type": "p",
+      "text": "See here for an example of monitoring a folder for changes."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\nimport asyncio\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"N\", min=1, max=100, value=1)\nui.input_action_button(\"compute\", \"Compute!\")\n\n@render.text\n@reactive.event(input.compute) # Take a dependency on the button\nasync def result():\n    # Any reactive dependencies inside this function are ignored.\n    await asyncio.sleep(2) # Simulate a long computation\n    return f\"Result: {input.n()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\nimport asyncio\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"N\", min=1, max=100, value=1)\nui.input_action_button(\"compute\", \"Compute!\")\n\n@render.text\nasync def result():\n    input.compute()        # Take a dependency on the button\n    await asyncio.sleep(2) # Simulate a long computation\n    with reactive.isolate():\n        # Read input.n() without taking a dependency on it\n        return f\"Result: {input.n()}\"",
+    "import pandas as pd\nfrom shiny import reactive, req\nfrom shiny.express import input, render, ui\n\nui.input_file(\"file\", \"Upload a csv file\", accept=\".csv\")\n\n@reactive.calc\ndef df():\n    # req() stops execution until input.file() is truthy\n    f = req(input.file())\n    return pd.read_csv(f[0]['datapath'])\n\n@render.data_frame\ndef table():\n    # Output won't render until input.file() is truthy\n    return render.DataGrid(df())",
+    "import pandas as pd\nfrom shiny import reactive, req\nfrom shiny.express import input, render, ui\n\nui.input_file(\"file\", \"Upload a csv file\", accept=\".csv\")\n\n@reactive.calc\ndef df():\n    # req() stops execution until input.file() is truthy\n    f = req(input.file())\n    return pd.read_csv(f[0]['datapath'])\n\n@render.data_frame\ndef table():\n    # Output won't render until input.file() is truthy\n    return render.DataGrid(df())",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import render\n\n# Get the current time every second\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(1)\n    return datetime.now().strftime('%H:%M:%S')\n\n@render.ui\ndef clock():\n    return f\"Current time: {cur_time()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import render\n\n# Get the current time every second\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(1)\n    return datetime.now().strftime('%H:%M:%S')\n\n# Write cur_time() to a file (every second)\n@reactive.effect\ndef _():\n    with open(\"time.txt\", \"w\") as f:\n        f.write(cur_time())\n\nf = open(\"time.txt\", \"w\")  # Create the file if it doesn't exist\n\n# Read and display whenever the file changes\n@render.ui\n@reactive.file_reader(\"time.txt\")\ndef time():\n    with open(\"time.txt\") as f:\n        return f\"Current time {f.read()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 50\nimport os\nfrom datetime import datetime\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\n# Get the current time every 0.5 seconds\n@reactive.calc\ndef cur_time():\n    reactive.invalidate_later(0.5)\n    return datetime.now().strftime('%H:%M:%S')\n\n# Write cur_time() to a file (every 0.5 seconds)\n@reactive.effect\ndef _():\n    with open(\"time2.txt\", \"w\") as f:\n        f.write(cur_time())\n\nf = open(\"time2.txt\", \"w\")  # Create the file if it doesn't exist\n\n# Every 2 seconds, check if the file has changed.\n# If it has, re-read it, and display the contents.\n# Note: checking for the modified time of a file is cheap\n# compared to reading the file contents\n@render.ui\n@reactive.poll(lambda: os.path.getmtime(\"time2.txt\"), 2)\ndef time():\n    with open(\"time2.txt\") as f:\n        return f\"Current time {f.read()}\""
+  ],
+  "toc": [
+    {
+      "title": "Isolation & Events",
+      "url": "docs/#isolate-events"
+    },
+    {
+      "title": "Requiring input",
+      "url": "docs/#req"
+    },
+    {
+      "title": "Scheduled invalidation",
+      "url": "docs/#invalidate-later"
+    },
+    {
+      "title": "Reactive file reading",
+      "url": "docs/#file"
+    },
+    {
+      "title": "Reactive polling",
+      "url": "docs/#poll"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What is the difference between a reactive effect and a reactive calculation in Shiny for Python?",
+  "How does the execution strategy of reactive effects differ from reactive calculations in Shiny for Python?",
+  "Can a reactive effect be used as an input to other reactive expressions in Shiny for Python?",
+  "What parameters can be specified when using the reactive.effect function in Shiny for Python?",
+  "What is the purpose of marking a function as a reactive effect in Shiny for Python?"
+]

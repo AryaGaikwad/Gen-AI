@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using the reactive.file_reader decorator in a Shiny Python application?",
+  "What types of functions can the reactive.file_reader decorator be applied to?",
+  "Can the file_reader decorator monitor directories of files, or just single files?",
+  "What are the parameters that need to be provided when using the reactive.file_reader decorator?",
+  "How does the interval_secs parameter impact the functionality of the reactive.file_reader decorator in a Shiny Python app?"
+]

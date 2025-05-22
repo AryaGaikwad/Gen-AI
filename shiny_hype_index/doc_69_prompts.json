@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using the ui.input_radio_buttons function in Shiny for Python?",
+  "How can you specify the value and label for each radio button in Shiny for Python?",
+  "How can you access the value of a set of radio buttons in the server function in Shiny for Python?",
+  "In Shiny for Python, how can you determine where the radio buttons will appear within the app's layout?",
+  "Can the choices parameter in ui.input_radio_buttons be both a list and a dictionary in Shiny for Python?"
+]

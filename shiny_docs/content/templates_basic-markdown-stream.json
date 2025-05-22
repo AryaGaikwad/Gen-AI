@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Hello Streaming Markdown",
+    "description": "Use the basic-markdown-stream template as a foundation for your next Shiny app.",
+    "url": "templates/basic-markdown-stream/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Hello Streaming Markdown"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-markdown-stream --mode express --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-markdown-stream --mode core --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "p",
+      "text": "A basic example of collecting user input, using it to fill a LLM prompt template, then sending the result to the LLM for response generation. The response is then streamed back to the user in real-time via MarkdownStream()."
+    },
+    {
+      "type": "p",
+      "text": "To learn more, see the article on Gen AI streaming."
+    },
+    {
+      "type": "p",
+      "text": "This particular template uses chatlas.ChatAnthropic() to do response generation via Anthropic. With chatlas, it’s easy to switch to other providers. Just change ChatAnthropic() to another provider (e.g., ChatOpenAI())."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "MarkdownStream",
+        "Action button",
+        "Select input"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "p",
+      "text": "chatlas"
+    }
+  ],
+  "code_examples": [
+    "shiny create --template basic-markdown-stream --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-markdown-stream --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-markdown-stream --mode core --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template basic-markdown-stream --mode core --github posit-dev/py-shiny-templates/gen-ai"
+  ],
+  "toc": []
+}

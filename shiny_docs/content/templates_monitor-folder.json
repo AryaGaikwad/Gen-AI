@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Streaming folder updates",
+    "description": "Use the monitor-folder template as a foundation for your next Shiny app.",
+    "url": "templates/monitor-folder/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Streaming folder updates"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template monitor-folder --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template monitor-folder --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Monitor a folder for updates (e.g., adding a new file) and visualize the updates in real-time. To facilitate, this template makes a clever use of the watchfiles package and reactive file reading to trigger an update when the folder changes. To trigger a change, you can press the “+” icon to add a new file to the folder, which will then be displayed in the table (listing the files name and their last modification time). Additionally, when a file is selected in this table, the contents are displayed and available for download."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Data grid output",
+        "Action button",
+        "Popover",
+        "Download link"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "pandas",
+        "watchfiles"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template monitor-folder --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-folder --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-folder --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-folder --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

@@ -1,0 +1,204 @@
+{
+  "metadata": {
+    "title": "Routing – Shiny for Python",
+    "description": "",
+    "url": "docs/routing.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🧩 Miscellaneous",
+        "Routing"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Routing"
+    },
+    {
+      "type": "p",
+      "text": "This page covers how to access and extend a Shiny applications server, including adding new routes. Shiny is built on top of the web server framework Starlette, which allows a wide range of customization."
+    },
+    {
+      "type": "h2",
+      "text": "Adding routes"
+    },
+    {
+      "type": "p",
+      "text": "Shiny apps can be put alongside each other, and other starlette applications."
+    },
+    {
+      "type": "p",
+      "text": "Here is an example."
+    },
+    {
+      "type": "code",
+      "text": "from starlette.applications import Starlette\nfrom starlette.routing import Mount\nfrom starlette.staticfiles import StaticFiles\n\nfrom shiny import App, ui\n\n# first starlette app, just serves static files ----\napp_static = StaticFiles(directory=\".\")\n\n# shiny app ----\napp_shiny = App(ui.page_fluid(\"hello from shiny!\"), None)\n\n\n# combine apps ----\nroutes = [\n    Mount('/static', app=app_static),\n    Mount('/shiny', app=app_shiny)\n]\n\napp = Starlette(routes=routes)"
+    },
+    {
+      "type": "p",
+      "text": "This application can be run using tools like uvicorn, as discussed in deployment."
+    }
+  ],
+  "code_examples": [
+    "from starlette.applications import Starlette\nfrom starlette.routing import Mount\nfrom starlette.staticfiles import StaticFiles\n\nfrom shiny import App, ui\n\n# first starlette app, just serves static files ----\napp_static = StaticFiles(directory=\".\")\n\n# shiny app ----\napp_shiny = App(ui.page_fluid(\"hello from shiny!\"), None)\n\n\n# combine apps ----\nroutes = [\n    Mount('/static', app=app_static),\n    Mount('/shiny', app=app_shiny)\n]\n\napp = Starlette(routes=routes)",
+    "from starlette.applications import Starlette\nfrom starlette.routing import Mount\nfrom starlette.staticfiles import StaticFiles\n\nfrom shiny import App, ui\n\n# first starlette app, just serves static files ----\napp_static = StaticFiles(directory=\".\")\n\n# shiny app ----\napp_shiny = App(ui.page_fluid(\"hello from shiny!\"), None)\n\n\n# combine apps ----\nroutes = [\n    Mount('/static', app=app_static),\n    Mount('/shiny', app=app_shiny)\n]\n\napp = Starlette(routes=routes)"
+  ],
+  "toc": [
+    {
+      "title": "Adding routes",
+      "url": "docs/#adding-routes"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

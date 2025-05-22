@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the express.ui.update_popover function in Shiny for Python?",
+  "What are the parameters required for updating the contents or title of a popover using express.ui.update_popover?",
+  "How can one specify whether to open or close the popover when using express.ui.update_popover?",
+  "When should a Shiny session object be explicitly provided as an argument in the express.ui.update_popover function?",
+  "What is the relationship between express.ui.update_popover and the popover function in Shiny for Python?"
+]

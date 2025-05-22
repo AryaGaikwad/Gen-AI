@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "title": "Modal – Shiny for Python",
+    "description": "",
+    "url": "components/display-messages/modal/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Display Messages",
+        "Modal"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Modal"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(\n            \"This is a somewhat important message.\",\n            title=\"Somewhat important message\",\n            easy_close=True,\n            footer=ui.modal_button(\"Dismiss\"),\n        )\n        ui.modal_show(m)\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import ui, input\n\nui.input_action_button(\"show\", \"Show modal dialog\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_important_message():\n    m = ui.modal(  \n        \"This is a somewhat important message.\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(  \n            \"This is a somewhat important message.\",  \n            title=\"Somewhat important message\",  \n            easy_close=True,  \n        )  \n        ui.modal_show(m)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.modal ui.modal(*args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, **kwargs)",
+        "ui.modal_show ui.modal_show(modal, session=None)",
+        "ui.modal_remove ui.modal_remove(session=None)",
+        "ui.modal_button ui.modal_button(label, icon=None, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.modal ui.modal(*args, title=None, footer=MISSING, size='m', easy_close=False, fade=True, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.modal_show ui.modal_show(modal, session=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.modal_remove ui.modal_remove(session=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.modal_button ui.modal_button(label, icon=None, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A modal is a dialog box that appears in front of the app. You can use modals to display messages, curate the user experience, or collect user input, like passwords and usernames."
+    },
+    {
+      "type": "p",
+      "text": "To create a modal, first assemble the components of the modal with ui.modal() and save them to an object. Then call ui.modal_show() on the object to display the modal."
+    },
+    {
+      "type": "p",
+      "text": "Typically, you will want to create a reactive effect to call ui.modal_show() whenever a particular event occurs. For example, the reactive effect below will open a modal whenever the value of input.show() changes."
+    },
+    {
+      "type": "code",
+      "text": "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    m = ui.modal( \n        \"This is a somewhat important message.\",\n        title=\"Somewhat important message\",\n        easy_close=True\n    )\n    ui.modal_show(m)"
+    },
+    {
+      "type": "h3",
+      "text": "Modal contents"
+    },
+    {
+      "type": "p",
+      "text": "To add elements to a modal, pass them as unnamed arguments to ui.modal(). Modals can contain any UI elements recognized by Shiny."
+    },
+    {
+      "type": "p",
+      "text": "Modals come in four sizes: small ('s'), medium ('m') (the default), large ('l'), and extra-large ('xl'). Set the size of a modal with the size argument of ui.modal()."
+    },
+    {
+      "type": "p",
+      "text": "See Also: Notifications provide a similar, but alternative way to display information to the user."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Modal for authentication"
+    },
+    {
+      "type": "p",
+      "text": "Place inputs inside a modal to collect, and then login with, database credentials."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"login\", \"Login to database\")\n\n@reactive.effect\n@reactive.event(input.login)\ndef show_login_modal():\n    m = ui.modal(  \n        ui.input_text(\"name\", \"Username:\"),\n        ui.input_password(\"password\", \"Password:\"),\n        ui.input_action_button(\"connect\", \"Connect\"),\n        title=\"Database Credentials\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)\n\n@reactive.effect  \n@reactive.event(input.connect)  \ndef connect_to_databaset():  \n    ui.modal_remove()  \n    # Code to connect with input.name() and input.password() "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(\n            \"This is a somewhat important message.\",\n            title=\"Somewhat important message\",\n            easy_close=True,\n            footer=ui.modal_button(\"Dismiss\"),\n        )\n        ui.modal_show(m)\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(\n            \"This is a somewhat important message.\",\n            title=\"Somewhat important message\",\n            easy_close=True,\n            footer=ui.modal_button(\"Dismiss\"),\n        )\n        ui.modal_show(m)\n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import ui, input\n\nui.input_action_button(\"show\", \"Show modal dialog\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_important_message():\n    m = ui.modal(  \n        \"This is a somewhat important message.\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)",
+    "from shiny import reactive\nfrom shiny.express import ui, input\n\nui.input_action_button(\"show\", \"Show modal dialog\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_important_message():\n    m = ui.modal(  \n        \"This is a somewhat important message.\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(  \n            \"This is a somewhat important message.\",  \n            title=\"Somewhat important message\",  \n            easy_close=True,  \n        )  \n        ui.modal_show(m)  \n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(\n    ui.input_action_button(\"show\", \"Show modal dialog\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        m = ui.modal(  \n            \"This is a somewhat important message.\",  \n            title=\"Somewhat important message\",  \n            easy_close=True,  \n        )  \n        ui.modal_show(m)  \n\napp = App(app_ui, server)",
+    "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    m = ui.modal( \n        \"This is a somewhat important message.\",\n        title=\"Somewhat important message\",\n        easy_close=True\n    )\n    ui.modal_show(m)",
+    "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    m = ui.modal( \n        \"This is a somewhat important message.\",\n        title=\"Somewhat important message\",\n        easy_close=True\n    )\n    ui.modal_show(m)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"login\", \"Login to database\")\n\n@reactive.effect\n@reactive.event(input.login)\ndef show_login_modal():\n    m = ui.modal(  \n        ui.input_text(\"name\", \"Username:\"),\n        ui.input_password(\"password\", \"Password:\"),\n        ui.input_action_button(\"connect\", \"Connect\"),\n        title=\"Database Credentials\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)\n\n@reactive.effect  \n@reactive.event(input.connect)  \ndef connect_to_databaset():  \n    ui.modal_remove()  \n    # Code to connect with input.name() and input.password() ",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"login\", \"Login to database\")\n\n@reactive.effect\n@reactive.event(input.login)\ndef show_login_modal():\n    m = ui.modal(  \n        ui.input_text(\"name\", \"Username:\"),\n        ui.input_password(\"password\", \"Password:\"),\n        ui.input_action_button(\"connect\", \"Connect\"),\n        title=\"Database Credentials\",  \n        easy_close=True,  \n        footer=None,  \n    )  \n    ui.modal_show(m)\n\n@reactive.effect  \n@reactive.event(input.connect)  \ndef connect_to_databaset():  \n    ui.modal_remove()  \n    # Code to connect with input.name() and input.password() ",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fixed(ui.input_action_button(\"login\", \"Login to database\"))\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.login)\n    def _():\n        m = ui.modal(  \n            ui.input_text(\"name\", \"Username:\"),\n            ui.input_password(\"password\", \"Password:\"),\n            ui.input_action_button(\"connect\", \"Connect\"),\n            title=\"Database Credentials\",  \n            easy_close=True,  \n            footer=None,  \n        )  \n        ui.modal_show(m)\n\n    @reactive.effect  \n    @reactive.event(input.connect)  \n    def __():  \n        ui.modal_remove()  \n        # Code to connect with input.name() and input.password() \n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

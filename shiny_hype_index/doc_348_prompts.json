@@ -1,0 +1,7 @@
+[
+  "What does the `ui.update_accordion_panel` function in Shiny for Python do?",
+  "What are the parameters required for dynamically updating accordion panel contents in a Shiny app?",
+  "What are the optional parameters that can be provided when using the `ui.update_accordion_panel` function?",
+  "How should the `ui.update_accordion_panel` function be called within a Shiny session?",
+  "Which other functions are related to `ui.update_accordion_panel` in Shiny for Python?"
+]

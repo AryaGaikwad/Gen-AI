@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Model scoring",
+    "description": "Use the model-scoring template as a foundation for your next Shiny app.",
+    "url": "templates/model-scoring/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Model scoring"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template model-scoring --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Use a combination of scikit-learn and plotnine to visualize model diagnostics like ROC and precision-recall curves. Shiny’s reactive programming model makes it easy and performant to update those outputs in response to user input like specific accounts or time periods."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Select input",
+        "Value box",
+        "Plot output",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Navbar",
+        "Sidebar",
+        "Tabs",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "numpy",
+        "pandas",
+        "plotnine",
+        "scikit-learn"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template model-scoring --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template model-scoring --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.update_task_button function in Shiny for Python?",
+  "How does ui.update_task_button change the state of a task button on the client?",
+  "What are the allowable states that can be set using the ui.update_task_button function?",
+  "In what scenarios would a developer use ui.update_task_button to manually set the button state to \"busy\"?",
+  "What parameters are required to be passed to the ui.update_task_button function in Shiny for Python?"
+]

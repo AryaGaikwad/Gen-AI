@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the reactive.lock function in Shiny for Python?",
+  "When should the reactive.lock be held according to the documentation?",
+  "How does the reactive.lock ensure safety when manipulating the reactive graph in Shiny for Python?",
+  "Can the reactive.lock be used to set a value and call flush from a different Task in Shiny for Python?",
+  "What specific scenario does the example in the documentation illustrate regarding the use of reactive.lock in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What does the `express.render.image` function in Shiny for Python do?",
+  "What happens if the `delete_file` parameter in the `express.render.image` function is set to True?",
+  "What type of object does the decorator returned by the `express.render.image` function expect the decorated function to return?",
+  "How should the name of the decorated function in `express.render.image` be related to the output_image container?",
+  "What are some related functions or objects mentioned in the documentation that are associated with `express.render.image`?"
+]

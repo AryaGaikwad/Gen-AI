@@ -1,0 +1,7 @@
+[
+  "What parameter does ui.navset_underline require to render nav items with active/focused navigation links styled with an underline?",
+  "What does the selected parameter in ui.navset_underline allow the user to do?",
+  "What are some of the related functions listed in the See Also section of the ui.navset_underline documentation?",
+  "How can one specify a default nav item to be selected in ui.navset_underline?",
+  "What is the purpose of the header and footer parameters in the ui.navset_underline function?"
+]

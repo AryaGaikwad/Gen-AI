@@ -1,0 +1,7 @@
+[
+  "What parameters can be set when creating a page with a navbar using ui.page_navbar in Shiny for Python?",
+  "How can the appearance and behavior of the navbar be configured in Shiny for Python using navbar_options?",
+  "What is the purpose of the fillable parameter in the ui.page_navbar function in Shiny for Python?",
+  "How can the browser window title be customized when using ui.page_navbar in Shiny for Python?",
+  "What are the deprecated arguments that were replaced by navbar_options in the ui.page_navbar function in Shiny for Python?"
+]

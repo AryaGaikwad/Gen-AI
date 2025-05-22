@@ -1,0 +1,7 @@
+[
+  "What does the function ui.fill.as_fill_item do in Shiny for Python?",
+  "How are filling layouts in Shiny for Python structured?",
+  "Why do most UI components in Shiny for Python possess both fillable and fill arguments?",
+  "When would it be useful to use the functions designed to add, remove, and test fillable/fill properties on arbitrary Tag in Shiny for Python?",
+  "What are the parameters and return value of the ui.fill.as_fill_item function in Shiny for Python?"
+]

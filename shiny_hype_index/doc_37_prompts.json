@@ -1,0 +1,7 @@
+[
+  "What are non-blocking operations in Shiny apps and why are they important?",
+  "How does Shiny support async programming and what are the differences compared to typical async Python frameworks?",
+  "What is the purpose of the @reactive.extended_task decorator in Shiny applications?",
+  "How can developers achieve true non-blocking behavior in Shiny apps using ExtendedTask?",
+  "What are the limitations of using ThreadPoolExecutor and ProcessPoolExecutor in Shiny applications for running tasks on different threads or processes?"
+]

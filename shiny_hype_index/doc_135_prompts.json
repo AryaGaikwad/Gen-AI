@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using express.render.DataTable to customize the data table appearance in a Shiny app?",
+  "What does the selection_mode parameter in express.render.DataTable control and what are the supported values for it?",
+  "How can CSS styles be applied to the data frame displayed in a Shiny app using express.render.DataTable?",
+  "What is the purpose of the deprecated row_selection_mode parameter in express.render.DataTable and how should it be used?",
+  "What method can be used to convert a DataTable object to a payload dictionary in a Shiny Python application using express.render.DataTable?"
+]

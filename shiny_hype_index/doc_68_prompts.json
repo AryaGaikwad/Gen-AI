@@ -1,0 +1,7 @@
+[
+  "What function is used to create a password field in a Shiny Python app?",
+  "How can you specify the identifier and label for a password field in Shiny?",
+  "What is the method to access the value of a password field in the server function?",
+  "What are the optional parameters that can be included when creating a password field using ui.input_password?",
+  "Where should you add ui.input_password() in your app to determine the location of the password field within the layout?"
+]

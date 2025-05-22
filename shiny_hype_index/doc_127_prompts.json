@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create an input control for entry of text values using express.ui.input_text in Shiny for Python?",
+  "What are the available options for the parameter 'autocomplete' when using express.ui.input_text in Shiny for Python?",
+  "How can the input value update behavior be controlled when using express.ui.input_text in Shiny for Python?",
+  "What does the 'update_on' parameter do in the express.ui.input_text function in Shiny for Python?",
+  "What does the function express.ui.input_text return when called in Shiny for Python?"
+]

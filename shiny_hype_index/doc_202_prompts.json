@@ -1,0 +1,7 @@
+[
+  "What parameters does the express.ui.update_action_link function require?",
+  "What does the express.ui.update_action_link function do?",
+  "How can the label and icon of an action link be changed using express.ui.update_action_link?",
+  "What is the purpose of the Session instance parameter in express.ui.update_action_link?",
+  "How are None values handled in the parameters of express.ui.update_action_link?"
+]

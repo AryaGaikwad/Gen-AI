@@ -1,0 +1,459 @@
+{
+  "metadata": {
+    "title": "Overview – Shiny for Python",
+    "description": "",
+    "url": "docs/overview.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📌 Essentials",
+        "Overview"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Overview"
+    },
+    {
+      "type": "p",
+      "text": "Welcome to the learn Shiny overview! Here we’ll introduce Shiny’s capabilities and link to articles where you can learn more. In the next article, we’ll cover more user interface (UI) components by building this dashboard:"
+    },
+    {
+      "type": "p",
+      "text": "Many examples on this site have a code editor for modifying the source code for a Shiny app (which runs entirely in the browser, thanks to shinylive). If you’d like to run any examples locally, first install Shiny locally, then create and run by copy/paste relevant code into the app.py file (created by shiny create)."
+    },
+    {
+      "type": "h3",
+      "text": "Basics"
+    },
+    {
+      "type": "p",
+      "text": "Shiny apps typically start with input components to gather information from a user, which are then used to reactively render output components. Here’s a basic example that displays a slider’s value as formatted text."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider label\", min=0, max=100, value=50)\n\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\""
+    },
+    {
+      "type": "p",
+      "text": "This example demonstrates the basic mechanics behind Shiny apps:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Inputs are created via ui.input_*() functions. The first argument is the input’s id, which is used to read the input’s value.",
+        "Outputs are created by decorating a function with @render.*. Inside a render function, input values can be read reactively. When those input values change, Shiny knows how to minimally re-render output.",
+        "This example happens to use shiny.express which, compared to core Shiny, reduces the amount of code required."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The first argument is the input’s id, which is used to read the input’s value."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Inside a render function, input values can be read reactively.",
+        "When those input values change, Shiny knows how to minimally re-render output."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Components"
+    },
+    {
+      "type": "p",
+      "text": "Shiny includes many useful user interface (ui) components for creating inputs, outputs, displaying messages, and more. For brevity sake, we’ll highlight just a few output and layout components here, but for a more comprehensive list, see the components gallery."
+    },
+    {
+      "type": "h4",
+      "text": "Outputs"
+    },
+    {
+      "type": "p",
+      "text": "Shiny makes it easy to create dynamic plots, tables, and other interactive widgets. All you need to do is apply a @render decorator to a function that returns a suitable object. Shiny includes a wide variety of these decorators in its render module, but Shiny extensions like shinywidgets provide additional decorators for rendering other kinds of outputs, like Jupyter Widgets."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Plots",
+        "Tables",
+        "Widgets"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To include a plot in an application, apply @render.plot to a function that creates a matplotlib visual. Note that packages like seaborn, plotnine, pandas, etc., are all compatible (as long as they create a matplotlib visual)."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, render, ui\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render.plot\ndef hist():\n    from matplotlib import pyplot as plt\n    from palmerpenguins import load_penguins\n\n    df = load_penguins()\n    df[input.var()].hist(grid=False)\n    plt.xlabel(input.var())\n    plt.ylabel(\"count\")\n\n## file: requirements.txt\npalmerpenguins"
+    },
+    {
+      "type": "p",
+      "text": "Apply @render.data_frame to any code that returns a pandas or polars DataFrame for a basic table. For more sophisticated tables, you can use render.DataGrid to add things like filters to your table."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, render, ui\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render.data_frame\ndef head():\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return df[[\"species\", input.var()]]\n## file: requirements.txt\npalmerpenguins"
+    },
+    {
+      "type": "p",
+      "text": "See the Jupyter Widgets article for more information on rendering Jupyter Widgets in Shiny."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Altair",
+        "Bokeh",
+        "Plotly",
+        "Pydeck",
+        "Other"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_altair\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_altair\ndef hist():\n    import altair as alt\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return (\n        alt.Chart(df)\n        .mark_bar()\n        .encode(x=alt.X(f\"{input.var()}:Q\", bin=True), y=\"count()\")\n    )\n## file: requirements.txt\naltair\nanywidget\npalmerpenguins"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_bokeh\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_bokeh\ndef hist():\n    from bokeh.plotting import figure\n    from palmerpenguins import load_penguins\n\n    p = figure(x_axis_label=input.var(), y_axis_label=\"count\")\n    bins = load_penguins()[input.var()].value_counts().sort_index()\n    p.quad(\n        top=bins.values,\n        bottom=0,\n        left=bins.index - 0.5,\n        right=bins.index + 0.5,\n    )\n    return p\n## file: requirements.txt\nbokeh\njupyter_bokeh\nxyzservices"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return px.histogram(df, x=input.var())\n\n## file: requirements.txt\npalmerpenguins\nplotly"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nimport pydeck as pdk\nimport shiny.express\nfrom shinywidgets import render_pydeck\n\n@render_pydeck\ndef map():\n    UK_ACCIDENTS_DATA = \"https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv\"\n\n    layer = pdk.Layer(\n        \"HexagonLayer\",  # `type` positional argument is here\n        UK_ACCIDENTS_DATA,\n        get_position=[\"lng\", \"lat\"],\n        auto_highlight=True,\n        elevation_scale=50,\n        pickable=True,\n        elevation_range=[0, 3000],\n        extruded=True,\n        coverage=1,\n    )\n\n    # Set the viewport location\n    view_state = pdk.ViewState(\n        longitude=-1.415,\n        latitude=52.2323,\n        zoom=6,\n        min_zoom=5,\n        max_zoom=15,\n        pitch=40.5,\n        bearing=-27.36,\n    )\n\n    # Combined all of it and render a viewport\n    return pdk.Deck(layers=[layer], initial_view_state=view_state)\n## file: requirements.txt\npydeck==0.8.0"
+    },
+    {
+      "type": "p",
+      "text": "Many other awesome Python packages provide widgets that are compatible with Shiny. In general, you can render them by applying the @render_widget decorator."
+    },
+    {
+      "type": "code",
+      "text": "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ..."
+    },
+    {
+      "type": "h4",
+      "text": "Layouts"
+    },
+    {
+      "type": "p",
+      "text": "Shiny provides a full suite of layout components which help with arranging multiple inputs and outputs in a variety of ways. As seen below, with shiny.express, layout components (e.g., ui.sidebar()) can be used as context managers to help with nesting and readability."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Multi-page",
+        "Multi-panel",
+        "Multi-column"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Sidebar layout\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\n@render_widget\ndef hist():\n    return px.histogram(px.data.tips(), input.var())\n\n## file: requirements.txt\npandas"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-page example\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.nav_panel(\"Plot\"):\n    @render_widget\n    def hist():\n        return px.histogram(px.data.tips(), input.var())\n\nwith ui.nav_panel(\"Table\"):\n    @render.data_frame\n    def table():\n        return px.data.tips()\n\n## file: requirements.txt\npandas"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-tab example\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.navset_card_underline(title=\"Penguins\"):\n    with ui.nav_panel(\"Plot\"):\n        @render_widget\n        def hist():\n            return px.histogram(px.data.tips(), input.var())\n\n    with ui.nav_panel(\"Table\"):\n        @render.data_frame\n        def table():\n            return px.data.tips()\n\n## file: requirements.txt\npandas"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-column example\")\n\nui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.layout_columns(height=\"300px\"):\n    @render_widget\n    def hist():\n        return px.histogram(px.data.tips(), input.var())\n\n    @render.data_frame\n    def table():\n        return px.data.tips()\n\n## file: requirements.txt\npandas"
+    },
+    {
+      "type": "p",
+      "text": "Shiny also integrates well with Quarto, allowing you to leverage its web-based output formats (e.g., dashboards) in combination with Shiny outputs and reactivity."
+    },
+    {
+      "type": "h3",
+      "text": "Reactivity"
+    },
+    {
+      "type": "p",
+      "text": "Shiny uses something called transparent reactivity to automatically infer relationships between components, and minimally re-render as needed when dependencies change.1 As a result, apps naturally retain performance as they grow in size, without workarounds like caching or memoization. All Shiny apps are also built on the same small set of reactive foundations, each of which are simple and easy to learn, but can be combined in novel ways to create seriously sophisticated and performant apps."
+    },
+    {
+      "type": "p",
+      "text": "To demonstrate how Shiny minimally re-renders, consider the following app which contains two different plots, each of which depends on a different input. When the first input changes, Shiny knows to only re-render the first plot, and vice versa."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 325\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\ntips = px.data.tips()\n\nwith ui.layout_columns():\n    @render_plotly\n    def plot1():\n        p = px.histogram(tips, x=input.var1())\n        p.update_layout(height=200, xaxis_title=None)\n        return p\n\n    @render_plotly\n    def plot2():\n        p = px.histogram(tips, x=input.var2())\n        p.update_layout(height=200, xaxis_title=None)\n        return p\n\nwith ui.layout_columns():\n    ui.input_select(\"var1\", None, choices=[\"total_bill\", \"tip\"], width=\"100%\")\n    ui.input_select(\"var2\", None, choices=[\"tip\", \"total_bill\"], width=\"100%\")\n## file: requirements.txt\npalmerpenguins\nplotly\npandas"
+    },
+    {
+      "type": "p",
+      "text": "Shiny also knows when outputs are visible or not, and so, will only call render functions when needed. For example, in the app below, the table function doesn’t get called until the “Table” page is selected."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 325\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\ntips = px.data.tips()\n\nwith ui.sidebar():\n    ui.input_selectize(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nui.nav_spacer()\n\nwith ui.nav_panel(\"Plot\"):\n    @render_plotly\n    def plot():\n        p = px.histogram(tips, x=input.var())\n        p.update_layout(height=225)\n        return p\n\nwith ui.nav_panel(\"Table\"):\n    @render.data_frame\n    def table():\n        return tips[[input.var()]]\n## file: requirements.txt\npalmerpenguins\nplotly\npandas"
+    },
+    {
+      "type": "p",
+      "text": "For a more in-depth look at reactivity, check out the reactivity article."
+    },
+    {
+      "type": "h3",
+      "text": "Starter templates"
+    },
+    {
+      "type": "p",
+      "text": "Once you’ve installed Shiny, the shiny create CLI command provides access to a collection of useful starter templates. This command walks you through a series of prompts to help you get started quickly with a helpful example. One great option is the dashboard template, which can be created with:"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard"
+    },
+    {
+      "type": "p",
+      "text": "See how to create and run apps for more information developing Shiny apps locally. Also keep in mind you can develop apps in the browser using the playground."
+    },
+    {
+      "type": "h3",
+      "text": "Extensible foundation"
+    },
+    {
+      "type": "p",
+      "text": "Shiny is built on a foundation of web standards, allowing you to incrementally adopt custom HTML, CSS, and/or JavaScript as needed. In fact, Shiny UI components themselves are built on a Python representation of HTML/CSS/JavaScript, which you can see by printing them in a Python REPL:"
+    },
+    {
+      "type": "code",
+      "text": ">>> from shiny import ui\n>>> ui.input_action_button(\"btn\", \"Button\")\n<button class=\"btn btn-default action-button\" id=\"btn\" type=\"button\">Button</button>"
+    },
+    {
+      "type": "p",
+      "text": "And, since UI is HTML, you can gently introduce HTML/CSS/JavaScript as needed in your apps to customize without having to learn complicated build tooling and frameworks. However, if you’re versed in web programming, you can also use Shiny to create custom components that leverage your favorite JavaScript framework from Python."
+    },
+    {
+      "type": "h3",
+      "text": "Next steps"
+    },
+    {
+      "type": "p",
+      "text": "Next, we’ll learn more about Shiny components and layouts by making a dashboard."
+    },
+    {
+      "type": "h2",
+      "text": "Footnotes"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "If you’re familiar with JavaScript, you may find a lot of similarities between Shiny and reactivity in modern JS frameworks like solidjs, mobx, and svelte.↩︎"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "If you’re familiar with JavaScript, you may find a lot of similarities between Shiny and reactivity in modern JS frameworks like solidjs, mobx, and svelte.↩︎"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider label\", min=0, max=100, value=50)\n\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, render, ui\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render.plot\ndef hist():\n    from matplotlib import pyplot as plt\n    from palmerpenguins import load_penguins\n\n    df = load_penguins()\n    df[input.var()].hist(grid=False)\n    plt.xlabel(input.var())\n    plt.ylabel(\"count\")\n\n## file: requirements.txt\npalmerpenguins",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, render, ui\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render.data_frame\ndef head():\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return df[[\"species\", input.var()]]\n## file: requirements.txt\npalmerpenguins",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_altair\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_altair\ndef hist():\n    import altair as alt\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return (\n        alt.Chart(df)\n        .mark_bar()\n        .encode(x=alt.X(f\"{input.var()}:Q\", bin=True), y=\"count()\")\n    )\n## file: requirements.txt\naltair\nanywidget\npalmerpenguins",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_bokeh\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_bokeh\ndef hist():\n    from bokeh.plotting import figure\n    from palmerpenguins import load_penguins\n\n    p = figure(x_axis_label=input.var(), y_axis_label=\"count\")\n    bins = load_penguins()[input.var()].value_counts().sort_index()\n    p.quad(\n        top=bins.values,\n        bottom=0,\n        left=bins.index - 0.5,\n        right=bins.index + 0.5,\n    )\n    return p\n## file: requirements.txt\nbokeh\njupyter_bokeh\nxyzservices",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return px.histogram(df, x=input.var())\n\n## file: requirements.txt\npalmerpenguins\nplotly",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n\nimport pydeck as pdk\nimport shiny.express\nfrom shinywidgets import render_pydeck\n\n@render_pydeck\ndef map():\n    UK_ACCIDENTS_DATA = \"https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv\"\n\n    layer = pdk.Layer(\n        \"HexagonLayer\",  # `type` positional argument is here\n        UK_ACCIDENTS_DATA,\n        get_position=[\"lng\", \"lat\"],\n        auto_highlight=True,\n        elevation_scale=50,\n        pickable=True,\n        elevation_range=[0, 3000],\n        extruded=True,\n        coverage=1,\n    )\n\n    # Set the viewport location\n    view_state = pdk.ViewState(\n        longitude=-1.415,\n        latitude=52.2323,\n        zoom=6,\n        min_zoom=5,\n        max_zoom=15,\n        pitch=40.5,\n        bearing=-27.36,\n    )\n\n    # Combined all of it and render a viewport\n    return pdk.Deck(layers=[layer], initial_view_state=view_state)\n## file: requirements.txt\npydeck==0.8.0",
+    "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ...",
+    "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ...",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Sidebar layout\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\n@render_widget\ndef hist():\n    return px.histogram(px.data.tips(), input.var())\n\n## file: requirements.txt\npandas",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-page example\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.nav_panel(\"Plot\"):\n    @render_widget\n    def hist():\n        return px.histogram(px.data.tips(), input.var())\n\nwith ui.nav_panel(\"Table\"):\n    @render.data_frame\n    def table():\n        return px.data.tips()\n\n## file: requirements.txt\npandas",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-tab example\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.navset_card_underline(title=\"Penguins\"):\n    with ui.nav_panel(\"Plot\"):\n        @render_widget\n        def hist():\n            return px.histogram(px.data.tips(), input.var())\n\n    with ui.nav_panel(\"Table\"):\n        @render.data_frame\n        def table():\n            return px.data.tips()\n\n## file: requirements.txt\npandas",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_widget\n\nui.page_opts(title=\"Multi-column example\")\n\nui.input_select(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nwith ui.layout_columns(height=\"300px\"):\n    @render_widget\n    def hist():\n        return px.histogram(px.data.tips(), input.var())\n\n    @render.data_frame\n    def table():\n        return px.data.tips()\n\n## file: requirements.txt\npandas",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 325\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\ntips = px.data.tips()\n\nwith ui.layout_columns():\n    @render_plotly\n    def plot1():\n        p = px.histogram(tips, x=input.var1())\n        p.update_layout(height=200, xaxis_title=None)\n        return p\n\n    @render_plotly\n    def plot2():\n        p = px.histogram(tips, x=input.var2())\n        p.update_layout(height=200, xaxis_title=None)\n        return p\n\nwith ui.layout_columns():\n    ui.input_select(\"var1\", None, choices=[\"total_bill\", \"tip\"], width=\"100%\")\n    ui.input_select(\"var2\", None, choices=[\"tip\", \"total_bill\"], width=\"100%\")\n## file: requirements.txt\npalmerpenguins\nplotly\npandas",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 325\nimport plotly.express as px\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\ntips = px.data.tips()\n\nwith ui.sidebar():\n    ui.input_selectize(\"var\", \"Select variable\", choices=[\"total_bill\", \"tip\"])\n\nui.nav_spacer()\n\nwith ui.nav_panel(\"Plot\"):\n    @render_plotly\n    def plot():\n        p = px.histogram(tips, x=input.var())\n        p.update_layout(height=225)\n        return p\n\nwith ui.nav_panel(\"Table\"):\n    @render.data_frame\n    def table():\n        return tips[[input.var()]]\n## file: requirements.txt\npalmerpenguins\nplotly\npandas",
+    "shiny create --template dashboard",
+    "shiny create --template dashboard",
+    ">>> from shiny import ui\n>>> ui.input_action_button(\"btn\", \"Button\")\n<button class=\"btn btn-default action-button\" id=\"btn\" type=\"button\">Button</button>",
+    ">>> from shiny import ui\n>>> ui.input_action_button(\"btn\", \"Button\")\n<button class=\"btn btn-default action-button\" id=\"btn\" type=\"button\">Button</button>"
+  ],
+  "toc": [
+    {
+      "title": "Basics",
+      "url": "docs/#basics"
+    },
+    {
+      "title": "Components",
+      "url": "docs/#components"
+    },
+    {
+      "title": "Reactivity",
+      "url": "docs/#reactivity"
+    },
+    {
+      "title": "Starter templates",
+      "url": "docs/#templates"
+    },
+    {
+      "title": "Extensible foundation",
+      "url": "docs/#extensible"
+    },
+    {
+      "title": "Next steps",
+      "url": "docs/#next-steps"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

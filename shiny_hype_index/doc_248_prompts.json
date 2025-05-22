@@ -1,0 +1,7 @@
+[
+  "What criteria does ui.page_auto use to determine which page function to use if there are no top-level nav panels or sidebars?",
+  "What are the parameters that can be passed to ui.page_auto and how are they used in determining the page function?",
+  "How can a custom Shiny theme be applied using ui.page_auto?",
+  "If the value of full_width is False, which page function will be used when there are no sidebars or top-level navs and fillable is also False?",
+  "What is the default behavior of the page function selection when the page_fn parameter is set to None in ui.page_auto?"
+]

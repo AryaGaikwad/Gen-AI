@@ -1,0 +1,558 @@
+{
+  "metadata": {
+    "title": "Custom components package – Shiny for Python",
+    "description": "",
+    "url": "docs/custom-components-pkg.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🏗️ Extending",
+        "Custom components package"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Custom components package"
+    },
+    {
+      "type": "p",
+      "text": "While there are a large number of pre-built components available for Shiny, there are times when you may want to create your own. In this article we’ll walk through the process of creating a custom input component package for Shiny. We’ll be using React and Typescript to build the component, but the process is similar for other languages and frameworks."
+    },
+    {
+      "type": "p",
+      "text": "If you just want to build a one-off component for a single app, a full package may be overkill. See the accompanying article Custom JavaScript component for a simpler approach."
+    },
+    {
+      "type": "h2",
+      "text": "What we’ll build"
+    },
+    {
+      "type": "p",
+      "text": "The component we are going to build is a color picker that returns the hex-code of the chosen color as a string for the user to use in their app. The component will be built using React and Typescript and will be packaged as a python package that can be deployed to pypi and installed with pip so other users can easily use it in their apps."
+    },
+    {
+      "type": "p",
+      "text": "The example here uses typescript. If you don’t want to use typescript, don’t worry! Javascript works just fine. To make this example JavaScript you can simply erase the type annotations, or run the typescript compiler on the source code to strip them out automatically."
+    },
+    {
+      "type": "p",
+      "text": "The component itself is based on the library react-color. We’ll be using the SketchPicker component from that library to build our custom component. The full code is as follows."
+    },
+    {
+      "type": "code",
+      "text": "srcts/index.tsx"
+    },
+    {
+      "type": "code",
+      "text": "import { SketchPicker } from \"react-color\";\nimport React from \"react\";\n\nfunction ColorPickerReact({\n  initialValue,\n  onNewValue,\n}: {\n  // The initial value for the color picker\n  initialValue: string;\n  // A callback that should be called whenever the color is changed\n  onNewValue: (x: string) => void;\n}) {\n  const [currentColor, setCurrentColor] = React.useState(initialValue);\n\n  return (\n    <SketchPicker\n      color={currentColor}\n      onChange={(color) => {\n        setCurrentColor(color.hex);\n        onNewValue(color.hex);\n      }}\n    />\n  );\n}"
+    },
+    {
+      "type": "p",
+      "text": "Your component may look very different, but at the end of the day it just needs to be a self-contained react component."
+    },
+    {
+      "type": "p",
+      "text": "This article touches on building an input component. However, it’s also possible to build output components. The process and project structure is very similar to inputs. Throughout this article look for the “What about an output binding?” tips for more information on how to build an output binding. You can generate an output template with shiny create --template js-output."
+    },
+    {
+      "type": "h2",
+      "text": "The quick version"
+    },
+    {
+      "type": "p",
+      "text": "If you just want to get up and running with the code, you can start with one of the available templates available with the shiny create --template js-react command and then run the commands provided after the template is created. You can also see the full list of JavaScript extension templates with shiny create --template js-component."
+    },
+    {
+      "type": "h2",
+      "text": "Development workflow"
+    },
+    {
+      "type": "p",
+      "text": "While there are lots of ways to develop components with live-feedback (e.g. Storybook, dev servers like vite, etc) an easy way to develop a component with our package structure is to use the example app, an editable mode pip install, and the watch mode for our build step. We can do this with the following steps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install the package in “editable mode” with pip install -e .",
+        "Run the bundler in watch mode with npm run watch. This will watch the srcts directory for changes and automatically rebuild the JavaScript when it detects a change.",
+        "Run the example app in live-reload mode. If you’re using VScode, the Shiny extension enables this automatically when pressing the run button above the app script."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Install the package in “editable mode” with pip install -e ."
+    },
+    {
+      "type": "p",
+      "text": "Run the bundler in watch mode with npm run watch. This will watch the srcts directory for changes and automatically rebuild the JavaScript when it detects a change."
+    },
+    {
+      "type": "p",
+      "text": "Run the example app in live-reload mode. If you’re using VScode, the Shiny extension enables this automatically when pressing the run button above the app script."
+    },
+    {
+      "type": "p",
+      "text": "Now you can update your component JavaScript/python functions and your app will automatically reload with the changes. Happy developing!"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Once you’re happy with your component, you can deploy to PyPi. For instructions on doing this see the Python Packaging User Guide."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "If you want to understand what’s going on under the hood, read on!"
+    },
+    {
+      "type": "p",
+      "text": "The component we’re creating here uses React, but there are templates for building components with plain JavaScript as well. The general concepts we talk about here apply to all of the templates so feel free to use whichever one you prefer."
+    },
+    {
+      "type": "h2",
+      "text": "Project structure"
+    },
+    {
+      "type": "p",
+      "text": "The template from above contains the color picker component above, along with all the scaffolding neccesary to build and package it as a python package.Let’s take a look at the files that are created and talk through why they are there."
+    },
+    {
+      "type": "code",
+      "text": "my-color-picker/"
+    },
+    {
+      "type": "code",
+      "text": "├── package.json\n├── package-lock.json\n├── srcts\n│   └── index.tsx\n├── example-app\n│   └── app.py\n├── fancy_color_picker\n│   ├── __init__.py\n│   ├── distjs\n│   │   └── index.js\n│   └── fancy_color_picker.py\n├── pyproject.toml\n├── README.md\n└── tsconfig.json"
+    },
+    {
+      "type": "h3",
+      "text": "package.json"
+    },
+    {
+      "type": "p",
+      "text": "This is the standard package.json file for a JavaScript project. It contains the dependencies and build commands for the JavaScript code. The important sections are: - A dependency on the shiny-bindings-react package. This is a JavaScript package with helpers for making it easier to create input and output bindings using React. Later we use the function makeReactInput() from this package to make Shiny aware of the component and its role as an input binding. - build command. The build command (and accompanying watch command) use esbuild to transpile the typescript to JavaScript and bundle the dependencies (like shiny-bindings-react and react itself."
+    },
+    {
+      "type": "p",
+      "text": "The .package-lock.json file is generated by npm and contains the exact versions of the dependencies used in the project. You shouldn’t need to modify this file by hand."
+    },
+    {
+      "type": "h3",
+      "text": "srcts/index.tsx"
+    },
+    {
+      "type": "p",
+      "text": "This is where all the typescript/JavaScript code lives. We talked about the react component - ColorPickerReact - above, but it’s worth touching on the code that binds that react component with Shiny so it functions as an input:"
+    },
+    {
+      "type": "code",
+      "text": "import { SketchPicker } from \"react-color\";\nimport type { ColorResult } from \"react-color\";\nimport React from \"react\";\n\nimport { makeReactInput } from \"@posit-dev/shiny-bindings-react\";\n\n// Generates a new input binding that renders the supplied react component\n// into the root of the webcomponent.\nmakeReactInput({\n  tagName: \"fancy-color-picker\",\n  initialValue: \"#fff\",\n  renderComp: ({ initialValue, onNewValue }) => (\n    <ColorPickerReact\n      initialValue={initialValue}\n      onNewValue={(color) => onNewValue(color)}\n    />\n  ),\n});\n\n// Color Picker React component\nfunction ColorPickerReact(...) { ... }"
+    },
+    {
+      "type": "p",
+      "text": "In here we declare the tagName of for our component. This name is used to generate the correct markup with python later. Under the hood makeReactInput() generates a webcomponent to hold our input. A webcomponent is a custom HTML element that allows us to bind custom markup and JavaScript logic to a point in our app by simply writing the custom tag into the app’s HTML. The tagName argument provided here represents the name of that custom component we’re generating. In this case we’re registering the component as <fancy-color-picker>."
+    },
+    {
+      "type": "p",
+      "text": "This example uses the webcomponent based interface provided by the @posit-dev/shiny-bindings-react package, but if you want lower level access you can use the built-in class-based interface. See the Shiny for R documentation for more details."
+    },
+    {
+      "type": "p",
+      "text": "Next we provide an initialValue for the component. This is the value that will be used when the component is first rendered. In this case we’re using #fff."
+    },
+    {
+      "type": "p",
+      "text": "Finally, we provide a renderComp function. This function is called whenever the component needs to be rendered. It is passed an object with two properties, onNewValue and initialValue. onNewValue is a callback that should be called whenever the value of the component changes. In this case we’re just passing the value of the color picker to the callback. This will send the value to Shiny and update the value of the input. initialValue is the value that should be used to initialize the component. In this case we’re just passing the value we were given to the ColorPickerReact component."
+    },
+    {
+      "type": "p",
+      "text": "The component we’re building here is an input. However, you may be interested in building an output binding. There is a template for this but the process is not too different. Just instead of using makeReactInput() you would use makeReactOutput(). Here’s how we would do it for a simple output that displays a color:"
+    },
+    {
+      "type": "code",
+      "text": "index.tsx"
+    },
+    {
+      "type": "code",
+      "text": "// Simple react output binding that renders a div with the background color\nmakeReactOutput<{ value: string }>({\n  tagName: \"fancy-color-shower\",\n  renderComp: ({ value }) => (\n    <div\n      style={{\n        backgroundColor: value,\n        border: \"1px solid black\",\n        height: \"100px\",\n        width: \"100px\",\n      }}\n    />\n  ),\n});"
+    },
+    {
+      "type": "h3",
+      "text": "fancy_color_picker/"
+    },
+    {
+      "type": "h4",
+      "text": "distjs/*"
+    },
+    {
+      "type": "p",
+      "text": "This is where the bundled JavaScript from srcts gets placed. You shouldn’t ever need to modify anything in here by hand. It will be automatically generated when you run npm run build. It is important to note the path though, as we will need to tell Shiny where to find this JavaScript when we declare the HTMLDependency…"
+    },
+    {
+      "type": "h4",
+      "text": "fancy_color_picker.py"
+    },
+    {
+      "type": "code",
+      "text": "from pathlib import PurePath\nfrom htmltools import HTMLDependency, Tag\nfrom shiny.module import resolve_id\n\n# This object is used to let Shiny know where the dependencies needed to run\n# our component all live. In this case, we're just using a single JavaScript\n# file but we could also include CSS.\nfancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)\n\n\ndef fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )"
+    },
+    {
+      "type": "p",
+      "text": "This is the main python script for the package. It contains the code that tells Shiny about the component and how to render it. The important parts are:"
+    },
+    {
+      "type": "h5",
+      "text": "fancy_color_picker_deps"
+    },
+    {
+      "type": "code",
+      "text": "fancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)"
+    },
+    {
+      "type": "p",
+      "text": "This sets up an “html-dependency” for our component. HTMLDependencies are Shiny’s way of keeping track of what resources are needed for the currently displayed elements. This html dependency is telling Shiny that whenever there is a fancy_color_picker on the page in an app, it needs to also have the bundled JavaScript at distjs/index.js as well."
+    },
+    {
+      "type": "p",
+      "text": "Here we just declare JavaScript dependencies, but you can also include style sheets with the stylesheet argument."
+    },
+    {
+      "type": "h5",
+      "text": "fancy_color_picker"
+    },
+    {
+      "type": "code",
+      "text": "def fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )"
+    },
+    {
+      "type": "p",
+      "text": "This is the actual UI function for our component. Aka the one that gets called by the user in their app’s UI to add our component to their app."
+    },
+    {
+      "type": "p",
+      "text": "Because makeReactInput() works by creating a webcomponent, to render our input we just need to pass the tag name we set up in the tagName argument to makeReactInput(). Next, we pass the fancy_color_picker_deps html dependency we just made and the ID of the binding and we’re good to go!"
+    },
+    {
+      "type": "p",
+      "text": "By using the resolve_id(id) function here when declaring our ID, we make sure that the component works Shiny modules where the ID of the component needs to be prefixed with the module name."
+    },
+    {
+      "type": "p",
+      "text": "Like with the JavaScript, the process for setting up the python code for an output binding is not too different. Although there is a bit of extra work because we need to build both the ui and server components. Here’s how we would do that for the color shower output binding we defined above:"
+    },
+    {
+      "type": "code",
+      "text": "fancy_color_picker.py"
+    },
+    {
+      "type": "code",
+      "text": "from shiny.render.renderer import Renderer, Jsonifiable\n\nclass render_color(Renderer[str]):\n    \"\"\"\n    Render a color\n    \"\"\"\n\n    # Express mode UI\n    def auto_output_ui(self, id: str) -> Tag:\n        return output_color(self.output_id)\n\n    # Transform the app value into a JSONifiable object\n    async def transform(self, value: str) -> Jsonifiable:\n        if not isinstance(res, str):\n            # Throw an error if the value is not a string\n            raise TypeError(f\"Expected a string, got {type(res)}. \")\n\n        # Send the results to the client. Make sure that this is a serializable\n        # object and matches what is expected in the JavaScript code.\n        return {\"value\": value}\n\n\ndef output_color(id: str):\n    \"\"\"\n    Show a color\n    \"\"\"\n    return Tag(\n        \"fancy-color-shower\",\n        fancy_color_picker_deps,\n        id=resolve_id(id),\n    )"
+    },
+    {
+      "type": "p",
+      "text": "Make sure you add these to your __init__.py file so they are exposed to users of your package. Again, there is an output binding template in the shiny create menu that can get you up and running quickly."
+    },
+    {
+      "type": "h4",
+      "text": "__init__.py"
+    },
+    {
+      "type": "code",
+      "text": "from .fancy_color_picker import fancy_color_picker\n\n__all__ = [\n    \"fancy_color_picker\",\n]"
+    },
+    {
+      "type": "p",
+      "text": "This is how we tell python what functions/ variables our package exposes. In this case it’s a single function, fancy_color_picker. If you were to add more components you would also need to register them here for them to be importable by users in their apps. For more information on the structure of these files see the python docs site."
+    },
+    {
+      "type": "h3",
+      "text": "pyproject.toml"
+    },
+    {
+      "type": "p",
+      "text": "This file is used to tell python/pypi about our package. It contains the name of the package, the version, and the dependencies. A deep dive into the structure of this file is outside the scope of this article, but you can find more information in the [Python Packaging Authority docs.]https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)"
+    },
+    {
+      "type": "h3",
+      "text": "tsconfig.json"
+    },
+    {
+      "type": "p",
+      "text": "This file is used to configure typescript, which we are using to write our component. Like the pyproject.toml file, a deep dive into the structure of this file is outside the scope of this article, but you can find more information in the typescript docs."
+    },
+    {
+      "type": "h3",
+      "text": "example-app/app.py"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from fancy_color_picker import fancy_color_picker\nfrom shiny.express import render\n\nfancy_color_picker(\"myComponent\")\n\n@render.text\ndef valueOut():\n    return f\"Value from input is {input.myComponent()}\""
+    },
+    {
+      "type": "code",
+      "text": "from fancy_color_picker import fancy_color_picker\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    ui.output_text(\"valueOut\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def valueOut():\n        return f\"Value from input is {input.myComponent()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "This is a simple example app that can be used to test the component while developing. It uses the fancy_color_picker function we defined in fancy_color_picker.py to add the component to the app. It also uses the render.text decorator to render the value of the input to the page."
+    },
+    {
+      "type": "p",
+      "text": "In our output binding example we defined an output that conveniently displays colors. If we were packaging up two components like this we could/should modify the example app to showcase both of them."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "app.py"
+    },
+    {
+      "type": "code",
+      "text": "from fancy_color_picker import fancy_color_picker, render_color\nimport shiny.express\n\nfancy_color_picker(\"myComponent\")\n\n@render_color\ndef myColor():\n    return input.myComponent()"
+    },
+    {
+      "type": "code",
+      "text": "app.py"
+    },
+    {
+      "type": "code",
+      "text": "from fancy_color_picker import fancy_color_picker, output_color, render_color\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    output_color(\"myColor\"),\n)\n\ndef server(input, output, session):\n    @render_color\n    def myColor():\n        return input.myComponent()\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "import { SketchPicker } from \"react-color\";\nimport React from \"react\";\n\nfunction ColorPickerReact({\n  initialValue,\n  onNewValue,\n}: {\n  // The initial value for the color picker\n  initialValue: string;\n  // A callback that should be called whenever the color is changed\n  onNewValue: (x: string) => void;\n}) {\n  const [currentColor, setCurrentColor] = React.useState(initialValue);\n\n  return (\n    <SketchPicker\n      color={currentColor}\n      onChange={(color) => {\n        setCurrentColor(color.hex);\n        onNewValue(color.hex);\n      }}\n    />\n  );\n}",
+    "import { SketchPicker } from \"react-color\";\nimport React from \"react\";\n\nfunction ColorPickerReact({\n  initialValue,\n  onNewValue,\n}: {\n  // The initial value for the color picker\n  initialValue: string;\n  // A callback that should be called whenever the color is changed\n  onNewValue: (x: string) => void;\n}) {\n  const [currentColor, setCurrentColor] = React.useState(initialValue);\n\n  return (\n    <SketchPicker\n      color={currentColor}\n      onChange={(color) => {\n        setCurrentColor(color.hex);\n        onNewValue(color.hex);\n      }}\n    />\n  );\n}",
+    "\n\n\n\nOutput of ColorPickerReact component\n\n\n",
+    "├── package.json\n├── package-lock.json\n├── srcts\n│   └── index.tsx\n├── example-app\n│   └── app.py\n├── fancy_color_picker\n│   ├── __init__.py\n│   ├── distjs\n│   │   └── index.js\n│   └── fancy_color_picker.py\n├── pyproject.toml\n├── README.md\n└── tsconfig.json",
+    "├── package.json\n├── package-lock.json\n├── srcts\n│   └── index.tsx\n├── example-app\n│   └── app.py\n├── fancy_color_picker\n│   ├── __init__.py\n│   ├── distjs\n│   │   └── index.js\n│   └── fancy_color_picker.py\n├── pyproject.toml\n├── README.md\n└── tsconfig.json",
+    "import { SketchPicker } from \"react-color\";\nimport type { ColorResult } from \"react-color\";\nimport React from \"react\";\n\nimport { makeReactInput } from \"@posit-dev/shiny-bindings-react\";\n\n// Generates a new input binding that renders the supplied react component\n// into the root of the webcomponent.\nmakeReactInput({\n  tagName: \"fancy-color-picker\",\n  initialValue: \"#fff\",\n  renderComp: ({ initialValue, onNewValue }) => (\n    <ColorPickerReact\n      initialValue={initialValue}\n      onNewValue={(color) => onNewValue(color)}\n    />\n  ),\n});\n\n// Color Picker React component\nfunction ColorPickerReact(...) { ... }",
+    "import { SketchPicker } from \"react-color\";\nimport type { ColorResult } from \"react-color\";\nimport React from \"react\";\n\nimport { makeReactInput } from \"@posit-dev/shiny-bindings-react\";\n\n// Generates a new input binding that renders the supplied react component\n// into the root of the webcomponent.\nmakeReactInput({\n  tagName: \"fancy-color-picker\",\n  initialValue: \"#fff\",\n  renderComp: ({ initialValue, onNewValue }) => (\n    <ColorPickerReact\n      initialValue={initialValue}\n      onNewValue={(color) => onNewValue(color)}\n    />\n  ),\n});\n\n// Color Picker React component\nfunction ColorPickerReact(...) { ... }",
+    "// Simple react output binding that renders a div with the background color\nmakeReactOutput<{ value: string }>({\n  tagName: \"fancy-color-shower\",\n  renderComp: ({ value }) => (\n    <div\n      style={{\n        backgroundColor: value,\n        border: \"1px solid black\",\n        height: \"100px\",\n        width: \"100px\",\n      }}\n    />\n  ),\n});",
+    "// Simple react output binding that renders a div with the background color\nmakeReactOutput<{ value: string }>({\n  tagName: \"fancy-color-shower\",\n  renderComp: ({ value }) => (\n    <div\n      style={{\n        backgroundColor: value,\n        border: \"1px solid black\",\n        height: \"100px\",\n        width: \"100px\",\n      }}\n    />\n  ),\n});",
+    "from pathlib import PurePath\nfrom htmltools import HTMLDependency, Tag\nfrom shiny.module import resolve_id\n\n# This object is used to let Shiny know where the dependencies needed to run\n# our component all live. In this case, we're just using a single JavaScript\n# file but we could also include CSS.\nfancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)\n\n\ndef fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )",
+    "from pathlib import PurePath\nfrom htmltools import HTMLDependency, Tag\nfrom shiny.module import resolve_id\n\n# This object is used to let Shiny know where the dependencies needed to run\n# our component all live. In this case, we're just using a single JavaScript\n# file but we could also include CSS.\nfancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)\n\n\ndef fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )",
+    "fancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)",
+    "fancy_color_picker_deps = HTMLDependency(\n    \"fancy_color_picker\",\n    \"1.0.0\",\n    source={\n        \"package\": \"fancy_color_picker\",\n        \"subdir\": str(PurePath(__file__).parent / \"distjs\"),\n    },\n    script={\"src\": \"index.js\", \"type\": \"module\"},\n)",
+    "def fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )",
+    "def fancy_color_picker(id: str):\n    \"\"\"\n    A shiny input.\n    \"\"\"\n    return Tag(\n        # This is the name of the custom tag we created with our webcomponent\n        \"fancy-color-picker\",\n        fancy_color_picker_deps,\n        # Use resolve_id so that our component will work in a module\n        id=resolve_id(id),\n    )",
+    "from shiny.render.renderer import Renderer, Jsonifiable\n\nclass render_color(Renderer[str]):\n    \"\"\"\n    Render a color\n    \"\"\"\n\n    # Express mode UI\n    def auto_output_ui(self, id: str) -> Tag:\n        return output_color(self.output_id)\n\n    # Transform the app value into a JSONifiable object\n    async def transform(self, value: str) -> Jsonifiable:\n        if not isinstance(res, str):\n            # Throw an error if the value is not a string\n            raise TypeError(f\"Expected a string, got {type(res)}. \")\n\n        # Send the results to the client. Make sure that this is a serializable\n        # object and matches what is expected in the JavaScript code.\n        return {\"value\": value}\n\n\ndef output_color(id: str):\n    \"\"\"\n    Show a color\n    \"\"\"\n    return Tag(\n        \"fancy-color-shower\",\n        fancy_color_picker_deps,\n        id=resolve_id(id),\n    )",
+    "from shiny.render.renderer import Renderer, Jsonifiable\n\nclass render_color(Renderer[str]):\n    \"\"\"\n    Render a color\n    \"\"\"\n\n    # Express mode UI\n    def auto_output_ui(self, id: str) -> Tag:\n        return output_color(self.output_id)\n\n    # Transform the app value into a JSONifiable object\n    async def transform(self, value: str) -> Jsonifiable:\n        if not isinstance(res, str):\n            # Throw an error if the value is not a string\n            raise TypeError(f\"Expected a string, got {type(res)}. \")\n\n        # Send the results to the client. Make sure that this is a serializable\n        # object and matches what is expected in the JavaScript code.\n        return {\"value\": value}\n\n\ndef output_color(id: str):\n    \"\"\"\n    Show a color\n    \"\"\"\n    return Tag(\n        \"fancy-color-shower\",\n        fancy_color_picker_deps,\n        id=resolve_id(id),\n    )",
+    "from .fancy_color_picker import fancy_color_picker\n\n__all__ = [\n    \"fancy_color_picker\",\n]",
+    "from .fancy_color_picker import fancy_color_picker\n\n__all__ = [\n    \"fancy_color_picker\",\n]",
+    "from fancy_color_picker import fancy_color_picker\nfrom shiny.express import render\n\nfancy_color_picker(\"myComponent\")\n\n@render.text\ndef valueOut():\n    return f\"Value from input is {input.myComponent()}\"",
+    "from fancy_color_picker import fancy_color_picker\nfrom shiny.express import render\n\nfancy_color_picker(\"myComponent\")\n\n@render.text\ndef valueOut():\n    return f\"Value from input is {input.myComponent()}\"",
+    "from fancy_color_picker import fancy_color_picker\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    ui.output_text(\"valueOut\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def valueOut():\n        return f\"Value from input is {input.myComponent()}\"\n\napp = App(app_ui, server)",
+    "from fancy_color_picker import fancy_color_picker\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    ui.output_text(\"valueOut\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def valueOut():\n        return f\"Value from input is {input.myComponent()}\"\n\napp = App(app_ui, server)",
+    "\n\n\n\nExample app running with color picker\n\n\n",
+    "from fancy_color_picker import fancy_color_picker, render_color\nimport shiny.express\n\nfancy_color_picker(\"myComponent\")\n\n@render_color\ndef myColor():\n    return input.myComponent()",
+    "from fancy_color_picker import fancy_color_picker, render_color\nimport shiny.express\n\nfancy_color_picker(\"myComponent\")\n\n@render_color\ndef myColor():\n    return input.myComponent()",
+    "from fancy_color_picker import fancy_color_picker, output_color, render_color\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    output_color(\"myColor\"),\n)\n\ndef server(input, output, session):\n    @render_color\n    def myColor():\n        return input.myComponent()\n\napp = App(app_ui, server)",
+    "from fancy_color_picker import fancy_color_picker, output_color, render_color\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    fancy_color_picker(\"myComponent\"),\n    output_color(\"myColor\"),\n)\n\ndef server(input, output, session):\n    @render_color\n    def myColor():\n        return input.myComponent()\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "What we’ll build",
+      "url": "docs/#what-well-build"
+    },
+    {
+      "title": "The quick version",
+      "url": "docs/#the-quick-version"
+    },
+    {
+      "title": "Development workflow",
+      "url": "docs/#development-workflow"
+    },
+    {
+      "title": "Project structure",
+      "url": "docs/#project-structure"
+    },
+    {
+      "title": "package.json",
+      "url": "docs/#package.json"
+    },
+    {
+      "title": "srcts/index.tsx",
+      "url": "docs/#srctsindex.tsx"
+    },
+    {
+      "title": "fancy_color_picker/",
+      "url": "docs/#fancy_color_picker"
+    },
+    {
+      "title": "pyproject.toml",
+      "url": "docs/#pyproject.toml"
+    },
+    {
+      "title": "tsconfig.json",
+      "url": "docs/#tsconfig.json"
+    },
+    {
+      "title": "example-app/app.py",
+      "url": "docs/#example-appapp.py"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

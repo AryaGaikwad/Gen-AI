@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating an output container using `ui.output_ui` in Shiny for Python?",
+  "How can I control whether the output is displayed inline when using `ui.output_ui` in Shiny for Python?",
+  "What does the `ui.output_ui` function return when called in Shiny for Python?",
+  "Can I specify custom attributes for the output container created with `ui.output_ui` in Shiny for Python?",
+  "What is the purpose of the `container` parameter in the `ui.output_ui` function in Shiny for Python?"
+]

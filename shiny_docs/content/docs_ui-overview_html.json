@@ -1,0 +1,480 @@
+{
+  "metadata": {
+    "title": "Overview – Shiny for Python",
+    "description": "",
+    "url": "docs/ui-overview.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🎨 User interfaces",
+        "Overview"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Overview"
+    },
+    {
+      "type": "p",
+      "text": "The term, user interface (UI), refers to the part of an application that is visible to the user. The UI is typically composed of a collection of components (e.g. buttons, sliders, plots, etc) that allow the user to interact with the application. Shiny provides roughly three types of UI components:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Inputs: Components that gather user input (e.g. sliders, text boxes, etc).",
+        "Outputs: Components that display the results (e.g. plots, tables, etc).",
+        "Layouts: Components that arrange other components (e.g. columns, tabs, etc). Page layouts are a special type of layout that are used to start a new UI."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The component and layout galleries provide a great visual overview of available components. This article focuses more on the shared concepts and patterns of UI components."
+    },
+    {
+      "type": "h3",
+      "text": "Inputs"
+    },
+    {
+      "type": "p",
+      "text": "Shiny provides a wide variety of input components, all of which:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Start with ui.input_*().",
+        "Require an id argument, a label, and sometimes other (mostly optional) arguments.",
+        "Allow their value to be read reactively using input[id]().",
+        "Have a corresponding ui.update_*() function for efficiently updating the input control (see here for more details and examples)."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Here’s a basic example of a text input (and printing its value to the console):"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@reactive.effect\ndef _():\n    print(input.text())"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\")\n)\n\ndef server(input):\n    @reactive.effect\n    def _():\n        print(input.text())\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "See this section of the component gallery for an overview of available inputs."
+    },
+    {
+      "type": "p",
+      "text": "Some layout components, like ui.accordion() or ui.navset_tab(), take an optional id argument. If provided, the id can be used to read the selected tab/accordion panel reactively in the server using input[id]()."
+    },
+    {
+      "type": "h3",
+      "text": "Outputs"
+    },
+    {
+      "type": "p",
+      "text": "Shiny provides a handful of output components, all of which:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Require a (named) function decorated by a @render.* decorator.",
+        "Require the return value of the function to be a valid value (e.g. a string for @render.text, a plot for @render.plot, etc)."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Here’s a basic example of using a text output (reacting to changes in a text input):"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@render.text\ndef text_out():\n    return f\"Input text: {input.text()}\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\"),\n    ui.output_text(\"text_out\")\n)\n\ndef server(input):\n    @render.text\n    def text_out():\n        return f\"Input text: {input.text()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "In a Shiny core app, output components typically start with a ui.output_*() object directly in the UI definition. Like inputs, outputs require an id argument, which must match the name of the function that returns the output’s value in the server."
+    },
+    {
+      "type": "p",
+      "text": "See this section of the component gallery for an overview of available outputs."
+    },
+    {
+      "type": "p",
+      "text": "In the next article, Jupyter Widgets, you’ll learn how to use Jupyter Widgets as outputs."
+    },
+    {
+      "type": "p",
+      "text": "Some outputs provide access their client-side state as input values. For example:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "@render.plot provides access to hover, click, and drag events.",
+        "@render.data_frame provides access to selected rows and more.",
+        "{shinywidgets}’s @render_widget() provides access to the ipywidget traits."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Layouts"
+    },
+    {
+      "type": "p",
+      "text": "Layout components help with arrangement and styling of their child components. A handful of layout components start with ui.layout_*(), but many other layout components are available as well (e.g. ui.card(), ui.accordion(), ui.navset_*() functions, etc)."
+    },
+    {
+      "type": "p",
+      "text": "For a quick example, here’s how to arrange two sliders in a row:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\n\nwith ui.layout_column_wrap(gap=\"2rem\"):\n    ui.input_slider(\"slider1\", \"Slider 1\", min=0, max=100, value=50)\n    ui.input_slider(\"slider2\", \"Slider 2\", min=0, max=100, value=50)"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_column_wrap(\n        ui.input_slider(\"slider1\", \"Slider 1\", min=0, max=100, value=50),\n        ui.input_slider(\"slider2\", \"Slider 2\", min=0, max=100, value=50),\n        gap=\"2rem\"\n    )\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "p",
+      "text": "See the layout gallery for an overview of available layout mechanisms."
+    },
+    {
+      "type": "h3",
+      "text": "Page layouts"
+    },
+    {
+      "type": "p",
+      "text": "A special type of layout is the page layout, which is used to start a new UI. In Shiny Express, the page layout is implicit, and automatically inferred from the top-level UI components. In Shiny Core, the page layout is explicit, meaning that the UI starts with a page layout component (e.g. ui.page_fluid(), ui.page_sidebar(), etc)."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Navbar",
+        "Fillable",
+        "Restricted width",
+        "Full width"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import ui\n\nui.page_opts(title=\"Page title\")\n\nwith ui.sidebar():\n    \"Sidebar content\"\n\n\"Main content\""
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar content\"),\n    \"Main content\",\n    title=\"Page title\"\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(title=\"Page title\")\n\nwith ui.nav_panel(\"Page 1\"):\n    \"Page 1 content\"\n\nwith ui.nav_panel(\"Page 2\"):\n    \"Page 2 content\""
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_panel(\"Page 1\", \"Page 1 content\"),\n    ui.nav_panel(\"Page 2\", \"Page 2 content\"),\n    title=\"Page title\"\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():\n    \"Card content\""
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nwith ui.card():\n    \"Card content\""
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fixed(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(full_width=True)\n\nwith ui.card():\n    \"Card content\""
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "h3",
+      "text": "Display messages"
+    },
+    {
+      "type": "p",
+      "text": "Another type of UI component is one used to display messages to the user (e.g. notifications, modals, tooltips, etc). Display messages like notifications and modals require server-side code to manage their state, so they are typically created in the server and then shown/hidden using the ui.*_show() and ui.*_hide() functions. Tooltips and popovers, on the other hand, can be created directly in the UI definition (i.e., statically rendered, without any server-side code)."
+    },
+    {
+      "type": "p",
+      "text": "See this section of the component gallery for an overview of available display messages."
+    },
+    {
+      "type": "h3",
+      "text": "Next steps"
+    },
+    {
+      "type": "p",
+      "text": "Next up, we’ll learn all about Shiny’s Jupyter Widgets integration."
+    }
+  ],
+  "code_examples": [
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@reactive.effect\ndef _():\n    print(input.text())",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@reactive.effect\ndef _():\n    print(input.text())",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\")\n)\n\ndef server(input):\n    @reactive.effect\n    def _():\n        print(input.text())\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\")\n)\n\ndef server(input):\n    @reactive.effect\n    def _():\n        print(input.text())\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@render.text\ndef text_out():\n    return f\"Input text: {input.text()}\"",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"text\", label=\"Enter some text\")\n\n@render.text\ndef text_out():\n    return f\"Input text: {input.text()}\"",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\"),\n    ui.output_text(\"text_out\")\n)\n\ndef server(input):\n    @render.text\n    def text_out():\n        return f\"Input text: {input.text()}\"\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"text\", label=\"Enter some text\"),\n    ui.output_text(\"text_out\")\n)\n\ndef server(input):\n    @render.text\n    def text_out():\n        return f\"Input text: {input.text()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\n\nwith ui.layout_column_wrap(gap=\"2rem\"):\n    ui.input_slider(\"slider1\", \"Slider 1\", min=0, max=100, value=50)\n    ui.input_slider(\"slider2\", \"Slider 2\", min=0, max=100, value=50)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_column_wrap(\n        ui.input_slider(\"slider1\", \"Slider 1\", min=0, max=100, value=50),\n        ui.input_slider(\"slider2\", \"Slider 2\", min=0, max=100, value=50),\n        gap=\"2rem\"\n    )\n)\n\napp = App(app_ui, None)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import ui\n\nui.page_opts(title=\"Page title\")\n\nwith ui.sidebar():\n    \"Sidebar content\"\n\n\"Main content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar content\"),\n    \"Main content\",\n    title=\"Page title\"\n)\n\napp = App(app_ui, None)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(title=\"Page title\")\n\nwith ui.nav_panel(\"Page 1\"):\n    \"Page 1 content\"\n\nwith ui.nav_panel(\"Page 2\"):\n    \"Page 2 content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_panel(\"Page 1\", \"Page 1 content\"),\n    ui.nav_panel(\"Page 2\", \"Page 2 content\"),\n    title=\"Page title\"\n)\n\napp = App(app_ui, None)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():\n    \"Card content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nwith ui.card():\n    \"Card content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fixed(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny.express import ui\n\nui.page_opts(full_width=True)\n\nwith ui.card():\n    \"Card content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.card(\"Card content\")\n)\n\napp = App(app_ui, None)"
+  ],
+  "toc": [
+    {
+      "title": "Inputs",
+      "url": "docs/#inputs"
+    },
+    {
+      "title": "Outputs",
+      "url": "docs/#outputs"
+    },
+    {
+      "title": "Layouts",
+      "url": "docs/#layouts"
+    },
+    {
+      "title": "Page layouts",
+      "url": "docs/#page-layouts"
+    },
+    {
+      "title": "Display messages",
+      "url": "docs/#display-messages"
+    },
+    {
+      "title": "Next steps",
+      "url": "docs/#next-steps"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

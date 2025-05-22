@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using express.ui.input_selectize to create a select list in Shiny for Python?",
+  "How can I specify the values that should be initially selected when using express.ui.input_selectize?",
+  "What is the difference in server value returned when multiple items are selected versus when only a single item is selected using express.ui.input_selectize?",
+  "What are the options available for customization when adding a remove button using express.ui.input_selectize?",
+  "Can I use a dictionary mapping choice values to labels when defining the choices for the select list in express.ui.input_selectize?"
+]

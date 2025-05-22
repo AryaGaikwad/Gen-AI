@@ -1,0 +1,7 @@
+[
+  "What steps are involved in creating a reactive Data Grid in a Shiny Python app?",
+  "How can a Data Grid in a Shiny Python app collect input from the user?",
+  "What is the purpose of setting the selection_mode parameter in render.DataGrid() in a Shiny Python app?",
+  "How can the selected rows in a Data Grid be accessed and manipulated in a Shiny Python app?",
+  "How can the styling of a Data Grid be customized in a Shiny Python app using render.DataGrid()?"
+]

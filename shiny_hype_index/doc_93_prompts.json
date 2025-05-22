@@ -1,0 +1,7 @@
+[
+  "What is a tooltip in Shiny for Python and how can it be added to a UI component?",
+  "How can you control the placement of a tooltip relative to the item it highlights in Shiny for Python?",
+  "Why is it recommended to use an element accessible via keyboard interactions as a tooltip trigger in Shiny for Python?",
+  "How can you update the message of a tooltip with a given id in Shiny for Python?",
+  "What is the difference between tooltips and popovers in organizing the layout of a Shiny app in Python?"
+]

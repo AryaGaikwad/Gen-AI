@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be customized using the express.ui.busy_indicators.options function in Shiny for Python?",
+  "What are the rules that an SVG file provided as a spinner type should adhere to when customizing busy indicators in Shiny for Python?",
+  "How can the appearance of busy indicators be customized in a Shiny app using the express.ui.busy_indicators.options function?",
+  "Can the color of the spinner in Shiny for Python be set to something other than the default primary color of the app?",
+  "In Shiny for Python, what effect does setting the fade_opacity parameter to 1 have when customizing busy indicators?"
+]

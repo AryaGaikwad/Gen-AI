@@ -1,0 +1,282 @@
+{
+  "metadata": {
+    "title": "Slider Range – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/slider-range/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "Slider Range"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Slider Range"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"\", min=0, max=100, value=[35, 65]).add_class(\n        \"pt-5 mx-auto text-center\"\n    ),\n    ui.output_text_verbatim(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65])  \n\n@render.text\ndef value():\n    return f\"{input.slider()}\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65]),  \n    ui.output_text_verbatim(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_slider ui.input_slider(id, label, min, max, value, *, step=None, ticks=False, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)",
+        "ui.output_data_frame ui.output_data_frame(id)",
+        "render.data_frame render.data_frame(fn=None)",
+        "render.DataTable render.DataTable(self, data, *, width='fit-content', height='500px', summary=True, filters=False, row_selection_mode='none')"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_slider ui.input_slider(id, label, min, max, value, *, step=None, ticks=False, animate=False, width=None, sep=',', pre=None, post=None, time_format=None, timezone=None, drag_range=True)"
+    },
+    {
+      "type": "p",
+      "text": "ui.output_data_frame ui.output_data_frame(id)"
+    },
+    {
+      "type": "p",
+      "text": "render.data_frame render.data_frame(fn=None)"
+    },
+    {
+      "type": "p",
+      "text": "render.DataTable render.DataTable(self, data, *, width='fit-content', height='500px', summary=True, filters=False, row_selection_mode='none')"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A slider is a widget that lets you drag to select numbers, dates, or date-tifrom a specified range. You can use a slider to select either a single value or a range of values."
+    },
+    {
+      "type": "p",
+      "text": "To add a slider that lets the user select a range of values:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_slider() to the UI of your app to create a slider. Where you call this function will determine where the slider will appear within the app’s layout.",
+        "Specify the id and label parameters of ui.input_slider() to define the identifier and label of the slider.",
+        "Use the min and max parameters to define the minimum and maximum values of the slider. min and max can be numbers, dates, or date-times. Dates and date-times can be provided from the datetime module with the date() or datetime() functions, respectively.",
+        "Pass a list with two elements to the value parameter. These elements define the initial range. value can be a list of numbers, dates, or date-times."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_slider() to the UI of your app to create a slider. Where you call this function will determine where the slider will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_slider() to define the identifier and label of the slider."
+    },
+    {
+      "type": "p",
+      "text": "Use the min and max parameters to define the minimum and maximum values of the slider. min and max can be numbers, dates, or date-times. Dates and date-times can be provided from the datetime module with the date() or datetime() functions, respectively."
+    },
+    {
+      "type": "p",
+      "text": "Pass a list with two elements to the value parameter. These elements define the initial range. value can be a list of numbers, dates, or date-times."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of a slider:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<slider_id>() (e.g., input.slider()) to access the value of the slider. If value is a list and the slider specifies a range, the server value of a slider will be a list of length 2."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "See also: Slider"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"\", min=0, max=100, value=[35, 65]).add_class(\n        \"pt-5 mx-auto text-center\"\n    ),\n    ui.output_text_verbatim(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"\", min=0, max=100, value=[35, 65]).add_class(\n        \"pt-5 mx-auto text-center\"\n    ),\n    ui.output_text_verbatim(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65])  \n\n@render.text\ndef value():\n    return f\"{input.slider()}\"",
+    "from shiny.express import input, render, ui\n\nui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65])  \n\n@render.text\ndef value():\n    return f\"{input.slider()}\"",
+    "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65]),  \n    ui.output_text_verbatim(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)",
+    "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"slider\", \"Slider\", min=0, max=100, value=[35, 65]),  \n    ui.output_text_verbatim(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return f\"{input.slider()}\"\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

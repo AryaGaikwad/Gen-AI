@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.output_plot() function in a Shiny app?",
+  "How can a user control where a figure will appear within the layout of a Shiny app?",
+  "What are the different types of objects that a function within the server() function should return when creating a figure in Shiny?",
+  "How can a plotting function be decorated to work properly in Shiny using the @render.plot() decorator?",
+  "In Shiny, how can a plot be used as an input widget to collect user interactions like clicks, double clicks, hovers, and brushes?"
+]

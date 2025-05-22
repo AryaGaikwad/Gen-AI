@@ -1,0 +1,7 @@
+[
+  "What parameters are required to construct a slider widget using express.ui.input_slider in Shiny for Python?",
+  "What is the purpose of the 'time_format' parameter in the express.ui.input_slider function?",
+  "How can I control the visibility of tick marks in the slider widget using express.ui.input_slider?",
+  "What is the default behavior of the 'drag_range' parameter in the express.ui.input_slider function?",
+  "Where can I find more details about the time format string to be used with date or datetime objects in express.ui.input_slider?"
+]

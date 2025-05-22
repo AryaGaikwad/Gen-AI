@@ -1,0 +1,368 @@
+{
+  "metadata": {
+    "title": "Debug, troubleshoot, & help – Shiny for Python",
+    "description": "",
+    "url": "get-started/debug.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Debug, troubleshoot, & help"
+    },
+    {
+      "type": "h2",
+      "text": "Common issues"
+    },
+    {
+      "type": "p",
+      "text": "Before jumping into general debugging techniques, lets cover some common issues that you may encounter when developing Shiny applications, and explain why they happen."
+    },
+    {
+      "type": "h3",
+      "text": "Missing output"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes, output won’t appear at all. This most commonly happens when an output reads a non-existent input, for example:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 120\n\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider value\", min=0, max=10, value=5)\n\n\n# Nothing renders because input.wrong_id() doesn't exist!\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.wrong_id()}\"\n\n\n## file: fixed.py\n# Copy this solution to the app.py and re-run the application to see the fix in action\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider value\", min=0, max=10, value=5)\n\n\n# Nothing renders because input.wrong_id() doesn't exist!\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\"  \n"
+    },
+    {
+      "type": "p",
+      "text": "This happens because, if a non-existent input is read, a SilentException is raised. That behavior is useful for events and dynamic ui, but it can be confusing when you mistype an input id."
+    },
+    {
+      "type": "p",
+      "text": "These are live Shiny apps that you can edit. Try fixing the problem yourself! You can also take a look at the fixed.py file to see the solution. You will need to copy the code to app.py if you want to run the fixed solution."
+    },
+    {
+      "type": "h3",
+      "text": "Output errors"
+    },
+    {
+      "type": "p",
+      "text": "When an error occurs inside a render decorator function, the relevant error message is displayed in red font where the output would normally be located, for example:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 120\nfrom shiny.express import render\n\n\n@render.text\ndef good():\n    return \"This output is fine, but the next one is not.\"\n\n\n@render.text\ndef bad():\n    return str(a_missing_variable)\n\n\n## file: fixed.py\n# Copy this solution to the app.py and re-run the application to see the fix in action\nfrom shiny.express import render\n\n\n@render.text\ndef good():\n    return \"This output is fine, but the next one is not.\"\n\n\n@render.text\ndef bad_fixed():\n    a_missing_variable = \"Fixed by defining missing variable.\"\n    return str(a_missing_variable)\n"
+    },
+    {
+      "type": "p",
+      "text": "The error displayed in the app is only the final part of the stack trace, but the full trace can be read in the console where you used shiny run."
+    },
+    {
+      "type": "p",
+      "text": "When Shiny apps are deployed, error messages are sanitized to the eliminate the possibility of leaking sensitive information. To unsanitize error messages, you’ll need to set sanitize_errors=False in the App constructor (of a Shiny core app)."
+    },
+    {
+      "type": "h2",
+      "text": "Debugging"
+    },
+    {
+      "type": "p",
+      "text": "There are many ways you can debug you code. Most likely, your IDE will have the ability to create breakpoints and debug your code. However, you can manual edit your code to help with debugging as well."
+    },
+    {
+      "type": "h3",
+      "text": "Positron and VS Code debugger"
+    },
+    {
+      "type": "p",
+      "text": "The Positron and VS Code debugger is a powerful tool for debugging Python code. To set a breakpoint in Positron or VS Code, you will need to click the gutter next to the line number. The gutter is empty space immediately to the left of the line number. When you click this area, a red circle will mark that particular line."
+    },
+    {
+      "type": "p",
+      "text": "Once the breakpoint is set, you can click the dropdown arrow next to the play button and select “Debug Shiny App”."
+    },
+    {
+      "type": "p",
+      "text": "This will run the shiny application in debug mode, and will pause the application when it reaches the code you have just marked. From there you can open the Debug Console by click the 3 dots in the debug menu. Once you are in the debug console, you can explore all the variables at that moment in the application, including any input variables. You can Mark as many points in your application you want at the same time, and you can step through the code using the debugging toolbar."
+    },
+    {
+      "type": "h3",
+      "text": "Manual debugging methods"
+    },
+    {
+      "type": "p",
+      "text": "Here we define manual debugging methods. These methods are less recommended because they require a manual change to your codebase, and potentially restarting your application."
+    },
+    {
+      "type": "h4",
+      "text": "Shiny debug mode"
+    },
+    {
+      "type": "p",
+      "text": "An advanced option for debugging is to use the debug mode when running your application."
+    },
+    {
+      "type": "p",
+      "text": "For Shiny Express applications, you can use the shiny.express.app_opts(debug=True) function call at the top of your application after the imports."
+    },
+    {
+      "type": "p",
+      "text": "For Shiny Core apps, pass the debug=True argument to the App() call, e.g., App(..., debug=True) at the bottom of your application."
+    },
+    {
+      "type": "p",
+      "text": "When you run a Shiny app in debug mode, you’ll see detailed messages in the terminal. These messages show the communication between the server and the web browser."
+    },
+    {
+      "type": "p",
+      "text": "This is an example of the raw data behind how your app works:"
+    },
+    {
+      "type": "code",
+      "text": "SEND: {\"busy\": \"busy\"}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculating\"}}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculated\"}}\nSEND: {\"busy\": \"idle\"}\nSEND: {\"values\": {}, \"inputMessages\": [], \"errors\": {}}"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "When a user changes an input, the browser sends a message to the server.",
+        "The server responds with updates, like re-running a calculation or updating a plot."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Note also that Shiny applications use Python’s asyncio under the hood, so it may be useful to set asyncio’s debug mode."
+    },
+    {
+      "type": "h3",
+      "text": "Manual breakpoints"
+    },
+    {
+      "type": "p",
+      "text": "You can use breakpoint() to pause your app while it’s running and inspect what’s going on. This serves the same purpose as clicking and marking a breakpoint in the Positron IDE a, but requires you manually adding new code to the application. This lets you debug using the ."
+    },
+    {
+      "type": "code",
+      "text": "@render.text\ndef bad():\n    breakpoint()\n    return str(a_missing_variable)"
+    },
+    {
+      "type": "p",
+      "text": "When Python hits the breakpoint(), it will pause and open the debugger in your terminal."
+    },
+    {
+      "type": "p",
+      "text": "From there, you can run commands like:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "continue: resume running the app",
+        "exit or Ctrl + D: exit the debugger and stop the app"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "This is helpful for figuring out where things go wrong in your code."
+    },
+    {
+      "type": "h4",
+      "text": "Print statements"
+    },
+    {
+      "type": "p",
+      "text": "A quick and simple way to debug Shiny applications is to add print() statements. This lets you see the value of different variables, and how they change when you toggle different inputs."
+    },
+    {
+      "type": "p",
+      "text": "If your Shiny application is running with Shinylive (Python in the browser), and there is not a visible Python console, then error messages will show up in your browser’s JavaScript console."
+    },
+    {
+      "type": "h2",
+      "text": "Get Help"
+    },
+    {
+      "type": "h3",
+      "text": "Shiny"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The first place to look for help with Shiny is Posit Community, which is a warm and welcoming place to ask any questions you might have about Shiny (as well as tidyverse and all things Posit). The web site is running Discourse, which is an excellent community discussion platform. Our developers monitor Posit Community and answer questions periodically.",
+        "Shiny users (and the Shiny team!) regularly talk on Shiny’s Discord server. Discord has more of a chat interface than Posit Community, and is not indexed by search engines. It’s a great forum for casual conversations or networking with other Shiny developers.",
+        "You can also check the “shiny+python” tag on Stack Overflow for existing answers, or post your own question. (Keep in mind that general Shiny for R answers may also point you in the right direction.) Note that questions posted on Stack Overflow are not closely monitored by our developers."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The first place to look for help with Shiny is Posit Community, which is a warm and welcoming place to ask any questions you might have about Shiny (as well as tidyverse and all things Posit). The web site is running Discourse, which is an excellent community discussion platform. Our developers monitor Posit Community and answer questions periodically."
+    },
+    {
+      "type": "p",
+      "text": "Shiny users (and the Shiny team!) regularly talk on Shiny’s Discord server. Discord has more of a chat interface than Posit Community, and is not indexed by search engines. It’s a great forum for casual conversations or networking with other Shiny developers."
+    },
+    {
+      "type": "p",
+      "text": "You can also check the “shiny+python” tag on Stack Overflow for existing answers, or post your own question. (Keep in mind that general Shiny for R answers may also point you in the right direction.) Note that questions posted on Stack Overflow are not closely monitored by our developers."
+    },
+    {
+      "type": "h3",
+      "text": "Posit Connect Cloud"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "For information about Posit Connect Cloud, see the Connect Cloud Documentation",
+        "For community support, there is a community forum for Connect Cloud.",
+        "Customers with Starter, Basic, Standard or Pro subscriptions can get direct access to our support engineers by opening a case on the Posit Support site. Questions are answered from 9AM - 5PM(EST) Monday - Friday."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "For information about Posit Connect Cloud, see the Connect Cloud Documentation"
+    },
+    {
+      "type": "p",
+      "text": "For community support, there is a community forum for Connect Cloud."
+    },
+    {
+      "type": "p",
+      "text": "Customers with Starter, Basic, Standard or Pro subscriptions can get direct access to our support engineers by opening a case on the Posit Support site. Questions are answered from 9AM - 5PM(EST) Monday - Friday."
+    },
+    {
+      "type": "h3",
+      "text": "shinyapps.io"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "For documentation and instructions on how to use shinyapps.io, see the shinyapps.io user guide.",
+        "The best place to get community support for shinyapps.io is the shinyapps.io category on Posit Community. If you’re having difficulties with shinyapps.io, feel free to ask questions there. Another option is to file an issue in the rsconnect-python package repo.",
+        "Customers with Starter, Basic, Standard or Pro subscriptions can get direct access to our support engineers by opening a case on the Posit Support site. Questions are answered from 9AM - 5PM(EST) Monday - Friday."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "For documentation and instructions on how to use shinyapps.io, see the shinyapps.io user guide."
+    },
+    {
+      "type": "p",
+      "text": "The best place to get community support for shinyapps.io is the shinyapps.io category on Posit Community. If you’re having difficulties with shinyapps.io, feel free to ask questions there. Another option is to file an issue in the rsconnect-python package repo."
+    },
+    {
+      "type": "p",
+      "text": "Customers with Starter, Basic, Standard or Pro subscriptions can get direct access to our support engineers by opening a case on the Posit Support site. Questions are answered from 9AM - 5PM(EST) Monday - Friday."
+    },
+    {
+      "type": "h3",
+      "text": "Posit Connect and Shiny Server Pro"
+    },
+    {
+      "type": "p",
+      "text": "Customers with Posit Connect or Shiny Server Pro subscriptions can contact our dedicated support team for our commercial offerings."
+    },
+    {
+      "type": "h3",
+      "text": "Sales"
+    },
+    {
+      "type": "p",
+      "text": "For sales questions, please email sales@posit.co."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 120\n\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider value\", min=0, max=10, value=5)\n\n\n# Nothing renders because input.wrong_id() doesn't exist!\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.wrong_id()}\"\n\n\n## file: fixed.py\n# Copy this solution to the app.py and re-run the application to see the fix in action\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider value\", min=0, max=10, value=5)\n\n\n# Nothing renders because input.wrong_id() doesn't exist!\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\"  \n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 120\nfrom shiny.express import render\n\n\n@render.text\ndef good():\n    return \"This output is fine, but the next one is not.\"\n\n\n@render.text\ndef bad():\n    return str(a_missing_variable)\n\n\n## file: fixed.py\n# Copy this solution to the app.py and re-run the application to see the fix in action\nfrom shiny.express import render\n\n\n@render.text\ndef good():\n    return \"This output is fine, but the next one is not.\"\n\n\n@render.text\ndef bad_fixed():\n    a_missing_variable = \"Fixed by defining missing variable.\"\n    return str(a_missing_variable)\n",
+    "SEND: {\"busy\": \"busy\"}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculating\"}}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculated\"}}\nSEND: {\"busy\": \"idle\"}\nSEND: {\"values\": {}, \"inputMessages\": [], \"errors\": {}}",
+    "SEND: {\"busy\": \"busy\"}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculating\"}}\nSEND: {\"recalculating\": {\"name\": \"my_cool_output\", \"status\": \"recalculated\"}}\nSEND: {\"busy\": \"idle\"}\nSEND: {\"values\": {}, \"inputMessages\": [], \"errors\": {}}",
+    "@render.text\ndef bad():\n    breakpoint()\n    return str(a_missing_variable)",
+    "@render.text\ndef bad():\n    breakpoint()\n    return str(a_missing_variable)"
+  ],
+  "toc": [
+    {
+      "title": "Common issues",
+      "url": "get-started/#common-issues"
+    },
+    {
+      "title": "Missing output",
+      "url": "get-started/#missing-output"
+    },
+    {
+      "title": "Output errors",
+      "url": "get-started/#output-errors"
+    },
+    {
+      "title": "Debugging",
+      "url": "get-started/#debugging"
+    },
+    {
+      "title": "Positron and VS Code debugger",
+      "url": "get-started/#positron-and-vs-code-debugger"
+    },
+    {
+      "title": "Manual debugging methods",
+      "url": "get-started/#manual-debugging-methods"
+    },
+    {
+      "title": "Manual breakpoints",
+      "url": "get-started/#breakpoints"
+    },
+    {
+      "title": "Get Help",
+      "url": "get-started/#get-help"
+    },
+    {
+      "title": "Shiny",
+      "url": "get-started/#shiny"
+    },
+    {
+      "title": "Posit Connect Cloud",
+      "url": "get-started/#posit-connect-cloud"
+    },
+    {
+      "title": "shinyapps.io",
+      "url": "get-started/#shinyapps.io"
+    },
+    {
+      "title": "Posit Connect and Shiny Server Pro",
+      "url": "get-started/#posit-connect-and-shiny-server-pro"
+    },
+    {
+      "title": "Sales",
+      "url": "get-started/#sales"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

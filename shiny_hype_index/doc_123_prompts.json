@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a group of checkboxes using express.ui.input_checkbox_group in Shiny for Python?",
+  "How can I specify the choices for the checkboxes in express.ui.input_checkbox_group?",
+  "In express.ui.input_checkbox_group, what does the \"selected\" parameter define?",
+  "What does the return value of express.ui.input_checkbox_group consist of?",
+  "How can I control the display of the checkboxes in express.ui.input_checkbox_group to be inline or not?"
+]

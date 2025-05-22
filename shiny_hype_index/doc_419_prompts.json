@@ -1,0 +1,7 @@
+[
+  "How can I add a left-side sidebar to my Shiny app using the provided functions?",
+  "How can I create a right-side sidebar in my Shiny app and control its position relative to the main content?",
+  "What steps should I follow to add a sidebar within a card in my Shiny app?",
+  "How can I create a collapsed sidebar in my Shiny app that is initially closed when the app launches?",
+  "What parameter in the ui.sidebar() function controls whether the sidebar appears open or closed when the app launches in Shiny?"
+]

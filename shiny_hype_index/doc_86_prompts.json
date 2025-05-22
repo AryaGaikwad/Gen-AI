@@ -1,0 +1,7 @@
+[
+  "What are the steps to add a UI output in a Shiny Python app?",
+  "How can I create dependent controls in a Shiny Python app using @render.ui and ui.output_ui()?",
+  "What is the purpose of the id argument in the ui.output_ui() function in Shiny Python?",
+  "How can I determine where a UI element will appear within the layout of my Shiny Python app?",
+  "When should I use @reactive.event decorator in combination with @render.ui in Shiny Python?"
+]

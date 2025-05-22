@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Article on regularization in ML",
+    "description": "Use the regularization template as a foundation for your next Shiny app.",
+    "url": "templates/regularization/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Article on regularization in ML"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template regularization --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template regularization --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "An article on regularization in machine learning and statistics. The app demonstrates the effect of regularization in linear regression. The user can adjust the regularization strength to see it influence the model’s coefficients."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Slider input",
+        "Plot output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "pandas",
+        "scikit-learn",
+        "seaborn"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template regularization --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template regularization --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template regularization --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template regularization --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

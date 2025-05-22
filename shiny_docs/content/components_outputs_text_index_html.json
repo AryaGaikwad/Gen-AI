@@ -1,0 +1,294 @@
+{
+  "metadata": {
+    "title": "Text – Shiny for Python",
+    "description": "",
+    "url": "components/outputs/text/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Outputs",
+        "Text"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Text"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text  \ndef text():\n    return input.Text()"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.output_text ui.output_text(id, inline=False, container=None)",
+        "@render.text render.text(fn=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.output_text ui.output_text(id, inline=False, container=None)"
+    },
+    {
+      "type": "p",
+      "text": "@render.text render.text(fn=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "Text displays a character string as normal text."
+    },
+    {
+      "type": "p",
+      "text": "To make reactive text, follow three steps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Call ui.output_text() in the UI of your app to create a div in which to display the text. Where you call this function within the UI functions will determine where the text will appear within the layout of the app. Set the id argument of ui.output_text() to a unique value.",
+        "Within the server function, define a new function whose name matches the id used above. The function should return the text to display. Shiny will rerun this function whenever it needs to build or update the output that has the matching id.",
+        "Decorate the function with @render.text"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Call ui.output_text() in the UI of your app to create a div in which to display the text. Where you call this function within the UI functions will determine where the text will appear within the layout of the app. Set the id argument of ui.output_text() to a unique value."
+    },
+    {
+      "type": "p",
+      "text": "Within the server function, define a new function whose name matches the id used above. The function should return the text to display. Shiny will rerun this function whenever it needs to build or update the output that has the matching id."
+    },
+    {
+      "type": "p",
+      "text": "Decorate the function with @render.text"
+    },
+    {
+      "type": "p",
+      "text": "See Verbatim Text to display string values as they would appear in a computer console, in monospaced font on a shaded background."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Inline text"
+    },
+    {
+      "type": "p",
+      "text": "Set inline=True within ui.output_text() to have text appear inline with the text that preceeds it."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text(inline=True)  \ndef text():\n    return input.Text()"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text  \ndef text():\n    return input.Text()",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text  \ndef text():\n    return input.Text()",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered:\",\n    ui.output_text_verbatim(\"text\"),  \n)\n\ndef server(input, output, session):\n    @render.text  \n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text(inline=True)  \ndef text():\n    return input.Text()",
+    "from shiny.express import input, render, ui\n\nui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\")\n\"You entered:\"\n\n@render.text(inline=True)  \ndef text():\n    return input.Text()",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_text(\"Text\", \"Enter text\", \"Hello Shiny\"),\n    \"You entered: \",\n    ui.output_text(\"text\", inline=True),  \n)\n\ndef server(input, output, session):\n    @render.text\n    def text():\n        return input.Text()\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

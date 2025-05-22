@@ -1,0 +1,7 @@
+[
+  "What parameters does the ui.update_slider function require?",
+  "What is the purpose of the time_format parameter in the ui.update_slider function?",
+  "How does the ui.update_slider function handle None values in its arguments?",
+  "When does the ui.update_slider function send a message to the client according to the documentation?",
+  "How can the set of choices for radio buttons, checkbox groups, and select inputs be cleared using the update functions mentioned in the documentation?"
+]

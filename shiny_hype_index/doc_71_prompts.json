@@ -1,0 +1,7 @@
+[
+  "How can I create a select list in a Shiny Python app that allows the user to select a single item?",
+  "What parameters do I need to specify when using the ui.input_select() function to define a select list in Shiny for Python?",
+  "How does the multiple parameter in the ui.input_select() function impact the selection behavior of a select list in Shiny for Python?",
+  "In Shiny for Python, how can I access the selected value of a select list within the server function?",
+  "What is the purpose of supplying a dictionary of dictionaries as the choices argument in the ui.input_select() function in Shiny for Python?"
+]

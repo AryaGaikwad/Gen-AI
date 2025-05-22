@@ -1,0 +1,7 @@
+[
+  "What is the purpose of ui.card_header in Shiny for Python?",
+  "How should ui.card_header be structured in relation to a card component?",
+  "What are the parameters that can be included in the header container of a card using ui.card_header?",
+  "What does ui.card_header return when called?",
+  "Which other components are related to ui.card_header and can be used in conjunction with it to build a card in Shiny for Python?"
+]

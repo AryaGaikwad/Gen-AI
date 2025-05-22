@@ -1,0 +1,649 @@
+{
+  "metadata": {
+    "title": "Data Grid – Shiny for Python",
+    "description": "",
+    "url": "components/outputs/data-grid/"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Outputs",
+        "Data Grid"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Data Grid"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 375\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame  \ndef penguins_df():\n    return render.DataGrid(penguins)  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.output_data_frame ui.output_data_frame(id)",
+        "@render.data_frame render.data_frame(fn=None)",
+        "render.DataGrid render.DataGrid(self, data, *, width='fit-content', height='500px', summary=True, filters=False, row_selection_mode='none')"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.output_data_frame ui.output_data_frame(id)"
+    },
+    {
+      "type": "p",
+      "text": "@render.data_frame render.data_frame(fn=None)"
+    },
+    {
+      "type": "p",
+      "text": "render.DataGrid render.DataGrid(self, data, *, width='fit-content', height='500px', summary=True, filters=False, row_selection_mode='none')"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A Data Grid presents tabular data in a spreadsheet-like view with cells separated by grid lines."
+    },
+    {
+      "type": "p",
+      "text": "To make a reactive Data Grid, follow three steps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Call ui.output_data_frame() in the UI of your app to create a div in which to display the table. Where you call this function within the UI functions will determine where the table will appear within the layout of the app. Set the id argument of ui.output_data_frame() to a unique value.",
+        "Within the server function, define a new function whose name matches the id used above. The function should assemble the table to display and then return the table wrapped in render.DataGrid(). Shiny will rerun this function whenever it needs to build or update the output that has the matching id.",
+        "Decorate the function with @render.data_frame."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Call ui.output_data_frame() in the UI of your app to create a div in which to display the table. Where you call this function within the UI functions will determine where the table will appear within the layout of the app. Set the id argument of ui.output_data_frame() to a unique value."
+    },
+    {
+      "type": "p",
+      "text": "Within the server function, define a new function whose name matches the id used above. The function should assemble the table to display and then return the table wrapped in render.DataGrid(). Shiny will rerun this function whenever it needs to build or update the output that has the matching id."
+    },
+    {
+      "type": "p",
+      "text": "Decorate the function with @render.data_frame."
+    },
+    {
+      "type": "p",
+      "text": "A Data Grid can also collect input from the user. To allow this, set render.DataGrid(selection_mode=\"row\") or render.DataGrid(selection_mode=\"rows\") to allow the user to select one or more rows of the Data Grid."
+    },
+    {
+      "type": "p",
+      "text": "The indices of the selected rows will be accessible within the server function as a reactive variable returned by <name>.cell_selection()[\"rows\"], where is the name of the function decorated with @render.data_frame."
+    },
+    {
+      "type": "p",
+      "text": "The value returned will be an empty tuple if no rows are selected, or a tuple of integers representing the indices of the selected rows. To filter a pandas data frame down to the selected rows, use df.iloc[list(<name>.cell_selection()[\"rows\"])]."
+    },
+    {
+      "type": "p",
+      "text": "For more information about interacting with data frames, see the API documentation for Express or Core syntax."
+    },
+    {
+      "type": "p",
+      "text": "If your table is a data frame that uses the pandas styler, replace ui.output_data_frame() with ui.output_table() and @render.data_frame with @render.table."
+    },
+    {
+      "type": "p",
+      "text": "See also: Data Tables"
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Select Rows"
+    },
+    {
+      "type": "p",
+      "text": "Set selection_mode in render.DataGrid() to \"row\" to allow the user to select one row at a time. Set it to \"rows\" to allow the user to select multiple rows at a time. Access the selection(s) as <id>.cell_selection()[\"rows\"]."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.ui()\ndef rows():\n    rows = penguins_df.cell_selection()[\"rows\"]  \n    selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n    return f\"Rows selected: {selected}\"\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Filterable Table"
+    },
+    {
+      "type": "p",
+      "text": "Set render.DataGrid(filters=True) to add a row of filter options to the header row. Users can interact with these options to filter the table."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "# shiny.express\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Edit Table Cells"
+    },
+    {
+      "type": "p",
+      "text": "Set editable=True to be able to edit cell contents without re-rendering the data frame."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        editable=True,  \n    )"
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Use Original Data"
+    },
+    {
+      "type": "p",
+      "text": "The reactive value .data() will reactively return the unaltered data."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data()  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)"
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Use Edited Data"
+    },
+    {
+      "type": "p",
+      "text": "The reactive value .data_view() (or .data_view(selected=True)) will reactively return the edited data. The data will be updated as the user edits the table and the rows will be arranged to match the user’s sorting and filtering."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the selected data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data_view(selected=True)  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")"
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Set Table Size"
+    },
+    {
+      "type": "p",
+      "text": "Set the height and width parameters of render.DataGrid() to constrain the output size of the table."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Styling"
+    },
+    {
+      "type": "p",
+      "text": "Set styles in render.DataGrid() to a customize the table display. styles can take a list of dictionaries where each dictionary represents a style to be applied to the table (and thus should have at least a style (or class) key to apply CSS styles or classes to the relevant cells). To scope the styling to particular cells, use the rows and cols keys (with 0-based indexing). Note that if both rows and cols are specified, the style will be applied only to the intersection of the specified rows and columns."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins: pd.DataFrame = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n        # penguins,\n        styles=[  \n            # Center the text of each cell (using Bootstrap utility class) \n            {  \n                \"class\": \"text-center\",  \n            },  \n            # Bold the first column \n            {  \n                \"cols\": [0],  \n                \"style\": {\"font-weight\": \"bold\"},  \n            },  \n            # Highlight the penguin colors \n            {\n                \"rows\": [0, 1],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#ffdbaf\"},  \n            },  \n            {  \n                \"rows\": [2, 3],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#b1d6d6\"},  \n            },  \n            {  \n                \"rows\": [4, 5],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#d6a9f2\"},  \n            },  \n        ],  \n    )"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Update Filters"
+    },
+    {
+      "type": "p",
+      "text": "The data frame filters can be programmatically updated using the .update_filter() method. It takes a list of column filters to apply to the data frame. Each column filter is a dictionary with the following keys: col and value. The col key is the column index to filter on, and the value key is the value to filter for. The value key can be a single value for string columns or a list of values to filter for numeric columns. Note, to not set a minimum or maximum value for a numeric column, you can provide a None value. To reset filters, provide None for the filters (.update_filter(None))."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_filters\", \"Update filters\")\nui.input_action_button(\"reset_filters\", \"Reset filters\")\n\nui.h5(\"Current filters: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.filter()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  \n\n@reactive.effect\n@reactive.event(input.update_filters)\nasync def _():\n    await penguins_df.update_filter(  \n        [  \n            # Set partial match \n            {\"col\": 0, \"value\": \"Gen\"},  \n            # Set min value \n            {\"col\": 2, \"value\": (50, None)},  \n            # Set max value \n            {\"col\": 3, \"value\": (None, 17)},  \n            # Set range \n            {\"col\": 4, \"value\": (220, 225)},  \n        ],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_filters)\nasync def _():\n    await penguins_df.update_filter(None)  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Update Sorting"
+    },
+    {
+      "type": "p",
+      "text": "The data frame sorting can be programmatically updated using the .update_sort() method. It takes a list of sorting information or column numbers to apply to the data frame. When using a number, the default sorting direction will be applied. When providing a sorting info object, col and desc describe the column index and whether or not the sorting direction is descending. To reset the sorting, provide None for the sorting information (.update_sort(None))."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_sorting\", \"Update sorting\")\nui.input_action_button(\"reset_sorting\", \"Reset sorting\")\n\nui.h5(\"Current sorting: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.sort()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)\n\n@reactive.effect\n@reactive.event(input.update_sorting)\nasync def _():\n    await penguins_df.update_sort(  \n        [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_sorting)\nasync def _():\n    await penguins_df.update_sort([])  "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Update Row Selection"
+    },
+    {
+      "type": "p",
+      "text": "The selected rows can be programmatically updated using the .update_cell_selection() method. .update_cell_selection() takes one argument, selection, which should be a dictionary specifying type, which can be either row (for a single row) or rows (for multiple rows), and row, a list of the row indices to select. Note that you will also need to set selection_mode in render.DataGrid() to \"row\" or \"rows\", since it is \"none\" by default."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_selection\", \"Update row selection\")\nui.input_action_button(\"reset_selection\", \"Reset row selection\")\n\nui.h5(\"Current selection: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():  \n    return penguins_df.cell_selection()[\"rows\"]  \n\n@render.data_frame\ndef penguins_df():  \n    return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n@reactive.effect \n@reactive.event(input.update_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]})  \n\n@reactive.effect\n@reactive.event(input.reset_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   "
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Customize Summary Statement"
+    },
+    {
+      "type": "p",
+      "text": "Set summary in render.DataGrid() to False to remove the statement “Viewing rows 1 through 10 of 20”. Set it to a string template containing {start}, {end}, and {total} tokens, to customize the message."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        summary=\"Viendo filas {start} a {end} de {total}\",  \n    )"
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 375\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 375\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame  \ndef penguins_df():\n    return render.DataGrid(penguins)  ",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame  \ndef penguins_df():\n    return render.DataGrid(penguins)  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),  \n)\n\ndef server(input, output, session):\n    @render.data_frame  \n    def penguins_df():\n        return render.DataGrid(penguins)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.ui()\ndef rows():\n    rows = penguins_df.cell_selection()[\"rows\"]  \n    selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n    return f\"Rows selected: {selected}\"\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")  ",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.ui()\ndef rows():\n    rows = penguins_df.cell_selection()[\"rows\"]  \n    selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n    return f\"Rows selected: {selected}\"\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_ui(\"rows\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @render.ui\n    def rows():\n        rows = penguins_df.cell_selection()[\"rows\"]  \n        selected = \", \".join(str(i) for i in sorted(rows)) if rows else \"None\"\n        return f\"Rows selected: {selected}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)",
+    "# shiny.express\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  ",
+    "# shiny.express\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        editable=True,  \n    )",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        editable=True,  \n    )",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            editable=True,  \n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data()  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data()  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data()  \n        return data.shape\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the selected data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data_view(selected=True)  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n\"The shape of the selected data frame is :\"\n\n@render.code\ndef penguins_shape():\n    data = penguins_df.data_view(selected=True)  \n    return data.shape\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, selection_mode=\"rows\")",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    \"The shape of the selected data frame is :\",\n    ui.output_code(\"penguins_shape\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, selection_mode=\"rows\")\n\n    @render.code\n    def penguins_shape():\n        data = penguins_df.data_view(selected=True)  \n        return data.shape\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  ",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, width=\"300px\", height=\"250px\")  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)",
+    "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins: pd.DataFrame = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n        # penguins,\n        styles=[  \n            # Center the text of each cell (using Bootstrap utility class) \n            {  \n                \"class\": \"text-center\",  \n            },  \n            # Bold the first column \n            {  \n                \"cols\": [0],  \n                \"style\": {\"font-weight\": \"bold\"},  \n            },  \n            # Highlight the penguin colors \n            {\n                \"rows\": [0, 1],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#ffdbaf\"},  \n            },  \n            {  \n                \"rows\": [2, 3],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#b1d6d6\"},  \n            },  \n            {  \n                \"rows\": [4, 5],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#d6a9f2\"},  \n            },  \n        ],  \n    )",
+    "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins: pd.DataFrame = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n        # penguins,\n        styles=[  \n            # Center the text of each cell (using Bootstrap utility class) \n            {  \n                \"class\": \"text-center\",  \n            },  \n            # Bold the first column \n            {  \n                \"cols\": [0],  \n                \"style\": {\"font-weight\": \"bold\"},  \n            },  \n            # Highlight the penguin colors \n            {\n                \"rows\": [0, 1],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#ffdbaf\"},  \n            },  \n            {  \n                \"rows\": [2, 3],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#b1d6d6\"},  \n            },  \n            {  \n                \"rows\": [4, 5],  \n                \"cols\": [0],  \n                \"style\": {\"background-color\": \"#d6a9f2\"},  \n            },  \n        ],  \n    )",
+    "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)",
+    "import pandas as pd\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins.iloc[[0, 1, 200, 201, 300, 301], :],\n            styles=[  \n                # Center the text of each cell (using Bootstrap utility class) \n                {  \n                    \"class\": \"text-center\",  \n                },  \n                # Bold the first column \n                {  \n                    \"cols\": [0],  \n                    \"style\": {\"font-weight\": \"bold\"},  \n                },  \n                # Highlight the penguin colors \n                {\n                    \"rows\": [0, 1],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#ffdbaf\"},  \n                },  \n                {  \n                    \"rows\": [2, 3],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#b1d6d6\"},  \n                },  \n                {  \n                    \"rows\": [4, 5],  \n                    \"cols\": [0],  \n                    \"style\": {\"background-color\": \"#d6a9f2\"},  \n                },  \n            ],  \n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_filters\", \"Update filters\")\nui.input_action_button(\"reset_filters\", \"Reset filters\")\n\nui.h5(\"Current filters: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.filter()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  \n\n@reactive.effect\n@reactive.event(input.update_filters)\nasync def _():\n    await penguins_df.update_filter(  \n        [  \n            # Set partial match \n            {\"col\": 0, \"value\": \"Gen\"},  \n            # Set min value \n            {\"col\": 2, \"value\": (50, None)},  \n            # Set max value \n            {\"col\": 3, \"value\": (None, 17)},  \n            # Set range \n            {\"col\": 4, \"value\": (220, 225)},  \n        ],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_filters)\nasync def _():\n    await penguins_df.update_filter(None)  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_filters\", \"Update filters\")\nui.input_action_button(\"reset_filters\", \"Reset filters\")\n\nui.h5(\"Current filters: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.filter()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins, filters=True)  \n\n@reactive.effect\n@reactive.event(input.update_filters)\nasync def _():\n    await penguins_df.update_filter(  \n        [  \n            # Set partial match \n            {\"col\": 0, \"value\": \"Gen\"},  \n            # Set min value \n            {\"col\": 2, \"value\": (50, None)},  \n            # Set max value \n            {\"col\": 3, \"value\": (None, 17)},  \n            # Set range \n            {\"col\": 4, \"value\": (220, 225)},  \n        ],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_filters)\nasync def _():\n    await penguins_df.update_filter(None)  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_filters\", \"Update filters\"),\n    ui.input_action_button(\"reset_filters\", \"Reset filters\"),\n    ui.h5(\"Current filters: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_filter\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_filter():\n        return penguins_df.filter()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins, filters=True)  \n\n    @reactive.effect\n    @reactive.event(input.update_filters)\n    async def _():\n        await penguins_df.update_filter(  \n            [  \n                # Set partial match \n                {\"col\": 0, \"value\": \"Gen\"},  \n                # Set min value \n                {\"col\": 2, \"value\": (50, None)},  \n                # Set max value \n                {\"col\": 3, \"value\": (None, 17)},  \n                # Set range \n                {\"col\": 4, \"value\": (220, 225)},  \n            ],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_filters)\n    async def _():\n        await penguins_df.update_filter(None)  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_sorting\", \"Update sorting\")\nui.input_action_button(\"reset_sorting\", \"Reset sorting\")\n\nui.h5(\"Current sorting: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.sort()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)\n\n@reactive.effect\n@reactive.event(input.update_sorting)\nasync def _():\n    await penguins_df.update_sort(  \n        [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_sorting)\nasync def _():\n    await penguins_df.update_sort([])  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_sorting\", \"Update sorting\")\nui.input_action_button(\"reset_sorting\", \"Reset sorting\")\n\nui.h5(\"Current sorting: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():\n    return penguins_df.sort()  \n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(penguins)\n\n@reactive.effect\n@reactive.event(input.update_sorting)\nasync def _():\n    await penguins_df.update_sort(  \n        [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n    )  \n\n@reactive.effect\n@reactive.event(input.reset_sorting)\nasync def _():\n    await penguins_df.update_sort([])  ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_sorting\", \"Update sorting\"),\n    ui.input_action_button(\"reset_sorting\", \"Reset sorting\"),\n    ui.h5(\"Current sorting: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_sort\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_sort():\n        return penguins_df.sort()  \n\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(penguins)\n\n    @reactive.effect\n    @reactive.event(input.update_sorting)\n    async def _():\n        await penguins_df.update_sort(  \n            [1, 0, {\"col\": 6, \"desc\": False}, 7],  \n        )  \n\n    @reactive.effect\n    @reactive.event(input.reset_sorting)\n    async def _():\n        await penguins_df.update_sort([])  \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_selection\", \"Update row selection\")\nui.input_action_button(\"reset_selection\", \"Reset row selection\")\n\nui.h5(\"Current selection: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():  \n    return penguins_df.cell_selection()[\"rows\"]  \n\n@render.data_frame\ndef penguins_df():  \n    return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n@reactive.effect \n@reactive.event(input.update_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]})  \n\n@reactive.effect\n@reactive.event(input.reset_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   ",
+    "from palmerpenguins import load_penguins\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\nui.input_action_button(\"update_selection\", \"Update row selection\")\nui.input_action_button(\"reset_selection\", \"Reset row selection\")\n\nui.h5(\"Current selection: \", {\"class\": \"pt-2\"})\n\n@render.code\ndef _():  \n    return penguins_df.cell_selection()[\"rows\"]  \n\n@render.data_frame\ndef penguins_df():  \n    return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n@reactive.effect \n@reactive.event(input.update_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]})  \n\n@reactive.effect\n@reactive.event(input.reset_selection)\nasync def _():  \n    await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   ",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, reactive, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.input_action_button(\"update_selection\", \"Update selection\"),\n    ui.input_action_button(\"reset_selection\", \"Reset selection\"),\n    ui.h5(\"Current selection: \", {\"class\": \"pt-2\"}),\n    ui.output_code(\"penguins_selection\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n\n    @render.code\n    def penguins_selection():\n        return penguins_df.cell_selection()[\"rows\"] \n\n    @render.data_frame\n    def penguins_df():  \n        return render.DataGrid(penguins, selection_mode=\"rows\")  \n\n    @reactive.effect  \n    @reactive.event(input.update_selection) \n    async def _():   \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": [1, 2, 8]}) \n    \n    @reactive.effect\n    @reactive.event(input.reset_selection)\n    async def _():  \n        await penguins_df.update_cell_selection({\"type\": \"row\", \"rows\": []})   \n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 350\n\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        summary=\"Viendo filas {start} a {end} de {total}\",  \n    )",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import render, ui\n\npenguins = load_penguins()\n\nui.h2(\"Palmer Penguins\")\n\n@render.data_frame\ndef penguins_df():\n    return render.DataGrid(\n        penguins,\n        summary=\"Viendo filas {start} a {end} de {total}\",  \n    )",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)",
+    "from palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.h2(\"Palmer Penguins\"),\n    ui.output_data_frame(\"penguins_df\"),\n)\n\ndef server(input, output, session):\n    @render.data_frame\n    def penguins_df():\n        return render.DataGrid(\n            penguins,\n            summary=\"Viendo filas {start} a {end} de {total}\",  \n        )\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "How can I append a message to the chat using the ui.Chat component?",
+  "What is the purpose of the on_user_submit() callback in the Chat interface?",
+  "When should I use .append_message_stream() instead of .append_message() to append a response to the chat?",
+  "How can I obtain chat messages within a reactive context using the messages() method?",
+  "What is the purpose of the transform_assistant_response method in the Chat interface?"
+]

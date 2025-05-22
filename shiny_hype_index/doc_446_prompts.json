@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a textarea input control using ui.input_text_area in Shiny for Python?",
+  "How can I specify the width and height of the textarea input in Shiny for Python using ui.input_text_area?",
+  "What options are available for resizing directions of the textarea box when using ui.input_text_area in Shiny for Python?",
+  "How can I control when the input value should be updated when using ui.input_text_area in Shiny for Python?",
+  "What are the default behaviors for browser autocompletion and spell checking when using ui.input_text_area in Shiny for Python?"
+]

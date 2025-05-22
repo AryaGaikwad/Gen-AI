@@ -1,0 +1,347 @@
+{
+  "metadata": {
+    "title": "UI as HTML – Shiny for Python",
+    "description": "",
+    "url": "docs/ui-html.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🎨 User interfaces",
+        "UI as HTML"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "UI as HTML"
+    },
+    {
+      "type": "p",
+      "text": "Under the hood, Shiny UI stands on a foundation of HTML, CSS, and JavaScript. In fact, if you print a UI component in a Python REPL, you’ll see its HTML representation:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.input_action_button(\"btn\", \"Button\")"
+    },
+    {
+      "type": "h2",
+      "text": "Creating HTML"
+    },
+    {
+      "type": "p",
+      "text": "Shiny provides some convenience for creating HTML, like ui.markdown():"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.markdown(\"Hello **world**!\")"
+    },
+    {
+      "type": "p",
+      "text": "Also, ui.HTML() for raw HTML:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.HTML(\"<p>Hello <strong>world</strong>!</p>\")"
+    },
+    {
+      "type": "p",
+      "text": "As well as common HTML tags like ui.div(), ui.span(), ui.p(), ui.h2(), etc."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.div(\"Hello\", ui.span(\"world\"), \"!\")"
+    },
+    {
+      "type": "p",
+      "text": "Also, less common tags are available under ui.tags:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.tags.video(src=\"video.mp4\")"
+    },
+    {
+      "type": "h2",
+      "text": "HTML tag objects"
+    },
+    {
+      "type": "p",
+      "text": "One benefit working with formal Tag object (e.g., ui.div()) is that you can use its methods and attributes to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add/remove HTML attributes like class and style.",
+        "Add/remove child tags.",
+        "show() to view the HTML in a browser:"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nx = ui.div(\"Hello\")\nx.add_style(\"color:red;\")\n# x.show()"
+    },
+    {
+      "type": "p",
+      "text": "That said, you can also provide HTML attributes when creating the Tag (via either named arguments or a dictionary):"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\n# Both of these are equivalent:\nui.a(\"Help\", href=\"help.html\")\nui.a({\"href\": \"help.html\"}, \"Help\")"
+    },
+    {
+      "type": "p",
+      "text": "In Python, there are some reserved keywords which can’t be used as argument names, such as class. To get around this, you can either use a dictionary as above, or append an underscore to the argument. If there’s a trailing _, it will be stripped off when creating the tag object."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\n# Two ways of doing the same thing\nui.a({\"href\": \"help.html\", \"class\": \"help-link\"}, \"Help\")\nui.a(\"Help\", href=\"help.html\", class_=\"help-link\")\n<a href=\"help.html\">Help</a>"
+    },
+    {
+      "type": "h2",
+      "text": "<head> content"
+    },
+    {
+      "type": "p",
+      "text": "The <head> of an HTML document is a special place where you can load CSS, JavaScript, and add other “meta” content that should only be loaded once. head_content() provides an easy easy way to add to the <head>, and can be placed anywhere in the UI. For example, to add a robots meta tag:"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui\n\nui.head_content(\n    ui.tags.meta(name=\"robots\", content=\"noindex\")\n)"
+    },
+    {
+      "type": "p",
+      "text": "If head_content() wants to import local files, see here to learn how to serve local files. If you find yourself using ui.head_content() to import CSS and JavaScript, you may instead want to use ui.include_css() and ui.include_js(), which are covered here. Lastly, if you’re loading files for a framework like Bootstrap, Svelte, etc. consider using HTMLDependency() instead (see below)."
+    },
+    {
+      "type": "h2",
+      "text": "HTML Dependencies"
+    },
+    {
+      "type": "p",
+      "text": "HTMLDependency() provides a useful way to include CSS, JavaScript, other files which should only ever be loaded once. Most Shiny apps don’t need to worry about this problem, but if you’re creating UI components that you expect other people to use, then it’s important to be aware of HTMLDependency(). It’s typically used to load frameworks like Bootstrap or Svelte, and can also be included as a child of any Tag/TagList object, so may see it used in the wild like this:"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui\n\ndef my_ui(x):\n    return ui.TagList(\n        x,\n        ui.HTMLDependency(\n            name=\"my-ui\",\n            version=\"0.1.0\",\n            source={\"subdir\": ...},\n            stylesheet=[{\"href\": \"my-ui.css\"}],\n            script=[{\"src\": \"my-ui.js\"}],\n        )\n    )"
+    },
+    {
+      "type": "p",
+      "text": "If multiple HTMLDependency() objects with the same name are included in the UI, then only the latest version is loaded."
+    },
+    {
+      "type": "p",
+      "text": "Learn more about HTMLDependencies in the custom component guide."
+    },
+    {
+      "type": "h2",
+      "text": "List fragments"
+    },
+    {
+      "type": "p",
+      "text": "When you need a collaction of HTML tags, you can usually just use a Python list or tuple. However, in some more advanced situations, it’s helpful to use a TagList, which has some additional attributes and methods (e.g., .render(), .get_dependencies(), etc)."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.TagList(\n    ui.div(\"Hello\"),\n    ui.span(\"World\"),\n    \"!\"\n)"
+    },
+    {
+      "type": "h2",
+      "text": "HTML-like objects"
+    },
+    {
+      "type": "p",
+      "text": "If you’ve created a custom Python object that you’d like to be able to render as a Shiny UI object, you can either create a full-blown Shiny binding and/or implement a _repr_html_ method. The former approach is recommended if it’s important to access the object’s state from Python, while the latter is recommended if the object is just a simple container for HTML (plus, it should also work in Jupyter notebooks)."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.input_action_button(\"btn\", \"Button\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.markdown(\"Hello **world**!\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.HTML(\"<p>Hello <strong>world</strong>!</p>\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.div(\"Hello\", ui.span(\"world\"), \"!\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.tags.video(src=\"video.mp4\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nx = ui.div(\"Hello\")\nx.add_style(\"color:red;\")\n# x.show()",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\n# Both of these are equivalent:\nui.a(\"Help\", href=\"help.html\")\nui.a({\"href\": \"help.html\"}, \"Help\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\n# Two ways of doing the same thing\nui.a({\"href\": \"help.html\", \"class\": \"help-link\"}, \"Help\")\nui.a(\"Help\", href=\"help.html\", class_=\"help-link\")\n<a href=\"help.html\">Help</a>",
+    "from shiny import ui\n\nui.head_content(\n    ui.tags.meta(name=\"robots\", content=\"noindex\")\n)",
+    "from shiny import ui\n\nui.head_content(\n    ui.tags.meta(name=\"robots\", content=\"noindex\")\n)",
+    "from shiny import ui\n\ndef my_ui(x):\n    return ui.TagList(\n        x,\n        ui.HTMLDependency(\n            name=\"my-ui\",\n            version=\"0.1.0\",\n            source={\"subdir\": ...},\n            stylesheet=[{\"href\": \"my-ui.css\"}],\n            script=[{\"src\": \"my-ui.js\"}],\n        )\n    )",
+    "from shiny import ui\n\ndef my_ui(x):\n    return ui.TagList(\n        x,\n        ui.HTMLDependency(\n            name=\"my-ui\",\n            version=\"0.1.0\",\n            source={\"subdir\": ...},\n            stylesheet=[{\"href\": \"my-ui.css\"}],\n            script=[{\"src\": \"my-ui.js\"}],\n        )\n    )",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| components: [editor, cell]\nfrom shiny import ui\nui.TagList(\n    ui.div(\"Hello\"),\n    ui.span(\"World\"),\n    \"!\"\n)"
+  ],
+  "toc": [
+    {
+      "title": "Creating HTML",
+      "url": "docs/#creating-html"
+    },
+    {
+      "title": "HTML tag objects",
+      "url": "docs/#html-tag-objects"
+    },
+    {
+      "title": "<head> content",
+      "url": "docs/#head-content"
+    },
+    {
+      "title": "HTML Dependencies",
+      "url": "docs/#html-dependencies"
+    },
+    {
+      "title": "List fragments",
+      "url": "docs/#list-fragments"
+    },
+    {
+      "title": "HTML-like objects",
+      "url": "docs/#html-like-objects"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using the ui.input_action_button function to create an action button in a Shiny app?",
+  "How can the value of an action button be accessed within the server() function in a Shiny Python app?",
+  "What is the purpose of the reactive.event function in Shiny for Python?",
+  "How can one define the identifier and label of an action button in a Shiny Python app using the ui.input_action_button function?",
+  "What does the value of an action button represent in a Shiny Python app?"
+]

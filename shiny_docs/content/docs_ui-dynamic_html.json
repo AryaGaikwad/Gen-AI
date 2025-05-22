@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "title": "Dynamic UI – Shiny for Python",
+    "description": "",
+    "url": "docs/ui-dynamic.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🎨 User interfaces",
+        "Dynamic UI"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Dynamic UI"
+    },
+    {
+      "type": "p",
+      "text": "It’s often useful to programmatically update the UI based on user input or other server-side state. Shiny provides several mechanisms for doing this, including conditional UI, updating inputs, and dynamic UI. Amongst these dynamic UI is the most general and powerful, but also comes with the most overhead."
+    },
+    {
+      "type": "h3",
+      "text": "Conditional UI"
+    },
+    {
+      "type": "p",
+      "text": "The most basic way to create dynamic UIs is by conditionally hiding a UI element on the client side. ui.panel_conditional() enables this by showing/hiding UI based on a JavaScript condition. This condition can reference input values, and can be used to make any sort of UI conditional."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\n\nfrom shiny.express import ui\n\nui.input_radio_buttons(\"display\", None, [\"hidden\", \"shown\"], inline=True)\n\n# The 1st string is a JavaScript condition, and the child UI is shown if it's truthy\n# NOTE: JS input values are read via `input[id]`, not `input[id]()`\nwith ui.panel_conditional(\"input.display === 'shown'\"):\n    \"Hidden content\""
+    },
+    {
+      "type": "h3",
+      "text": "Updating inputs"
+    },
+    {
+      "type": "p",
+      "text": "In addition to hiding elements on the client side, you can also update input elements from the server. This is used in cases where you want to change on part of an input without regenerating it entirely. For example you might want to change ui.input_select choices when a user takes a particular action."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nCHOICES = {\n  \"lower\": [\"a\", \"b\", \"c\"],\n  \"upper\": [\"A\", \"B\", \"C\"]\n}\n\nui.input_switch(\"uppercase\", \"Uppercase choices\", value=False)\nui.input_selectize(\"x\", None, choices=CHOICES[\"lower\"])\n\n@reactive.effect\ndef _():\n    choices = \"upper\" if input.uppercase() else \"lower\"\n    ui.update_selectize(\"x\", choices=CHOICES[choices])"
+    },
+    {
+      "type": "h3",
+      "text": "Dynamic UI"
+    },
+    {
+      "type": "p",
+      "text": "Finally, @render.ui lets you generate UI element(s) entirely on the server, which is an extremely flexible way to dynamically generate UIs. This is the most general mechanism for dynamic UI, but also comes with the most overhead."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\nfrom shiny.express import input, render, ui\n\nui.input_text(\"message\", \"Message\", value=\"Hello, world!\")\n\nui.input_checkbox_group(\n  \"styles\", \"Styles\",\n  choices=[\"Bold\", \"Italic\"],\n  selected=[\"Bold\"],\n  inline=True\n)\n\n@render.ui\ndef result():\n    x = input.message()\n    if \"Bold\" in input.styles():\n        x = ui.strong(x)\n    if \"Italic\" in input.styles():\n        x = ui.em(x)\n    return x"
+    },
+    {
+      "type": "p",
+      "text": "Shiny Express code that works via side-effects needs to be used with @render.express, not @render.ui. See this section to learn more."
+    },
+    {
+      "type": "p",
+      "text": "Anything that’s statically renderable can also be rendered dynamically (e.g., ui.markdown(), ui.HTML(), ui.div(), inputs, outputs, etc)."
+    },
+    {
+      "type": "p",
+      "text": "Dynamic UI is a more general mechanism than the updating inputs and conditional UI patterns, and can be used to update any UI component(s) (not just inputs). However, updating inputs is more efficient than dynamic UI, and should be preferred where possible."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\n\nfrom shiny.express import ui\n\nui.input_radio_buttons(\"display\", None, [\"hidden\", \"shown\"], inline=True)\n\n# The 1st string is a JavaScript condition, and the child UI is shown if it's truthy\n# NOTE: JS input values are read via `input[id]`, not `input[id]()`\nwith ui.panel_conditional(\"input.display === 'shown'\"):\n    \"Hidden content\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nCHOICES = {\n  \"lower\": [\"a\", \"b\", \"c\"],\n  \"upper\": [\"A\", \"B\", \"C\"]\n}\n\nui.input_switch(\"uppercase\", \"Uppercase choices\", value=False)\nui.input_selectize(\"x\", None, choices=CHOICES[\"lower\"])\n\n@reactive.effect\ndef _():\n    choices = \"upper\" if input.uppercase() else \"lower\"\n    ui.update_selectize(\"x\", choices=CHOICES[choices])",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\nfrom shiny.express import input, render, ui\n\nui.input_text(\"message\", \"Message\", value=\"Hello, world!\")\n\nui.input_checkbox_group(\n  \"styles\", \"Styles\",\n  choices=[\"Bold\", \"Italic\"],\n  selected=[\"Bold\"],\n  inline=True\n)\n\n@render.ui\ndef result():\n    x = input.message()\n    if \"Bold\" in input.styles():\n        x = ui.strong(x)\n    if \"Italic\" in input.styles():\n        x = ui.em(x)\n    return x"
+  ],
+  "toc": [
+    {
+      "title": "Conditional UI",
+      "url": "docs/#conditional-ui"
+    },
+    {
+      "title": "Updating inputs",
+      "url": "docs/#updating-inputs"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/#dynamic-ui"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

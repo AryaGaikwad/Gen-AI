@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_navs function in Shiny for Python?",
+  "What happens if the Session instance is not provided in the ui.update_navs function?",
+  "How are input updater functions related to changing the settings of an input object in Shiny for Python?",
+  "In what order are the messages sent to the client for changing the settings of an input object in Shiny for Python?",
+  "How can the set of choices be cleared for radio buttons, checkbox groups, and select inputs using the ui.update_navs function in Shiny for Python?"
+]

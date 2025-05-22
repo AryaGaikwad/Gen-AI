@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the express.ui.update_numeric function in Shiny for Python?",
+  "How are input updater functions like express.ui.update_numeric different from other functions in Shiny for Python?",
+  "What happens if an argument with a None value is passed to the update_numeric function in Shiny for Python?",
+  "How can the set of choices for radio buttons, checkbox groups, and select inputs be cleared using the update functions in Shiny for Python?",
+  "When are the messages to update input objects sent to the client in Shiny for Python using the express.ui.update_numeric function?"
+]

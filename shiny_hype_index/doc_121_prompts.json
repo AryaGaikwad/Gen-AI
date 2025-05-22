@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a pair of date inputs using express.ui.input_date_range in Shiny for Python?",
+  "What are the default values for the initial start date and end date if not specified when using express.ui.input_date_range in Shiny for Python?",
+  "How can the language for month and day names be customized when using express.ui.input_date_range in Shiny for Python?",
+  "What are the valid values for the 'startview' parameter in express.ui.input_date_range in Shiny for Python, and what do they represent?",
+  "In Shiny for Python, how can the display format of the date be controlled when using express.ui.input_date_range?"
+]

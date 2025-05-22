@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be specified when using express.ui.layout_column_wrap in Shiny for Python?",
+  "How does the fixed_width parameter affect the width of columns in the grid layout created by express.ui.layout_column_wrap?",
+  "What is the default behavior for the heights of cards in the grid layout created by express.ui.layout_column_wrap?",
+  "How can one ensure that the layout container does not shrink below a certain height or grow beyond a certain height in express.ui.layout_column_wrap?",
+  "What are the options available for specifying the gap between columns in the grid layout created by express.ui.layout_column_wrap?"
+]

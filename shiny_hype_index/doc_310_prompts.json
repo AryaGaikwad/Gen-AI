@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.output_markdown_stream function in Shiny for Python?",
+  "What are the parameters required to create a UI element for a MarkdownStream using ui.output_markdown_stream?",
+  "What are the supported content types for the content displayed by ui.output_markdown_stream?",
+  "What is the default behavior regarding scrolling when new content is added to a scrollable container using ui.output_markdown_stream?",
+  "How can one specify the dimensions (width and height) of the UI element created with ui.output_markdown_stream in Shiny for Python?"
+]

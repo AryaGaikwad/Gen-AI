@@ -1,0 +1,7 @@
+[
+  "What parameters are required when constructing a slider widget using ui.input_slider in Shiny for Python?",
+  "What are the options for showing tick marks on the slider widget using ui.input_slider in Shiny for Python?",
+  "How can one specify the time format for datetime objects when using the slider widget in Shiny for Python?",
+  "What does the drag_range parameter do in the ui.input_slider function in Shiny for Python?",
+  "Can you provide an example of using ui.input_slider function with all the required parameters in Shiny for Python?"
+]

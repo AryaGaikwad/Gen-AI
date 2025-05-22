@@ -1,0 +1,7 @@
+[
+  "How can I display a character string as normal text in a Shiny app using Python?",
+  "What are the three steps to make reactive text in a Shiny app with Python?",
+  "How can I set the text to appear inline with the text that preceeds it in a Shiny app using Python?",
+  "What is the purpose of the @render.text decorator in Shiny for Python?",
+  "Where should I call the ui.output_text() function within the UI functions to determine the text's placement in a Shiny app layout using Python?"
+]

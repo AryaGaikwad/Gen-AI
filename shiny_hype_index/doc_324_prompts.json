@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.fill.remove_all_fill` function in Shiny for Python?",
+  "How can the `ui.fill.remove_all_fill` function be used to manipulate fillable/fill properties on arbitrary Tag objects?",
+  "What are filling layouts in the context of Shiny for Python's UI components?",
+  "Which UI components in Shiny for Python possess both fillable and fill arguments to control their fill behavior?",
+  "What does the `ui.fill.remove_all_fill` function return when called with a Tag object as a parameter?"
+]

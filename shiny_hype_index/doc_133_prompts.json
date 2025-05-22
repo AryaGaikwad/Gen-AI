@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using express.render.plot to render a plot object as an HTML image in Shiny for Python?",
+  "What are the possible return types when using the express.render.plot decorator in Shiny for Python?",
+  "When should the width and height parameters be used in the express.render.plot function in a Shiny app?",
+  "What is the purpose of the alt parameter in the express.render.plot function in Shiny for Python?",
+  "How should the name of the decorated function be related to the output_plot container in a Shiny app when using express.render.plot?"
+]

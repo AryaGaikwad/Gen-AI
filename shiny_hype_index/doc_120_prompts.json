@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a text input with a calendar for date selection using express.ui.input_date in Shiny for Python?",
+  "What are the default values for format, start view, week start, language, and autoclose when using express.ui.input_date in Shiny for Python?",
+  "How can the date format be customized when displaying dates in the browser using express.ui.input_date in Shiny for Python?",
+  "What are the valid values that can be used for the \"language\" parameter in express.ui.input_date in Shiny for Python?",
+  "What does the \"weekstart\" parameter represent in the express.ui.input_date function in Shiny for Python, and what are its possible values?"
+]

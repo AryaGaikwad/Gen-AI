@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a UI element for the Chat interface in Shiny for Python?",
+  "What are the possible values for the role key when defining messages for the chat in Shiny for Python?",
+  "How can I specify placeholder text for the chat input in Shiny for Python?",
+  "What is the purpose of the on_error and tokenizer parameters in the express.ui.Chat method in Shiny for Python?",
+  "In Shiny for Python, how can I customize the icon used for the assistant's chat messages in the Chat interface?"
+]

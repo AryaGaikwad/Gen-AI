@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for using ui.update_numeric in Shiny for Python?",
+  "How does ui.update_numeric function change the value of a number input on the client side?",
+  "What happens if any of the parameters in ui.update_numeric have a value of None?",
+  "How are the messages handled in input updater functions like update_numeric in Shiny for Python?",
+  "How can you clear the set of choices for radio buttons, checkbox groups, and selects using update functions in Shiny for Python?"
+]

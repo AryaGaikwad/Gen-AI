@@ -1,0 +1,7 @@
+[
+  "How can I create a numeric input control in a Shiny app using Python?",
+  "What parameters can I specify when using the ui.input_numeric function in Shiny for Python?",
+  "How can I access the value of a numeric input control in the server function of a Shiny Python app?",
+  "In the provided code example, what is the initial value set for the numeric input control?",
+  "What does the min parameter do when used with the ui.input_numeric function in Shiny for Python?"
+]

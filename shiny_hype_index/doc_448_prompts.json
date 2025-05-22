@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for creating an output container for a static image using `ui.output_image` in Shiny for Python?",
+  "How can the plot send coordinates to the server whenever it is clicked, and how can this value be accessed?",
+  "What is the purpose of the `brush` parameter in the `ui.output_image` function, and how does it affect user interaction with the image?",
+  "In what scenarios might a developer want to use the `inline` parameter in the `ui.output_image` function?",
+  "How can the hover behavior be controlled in the `ui.output_image` function, and how can the hover time or delay type be adjusted?"
+]

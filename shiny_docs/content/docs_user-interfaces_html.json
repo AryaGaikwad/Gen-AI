@@ -1,0 +1,374 @@
+{
+  "metadata": {
+    "title": "User interfaces – Shiny for Python",
+    "description": "",
+    "url": "docs/user-interfaces.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📌 Essentials",
+        "User interfaces"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "User interfaces"
+    },
+    {
+      "type": "p",
+      "text": "With Shiny, you can create a wide variety of user interfaces (UI), including dashboards. Here, we’ll use the following dashboard as motivation to learn about some important UI components (e.g., cards, value boxes) and layouts (e.g., columns)."
+    },
+    {
+      "type": "p",
+      "text": "See the gallery, layouts, and components for more UI design inspiration."
+    },
+    {
+      "type": "h2",
+      "text": "Basic dashboard"
+    },
+    {
+      "type": "p",
+      "text": "Before we walk through a more sophisticated dashboard, consider this basic dashboard with a header (i.e., page title) and a sidebar layout. In the sidebar, there are a couple inputs for getting different views of the data, and in the main content area, is a plotly output. That output is also placed in a card to give it some depth and the ability to go full screen. The card isn’t critical when there is only one output, but they come highly recommended when there are multiple outputs to display."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer, editor]\n#| layout: vertical\n#| viewerHeight: 500\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\nui.page_opts(title=\"Penguins dashboard\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_selectize(\n        \"var\", \"Select variable\",\n        [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\", \"year\"]\n    )\n    ui.input_numeric(\"bins\", \"Number of bins\", 30)\n\nwith ui.card(full_screen=True):\n    @render_plotly\n    def hist():\n        import plotly.express as px\n        from palmerpenguins import load_penguins\n        return px.histogram(load_penguins(), x=input.var(), nbins=input.bins())"
+    },
+    {
+      "type": "h2",
+      "text": "Sophisticated dashboard"
+    },
+    {
+      "type": "p",
+      "text": "Now let’s work up to a more sophisticated dashboard by walking through components and layouts that are useful for dashboards step-by-step."
+    },
+    {
+      "type": "h3",
+      "text": "Sidebar layout"
+    },
+    {
+      "type": "p",
+      "text": "Create a sidebar layout by giving content to ui.sidebar(). It’s usually a good idea to place inputs in the sidebar and outputs in the main content area."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny.express import ui\n\nui.page_opts(title = \"Title\")\n\nwith ui.sidebar():\n    \"Sidebar (input)\"\n\n\"Main content (output)\""
+    },
+    {
+      "type": "p",
+      "text": "To create a sidebar layout with multiple pages, just put each page’s content in a top-level ui.nav_panel(), as shown here."
+    },
+    {
+      "type": "h3",
+      "text": "Cards"
+    },
+    {
+      "type": "p",
+      "text": "Cards are great for visually grouping together related content, and it’s best practice to place related components together in a card. Here you’ll also have an opportunity to add a header, footer, add full_screen capability, and more. As we’ll see later, cards are also useful for making outputs stand out from one another when there are multiple outputs to display."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import render, ui\n\nwith ui.card(full_screen=True):\n    ui.card_header(\"A card with a header\")\n    @render.plot\n    def plot():\n        import matplotlib.pyplot as plt\n        return plt.scatter([1, 2, 3], [4, 5, 6])\n\nwith ui.card():\n    ui.markdown(\"Another card with some _markdown_.\")"
+    },
+    {
+      "type": "h3",
+      "text": "Value boxes"
+    },
+    {
+      "type": "p",
+      "text": "Value boxes are great for highlighting important summaries. They require at least two values (the title and value) and also support a showcase argument for adding a visual representation of the value. The showcase argument can technically be any UI element, but is often a faicons (i.e., fontawesome) icon."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import render, ui\nfrom faicons import icon_svg as icon\n\nwith ui.value_box(showcase=icon(\"piggy-bank\")):\n    \"Total sales\"\n    \"$1,000,000\"\n\nwith ui.value_box(showcase=icon(\"person\")):\n    \"Total customers\"\n    @render.ui\n    def customers():\n        return f\"{1000:,}\""
+    },
+    {
+      "type": "p",
+      "text": "Under the hood, value boxes are built on cards, so you can leverage similar options like full_screen."
+    },
+    {
+      "type": "h3",
+      "text": "Multi-column layout"
+    },
+    {
+      "type": "p",
+      "text": "Create a multi-column layout based on a 12-column grid system by using ui.layout_columns(). By default, an intelligent equal-width layout is created, but each column width can be specified (in units of 1/12) using col_widths:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny.express import ui\n\nwith ui.layout_columns(col_widths=[6, 6, 12]):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\""
+    },
+    {
+      "type": "p",
+      "text": "By default, col_widths doesn’t apply on smaller width (i.e., mobile) screens (in that case, columns go full-width). However, col_widths also accepts a dictionary of column widths for different screen sizes (e.g., col_widths=dict(sm=6, md=4) yields 2 columns on small screens and 3 columns on medium (or larger) screens)."
+    },
+    {
+      "type": "h3",
+      "text": "Filling layout"
+    },
+    {
+      "type": "p",
+      "text": "Set ui.page_opts(fillable=True) to encourage content to fill the screen. Many of Shiny’s layouts and components automatically fill the screen when this option is set, which is often desirable for dashboards, but may not be what you want for things like value boxes or cards with a textual description. You can override the filling behavior on a per-component basis by setting fill=False or by specifying a height:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nui.page_opts(fillable = True)\n\nwith ui.layout_column_wrap(fill=False):\n    with ui.value_box():\n        \"Value box\"\n        \"$1,000,000\"\n\n    with ui.value_box():\n        \"Value box\"\n        \"$1,000,000\"\n\nwith ui.card():\n    \"Card that fills remaining space...\""
+    },
+    {
+      "type": "p",
+      "text": "Did you know the app viewer above is resizable? Try resizing it to see how the layout responds (the card fills the remaining space)."
+    },
+    {
+      "type": "h3",
+      "text": "Tooltips and popovers"
+    },
+    {
+      "type": "p",
+      "text": "Tooltips and popovers are a useful means for both displaying and interacting with additional information in a non-obtrusive way. Tooltips are shown on hover, whereas popovers are shown on click, making them more suitable for interactive content like inputs. In the actual dashboard, we’ll leverage a popover to effectively add a toolbar with additional inputs controls to card headers."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\nfrom faicons import icon_svg as icon\n\n\"Hover this icon: \"\n\nwith ui.tooltip():\n    icon(\"circle-info\")\n    \"Tooltip message\"\n\nui.br()\n\n\"Click this icon: \"\n\nwith ui.popover(title=\"Popover title\"):\n    icon(\"circle-info\")\n    \"Popover message\""
+    },
+    {
+      "type": "h3",
+      "text": "All together now"
+    },
+    {
+      "type": "p",
+      "text": "Let’s put it all together to create a dashboard for exploring restaurant tipping data."
+    },
+    {
+      "type": "p",
+      "text": "Here we use a sidebar to hold our “global” inputs, and place outputs in cards. These cards are laid out column-wise, and value boxes highlight the most important numbers. Finally, inputs that are specific to each are placed in a popover so that they are unobtrusive and don’t distract the user from the main application content."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 800\n\nimport faicons as fa\nimport plotly.express as px\nfrom shinywidgets import render_plotly\n\nfrom shiny import reactive, render, req\nfrom shiny.express import input, ui\n\n# Load data and compute static values\ntips = px.data.tips()\nbill_rng = (min(tips.total_bill), max(tips.total_bill))\n\n# Add page title and sidebar\nui.page_opts(title=\"Restaurant tipping\", fillable=True)\nwith ui.sidebar(open=\"desktop\"):\n    ui.input_slider(\"total_bill\", \"Bill amount\", min=bill_rng[0], max=bill_rng[1], value=bill_rng, pre=\"$\")\n    ui.input_checkbox_group(\"time\", \"Food service\", [\"Lunch\", \"Dinner\"], selected=[\"Lunch\", \"Dinner\"], inline=True)\n    ui.input_action_button(\"reset\", \"Reset filter\")\n\n# Add main content\nICONS = {\n    \"user\": fa.icon_svg(\"user\", \"regular\"),\n    \"wallet\": fa.icon_svg(\"wallet\"),\n    \"currency-dollar\": fa.icon_svg(\"dollar-sign\"),\n    \"gear\": fa.icon_svg(\"gear\")\n}\n\nwith ui.layout_columns(fill=False):\n\n    with ui.value_box(showcase=ICONS[\"user\"]):\n        \"Total tippers\"\n        @render.express\n        def total_tippers():\n            tips_data().shape[0]\n\n    with ui.value_box(showcase=ICONS[\"wallet\"]):\n        \"Average tip\"\n        @render.express\n        def average_tip():\n            d = tips_data()\n            if d.shape[0] > 0:\n                perc = d.tip / d.total_bill\n                f\"{perc.mean():.1%}\"\n\n    with ui.value_box(showcase=ICONS[\"currency-dollar\"]):\n        \"Average bill\"\n        @render.express\n        def average_bill():\n            d = tips_data()\n            if d.shape[0] > 0:\n                bill = d.total_bill.mean()\n                f\"${bill:.2f}\"\n\n\nwith ui.layout_columns(col_widths=[6, 6, 12]):\n\n    with ui.card(full_screen=True):\n        ui.card_header(\"Tips data\")\n        @render.data_frame\n        def table():\n            return render.DataGrid(tips_data())\n\n    with ui.card(full_screen=True):\n        with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n            \"Total bill vs tip\"\n            with ui.popover(title=\"Add a color variable\", placement=\"top\"):\n                ICONS[\"gear\"]\n                ui.input_radio_buttons(\n                    \"scatter_color\", None,\n                    [\"none\", \"sex\", \"smoker\", \"day\", \"time\"],\n                    inline=True\n                )\n\n        @render_plotly\n        def scatterplot():\n            color = input.scatter_color()\n            return px.scatter(\n                tips_data(),\n                x=\"total_bill\",\n                y=\"tip\",\n                color=None if color == \"none\" else color,\n                trendline=\"lowess\"\n            )\n\n    with ui.card(full_screen=True):\n        with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n            \"Tip percentages\"\n            with ui.popover(title=\"Add a color variable\"):\n                ICONS[\"gear\"]\n                ui.input_radio_buttons(\n                    \"tip_perc_y\", \"Split by:\",\n                    [\"sex\", \"smoker\", \"day\", \"time\"],\n                    selected=\"day\",\n                    inline=True\n                )\n\n        @render_plotly\n        def tip_perc():\n            from ridgeplot import ridgeplot\n            # Must make a copy of this pandas dataframe before we mutate it!\n            # See https://shiny.posit.co/py/docs/reactive-mutable.html\n            dat = tips_data().copy()\n            dat[\"percent\"] = dat.tip / dat.total_bill\n            yvar = input.tip_perc_y()\n            uvals = dat[yvar].unique()\n\n            samples = [\n                [ dat.percent[dat[yvar] == val] ]\n                for val in uvals\n            ]\n\n            plt = ridgeplot(\n                samples=samples, labels=uvals, bandwidth=0.01,\n                colorscale=\"viridis\", colormode=\"row-index\"\n            )\n\n            plt.update_layout(\n                legend=dict(orientation=\"h\", yanchor=\"bottom\", y=1.02, xanchor=\"center\", x=0.5)\n            )\n\n            return plt\n\n\n# --------------------------------------------------------\n# Reactive calculations and effects\n# --------------------------------------------------------\n\n@reactive.calc\ndef tips_data():\n    bill = input.total_bill()\n    idx1 = tips.total_bill.between(bill[0], bill[1])\n    idx2 = tips.time.isin(input.time())\n    return tips[idx1 & idx2]\n\n@reactive.effect\n@reactive.event(input.reset)\ndef _():\n    ui.update_slider(\"total_bill\", value=bill_rng)\n    ui.update_checkbox_group(\"time\", selected=[\"Lunch\", \"Dinner\"])\n\n## file: requirements.txt\nridgeplot==0.1.25"
+    },
+    {
+      "type": "h2",
+      "text": "Next steps"
+    },
+    {
+      "type": "p",
+      "text": "If you’d like to start developing Shiny apps locally, see the get started section on creating and running apps."
+    },
+    {
+      "type": "p",
+      "text": "Otherwise, to keep learning more about some of the topics covered here, see the following:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "User interfaces: Learn more about the Shiny’s UI tooling.",
+        "Reactivity: Learn how to manage code execution in response to user input.",
+        "Jupyter Widgets: Learn how all about Shiny’s Jupyter Widgets integration."
+      ]
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer, editor]\n#| layout: vertical\n#| viewerHeight: 500\nfrom shiny.express import input, render, ui\nfrom shinywidgets import render_plotly\n\nui.page_opts(title=\"Penguins dashboard\", fillable=True)\n\nwith ui.sidebar():\n    ui.input_selectize(\n        \"var\", \"Select variable\",\n        [\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\", \"body_mass_g\", \"year\"]\n    )\n    ui.input_numeric(\"bins\", \"Number of bins\", 30)\n\nwith ui.card(full_screen=True):\n    @render_plotly\n    def hist():\n        import plotly.express as px\n        from palmerpenguins import load_penguins\n        return px.histogram(load_penguins(), x=input.var(), nbins=input.bins())",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny.express import ui\n\nui.page_opts(title = \"Title\")\n\nwith ui.sidebar():\n    \"Sidebar (input)\"\n\n\"Main content (output)\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import render, ui\n\nwith ui.card(full_screen=True):\n    ui.card_header(\"A card with a header\")\n    @render.plot\n    def plot():\n        import matplotlib.pyplot as plt\n        return plt.scatter([1, 2, 3], [4, 5, 6])\n\nwith ui.card():\n    ui.markdown(\"Another card with some _markdown_.\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import render, ui\nfrom faicons import icon_svg as icon\n\nwith ui.value_box(showcase=icon(\"piggy-bank\")):\n    \"Total sales\"\n    \"$1,000,000\"\n\nwith ui.value_box(showcase=icon(\"person\")):\n    \"Total customers\"\n    @render.ui\n    def customers():\n        return f\"{1000:,}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny.express import ui\n\nwith ui.layout_columns(col_widths=[6, 6, 12]):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nui.page_opts(fillable = True)\n\nwith ui.layout_column_wrap(fill=False):\n    with ui.value_box():\n        \"Value box\"\n        \"$1,000,000\"\n\n    with ui.value_box():\n        \"Value box\"\n        \"$1,000,000\"\n\nwith ui.card():\n    \"Card that fills remaining space...\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\nfrom faicons import icon_svg as icon\n\n\"Hover this icon: \"\n\nwith ui.tooltip():\n    icon(\"circle-info\")\n    \"Tooltip message\"\n\nui.br()\n\n\"Click this icon: \"\n\nwith ui.popover(title=\"Popover title\"):\n    icon(\"circle-info\")\n    \"Popover message\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 800\n\nimport faicons as fa\nimport plotly.express as px\nfrom shinywidgets import render_plotly\n\nfrom shiny import reactive, render, req\nfrom shiny.express import input, ui\n\n# Load data and compute static values\ntips = px.data.tips()\nbill_rng = (min(tips.total_bill), max(tips.total_bill))\n\n# Add page title and sidebar\nui.page_opts(title=\"Restaurant tipping\", fillable=True)\nwith ui.sidebar(open=\"desktop\"):\n    ui.input_slider(\"total_bill\", \"Bill amount\", min=bill_rng[0], max=bill_rng[1], value=bill_rng, pre=\"$\")\n    ui.input_checkbox_group(\"time\", \"Food service\", [\"Lunch\", \"Dinner\"], selected=[\"Lunch\", \"Dinner\"], inline=True)\n    ui.input_action_button(\"reset\", \"Reset filter\")\n\n# Add main content\nICONS = {\n    \"user\": fa.icon_svg(\"user\", \"regular\"),\n    \"wallet\": fa.icon_svg(\"wallet\"),\n    \"currency-dollar\": fa.icon_svg(\"dollar-sign\"),\n    \"gear\": fa.icon_svg(\"gear\")\n}\n\nwith ui.layout_columns(fill=False):\n\n    with ui.value_box(showcase=ICONS[\"user\"]):\n        \"Total tippers\"\n        @render.express\n        def total_tippers():\n            tips_data().shape[0]\n\n    with ui.value_box(showcase=ICONS[\"wallet\"]):\n        \"Average tip\"\n        @render.express\n        def average_tip():\n            d = tips_data()\n            if d.shape[0] > 0:\n                perc = d.tip / d.total_bill\n                f\"{perc.mean():.1%}\"\n\n    with ui.value_box(showcase=ICONS[\"currency-dollar\"]):\n        \"Average bill\"\n        @render.express\n        def average_bill():\n            d = tips_data()\n            if d.shape[0] > 0:\n                bill = d.total_bill.mean()\n                f\"${bill:.2f}\"\n\n\nwith ui.layout_columns(col_widths=[6, 6, 12]):\n\n    with ui.card(full_screen=True):\n        ui.card_header(\"Tips data\")\n        @render.data_frame\n        def table():\n            return render.DataGrid(tips_data())\n\n    with ui.card(full_screen=True):\n        with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n            \"Total bill vs tip\"\n            with ui.popover(title=\"Add a color variable\", placement=\"top\"):\n                ICONS[\"gear\"]\n                ui.input_radio_buttons(\n                    \"scatter_color\", None,\n                    [\"none\", \"sex\", \"smoker\", \"day\", \"time\"],\n                    inline=True\n                )\n\n        @render_plotly\n        def scatterplot():\n            color = input.scatter_color()\n            return px.scatter(\n                tips_data(),\n                x=\"total_bill\",\n                y=\"tip\",\n                color=None if color == \"none\" else color,\n                trendline=\"lowess\"\n            )\n\n    with ui.card(full_screen=True):\n        with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n            \"Tip percentages\"\n            with ui.popover(title=\"Add a color variable\"):\n                ICONS[\"gear\"]\n                ui.input_radio_buttons(\n                    \"tip_perc_y\", \"Split by:\",\n                    [\"sex\", \"smoker\", \"day\", \"time\"],\n                    selected=\"day\",\n                    inline=True\n                )\n\n        @render_plotly\n        def tip_perc():\n            from ridgeplot import ridgeplot\n            # Must make a copy of this pandas dataframe before we mutate it!\n            # See https://shiny.posit.co/py/docs/reactive-mutable.html\n            dat = tips_data().copy()\n            dat[\"percent\"] = dat.tip / dat.total_bill\n            yvar = input.tip_perc_y()\n            uvals = dat[yvar].unique()\n\n            samples = [\n                [ dat.percent[dat[yvar] == val] ]\n                for val in uvals\n            ]\n\n            plt = ridgeplot(\n                samples=samples, labels=uvals, bandwidth=0.01,\n                colorscale=\"viridis\", colormode=\"row-index\"\n            )\n\n            plt.update_layout(\n                legend=dict(orientation=\"h\", yanchor=\"bottom\", y=1.02, xanchor=\"center\", x=0.5)\n            )\n\n            return plt\n\n\n# --------------------------------------------------------\n# Reactive calculations and effects\n# --------------------------------------------------------\n\n@reactive.calc\ndef tips_data():\n    bill = input.total_bill()\n    idx1 = tips.total_bill.between(bill[0], bill[1])\n    idx2 = tips.time.isin(input.time())\n    return tips[idx1 & idx2]\n\n@reactive.effect\n@reactive.event(input.reset)\ndef _():\n    ui.update_slider(\"total_bill\", value=bill_rng)\n    ui.update_checkbox_group(\"time\", selected=[\"Lunch\", \"Dinner\"])\n\n## file: requirements.txt\nridgeplot==0.1.25"
+  ],
+  "toc": [
+    {
+      "title": "Basic dashboard",
+      "url": "docs/#basic-dashboard"
+    },
+    {
+      "title": "Sophisticated dashboard",
+      "url": "docs/#sophisticated-dashboard"
+    },
+    {
+      "title": "Sidebar layout",
+      "url": "docs/#sidebar-layout"
+    },
+    {
+      "title": "Cards",
+      "url": "docs/#cards"
+    },
+    {
+      "title": "Value boxes",
+      "url": "docs/#value-boxes"
+    },
+    {
+      "title": "Multi-column layout",
+      "url": "docs/#multi-column-layout"
+    },
+    {
+      "title": "Filling layout",
+      "url": "docs/#filling-layout"
+    },
+    {
+      "title": "Tooltips and popovers",
+      "url": "docs/#tooltips-and-popovers"
+    },
+    {
+      "title": "All together now",
+      "url": "docs/#all-together-now"
+    },
+    {
+      "title": "Next steps",
+      "url": "docs/#next-steps"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

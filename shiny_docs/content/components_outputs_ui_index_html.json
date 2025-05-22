@@ -1,0 +1,299 @@
+{
+  "metadata": {
+    "title": "UI – Shiny for Python",
+    "description": "",
+    "url": "components/outputs/ui/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Outputs",
+        "UI"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "UI"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_switch(\"show_slider\", \"Show slider\", True)\n\n@render.express  \ndef ui_slider():  \n    if input.show_slider():\n        value = input.slider() if \"slider\" in input else 5\n        ui.input_slider(\"slider\", \"Choose a number\", min=1, max=10, value=value)"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.output_ui ui.output_ui(id, inline=False, container=None, fill=False, fillable=False, **kwargs)",
+        "@render.ui render.ui(_fn=None)",
+        "@render.express express.render.express(self, _fn=None, *, inline=False, container=None, fill=False, fillable=False, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.output_ui ui.output_ui(id, inline=False, container=None, fill=False, fillable=False, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "@render.ui render.ui(_fn=None)"
+    },
+    {
+      "type": "p",
+      "text": "@render.express express.render.express(self, _fn=None, *, inline=False, container=None, fill=False, fillable=False, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A UI output creates an output container for a UI (i.e., HTML) element, such as a set of additional controls. Adding a UI output allows you to show, hide, or update input controls within your app."
+    },
+    {
+      "type": "p",
+      "text": "To add a UI output, follow three steps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Call ui.output_ui() in the UI of your app to create a div in which to display the UI element. Where you call this function within the UI functions will determine where the table will appear within the layout of the app. Set the id argument of ui.output_ui() to a unique value.",
+        "Within the server function, define a new function whose name matches the id used above. The function should return a UI element, like an input control.",
+        "Decorate the function with @render.ui. If you’re using an action button or link to show the UI element, you’ll also need to decorate with @reactive.event."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Call ui.output_ui() in the UI of your app to create a div in which to display the UI element. Where you call this function within the UI functions will determine where the table will appear within the layout of the app. Set the id argument of ui.output_ui() to a unique value."
+    },
+    {
+      "type": "p",
+      "text": "Within the server function, define a new function whose name matches the id used above. The function should return a UI element, like an input control."
+    },
+    {
+      "type": "p",
+      "text": "Decorate the function with @render.ui. If you’re using an action button or link to show the UI element, you’ll also need to decorate with @reactive.event."
+    },
+    {
+      "type": "p",
+      "text": "See also: Dynamic UI and UI and HTML."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Create dependent controls"
+    },
+    {
+      "type": "p",
+      "text": "You can use @render.ui or @render.express and ui.output_ui() to create a set of controls that are dependent on a setting in your app. In this example, we show a different set of options when the app is in “plot” or “table” mode. Note that we use the current input values or a default value when creating the dependent controls. Without this, the values are re-initialized every time and forget previous user input."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nwith ui.layout_columns():\n    ui.input_radio_buttons(\"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\")\n\n    @render.express\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10)\n            ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10)\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000)\n            ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000)"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_switch(\"show_slider\", \"Show slider\", True)\n\n@render.express  \ndef ui_slider():  \n    if input.show_slider():\n        value = input.slider() if \"slider\" in input else 5\n        ui.input_slider(\"slider\", \"Choose a number\", min=1, max=10, value=value)",
+    "from shiny.express import input, render, ui\n\nui.input_switch(\"show_slider\", \"Show slider\", True)\n\n@render.express  \ndef ui_slider():  \n    if input.show_slider():\n        value = input.slider() if \"slider\" in input else 5\n        ui.input_slider(\"slider\", \"Choose a number\", min=1, max=10, value=value)",
+    "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_switch(\"show_slider\", \"Show slider\", True),\n    ui.output_ui(\"ui_slider\"),  \n)\n\ndef server(input, output, session):\n    @render.ui  \n    @reactive.event(input.show_slider)  \n    def ui_slider():  \n        if input.show_slider():\n            value = input.slider() if \"slider\" in input else 5\n            return ui.input_slider(\n                \"slider\", \"Choose a number\", min=1, max=10, value=value\n            )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nwith ui.layout_columns():\n    ui.input_radio_buttons(\"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\")\n\n    @render.express\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10)\n            ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10)\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000)\n            ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000)",
+    "from shiny.express import input, render, ui\n\nwith ui.layout_columns():\n    ui.input_radio_buttons(\"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\")\n\n    @render.express\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10)\n            ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10)\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000)\n            ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.layout_columns(\n        ui.input_radio_buttons(\n            \"mode\", \"Display mode\", [\"Table\", \"Plot\"], selected=\"Table\"\n        ),\n        ui.output_ui(\"mode_controls\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.ui\n    def mode_controls():\n        if input.mode() == \"Table\":\n            rows = input.rows() if \"rows\" in input else 10\n            cols = input.cols() if \"cols\" in input else 4\n            return ui.TagList(\n                ui.input_slider(\"rows\", \"Rows:\", value=rows, min=1, max=10),\n                ui.input_slider(\"cols\", \"Columns:\", value=cols, min=1, max=10),\n            )\n        else:\n            height = input.height() if \"height\" in input else 500\n            width = input.width() if \"width\" in input else 500\n            return ui.TagList(\n                ui.input_slider(\"height\", \"Height:\", value=height, min=100, max=1000),\n                ui.input_slider(\"width\", \"Width:\", value=width, min=100, max=1000),\n            )\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

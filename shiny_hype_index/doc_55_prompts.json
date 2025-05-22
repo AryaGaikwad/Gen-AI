@@ -1,0 +1,7 @@
+[
+  "How can I create an interactive plot using Plotly in Shiny for Python?",
+  "What steps are involved in defining a function within the server() function to create a Plotly figure in Shiny for Python?",
+  "How can I convert a Plotly figure to a FigureWidget in Shiny for Python?",
+  "What event handlers can I use to listen for user interactions with a Plotly figure in Shiny for Python?",
+  "In Shiny for Python, how can I capture click, hover, and selection information as reactive variables when using a Plotly figure as an input widget?"
+]

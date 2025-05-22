@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create an input control for entry of numeric values using `ui.input_numeric` in Shiny for Python?",
+  "How can I specify the interval to use when stepping between the minimum and maximum allowed values in `ui.input_numeric`?",
+  "What are the options available for specifying when the input value should be updated in `ui.input_numeric`?",
+  "What does the `update_numeric` function do in relation to `ui.input_numeric` in Shiny for Python?",
+  "In the context of `ui.input_numeric`, how can I define the CSS width of the input control?"
+]

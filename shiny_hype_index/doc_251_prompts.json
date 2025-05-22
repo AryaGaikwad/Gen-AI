@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for creating a sidebar layout using ui.layout_sidebar in Shiny for Python?",
+  "How can I specify whether the main content area and sidebar layout should be wrapped in a fillable container using ui.layout_sidebar?",
+  "What options are available for customizing the appearance of the sidebar layout, such as background color, border, and border radius?",
+  "In what situations would I use the padding parameter within the sidebar layout in Shiny for Python?",
+  "What does the ui.layout_sidebar function return, and how does it relate to the sidebar object created by the sidebar function?"
+]

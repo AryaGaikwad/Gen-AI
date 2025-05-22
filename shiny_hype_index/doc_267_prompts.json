@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using ui.input_date in Shiny for Python?",
+  "How can I specify the starting date for the calendar in ui.input_date?",
+  "What options are available for the date range shown when the input object is first clicked in ui.input_date?",
+  "How can I disable specific dates or days of the week in the ui.input_date calendar?",
+  "What are the different date format values that can be used to display dates in the browser when using ui.input_date?"
+]

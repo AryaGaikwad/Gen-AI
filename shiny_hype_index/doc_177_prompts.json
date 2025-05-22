@@ -1,0 +1,7 @@
+[
+  "How does using `reactive.isolate()` differ from directly reading a reactive value in Shiny for Python?",
+  "When might it be beneficial to use `reactive.isolate()` in a Shiny for Python application?",
+  "How does `reactive.isolate()` help in creating a non-reactive scope within a reactive scope in Shiny for Python?",
+  "How can `reactive.isolate()` be used for debugging purposes in Shiny for Python applications?",
+  "What does the `reactive.isolate()` function return in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "How can I display a character string as monospaced code in a shaded rectangle using Shiny for Python?",
+  "How can I ensure that a shaded rectangle placeholder is displayed when the string to be shown is empty in Shiny for Python?",
+  "What functions are available in Shiny for Python to work with verbatim text?",
+  "How can I create reactive verbatim text in Shiny for Python using the @render.text decorator?",
+  "What is the purpose of setting placeholder=True in the ui.output_verbatim_text() function in Shiny for Python?"
+]

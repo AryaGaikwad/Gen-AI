@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating a select list using ui.input_select in Shiny for Python?",
+  "How is the initial selection of values specified in the ui.input_select function?",
+  "What is the difference in server values returned when multiple items are selected versus when only one item is selected using ui.input_select?",
+  "What is the purpose of the 'selectize' parameter in the ui.input_select function?",
+  "How can the appearance of the selection box be customized using the 'width' and 'size' parameters in ui.input_select?"
+]

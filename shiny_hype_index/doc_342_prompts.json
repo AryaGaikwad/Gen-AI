@@ -1,0 +1,7 @@
+[
+  "What does the ui.update_action_link function in Shiny for Python allow you to do?",
+  "What parameters are required for the ui.update_action_link function in Shiny for Python?",
+  "How are input updater functions in Shiny for Python executed on the client side?",
+  "What happens if any arguments in the ui.update_action_link function have None values?",
+  "In Shiny for Python, how can you clear the set of choices for radio buttons, checkbox groups, and select inputs using the update functions?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a set of radio buttons using ui.input_radio_buttons in Shiny for Python?",
+  "What does the ui.input_radio_buttons function in Shiny for Python return?",
+  "How can I specify the values that should be initially selected when creating radio buttons with ui.input_radio_buttons in Shiny for Python?",
+  "In what circumstances would I provide a dictionary mapping choice values to labels when using ui.input_radio_buttons in Shiny for Python?",
+  "What other input functions are mentioned in the 'See Also' section of the documentation for ui.input_radio_buttons in Shiny for Python?"
+]

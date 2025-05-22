@@ -1,0 +1,7 @@
+[
+  "How can I allow users to select multiple items from a list in a Shiny Python app?",
+  "How do I define the identifier and label of a select list in Shiny Python?",
+  "What is the purpose of the choices parameter in the ui.input_select() function in Shiny Python?",
+  "How can I access the selected value(s) of a select list in the server function of a Shiny Python app?",
+  "In Shiny Python, how can I group choices into categories within a select list using dictionaries?"
+]

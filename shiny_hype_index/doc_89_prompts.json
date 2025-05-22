@@ -1,0 +1,7 @@
+[
+  "What are the relevant functions related to the Chat component in Shiny for Python?",
+  "How can I set the page options for a Shiny chat interface using Python?",
+  "What is the purpose of the callback function @chat.on_user_submit in the Chat component?",
+  "How can I append a message stream to the chat interface in Shiny for Python?",
+  "How can I create a new instance of the Chat component with a specific ID in Shiny for Python?"
+]

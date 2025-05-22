@@ -1,0 +1,308 @@
+{
+  "metadata": {
+    "title": "Choosing a syntax – Shiny for Python",
+    "description": "",
+    "url": "docs/express-or-core.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📝 Syntax modes",
+        "Choosing a syntax"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Choosing a syntax"
+    },
+    {
+      "type": "p",
+      "text": "Now that you are familiar with the differences between Shiny Express and Shiny Core, you might be wondering how to choose between them."
+    },
+    {
+      "type": "p",
+      "text": "In this article, we’ll suggest some guidelines, but it’s important to note that there are not many hard and fast rules. There is a lot of overlap between the capabilities of the two syntaxes, so feel free to choose whichever feels more natural and comfortable for you."
+    },
+    {
+      "type": "p",
+      "text": "Shiny Express is designed to get you up and running as quickly as possible. It’s also designed to let you author your app with a minimum of boilerplate. As a result, it really shines in the early stages of both the learning journey and the lifecycle of an app."
+    },
+    {
+      "type": "p",
+      "text": "Compared to Express, Core enforces a more structured approach that requires more initial effort to use. However, that investment has its own payoff."
+    },
+    {
+      "type": "p",
+      "text": "The bulk of the rest of this article will focus on the advantages of Shiny Core. This isn’t because we think it’s better, but because Shiny Express’s advantages—being more approachable and more concise—are fairly self-evident, while Shiny Core’s advantages are more subtle."
+    },
+    {
+      "type": "h2",
+      "text": "Maintainability"
+    },
+    {
+      "type": "p",
+      "text": "Consider using Shiny Core if you are building a large or long-lived app."
+    },
+    {
+      "type": "p",
+      "text": "The most important difference between the two syntaxes is that Express allows you to intermingle UI and server code, while Core requires you to separate them. The separation that Core requires can feel inconvenient while adding features to your app, as each new output requires you to edit two different places in your app.py file."
+    },
+    {
+      "type": "p",
+      "text": "But for larger and longer-lived apps, Shiny Core’s more opinionated approach becomes an advantage. It is much easier to add, remove, or relocate pieces of your UI when all of its code is in one place, with no server code to confuse things. Similarly, when you’re trying to understand the relationship between a reactive calculation and some outputs, it’s much easier to do so when you don’t have intermingled UI code in the way."
+    },
+    {
+      "type": "p",
+      "text": "At the bottom of this page, you’ll find a Shiny Core version of the dashboard app from the Essentials section of this guide. Compare their respective source code, and consider:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Which version makes the structure of the UI more obvious?",
+        "Which version would make you more confident in moving UI elements around?",
+        "Which version makes it easier to understand the reactive calcs and outputs?",
+        "Imagine you were picking up an app that had been written a year ago by someone else. Which version would you prefer?"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Feature set"
+    },
+    {
+      "type": "p",
+      "text": "Consider using Shiny Core if you need to use Shiny Modules or dynamic UI."
+    },
+    {
+      "type": "p",
+      "text": "At this time, Shiny Core’s functionality is a superset of Express, meaning that anything you can do in Express, you can also do in Core. However, the reverse is not true."
+    },
+    {
+      "type": "p",
+      "text": "Most importantly, Shiny Modules are supported in Shiny Core but not (yet) in Shiny Express. Shiny Modules are extremely useful for organizing large apps into smaller, more manageable pieces, and are also a mechanism for reusing Shiny application logic."
+    },
+    {
+      "type": "p",
+      "text": "Shiny Core also has ui.insert_ui() and ui.remove_ui() functions, which is a way to imperatively add or remove UI elements from the app at any time. Despite being available in shiny.express.ui, these functions do not currently work well with Shiny Express. The same goes for ui.modal_show()."
+    },
+    {
+      "type": "h2",
+      "text": "Maturity"
+    },
+    {
+      "type": "p",
+      "text": "Consider using Shiny Core if you care more about maturity and stability than convenience."
+    },
+    {
+      "type": "p",
+      "text": "Given its longer history, Shiny Core is naturally more mature than Shiny Express in both syntax and implementation."
+    },
+    {
+      "type": "p",
+      "text": "We’ve carefully designed the Shiny Express syntax, and hope not to have to make breaking changes to it. However, we don’t know what we don’t know, and it’s possible that user feedback or our own testing will someday require us to make significant changes."
+    },
+    {
+      "type": "p",
+      "text": "Similarly, we are constantly testing Shiny Express, but as of this writing, it has not has as much real-world use as Shiny Core. Therefore, with Shiny Core, you are less likely to encounter bugs."
+    },
+    {
+      "type": "h2",
+      "text": "Familiarity to R users"
+    },
+    {
+      "type": "p",
+      "text": "Consider using Shiny Core if you are an R user who is already familiar with Shiny."
+    },
+    {
+      "type": "p",
+      "text": "While Shiny Core is not a literal translation of Shiny for R, it is much closer to it than Shiny Express. The UI/server separation, the nested UI function calls, the matching of output IDs to render functions, are all going to feel very natural to experienced Shiny for R app authors."
+    },
+    {
+      "type": "h2",
+      "text": "Appendix"
+    },
+    {
+      "type": "p",
+      "text": "The following is the dashboard application from the Essentials section of this guide, rewritten using Shiny Core. Compare it to the original."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 800\nimport faicons as fa\nimport plotly.express as px\nfrom shinywidgets import output_widget, render_plotly\n\nfrom shiny import App, reactive, render, req, ui\n\n# Load data and compute static values\ntips = px.data.tips()\nbill_rng = (min(tips.total_bill), max(tips.total_bill))\n\nICONS = {\n    \"user\": fa.icon_svg(\"user\", \"regular\"),\n    \"wallet\": fa.icon_svg(\"wallet\"),\n    \"currency-dollar\": fa.icon_svg(\"dollar-sign\"),\n    \"gear\": fa.icon_svg(\"gear\")\n}\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"total_bill\", \"Bill amount\", min=bill_rng[0], max=bill_rng[1], value=bill_rng, pre=\"$\"),\n        ui.input_checkbox_group(\"time\", \"Food service\", [\"Lunch\", \"Dinner\"], selected=[\"Lunch\", \"Dinner\"], inline=True),\n        ui.input_action_button(\"reset\", \"Reset filter\"),\n    ),\n    ui.layout_columns(\n        ui.value_box(\n            \"Total tippers\",\n            ui.output_ui(\"total_tippers\"),\n            showcase=ICONS[\"user\"],\n            showcase_layout=\"left center\",\n        ),\n        ui.value_box(\n            \"Average tip\",\n            ui.output_ui(\"average_tip\"),\n            showcase=ICONS[\"wallet\"],\n            showcase_layout=\"left center\",\n        ),\n        ui.value_box(\n            \"Average bill\",\n            ui.output_ui(\"average_bill\"),\n            showcase=ICONS[\"currency-dollar\"],\n            showcase_layout=\"left center\",\n        ),\n        fill=False,\n    ),\n    ui.layout_columns(\n        ui.card(\n            ui.card_header(\"Tips data\"),\n            ui.output_data_frame(\"table\"),\n            full_screen=True,\n        ),\n        ui.card(\n            ui.card_header(\n                \"Total bill vs tip\",\n                ui.popover(\n                    ICONS[\"gear\"],\n                    ui.input_radio_buttons(\n                        \"scatter_color\", None,\n                        [\"none\", \"sex\", \"smoker\", \"day\", \"time\"],\n                        inline=True,\n                    ),\n                    title=\"Add a color variable\",\n                    placement=\"top\",\n                ),\n                class_=\"d-flex justify-content-between align-items-center\"\n            ),\n            output_widget(\"scatterplot\"),\n            full_screen=True,\n        ),\n        ui.card(\n            ui.card_header(\n                \"Tip percentages\",\n                ui.popover(\n                    ICONS[\"gear\"],\n                    ui.input_radio_buttons(\n                        \"tip_perc_y\", \"Split by:\",\n                        [\"sex\", \"smoker\", \"day\", \"time\"],\n                        selected=\"day\",\n                        inline=True,\n                    ),\n                    title=\"Add a color variable\",\n                ),\n                class_=\"d-flex justify-content-between align-items-center\",\n            ),\n            output_widget(\"tip_perc\"),\n            full_screen=True,\n        ),\n        col_widths=[6, 6, 12],\n    ),\n    title=\"Restaurant tipping\",\n    fillable=True,\n)\n\ndef server(input, output, session):\n\n    # --------------------------------------------------------\n    # Reactive calculations and effects\n    # --------------------------------------------------------\n\n    @reactive.calc\n    def tips_data():\n        bill = input.total_bill()\n        idx1 = tips.total_bill.between(bill[0], bill[1])\n        idx2 = tips.time.isin(input.time())\n        return tips[idx1 & idx2]\n\n    @reactive.effect\n    @reactive.event(input.reset)\n    def _():\n        ui.update_slider(\"total_bill\", value=bill_rng)\n        ui.update_checkbox_group(\"time\", selected=[\"Lunch\", \"Dinner\"])\n\n    # --------------------------------------------------------\n    # Outputs\n    # --------------------------------------------------------\n\n    @render.ui\n    def total_tippers():\n        return tips_data().shape[0]\n\n    @render.ui\n    def average_tip():\n        d = tips_data()\n        req(d.shape[0] > 0)\n        perc = d.tip / d.total_bill\n        return f\"{perc.mean():.1%}\"\n\n    @render.ui\n    def average_bill():\n        d = tips_data()\n        req(d.shape[0] > 0)\n        bill = d.total_bill.mean()\n        return f\"${bill:.2f}\"\n\n    @render.data_frame\n    def table():\n        return render.DataGrid(tips_data())\n\n\n    @render_plotly\n    def scatterplot():\n        color = input.scatter_color()\n        return px.scatter(\n            tips_data(),\n            x=\"total_bill\",\n            y=\"tip\",\n            color=None if color == \"none\" else color,\n            trendline=\"lowess\"\n        )\n\n    @render_plotly\n    def tip_perc():\n        from ridgeplot import ridgeplot\n        dat = tips_data().copy()\n        dat.loc[:, \"percent\"] = dat.tip / dat.total_bill\n        yvar = input.tip_perc_y()\n        uvals = dat[yvar].unique()\n\n        samples = [\n            [ dat.percent[dat[yvar] == val] ]\n            for val in uvals\n        ]\n\n        plt = ridgeplot(\n            samples=samples, labels=uvals, bandwidth=0.01,\n            colorscale=\"viridis\", colormode=\"row-index\"\n        )\n\n        plt.update_layout(\n            legend=dict(orientation=\"h\", yanchor=\"bottom\", y=1.02, xanchor=\"center\", x=0.5)\n        )\n\n        return plt\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nridgeplot==0.1.25"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 800\nimport faicons as fa\nimport plotly.express as px\nfrom shinywidgets import output_widget, render_plotly\n\nfrom shiny import App, reactive, render, req, ui\n\n# Load data and compute static values\ntips = px.data.tips()\nbill_rng = (min(tips.total_bill), max(tips.total_bill))\n\nICONS = {\n    \"user\": fa.icon_svg(\"user\", \"regular\"),\n    \"wallet\": fa.icon_svg(\"wallet\"),\n    \"currency-dollar\": fa.icon_svg(\"dollar-sign\"),\n    \"gear\": fa.icon_svg(\"gear\")\n}\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"total_bill\", \"Bill amount\", min=bill_rng[0], max=bill_rng[1], value=bill_rng, pre=\"$\"),\n        ui.input_checkbox_group(\"time\", \"Food service\", [\"Lunch\", \"Dinner\"], selected=[\"Lunch\", \"Dinner\"], inline=True),\n        ui.input_action_button(\"reset\", \"Reset filter\"),\n    ),\n    ui.layout_columns(\n        ui.value_box(\n            \"Total tippers\",\n            ui.output_ui(\"total_tippers\"),\n            showcase=ICONS[\"user\"],\n            showcase_layout=\"left center\",\n        ),\n        ui.value_box(\n            \"Average tip\",\n            ui.output_ui(\"average_tip\"),\n            showcase=ICONS[\"wallet\"],\n            showcase_layout=\"left center\",\n        ),\n        ui.value_box(\n            \"Average bill\",\n            ui.output_ui(\"average_bill\"),\n            showcase=ICONS[\"currency-dollar\"],\n            showcase_layout=\"left center\",\n        ),\n        fill=False,\n    ),\n    ui.layout_columns(\n        ui.card(\n            ui.card_header(\"Tips data\"),\n            ui.output_data_frame(\"table\"),\n            full_screen=True,\n        ),\n        ui.card(\n            ui.card_header(\n                \"Total bill vs tip\",\n                ui.popover(\n                    ICONS[\"gear\"],\n                    ui.input_radio_buttons(\n                        \"scatter_color\", None,\n                        [\"none\", \"sex\", \"smoker\", \"day\", \"time\"],\n                        inline=True,\n                    ),\n                    title=\"Add a color variable\",\n                    placement=\"top\",\n                ),\n                class_=\"d-flex justify-content-between align-items-center\"\n            ),\n            output_widget(\"scatterplot\"),\n            full_screen=True,\n        ),\n        ui.card(\n            ui.card_header(\n                \"Tip percentages\",\n                ui.popover(\n                    ICONS[\"gear\"],\n                    ui.input_radio_buttons(\n                        \"tip_perc_y\", \"Split by:\",\n                        [\"sex\", \"smoker\", \"day\", \"time\"],\n                        selected=\"day\",\n                        inline=True,\n                    ),\n                    title=\"Add a color variable\",\n                ),\n                class_=\"d-flex justify-content-between align-items-center\",\n            ),\n            output_widget(\"tip_perc\"),\n            full_screen=True,\n        ),\n        col_widths=[6, 6, 12],\n    ),\n    title=\"Restaurant tipping\",\n    fillable=True,\n)\n\ndef server(input, output, session):\n\n    # --------------------------------------------------------\n    # Reactive calculations and effects\n    # --------------------------------------------------------\n\n    @reactive.calc\n    def tips_data():\n        bill = input.total_bill()\n        idx1 = tips.total_bill.between(bill[0], bill[1])\n        idx2 = tips.time.isin(input.time())\n        return tips[idx1 & idx2]\n\n    @reactive.effect\n    @reactive.event(input.reset)\n    def _():\n        ui.update_slider(\"total_bill\", value=bill_rng)\n        ui.update_checkbox_group(\"time\", selected=[\"Lunch\", \"Dinner\"])\n\n    # --------------------------------------------------------\n    # Outputs\n    # --------------------------------------------------------\n\n    @render.ui\n    def total_tippers():\n        return tips_data().shape[0]\n\n    @render.ui\n    def average_tip():\n        d = tips_data()\n        req(d.shape[0] > 0)\n        perc = d.tip / d.total_bill\n        return f\"{perc.mean():.1%}\"\n\n    @render.ui\n    def average_bill():\n        d = tips_data()\n        req(d.shape[0] > 0)\n        bill = d.total_bill.mean()\n        return f\"${bill:.2f}\"\n\n    @render.data_frame\n    def table():\n        return render.DataGrid(tips_data())\n\n\n    @render_plotly\n    def scatterplot():\n        color = input.scatter_color()\n        return px.scatter(\n            tips_data(),\n            x=\"total_bill\",\n            y=\"tip\",\n            color=None if color == \"none\" else color,\n            trendline=\"lowess\"\n        )\n\n    @render_plotly\n    def tip_perc():\n        from ridgeplot import ridgeplot\n        dat = tips_data().copy()\n        dat.loc[:, \"percent\"] = dat.tip / dat.total_bill\n        yvar = input.tip_perc_y()\n        uvals = dat[yvar].unique()\n\n        samples = [\n            [ dat.percent[dat[yvar] == val] ]\n            for val in uvals\n        ]\n\n        plt = ridgeplot(\n            samples=samples, labels=uvals, bandwidth=0.01,\n            colorscale=\"viridis\", colormode=\"row-index\"\n        )\n\n        plt.update_layout(\n            legend=dict(orientation=\"h\", yanchor=\"bottom\", y=1.02, xanchor=\"center\", x=0.5)\n        )\n\n        return plt\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nridgeplot==0.1.25"
+  ],
+  "toc": [
+    {
+      "title": "Maintainability",
+      "url": "docs/#maintainability"
+    },
+    {
+      "title": "Feature set",
+      "url": "docs/#feature-set"
+    },
+    {
+      "title": "Maturity",
+      "url": "docs/#maturity"
+    },
+    {
+      "title": "Familiarity to R users",
+      "url": "docs/#familiarity-to-r-users"
+    },
+    {
+      "title": "Appendix",
+      "url": "docs/#appendix"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

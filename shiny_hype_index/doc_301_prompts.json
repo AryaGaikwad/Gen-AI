@@ -1,0 +1,7 @@
+[
+  "How can I create a conditional panel in Shiny for Python?",
+  "What parameters can be specified when using ui.panel_conditional in Shiny for Python?",
+  "How can I refer to input and output JavaScript objects in the JavaScript expression for a conditional panel in Shiny for Python?",
+  "What is the recommended practice regarding special JavaScript characters in input id's when using ui.panel_conditional in Shiny for Python?",
+  "What is a more powerful but slower alternative to conditionally showing UI content in Shiny for Python, and how is it used?"
+]

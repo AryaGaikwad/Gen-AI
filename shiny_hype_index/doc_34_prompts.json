@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using React and Typescript to build a custom input component package for Shiny in Python?",
+  "How can I build a color picker component that returns the hex-code of the chosen color as a string for use in Shiny apps?",
+  "What steps are involved in deploying a custom input component package to PyPi for easy installation?",
+  "How can I develop a custom component with live-feedback using the provided package structure?",
+  "What is the significance of the package.json file and the shiny-bindings-react package in building custom components for Shiny in Python?"
+]

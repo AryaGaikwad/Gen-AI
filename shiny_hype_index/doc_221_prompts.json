@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.ui.panel_fixed` function in Shiny for Python?",
+  "How does `express.ui.panel_fixed` differ from `panel_absolute` in terms of functionality?",
+  "What are the parameters that can be passed to the `express.ui.panel_fixed` function?",
+  "In what scenarios would setting `fixed=True` in `express.ui.panel_fixed` be useful?",
+  "How does `express.ui.panel_fixed` handle scrolling behavior compared to other panel functions?"
+]

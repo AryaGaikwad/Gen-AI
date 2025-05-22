@@ -1,0 +1,7 @@
+[
+  "What steps are required to create a reactive Data Grid in a Shiny app?",
+  "How can a Data Grid collect input from the user in a Shiny app?",
+  "What function is used to access the indices of selected rows in a Shiny Data Grid?",
+  "How can filters be added to a Data Grid in a Shiny app?",
+  "In Shiny, how can the sorting of a Data Grid be programmatically updated?"
+]

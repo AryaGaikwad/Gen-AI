@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to define an HTML dependency using htmltools in Shiny for Python?",
+  "How can I retrieve a dictionary of attributes for a dependency using the as_dict method in htmltools?",
+  "What is the purpose of the as_html_tags method in htmltools, and how does it render a dependency?",
+  "How can I copy the files of a dependency to a specific path using htmltools in Shiny for Python?",
+  "What parameters are required for creating a CSS dependency using htmltools.css in Shiny for Python?"
+]

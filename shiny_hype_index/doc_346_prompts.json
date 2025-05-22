@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.update_popover function in Shiny for Python?",
+  "What parameters does the ui.update_popover function require for updating a popover?",
+  "How can the ui.update_popover function be used to open or close a popover?",
+  "When should the default Shiny session object be used with the ui.update_popover function?",
+  "What is the syntax for using the ui.update_popover function with specific parameters like title, show, and session?"
+]

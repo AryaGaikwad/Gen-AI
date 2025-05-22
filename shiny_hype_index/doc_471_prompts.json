@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a fillable page using ui.page_fillable in Shiny for Python?",
+  "What does the 'padding' parameter do in the ui.page_fillable function in Shiny for Python?",
+  "How can the gap (spacing between elements) be defined in the ui.page_fillable function in Shiny for Python?",
+  "What is the default behavior for the 'title' parameter in the ui.page_fillable function in Shiny for Python?",
+  "How can a custom Shiny theme be applied to a page created with ui.page_fillable in Shiny for Python?"
+]

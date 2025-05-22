@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using ui.layout_columns to create responsive, column-based grid layouts?",
+  "What are the options for defining the widths of columns in a layout created with ui.layout_columns?",
+  "How can row heights be specified in a layout created with ui.layout_columns?",
+  "What does the parameter 'fill' control when using ui.layout_columns?",
+  "How can CSS classes be applied to the containing element in a layout created with ui.layout_columns?"
+]

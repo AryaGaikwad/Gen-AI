@@ -1,0 +1,7 @@
+[
+  "What are the steps to display a Matplotlib figure in a Shiny app?",
+  "How can a function within the server() function create a figure in Shiny using Matplotlib?",
+  "How can a plot be used as an input widget in Shiny, and what interactions can be collected from the user?",
+  "What are the different objects that a function should return when using Matplotlib to plot in a Shiny app?",
+  "How can multiple output_image()/output_plot() calls with the same id value interact in a Shiny app when brushing?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the function ui.fill.as_fillable_container in Shiny for Python?",
+  "What is the input parameter required by the ui.fill.as_fillable_container function?",
+  "What is the return value of the ui.fill.as_fillable_container function?",
+  "How are filling layouts in Shiny for Python based on fillable containers and fill items?",
+  "Why would a developer use the functions as_fill_item and remove_all_fill in Shiny for Python?"
+]

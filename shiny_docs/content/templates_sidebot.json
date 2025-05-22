@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Side bot",
+    "description": "Use the sidebot template as a foundation for your next Shiny app.",
+    "url": "templates/sidebot/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Side bot"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --mode express --github jcheng5/py-databot"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --mode core --github jcheng5/py-databot"
+    },
+    {
+      "type": "p",
+      "text": "The sidebot app template extends the idea of the Query Chat template to a full blown dashboard. That is, users can use natural language to drill down into a dataset, and the app will display the results in a variety of ways, including tables, plots, and value boxes. Note the app will also display the SQL used to generate the results, so users can verify the app’s interpretation of their query, and learn how to write SQL queries themselves. It also includes a ✨ icon, which sends a screenshot of visuals to the LLM for an explanation of the visual."
+    },
+    {
+      "type": "p",
+      "text": "See Joe Cheng’s posit::conf(2024) presentation for a live demo of the app."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Chat",
+        "Data Grid",
+        "Plotly",
+        "Value box"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Cards",
+        "Grid layout"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "p",
+      "text": "chatlas shinywidgets plotly pandas matplotlib polars"
+    }
+  ],
+  "code_examples": [
+    "shiny create --mode express --github jcheng5/py-databot",
+    "shiny create --mode express --github jcheng5/py-databot",
+    "shiny create --mode core --github jcheng5/py-databot",
+    "shiny create --mode core --github jcheng5/py-databot"
+  ],
+  "toc": []
+}

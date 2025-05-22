@@ -1,0 +1,7 @@
+[
+  "What function in Shiny for Python can be used to create a checkbox for specifying logical values?",
+  "How can you specify the initial value of a checkbox when using ui.input_checkbox() in Shiny for Python?",
+  "What is the default value of a checkbox created using ui.input_checkbox() in Shiny for Python?",
+  "How can you access the value of a checkbox in the server() function of a Shiny Python app?",
+  "In Shiny for Python, what function should be added to the UI of the app to create a checkbox, and how can you determine where the checkbox will appear within the layout?"
+]

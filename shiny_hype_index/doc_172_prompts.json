@@ -1,0 +1,7 @@
+[
+  "What are the supported content types for the `ui` method in `express.ui.MarkdownStream`?",
+  "What is the default behavior for scrolling in the `ui` method of `express.ui.MarkdownStream`?",
+  "How can I render plain text content using `express.ui.MarkdownStream`?",
+  "What are the parameters required to create a UI element for `MarkdownStream`?",
+  "What does the `ui` method in `express.ui.MarkdownStream` return?"
+]

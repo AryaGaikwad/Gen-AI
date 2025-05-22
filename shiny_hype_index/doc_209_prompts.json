@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using express.ui.insert_accordion_panel in Shiny for Python?",
+  "How can I specify the position for inserting an accordion panel using express.ui.insert_accordion_panel?",
+  "What is the default value for the session parameter in express.ui.insert_accordion_panel?",
+  "When target=None, how does the position parameter affect the insertion of an accordion panel using express.ui.insert_accordion_panel?",
+  "Which functions are related to express.ui.insert_accordion_panel according to the documentation?"
+]

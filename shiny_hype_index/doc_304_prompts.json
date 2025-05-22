@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using ui.input_file to create a file upload control in Shiny for Python?",
+  "How can I specify the file type that the server expects when using ui.input_file in Shiny for Python?",
+  "What does the 'capture' parameter in the ui.input_file function do in Shiny for Python?",
+  "After uploading a file using ui.input_file in Shiny for Python, what information can be retrieved for each uploaded file from the returned UI element?",
+  "How can the width of the file upload control be customized using the ui.input_file function in Shiny for Python?"
+]

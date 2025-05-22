@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using express.ui.input_radio_buttons in Shiny for Python?",
+  "What does the 'inline' parameter do when creating radio buttons with express.ui.input_radio_buttons?",
+  "How can I specify the default selected value when using express.ui.input_radio_buttons?",
+  "What is the purpose of the CSS width parameter in express.ui.input_radio_buttons?",
+  "What type of values can be provided for the 'choices' parameter in express.ui.input_radio_buttons?"
+]

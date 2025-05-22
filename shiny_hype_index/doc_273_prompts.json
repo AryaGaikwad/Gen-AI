@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create an input control for entry of numeric values using ui.input_numeric in Shiny for Python?",
+  "How can I specify the minimum and maximum allowed values for the numeric input control in Shiny for Python using ui.input_numeric?",
+  "In Shiny for Python, what does the parameter 'update_on' control when creating a numeric input control using ui.input_numeric?",
+  "What does the function ui.input_numeric return in Shiny for Python?",
+  "How can I specify the interval to use when stepping between the minimum and maximum values for a numeric input control in Shiny for Python using ui.input_numeric?"
+]

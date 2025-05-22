@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating an output container for a static image using ui.output_image?",
+  "What does the click parameter do in the context of ui.output_image?",
+  "How can one control hover behavior in a static image output using ui.output_image?",
+  "What is the purpose of the brush parameter in ui.output_image?",
+  "How can the image output be adjusted to fit a fillable container according to the documentation for ui.output_image?"
+]

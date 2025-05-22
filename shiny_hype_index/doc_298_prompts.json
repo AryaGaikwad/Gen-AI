@@ -1,0 +1,7 @@
+[
+  "What are the different options available for configuring the appearance and behavior of the navbar in Shiny for Python?",
+  "How can I adjust the colors of the navbar when using a Bootswatch preset theme with Bootstrap 5 in Shiny for Python?",
+  "How can I customize the navbar colors used in light or dark mode in Shiny for Python?",
+  "What are the parameters that can be specified when using the ui.navbar_options function in Shiny for Python?",
+  "How can I create a NavbarOptions object with specific options using the ui.navbar_options function in Shiny for Python?"
+]

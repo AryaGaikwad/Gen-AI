@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "title": "Create and Run – Shiny for Python",
+    "description": "",
+    "url": "get-started/create-run.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Create and Run"
+    },
+    {
+      "type": "p",
+      "text": "When you install shiny, you also install the shiny command line interface (CLI). You can use this interface to help you create and run your Shiny applications."
+    },
+    {
+      "type": "h2",
+      "text": "Create a Shiny application"
+    },
+    {
+      "type": "p",
+      "text": "The best way to create a new Shiny app is with the shiny create command. This command asks you a series of questions about what kind of app you want to create, and then provides all the boilerplate code you need to get started with a working app."
+    },
+    {
+      "type": "code",
+      "text": "shiny create"
+    },
+    {
+      "type": "p",
+      "text": "Video"
+    },
+    {
+      "type": "p",
+      "text": "You can also get started faster by using one of our starter templates. There are templates for common use cases. For example, data dashboards, applications, streaming updates, or data entry."
+    },
+    {
+      "type": "h2",
+      "text": "Run your Shiny application"
+    },
+    {
+      "type": "p",
+      "text": "Shiny apps can be launched from Positron, VS Code, or the command line via shiny run."
+    },
+    {
+      "type": "p",
+      "text": "We recommend naming your shiny application app.py. This is the default file that shiny run will look for, so you can run the application in the terminal without any additional parameters."
+    },
+    {
+      "type": "p",
+      "text": "If you need a more unique name, we recommend beginning the file name with app, because the Shiny extension expects this naming pattern."
+    },
+    {
+      "type": "h3",
+      "text": "Positron and VS Code"
+    },
+    {
+      "type": "p",
+      "text": "The best way to run (and develop) Shiny apps is in Positron or Visual Studio Code with the Shiny extension. When you are editing a Shiny app.py file, the default behavior of the Run button (circled in red in the screenshot below) becomes “Run Shiny App”."
+    },
+    {
+      "type": "p",
+      "text": "When you run a Shiny app in Positron, it starts a Python process in a dedicated terminal and opens the app in an internal web browser. This lets you test and interact with your app without leaving the editor."
+    },
+    {
+      "type": "p",
+      "text": "Whenever you make changes to the app’s source code, the preview updates automatically. To view your app in a full browser window, click the icon to the right of the URL bar to open it externally."
+    },
+    {
+      "type": "p",
+      "text": "To debug your app, use the dropdown next to the Run button and select Debug Shiny App. Before launching in debug mode, make sure to set breakpoints in your code. Once the app starts, you can step through your code starting from those breakpoints. See the debugging page for more details."
+    },
+    {
+      "type": "h3",
+      "text": "Command line"
+    },
+    {
+      "type": "p",
+      "text": "To run a Shiny app from the command line, use the shiny run command. The required argument is the path to your app’s entry point, usually a Python file like app.py."
+    },
+    {
+      "type": "p",
+      "text": "You can also include optional flags to improve your development experience. For example, if your app’s entry point is app.py inside a folder called app_dir, you can run:"
+    },
+    {
+      "type": "code",
+      "text": "shiny run --reload --launch-browser app_dir/app.py"
+    },
+    {
+      "type": "p",
+      "text": "This will start the app and open it in your default web browser."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The --reload flag enables automatic reloading. When you save changes to your source files, the app will automatically restart and update in the browser.",
+        "The --launch-browser flag opens the app in a browser as soon as it starts."
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create",
+    "shiny create",
+    "shiny run --reload --launch-browser app_dir/app.py",
+    "shiny run --reload --launch-browser app_dir/app.py"
+  ],
+  "toc": [
+    {
+      "title": "Create a Shiny application",
+      "url": "get-started/#create-a-shiny-application"
+    },
+    {
+      "title": "Run your Shiny application",
+      "url": "get-started/#run-your-shiny-application"
+    },
+    {
+      "title": "Positron and VS Code",
+      "url": "get-started/#positron-and-vs-code"
+    },
+    {
+      "title": "Command line",
+      "url": "get-started/#command-line"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

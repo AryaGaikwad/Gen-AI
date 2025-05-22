@@ -1,0 +1,7 @@
+[
+  "What does the function `reactive.invalidate_later` do in Shiny for Python?",
+  "How does `reactive.invalidate_later` handle scheduled invalidation in Shiny for Python?",
+  "What parameters does `reactive.invalidate_later` take in Shiny for Python?",
+  "How can conditional logic be used to prevent the cycle of re-execution caused by `reactive.invalidate_later` in Shiny for Python?",
+  "In what contexts can `reactive.invalidate_later` be called to schedule invalidation in Shiny for Python?"
+]

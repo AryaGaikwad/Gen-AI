@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Basic reactive plot",
+    "description": "Use the basic-app-plot template as a foundation for your next Shiny app.",
+    "url": "templates/basic-app-plot/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Basic reactive plot"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-app-plot --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template basic-app-plot --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "A basic example of changing a histogram based on a select input control."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Select input",
+        "Plot output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "seaborn"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template basic-app-plot --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template basic-app-plot --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template basic-app-plot --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template basic-app-plot --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

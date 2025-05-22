@@ -1,0 +1,252 @@
+{
+  "metadata": {
+    "title": "Navbars – Shiny for Python",
+    "description": "A navbar adds a navigation bar, allowing users to easily navigate your Shiny app.",
+    "url": "layouts/navbars/index.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Navbars"
+    },
+    {
+      "type": "p",
+      "text": "A navbar adds a navigation bar, allowing users to easily navigate your Shiny app."
+    },
+    {
+      "type": "p",
+      "text": "A navbar adds a navigation bar to your app, allowing users to easily navigate your app."
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.page_navbar ui.page_navbar(*args, title=None, id=None, selected=None, sidebar=None, fillable=True, fillable_mobile=False, gap=None, padding=None, position='static-top', header=None, footer=None, bg=None, inverse=False, underline=True, collapsible=True, fluid=True, window_title=MISSING, lang=None)",
+        "ui.nav ui.nav_panel(title, *args, value=None, icon=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.page_navbar ui.page_navbar(*args, title=None, id=None, selected=None, sidebar=None, fillable=True, fillable_mobile=False, gap=None, padding=None, position='static-top', header=None, footer=None, bg=None, inverse=False, underline=True, collapsible=True, fluid=True, window_title=MISSING, lang=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.nav ui.nav_panel(title, *args, value=None, icon=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Navbar at top"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a navbar to the top of your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Define a navbar page layout with ui.page_navbar().",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.page_navbar() to control the items displayed in the navbar.",
+        "Set the title argument of ui.page_navbar() to set the browser window title.",
+        "Optional: Pass a string to the id argument of ui.page_navbar(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Define a navbar page layout with ui.page_navbar()."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.page_navbar() to control the items displayed in the navbar."
+    },
+    {
+      "type": "p",
+      "text": "Set the title argument of ui.page_navbar() to set the browser window title."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.page_navbar(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Navbar at bottom"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\", position=\"fixed-bottom\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a navbar to the bottom of your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Define a navbar page layout with ui.page_navbar().",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.page_navbar() to control the items displayed in the navbar.",
+        "Set the position parameter of ui.page_navbar() to \"fixed-bottom\" to pin the navbar to the bottom of the app. By default, position is \"static-top\", which causes the navbar to display at the top with normal scrolling behavior. You can also pin the navbar to the top (position=\"fixed-top\").",
+        "Set the title argument of ui.page_navbar() to set the browser window title.",
+        "Optional: Pass a string to the id argument of ui.page_navbar(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Define a navbar page layout with ui.page_navbar()."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.page_navbar() to control the items displayed in the navbar."
+    },
+    {
+      "type": "p",
+      "text": "Set the position parameter of ui.page_navbar() to \"fixed-bottom\" to pin the navbar to the bottom of the app. By default, position is \"static-top\", which causes the navbar to display at the top with normal scrolling behavior. You can also pin the navbar to the top (position=\"fixed-top\")."
+    },
+    {
+      "type": "p",
+      "text": "Set the title argument of ui.page_navbar() to set the browser window title."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.page_navbar(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\"",
+    "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 150\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\", position=\"fixed-bottom\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\"",
+    "from functools import partial\n\nfrom shiny.express import ui\nfrom shiny.ui import page_navbar\n\nui.page_opts(\n    title=\"App with navbar\",  \n    page_fn=partial(page_navbar, id=\"page\", position=\"fixed-bottom\"),  \n)\n\nwith ui.nav_panel(\"A\"):  \n    \"Page A content\"\n\nwith ui.nav_panel(\"B\"):  \n    \"Page B content\"\n\nwith ui.nav_panel(\"C\"):  \n    \"Page C content\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(  \n    ui.nav_panel(\"A\", \"Page A content\"),  \n    ui.nav_panel(\"B\", \"Page B content\"),  \n    ui.nav_panel(\"C\", \"Page C content\"),  \n    title=\"App with navbar\",  \n    id=\"page\",  \n    position=\"fixed-bottom\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "LAYOUTS",
+      "url": "layouts/index.html"
+    },
+    {
+      "title": "Navbars"
+    },
+    {
+      "title": "Navbar at Top",
+      "url": "layouts/navbars/index.html#navbar-at-top"
+    },
+    {
+      "title": "Navbar at Bottom",
+      "url": "layouts/navbars/index.html#navbar-at-bottom"
+    },
+    {
+      "title": "Sidebars"
+    },
+    {
+      "title": "Sidebar on Left",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-left"
+    },
+    {
+      "title": "Sidebar on Right",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-right"
+    },
+    {
+      "title": "Sidebar Within a Card",
+      "url": "layouts/sidebars/index.html#sidebar-within-a-card"
+    },
+    {
+      "title": "Collapsed Sidebar",
+      "url": "layouts/sidebars/index.html#collapsed-sidebar"
+    },
+    {
+      "title": "Tabs"
+    },
+    {
+      "title": "Tabset with Pill Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-navigation"
+    },
+    {
+      "title": "Tabset with Pill List Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-list-navigation"
+    },
+    {
+      "title": "Tabset with Tab Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-tab-navigation"
+    },
+    {
+      "title": "Card with a Tabbed Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-tabbed-tabset"
+    },
+    {
+      "title": "Card with a Pill Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-pill-tabset"
+    },
+    {
+      "title": "Vertically Collapsing Accordions",
+      "url": "layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+    },
+    {
+      "title": "Panels & Cards"
+    },
+    {
+      "title": "Floating Panel",
+      "url": "layouts/panels-cards/index.html#floating-panel"
+    },
+    {
+      "title": "Content Divided by Cards",
+      "url": "layouts/panels-cards/index.html#content-divided-by-cards"
+    },
+    {
+      "title": "Arrange Elements"
+    },
+    {
+      "title": "Grid Layouts",
+      "url": "layouts/arrange/index.html#grid-layouts"
+    },
+    {
+      "title": "Column Nesting",
+      "url": "layouts/arrange/index.html#column-nesting"
+    },
+    {
+      "title": "Controlling for Page Size",
+      "url": "layouts/arrange/index.html#controlling-for-page-width-and-height"
+    }
+  ]
+}

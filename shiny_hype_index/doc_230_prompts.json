@@ -1,0 +1,7 @@
+[
+  "What are the available presets that can be used as a base for creating a custom Shiny theme using express.ui.Theme?",
+  "How can I speed up app loading in Shiny Express by pre-compiling the theme CSS and saving it to a file?",
+  "How can I add custom default values to a Shiny theme using the add_defaults method in express.ui.Theme?",
+  "What is the purpose of the add_sass_layer_file method in the express.ui.Theme class?",
+  "How can I create a custom Shiny theme based on my brand guidelines using the from_brand method in express.ui.Theme?"
+]

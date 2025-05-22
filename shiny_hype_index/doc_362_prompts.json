@@ -1,0 +1,7 @@
+[
+  "What does render.text do in Shiny Express applications?",
+  "In what situations should render.text be paired with output_text in Shiny Core applications?",
+  "What is the purpose of the inline parameter when using render.text in Shiny Express applications?",
+  "What type of function should be decorated with render.text in order to work properly?",
+  "How should the name of the decorated function or @output(id=...) be related to the output_text container when using render.text?"
+]

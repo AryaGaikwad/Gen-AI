@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "title": "Gallery – Shiny for Python",
+    "description": "",
+    "url": "gallery/"
+  },
+  "content": [
+    {
+      "type": "h2",
+      "text": "Shiny Gallery"
+    },
+    {
+      "type": "h5",
+      "text": "Superzip explorer"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Restaurant tips dashboard"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Stock prices"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Regularization strength"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "NBA player stats"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Real-time model scoring"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Respiratory Disease data"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Shiny Wordle"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Orbit simulation"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Airmass calculator"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "CPU usage monitor"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Simulate data for a t-test"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "AWS Community Builders Dashboard"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Identify Outliers"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "View app",
+        "View source"
+      ]
+    }
+  ],
+  "code_examples": [],
+  "toc": []
+}

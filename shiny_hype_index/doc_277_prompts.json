@@ -1,0 +1,7 @@
+[
+  "What does the ui.input_action_button function in Shiny for Python do?",
+  "What parameters are required to create an action button using ui.input_action_button?",
+  "How does the value of the action button change with each press?",
+  "What does the disabled parameter do in the ui.input_action_button function?",
+  "What does the function return when ui.input_action_button is called?"
+]

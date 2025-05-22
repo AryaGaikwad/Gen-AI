@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a slider using the `ui.input_slider()` function in Shiny for Python?",
+  "How can I access the value of a slider within the `server()` function in Shiny for Python?",
+  "Can the values of min, max, and value parameters in the `ui.input_slider()` function be numbers, dates, or date-times?",
+  "What is the purpose of setting the value parameter when creating a slider in Shiny for Python?",
+  "How can I determine where a slider will appear within the layout of my Shiny app using the `ui.input_slider()` function?"
+]

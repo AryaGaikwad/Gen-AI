@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a select list using express.ui.input_select in Shiny for Python?",
+  "What is the difference between providing a list of choices and providing a dictionary mapping choice values to labels in express.ui.input_select?",
+  "How is the selection of multiple items controlled in express.ui.input_select?",
+  "What are the possible values for the parameter 'size' in express.ui.input_select, and how does it affect the appearance of the selection box?",
+  "In express.ui.input_select, what is the difference in server value handling when multiple items are selected compared to when a single item is selected?"
+]

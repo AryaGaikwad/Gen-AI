@@ -1,0 +1,326 @@
+{
+  "metadata": {
+    "title": "Installation – Shiny for Python",
+    "description": "",
+    "url": "get-started/install.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Installation"
+    },
+    {
+      "type": "p",
+      "text": "Shiny for Python can be installed can be installed via pip or conda."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "pip",
+        "conda",
+        "uv"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Before installing you may want to upgrade pip and install wheel. This will help with making your installations faster and less error-prone."
+    },
+    {
+      "type": "code",
+      "text": "pip install --upgrade pip wheel"
+    },
+    {
+      "type": "p",
+      "text": "Next, install shiny from PyPI."
+    },
+    {
+      "type": "code",
+      "text": "pip install shiny"
+    },
+    {
+      "type": "p",
+      "text": "If you already have shiny installed, and you want to upgrade the shiny packages, you will need to use the --upgrade flag."
+    },
+    {
+      "type": "code",
+      "text": "pip install --upgrade shiny htmltools"
+    },
+    {
+      "type": "p",
+      "text": "When building Shiny applications, especially in a production environment, it is best practice to use a virtual environment."
+    },
+    {
+      "type": "p",
+      "text": "Why use a virtual environment?"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Keeps your application’s dependencies isolated from other global Python packages.",
+        "Makes your application easier to deploy and share.",
+        "Helps avoid version conflicts between different projects."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Python already comes with a mechanism to create virtual environments with venv."
+    },
+    {
+      "type": "p",
+      "text": "Suppose you want to create a new Shiny app named myapp:"
+    },
+    {
+      "type": "code",
+      "text": "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment in the .venv subdirectory\npython3 -m venv .venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n\n# Your prompt will change to have the .venv prefix\n\n# Now install Shiny in your environment\npip install shiny"
+    },
+    {
+      "type": "p",
+      "text": "You are now ready to start building your app! All packages you install (e.g., shiny, pandas, plotly, etc) will now stay inside .venv, scoped to just this project. You can save a list of all the packages you want for this project in a requirements.txt file."
+    },
+    {
+      "type": "p",
+      "text": "If you want to install the development versions, you can do so with:"
+    },
+    {
+      "type": "code",
+      "text": "pip install https://github.com/posit-dev/py-htmltools/tarball/main\npip install https://github.com/posit-dev/py-shiny/tarball/main"
+    },
+    {
+      "type": "p",
+      "text": "You can install shiny from the conda-forge channel."
+    },
+    {
+      "type": "code",
+      "text": "conda install -c conda-forge shiny"
+    },
+    {
+      "type": "p",
+      "text": "If you already have shiny installed, and you want to upgrade the shiny package you will use the conda update command."
+    },
+    {
+      "type": "code",
+      "text": "conda update -c conda-forge shiny"
+    },
+    {
+      "type": "p",
+      "text": "When building Shiny applications, especially in a production environment, it is best practice to use a virtual environment."
+    },
+    {
+      "type": "p",
+      "text": "Why use a virtual environment?"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Keeps your application’s dependencies isolated from other global Python packages.",
+        "Makes your application easier to deploy and share.",
+        "Helps avoid version conflicts between different projects."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "You can also use conda to create virtual environments."
+    },
+    {
+      "type": "p",
+      "text": "Unlike some other tools, you don’t need to be inside a specific folder when you create a conda environment. Conda environments are managed separately and can be used from anywhere on your system once they are created."
+    },
+    {
+      "type": "code",
+      "text": "# Create a conda environment named 'shiny' install the shiny package with latest python\nconda create --name shiny -c conda-forge shiny python\n\n# Activate the virtual environment\nconda activate shiny\n\n# Your prompt will be pre-pended with shiny"
+    },
+    {
+      "type": "p",
+      "text": "You can install shiny using uv pip"
+    },
+    {
+      "type": "code",
+      "text": "uv pip install shiny"
+    },
+    {
+      "type": "p",
+      "text": "If you already have shiny installed, and you want to upgrade the shiny packages, you will need to use the --upgrade flag."
+    },
+    {
+      "type": "code",
+      "text": "uv pip install --upgrade shiny htmltools"
+    },
+    {
+      "type": "p",
+      "text": "When building Shiny applications, especially in a production environment, it is best practice to use a virtual environment."
+    },
+    {
+      "type": "p",
+      "text": "Why use a virtual environment?"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Keeps your application’s dependencies isolated from other global Python packages.",
+        "Makes your application easier to deploy and share.",
+        "Helps avoid version conflicts between different projects."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "You can also use uv to create virtual environments with uv venv to create a Python .venv directory."
+    },
+    {
+      "type": "code",
+      "text": "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment, defaults to .venv\nuv venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n# .venv\\Scripts\\Activate.ps1 # on Windows (PowerShell)\n\n# Your prompt will prepend with the current directory name\n\n# Install into venv\nuv pip install shiny"
+    },
+    {
+      "type": "h2",
+      "text": "Positron"
+    },
+    {
+      "type": "p",
+      "text": "We recommend using Positron, a next-generation data science focused fork of Visual Studio Code."
+    },
+    {
+      "type": "p",
+      "text": "Even if you already have VS Code installed, Positron is worth trying out. It installs separately, so your existing VS Code extensions won’t conflict with Positron extensions."
+    },
+    {
+      "type": "p",
+      "text": "Positron already ships with many Python-focused VS Code extensions from Open VSX, including Quarto, Jupyter Notebooks, and Pyright."
+    },
+    {
+      "type": "p",
+      "text": "To get started with Shiny for Python, you will need to install the Shiny Extension. This adds helpful features like a play ▶️ button in the top-right corner of the editor to run your Shiny app with one click."
+    },
+    {
+      "type": "h2",
+      "text": "Visual Studio Code"
+    },
+    {
+      "type": "p",
+      "text": "For for Visual Studio Code, you will need the Python and Shiny extensions."
+    },
+    {
+      "type": "p",
+      "text": "If type checking is important to you, in addition to installing the Python VSCode extension, you may want to do some additional configuration for a smooth experience with types in Shiny. See the tip below for more details."
+    },
+    {
+      "type": "p",
+      "text": "We recommend the following settings in your project’s .vscode/settings.json file:"
+    },
+    {
+      "type": "code",
+      "text": "{\n    \"python.analysis.typeCheckingMode\": \"basic\",\n    \"python.analysis.diagnosticSeverityOverrides\": {\n        \"reportUnusedFunction\": \"none\"\n    }\n}"
+    },
+    {
+      "type": "p",
+      "text": "or alternatively, if your project keeps these settings in pyrightconfig.json:"
+    },
+    {
+      "type": "code",
+      "text": "{\n  \"typeCheckingMode\": \"basic\",\n  \"reportUnusedFunction\":  \"none\",\n}"
+    },
+    {
+      "type": "p",
+      "text": "The basic type checking mode will flag many potential problems in your code, but it does require an understanding of type hints in Python. This is the mode that is used by the Shinylive examples editor. If you want to make even greater use of type checking, you can use strict mode:"
+    },
+    {
+      "type": "code",
+      "text": "   \"python.analysis.typeCheckingMode\": \"strict\""
+    },
+    {
+      "type": "p",
+      "text": "In the above configuration, we also disable the reportUnusedFunction diagnostic, as it’s idiomatic Shiny to create named functions that are never explicitly called by any code (i.e., @reactive.effect)."
+    },
+    {
+      "type": "p",
+      "text": "You can also modify these settings on a per-file basis with comments at the top of the file. For example, you might have something like this at the top of your app.py:"
+    },
+    {
+      "type": "code",
+      "text": "# pyright: strict\n# pyright: reportUnusedFunction=false"
+    },
+    {
+      "type": "p",
+      "text": "A full list of configuration settings for Pyright/Pylance is available here."
+    }
+  ],
+  "code_examples": [
+    "pip install --upgrade pip wheel",
+    "pip install --upgrade pip wheel",
+    "pip install shiny",
+    "pip install shiny",
+    "pip install --upgrade shiny htmltools",
+    "pip install --upgrade shiny htmltools",
+    "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment in the .venv subdirectory\npython3 -m venv .venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n\n# Your prompt will change to have the .venv prefix\n\n# Now install Shiny in your environment\npip install shiny",
+    "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment in the .venv subdirectory\npython3 -m venv .venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n\n# Your prompt will change to have the .venv prefix\n\n# Now install Shiny in your environment\npip install shiny",
+    "pip install https://github.com/posit-dev/py-htmltools/tarball/main\npip install https://github.com/posit-dev/py-shiny/tarball/main",
+    "pip install https://github.com/posit-dev/py-htmltools/tarball/main\npip install https://github.com/posit-dev/py-shiny/tarball/main",
+    "conda install -c conda-forge shiny",
+    "conda install -c conda-forge shiny",
+    "conda update -c conda-forge shiny",
+    "conda update -c conda-forge shiny",
+    "# Create a conda environment named 'shiny' install the shiny package with latest python\nconda create --name shiny -c conda-forge shiny python\n\n# Activate the virtual environment\nconda activate shiny\n\n# Your prompt will be pre-pended with shiny",
+    "# Create a conda environment named 'shiny' install the shiny package with latest python\nconda create --name shiny -c conda-forge shiny python\n\n# Activate the virtual environment\nconda activate shiny\n\n# Your prompt will be pre-pended with shiny",
+    "uv pip install shiny",
+    "uv pip install shiny",
+    "uv pip install --upgrade shiny htmltools",
+    "uv pip install --upgrade shiny htmltools",
+    "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment, defaults to .venv\nuv venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n# .venv\\Scripts\\Activate.ps1 # on Windows (PowerShell)\n\n# Your prompt will prepend with the current directory name\n\n# Install into venv\nuv pip install shiny",
+    "# Create and move into your shiny application directory\nmkdir myapp\ncd myapp\n\n# Create a virtual environment, defaults to .venv\nuv venv\n\n# Activate the virtual environment\nsource .venv/bin/activate\n# .venv\\Scripts\\Activate.ps1 # on Windows (PowerShell)\n\n# Your prompt will prepend with the current directory name\n\n# Install into venv\nuv pip install shiny",
+    "{\n    \"python.analysis.typeCheckingMode\": \"basic\",\n    \"python.analysis.diagnosticSeverityOverrides\": {\n        \"reportUnusedFunction\": \"none\"\n    }\n}",
+    "{\n    \"python.analysis.typeCheckingMode\": \"basic\",\n    \"python.analysis.diagnosticSeverityOverrides\": {\n        \"reportUnusedFunction\": \"none\"\n    }\n}",
+    "{\n  \"typeCheckingMode\": \"basic\",\n  \"reportUnusedFunction\":  \"none\",\n}",
+    "{\n  \"typeCheckingMode\": \"basic\",\n  \"reportUnusedFunction\":  \"none\",\n}",
+    "   \"python.analysis.typeCheckingMode\": \"strict\"",
+    "   \"python.analysis.typeCheckingMode\": \"strict\"",
+    "# pyright: strict\n# pyright: reportUnusedFunction=false",
+    "# pyright: strict\n# pyright: reportUnusedFunction=false"
+  ],
+  "toc": [
+    {
+      "title": "Positron",
+      "url": "get-started/#positron"
+    },
+    {
+      "title": "Visual Studio Code",
+      "url": "get-started/#visual-studio-code"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

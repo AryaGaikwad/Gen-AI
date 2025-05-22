@@ -1,0 +1,458 @@
+{
+  "metadata": {
+    "title": "Tool calling – Shiny for Python",
+    "description": "",
+    "url": "docs/genai-tools.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🤖 Generative AI",
+        "Tool calling"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Tool calling"
+    },
+    {
+      "type": "h2",
+      "text": "Why tool calling?"
+    },
+    {
+      "type": "p",
+      "text": "Large language models (LLMs) are inherently good at drawing from their vast knowledge base to generate helpful responses based on a user prompt. However, they are not inherently good at or capable of everything. Some of their limitations can be addressed by equipping the LLM with the ability to call tools (i.e., functions). For example, LLMs are not inherently good at:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Making precise, reliable, and reproducible calculations based on data.",
+        "Accessing up-to-date, private, or otherwise “most relevant” information.",
+        "Generally accomplishing programmatic tasks at the request of the user."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "For a motivating example, consider the sidebot template. It allows end users to ask questions about a dataset using natural language, and see multiple views of the data update in real-time. It works by equipping the LLM with the context and tools to control the dashboard through SQL. And, since LLMs are inherently good at translating natural language to SQL, the result is a suprisingly effective (and verfiable!) way to explore data."
+    },
+    {
+      "type": "p",
+      "text": "This article discusses the mechanics behind what makes an app like sidebot work. It covers:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Get started with tool calls, including displaying status/results in Shiny.",
+        "Combine tools with reactivity, enabling the LLM to “use” the app.",
+        "Customize the display of tool calls."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Although this article focuses on using tool calling in a chatbot, the same ideas also apply to streaming markdown"
+    },
+    {
+      "type": "h2",
+      "text": "Get started"
+    },
+    {
+      "type": "h3",
+      "text": "Fundamentals"
+    },
+    {
+      "type": "p",
+      "text": "LLMs are trained on data up until a certain cutoff date, and they don’t natively have access to the internet. This means that they can’t answer questions about current events, weather, etc. Most LLMs nowadays are at least aware of this limitation:"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatAnthropic\nchat_client = ChatAnthropic()\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")"
+    },
+    {
+      "type": "p",
+      "text": "I don’t have the ability to check the current temperature in Duluth, MN in real-time."
+    },
+    {
+      "type": "p",
+      "text": "However, we can equip the LLM with a function to query current weather from a web API. Since LLMs are good at finding structure from unstructured input, we can have a tool that accepts lat/long as input, and the LLM is smart enough to infer a lat/long from a city name (or ask the user for lat/long)."
+    },
+    {
+      "type": "p",
+      "text": "Note also that the function includes type hints and a docstring. This is important because it helps the LLM understand what the function does and how to use it."
+    },
+    {
+      "type": "code",
+      "text": "import requests\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current current weather given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")"
+    },
+    {
+      "type": "p",
+      "text": "The current temperature in Duluth, Minnesota is 0.9°C (which is approximately 33.6°F). There are also strong winds at 32.7 km/h (about 20.3 mph)."
+    },
+    {
+      "type": "p",
+      "text": "In .chat(), you can set echo=\"all\" to see all the tool call information in your console. In the Tool displays, we’ll see how to display this information in the Shiny UI."
+    },
+    {
+      "type": "p",
+      "text": "See the chatlas docs to learn more about tool calling fundamentals."
+    },
+    {
+      "type": "h3",
+      "text": "Basic chatbot"
+    },
+    {
+      "type": "p",
+      "text": "To embed our chat_client in a Shiny chatbot, let’s put it in a client.py module and use it for response generation. To display the tool call results, just set content=\"all\" in the .stream_async() method. This way, chatlas will include tool call content objects in the stream, and since those content objects know how to display themselves in Shiny, we get a generic display of the tool request, response, and any errors that occurred."
+    },
+    {
+      "type": "code",
+      "text": "import requests\nfrom chatlas import ChatAnthropic\n\nchat_client = ChatAnthropic()\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)"
+    },
+    {
+      "type": "code",
+      "text": "from client import chat_client\nfrom shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Hello! How can I help you today?\"])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(\n      user_input,\n      content=\"all\"\n    )\n    await chat.append_message_stream(response)"
+    },
+    {
+      "type": "p",
+      "text": "Once the tool call is made, you can expand the <details> of the tool call to see what the model requested for arguments as well as the result sent to the model."
+    },
+    {
+      "type": "p",
+      "text": "Also, for tools that take a while to run, the user is notified of what tool is running along with a bouncing dot to indicate that the tool is still running."
+    },
+    {
+      "type": "p",
+      "text": "And, in the case of an error, the user is also notified of the error."
+    },
+    {
+      "type": "p",
+      "text": "In general, these default displays should be enough to let your users know what the LLM is requesting/receiving to help generate their responses."
+    },
+    {
+      "type": "h2",
+      "text": "Reactivity"
+    },
+    {
+      "type": "p",
+      "text": "Combining tool calling with reactivity is a powerful technique that can effectively let the LLM interact with the app. Here, we’ll explore a few general patterns for doing this."
+    },
+    {
+      "type": "h3",
+      "text": "Updating inputs"
+    },
+    {
+      "type": "p",
+      "text": "The most basic way to hand over control to the LLM is to have it update reactive input(s). The core idea is to wrap a ui.update_*() call in a tool function and register that function with the chat_client. Then, when a user asks the LLM to update an input, it is able to do so."
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatAnthropic\nfrom shiny.express import ui\n\nSLIDER_ID = \"slider\"\n\nchat_client = ChatAnthropic(\n    system_prompt=(\n        \"You are a helpful assistant in the sidebar of a Shiny app.\"\n        \"You have a tool available to you to update a slider in the main panel of the app.\"\n    )\n)\n\ndef update_slider(value: int):\n    \"Update the slider in the main panel with the provided value\"\n    ui.update_slider(SLIDER_ID, value=value)\n\nchat_client.register_tool(update_slider)"
+    },
+    {
+      "type": "code",
+      "text": "from client import chat_client, SLIDER_ID\nfrom shiny.express import ui\n\nui.input_slider(SLIDER_ID, \"Value\", value=50, min=0, max=100)\n\nwelcome = \"Welcome! Try asking me to <span class='suggestion'>update the slider to 80</span> \"\n\nwith ui.sidebar(width=350):\n    chat = ui.Chat(\"chat\")\n    chat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)"
+    },
+    {
+      "type": "p",
+      "text": "The basic example above illustrates the idea using minimal code, but the app itself is not particularly useful. For brevity sake, we won’t fully explore compelling applications here, but in general, updating inputs can be useful for:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Navigating complex UI (i.e., lots of tabs, controls, etc) Allow users describe to what they want without finding it",
+        "Combine with input suggestions to: Guide user to interesting states Save clicks"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Allow users describe to what they want without finding it"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Guide user to interesting states",
+        "Save clicks"
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Managing state"
+    },
+    {
+      "type": "p",
+      "text": "In Shiny, a reactive value can derive from either an input component (e.g., ui.input_select(), etc.) or an entirely server-side reactive.value(). Generally speaking, the latter approach is useful for tracking state that may not exist in the UI (e.g., authentication, user activity, etc.). Similar to how we can equip the LLM to update an input component, we can also equip it to update a reactive value to have it drive the app’s state."
+    },
+    {
+      "type": "p",
+      "text": "The sidebot template (mentioned at the top of this article) illustrates a particularly powerful application of managing state. In this case, the state is an SQL query. When that state changes, it triggers a reactive data frame (current_data) to be updated, which in turn updates all the downstream views of the data."
+    },
+    {
+      "type": "code",
+      "text": "import duckdb\nfrom shiny import reactive\n\n# An SQL query\ncurrent_query = reactive.value(\"\")\n\n# Reactively execute the SQL query and\n# return the result as a data frame\n@reactive.calc\ndef current_data():\n    if current_query() == \"\":\n        return tips\n    return duckdb.query(current_query()).df()"
+    },
+    {
+      "type": "p",
+      "text": "The LLM is also provided a tool (update_dashboard()) which takes an SQL query as input, and sets a new value for the current_query reactive value."
+    },
+    {
+      "type": "code",
+      "text": "from typing import Annotated\n\nasync def update_dashboard(\n    query: Annotated[str, 'A DuckDB SQL query; must be a SELECT statement, or \"\".']\n):\n    \"Modifies the data presented in the data dashboard based on the provided SQL query\"\n    async with reactive.lock():\n        current_query.set(query)\n        await reactive.flush()"
+    },
+    {
+      "type": "p",
+      "text": "Since this tool runs within a non-blocking message stream (i.e., .append_message_stream()), in order to prevent race conditions, it must lock the reactivity graph when updating reactive value(s). If the tool were, instead, running in a blocking stream, the reactive.lock() and reactive.flush() wouldn’t be necessary."
+    },
+    {
+      "type": "p",
+      "text": "The final crucial piece is that, in order for the LLM to generate accurate SQL, it needs to know the schema of the dataset. This is done by passing the table schema to the LLM’s system prompt."
+    },
+    {
+      "type": "p",
+      "text": "Since the general pattern of having a tool to update a reactive data frame via SQL is so useful, the querychat package generalizes this pattern to make it more accessible and easier to use."
+    },
+    {
+      "type": "h2",
+      "text": "Custom tool display"
+    },
+    {
+      "type": "p",
+      "text": "Customizing how tool results are displayed can be useful for a variety of reasons. For example, you may want to style results differently, or implement something more sophisticated, such as displaying a map or a table."
+    },
+    {
+      "type": "p",
+      "text": "To customize the result display, you can:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Subclass the chatlas.ContentToolResult class.",
+        "Override the tagify() method. This can return any valid ui.Chat() message content (i.e., a markdown string or Shiny UI).",
+        "Return an instance of this subclass from your tool function."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The basic example below would just style the tool result differently than the default:"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ContentToolResult\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n        else:\n            args = self.arguments\n            params = \", \".join(f\"{k}={v}\" for k, v in args.items())\n            temp = self.value[\"temperature_2m\"]\n            return (\n                f\"✅ Tool call of `{self.name}({params})` \"\n                \"gave temperature of: {temp} °C\\n\\n\"\n            )\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return WeatherToolResult(value=json[\"current\"])"
+    },
+    {
+      "type": "p",
+      "text": "Keep in mind that Shiny UI can be included in messages, so you could do something like diplay a Jupyter Widget."
+    },
+    {
+      "type": "code",
+      "text": "import ipywidgets\nfrom shinywidgets import register_widget, output_widget\nfrom ipyleaflet import Map, CircleMarker\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n\n        args = self.arguments\n        loc = (args[\"latitude\"], args[\"longitude\"])\n        info = (\n            f\"<h6>Current weather</h6>\"\n            f\"Temperature: {self.value['temperature_2m']}°C<br>\"\n            f\"Wind: {self.value['wind_speed_10m']} m/s<br>\"\n            f\"Time: {self.value['time']}\"\n        )\n\n        m = Map(center=loc, zoom=10)\n        m.add_layer(\n            CircleMarker(location=loc, popup=ipywidgets.HTML(info))\n        )\n\n        register_widget(self.id, m)\n        return output_widget(self.id)"
+    }
+  ],
+  "code_examples": [
+    "from chatlas import ChatAnthropic\nchat_client = ChatAnthropic()\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")",
+    "from chatlas import ChatAnthropic\nchat_client = ChatAnthropic()\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")",
+    "import requests\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current current weather given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")",
+    "import requests\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current current weather given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)\nchat_client.chat(\"What's the current temperature in Duluth, MN?\")",
+    "import requests\nfrom chatlas import ChatAnthropic\n\nchat_client = ChatAnthropic()\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)",
+    "import requests\nfrom chatlas import ChatAnthropic\n\nchat_client = ChatAnthropic()\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return json[\"current\"]\n\nchat_client.register_tool(get_current_weather)",
+    "from client import chat_client\nfrom shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Hello! How can I help you today?\"])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(\n      user_input,\n      content=\"all\"\n    )\n    await chat.append_message_stream(response)",
+    "from client import chat_client\nfrom shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Hello! How can I help you today?\"])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(\n      user_input,\n      content=\"all\"\n    )\n    await chat.append_message_stream(response)",
+    "from chatlas import ChatAnthropic\nfrom shiny.express import ui\n\nSLIDER_ID = \"slider\"\n\nchat_client = ChatAnthropic(\n    system_prompt=(\n        \"You are a helpful assistant in the sidebar of a Shiny app.\"\n        \"You have a tool available to you to update a slider in the main panel of the app.\"\n    )\n)\n\ndef update_slider(value: int):\n    \"Update the slider in the main panel with the provided value\"\n    ui.update_slider(SLIDER_ID, value=value)\n\nchat_client.register_tool(update_slider)",
+    "from chatlas import ChatAnthropic\nfrom shiny.express import ui\n\nSLIDER_ID = \"slider\"\n\nchat_client = ChatAnthropic(\n    system_prompt=(\n        \"You are a helpful assistant in the sidebar of a Shiny app.\"\n        \"You have a tool available to you to update a slider in the main panel of the app.\"\n    )\n)\n\ndef update_slider(value: int):\n    \"Update the slider in the main panel with the provided value\"\n    ui.update_slider(SLIDER_ID, value=value)\n\nchat_client.register_tool(update_slider)",
+    "from client import chat_client, SLIDER_ID\nfrom shiny.express import ui\n\nui.input_slider(SLIDER_ID, \"Value\", value=50, min=0, max=100)\n\nwelcome = \"Welcome! Try asking me to <span class='suggestion'>update the slider to 80</span> \"\n\nwith ui.sidebar(width=350):\n    chat = ui.Chat(\"chat\")\n    chat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)",
+    "from client import chat_client, SLIDER_ID\nfrom shiny.express import ui\n\nui.input_slider(SLIDER_ID, \"Value\", value=50, min=0, max=100)\n\nwelcome = \"Welcome! Try asking me to <span class='suggestion'>update the slider to 80</span> \"\n\nwith ui.sidebar(width=350):\n    chat = ui.Chat(\"chat\")\n    chat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)",
+    "import duckdb\nfrom shiny import reactive\n\n# An SQL query\ncurrent_query = reactive.value(\"\")\n\n# Reactively execute the SQL query and\n# return the result as a data frame\n@reactive.calc\ndef current_data():\n    if current_query() == \"\":\n        return tips\n    return duckdb.query(current_query()).df()",
+    "import duckdb\nfrom shiny import reactive\n\n# An SQL query\ncurrent_query = reactive.value(\"\")\n\n# Reactively execute the SQL query and\n# return the result as a data frame\n@reactive.calc\ndef current_data():\n    if current_query() == \"\":\n        return tips\n    return duckdb.query(current_query()).df()",
+    "from typing import Annotated\n\nasync def update_dashboard(\n    query: Annotated[str, 'A DuckDB SQL query; must be a SELECT statement, or \"\".']\n):\n    \"Modifies the data presented in the data dashboard based on the provided SQL query\"\n    async with reactive.lock():\n        current_query.set(query)\n        await reactive.flush()",
+    "from typing import Annotated\n\nasync def update_dashboard(\n    query: Annotated[str, 'A DuckDB SQL query; must be a SELECT statement, or \"\".']\n):\n    \"Modifies the data presented in the data dashboard based on the provided SQL query\"\n    async with reactive.lock():\n        current_query.set(query)\n        await reactive.flush()",
+    "from chatlas import ContentToolResult\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n        else:\n            args = self.arguments\n            params = \", \".join(f\"{k}={v}\" for k, v in args.items())\n            temp = self.value[\"temperature_2m\"]\n            return (\n                f\"✅ Tool call of `{self.name}({params})` \"\n                \"gave temperature of: {temp} °C\\n\\n\"\n            )\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return WeatherToolResult(value=json[\"current\"])",
+    "from chatlas import ContentToolResult\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n        else:\n            args = self.arguments\n            params = \", \".join(f\"{k}={v}\" for k, v in args.items())\n            temp = self.value[\"temperature_2m\"]\n            return (\n                f\"✅ Tool call of `{self.name}({params})` \"\n                \"gave temperature of: {temp} °C\\n\\n\"\n            )\n\ndef get_current_weather(latitude: float, longitude: float):\n    \"\"\"Get the current temperature given a latitude and longitude.\"\"\"\n\n    lat_lng = f\"latitude={latitude}&longitude={longitude}\"\n    url = f\"https://api.open-meteo.com/v1/forecast?{lat_lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m\"\n    response = requests.get(url)\n    json = response.json()\n    return WeatherToolResult(value=json[\"current\"])",
+    "import ipywidgets\nfrom shinywidgets import register_widget, output_widget\nfrom ipyleaflet import Map, CircleMarker\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n\n        args = self.arguments\n        loc = (args[\"latitude\"], args[\"longitude\"])\n        info = (\n            f\"<h6>Current weather</h6>\"\n            f\"Temperature: {self.value['temperature_2m']}°C<br>\"\n            f\"Wind: {self.value['wind_speed_10m']} m/s<br>\"\n            f\"Time: {self.value['time']}\"\n        )\n\n        m = Map(center=loc, zoom=10)\n        m.add_layer(\n            CircleMarker(location=loc, popup=ipywidgets.HTML(info))\n        )\n\n        register_widget(self.id, m)\n        return output_widget(self.id)",
+    "import ipywidgets\nfrom shinywidgets import register_widget, output_widget\nfrom ipyleaflet import Map, CircleMarker\n\nclass WeatherToolResult(ContentToolResult):\n    def tagify(self):\n        if self.error:\n            return super().tagify()\n\n        args = self.arguments\n        loc = (args[\"latitude\"], args[\"longitude\"])\n        info = (\n            f\"<h6>Current weather</h6>\"\n            f\"Temperature: {self.value['temperature_2m']}°C<br>\"\n            f\"Wind: {self.value['wind_speed_10m']} m/s<br>\"\n            f\"Time: {self.value['time']}\"\n        )\n\n        m = Map(center=loc, zoom=10)\n        m.add_layer(\n            CircleMarker(location=loc, popup=ipywidgets.HTML(info))\n        )\n\n        register_widget(self.id, m)\n        return output_widget(self.id)"
+  ],
+  "toc": [
+    {
+      "title": "Why tool calling?",
+      "url": "docs/#why-tool-calling"
+    },
+    {
+      "title": "Get started",
+      "url": "docs/#get-started"
+    },
+    {
+      "title": "Fundamentals",
+      "url": "docs/#fundamentals"
+    },
+    {
+      "title": "Basic chatbot",
+      "url": "docs/#basic-chatbot"
+    },
+    {
+      "title": "Reactivity",
+      "url": "docs/#reactivity"
+    },
+    {
+      "title": "Updating inputs",
+      "url": "docs/#updating-inputs"
+    },
+    {
+      "title": "Managing state",
+      "url": "docs/#managing-state"
+    },
+    {
+      "title": "Custom tool display",
+      "url": "docs/#custom-display"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

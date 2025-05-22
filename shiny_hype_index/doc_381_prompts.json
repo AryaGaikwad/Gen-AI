@@ -1,0 +1,7 @@
+[
+  "What is the purpose of a reactive polling object in Shiny for Python?",
+  "How is a reactive polling object constructed and what functions are involved in its creation?",
+  "What parameters are required when defining a reactive polling object using the reactive.poll function?",
+  "How does the reactive polling object handle changes detected by the polling function?",
+  "Why is it recommended to declare the polling object at the top level of app.py for apps where all sessions depend on the same data source?"
+]

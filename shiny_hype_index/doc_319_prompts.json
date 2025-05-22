@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.remove_ui` function in Shiny for Python?",
+  "What parameters does the `ui.remove_ui` function accept?",
+  "How can complex selectors be used in the `ui.remove_ui` function?",
+  "What is the significance of the `multiple` parameter in the `ui.remove_ui` function?",
+  "When using the `ui.remove_ui` function, what determines whether the UI object should be immediately removed or whether Shiny should wait for certain events to occur?"
+]

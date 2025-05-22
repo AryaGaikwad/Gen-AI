@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a set of radio buttons using `ui.input_radio_buttons` in Shiny for Python?",
+  "How can the radio button choices be provided - as a list or as a dictionary with values mapped to labels?",
+  "What does the `selected` parameter in `ui.input_radio_buttons` represent and how is it used?",
+  "What is the purpose of the `inline` parameter in `ui.input_radio_buttons` and how does it affect the display?",
+  "What information does the `Returns` section of the documentation provide about `ui.input_radio_buttons`?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create an input control for entry of numeric values using express.ui.input_numeric in Shiny for Python?",
+  "What are the options for updating the input value in express.ui.input_numeric, and what is the default option?",
+  "Can you provide an example code snippet demonstrating how to use express.ui.input_numeric in Shiny for Python?",
+  "What does the update_numeric function do, and how is it related to express.ui.input_numeric in Shiny for Python?",
+  "What is the purpose of the \"interval\" parameter in express.ui.input_numeric, and how does it affect the input control for numeric values in Shiny for Python?"
+]

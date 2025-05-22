@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "title": "What is Shiny? – Shiny for Python",
+    "description": "",
+    "url": "get-started/what-is-shiny.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "What is Shiny?"
+    },
+    {
+      "type": "p",
+      "text": "Whether you’re a data scientist, analyst, or developer, Shiny makes it easy to create rich, interactive experiences in pure Python with a fully reactive framework. No need to learn JavaScript or front-end frameworks."
+    },
+    {
+      "type": "h2",
+      "text": "Batteries included"
+    },
+    {
+      "type": "p",
+      "text": "Shiny for Python comes fully equipped with everything you need to build a dashboard right out of the box, including a rich set of input and output components. There is an entire components gallery to help you quickly build interactive applications."
+    },
+    {
+      "type": "p",
+      "text": "Layout options let you organize your UI efficiently, while built-in theming (including dark mode) ensures your app looks great with minimal effort."
+    },
+    {
+      "type": "p",
+      "text": "Already have a brand guideline? You can use brand.yml to apply consistent branding, colors, and logos across your application."
+    },
+    {
+      "type": "p",
+      "text": "Inputs"
+    },
+    {
+      "type": "p",
+      "text": "Outputs"
+    },
+    {
+      "type": "p",
+      "text": "Layouts"
+    },
+    {
+      "type": "h2",
+      "text": "Reactivity"
+    },
+    {
+      "type": "p",
+      "text": "At the heart of Shiny is reactivity, a system that automatically updates outputs when inputs change for seamless interactivity, without manually writing callbacks."
+    },
+    {
+      "type": "p",
+      "text": "Shiny’s reactive engine avoids unnecessary computations by only re-calculating the outputs whose inputs have changed, making Shiny ideal for fast data-driven applications, enabling live updates for charts, tables, and reports with minimal effort."
+    },
+    {
+      "type": "p",
+      "text": "Below is a live Shiny application and its accompanying code. The first output text shows the square of the first slider value, and the second row of text shows the sum of both slider values."
+    },
+    {
+      "type": "p",
+      "text": "Try updating the sliders below and see how the text reacts. Also change what value gets returned on lines 11 or 17 and click the play button ▶️ for the app to refresh."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import ui, render, input\n\nui.input_slider(\"s1\", \"Slider 1\", min=0, max=10, value=5)\nui.input_slider(\"s2\", \"Slider 2\", min=0, max=100, value=50)\n\n\n# This output only reacts to the first slider\n@render.text\ndef result():\n    return f\"{input.s1()} squared is {input.s1() ** 2}.\"\n\n\n# This output reacts to both sliders\n@render.text\ndef both_sliders_output():\n    return f\"{input.s1()} + {input.s2()} is {input.s1() + input.s2()}.\""
+    },
+    {
+      "type": "h2",
+      "text": "Jumpstart with templates"
+    },
+    {
+      "type": "p",
+      "text": "Here’s a full Shiny application in action, complete with reactivity and a user interface!"
+    },
+    {
+      "type": "p",
+      "text": "Hit the ground running with one of our starter templates, like the app above, by using shiny create."
+    },
+    {
+      "type": "p",
+      "text": "There are templates for common use cases. For example, data dashboards, data applications, streaming updates, or data entry."
+    },
+    {
+      "type": "p",
+      "text": "Use the terminal command below to create and run the same dashboard locally with shiny create, starting from a template."
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard"
+    },
+    {
+      "type": "h2",
+      "text": "Extensibility"
+    },
+    {
+      "type": "p",
+      "text": "While Shiny includes everything you need to build an app, it is also built on a foundation of web standards, making it highly extensible. Many of Shiny’s components are just plain HTML elements with the right classes to connect to Shiny’s client-side JavaScript."
+    },
+    {
+      "type": "p",
+      "text": "Take the action button, for example. You can print the input in the Python console to see that it’s just a regular HTML <button> element."
+    },
+    {
+      "type": "code",
+      "text": ">>> from shiny import ui\n>>> ui.input_action_button(\"update_data\", \"Button\")"
+    },
+    {
+      "type": "code",
+      "text": "<button class=\"btn btn-default action-button\" id=\"update_data\" type=\"button\">Button</button>"
+    },
+    {
+      "type": "p",
+      "text": "This means that you can use Shiny to learn web development—and many people have!"
+    },
+    {
+      "type": "p",
+      "text": "But this also means that Shiny doesn’t lock you into a particular front-end framework. At the more advanced end of the spectrum, Shiny components can be highly sophisticated and can leverage modern web frameworks. For example, Data Grids are React components that use the popular TanStack Table React library under the hood."
+    },
+    {
+      "type": "p",
+      "text": "If you’re versed in web programming, you can use Shiny to build one-off custom components that integrate your favorite JavaScript framework directly from Python. For more advanced needs, you can develop a reusable component package or customize the user interface by incrementally adding JavaScript or custom HTML or CSS."
+    },
+    {
+      "type": "h2",
+      "text": "Install, create, and run"
+    },
+    {
+      "type": "p",
+      "text": "Now that you know a little more about Shiny for Python, let’s go install Shiny so you can create your first application!"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 250\n\nfrom shiny import reactive\nfrom shiny.express import ui, render, input\n\nui.input_slider(\"s1\", \"Slider 1\", min=0, max=10, value=5)\nui.input_slider(\"s2\", \"Slider 2\", min=0, max=100, value=50)\n\n\n# This output only reacts to the first slider\n@render.text\ndef result():\n    return f\"{input.s1()} squared is {input.s1() ** 2}.\"\n\n\n# This output reacts to both sliders\n@render.text\ndef both_sliders_output():\n    return f\"{input.s1()} + {input.s2()} is {input.s1() + input.s2()}.\"",
+    "shiny create --template dashboard",
+    "shiny create --template dashboard",
+    ">>> from shiny import ui\n>>> ui.input_action_button(\"update_data\", \"Button\")",
+    ">>> from shiny import ui\n>>> ui.input_action_button(\"update_data\", \"Button\")",
+    "<button class=\"btn btn-default action-button\" id=\"update_data\" type=\"button\">Button</button>",
+    "<button class=\"btn btn-default action-button\" id=\"update_data\" type=\"button\">Button</button>"
+  ],
+  "toc": [
+    {
+      "title": "Batteries included",
+      "url": "get-started/#batteries-included"
+    },
+    {
+      "title": "Reactivity",
+      "url": "get-started/#reactivity"
+    },
+    {
+      "title": "Jumpstart with templates",
+      "url": "get-started/#templates"
+    },
+    {
+      "title": "Extensibility",
+      "url": "get-started/#extensible"
+    },
+    {
+      "title": "Install, create, and run",
+      "url": "get-started/#install-create-and-run"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

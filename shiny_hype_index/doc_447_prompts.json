@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create an input control for text values using ui.input_text in Shiny for Python?",
+  "How can I specify the width of the text input control when using ui.input_text in Shiny for Python?",
+  "What are the options available for enabling or disabling browser autocompletion of the text input in ui.input_text?",
+  "What does the update_on parameter in ui.input_text control and how does it affect when the input value is updated?",
+  "What is the default behavior for browser spell checking in the text input control created with ui.input_text in Shiny for Python?"
+]

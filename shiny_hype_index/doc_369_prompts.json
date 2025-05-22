@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be specified when using the render.DataTable class in Shiny for Python?",
+  "How can one customize the message displayed below the grid when not all rows are being shown in the data table?",
+  "What is the purpose of the row_selection_mode parameter in the render.DataTable class?",
+  "How can CSS styles be applied to specific rows and columns in the data frame using the style info object in Shiny for Python?",
+  "What is the deprecated parameter in the render.DataTable class used for, and what alternative should be used instead?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be updated using the express.ui.update_action_button function in Shiny for Python?",
+  "What does the disabled parameter do in the express.ui.update_action_button function?",
+  "How are input updater functions in Shiny different from observers and outputs?",
+  "What happens if a parameter with a None value is passed to the express.ui.update_action_button function?",
+  "How can the set of choices be cleared for radio buttons, checkbox groups, and select inputs using the update functions in Shiny for Python?"
+]

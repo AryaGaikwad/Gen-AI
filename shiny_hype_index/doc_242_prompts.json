@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a page with a sidebar using ui.page_sidebar in Shiny for Python?",
+  "What does the window_title parameter default to when creating a page with a sidebar in Shiny for Python?",
+  "How can a custom Shiny theme be applied when creating a page with a sidebar in Shiny for Python?",
+  "What is the purpose of the lang parameter in the ui.page_sidebar function in Shiny for Python?",
+  "How can additional attributes be passed to the layout_sidebar when using ui.page_sidebar in Shiny for Python?"
+]

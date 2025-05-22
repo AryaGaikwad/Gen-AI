@@ -1,0 +1,7 @@
+[
+  "How can I pass non-reactive arguments to Shiny modules?",
+  "How can I pass multiple UI elements to a Shiny module?",
+  "How can I pass reactive objects to Shiny modules and use them inside the module code?",
+  "What is the benefit of passing callbacks to Shiny modules instead of passing reactive values?",
+  "How can I return reactive objects from Shiny modules to use them in the larger application?"
+]

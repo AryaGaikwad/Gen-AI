@@ -1,0 +1,7 @@
+[
+  "How does render.express differ from ui in Shiny for Python?",
+  "What is the purpose of using render.express to render HTML content in Shiny for Python?",
+  "In what way does render.express capture the output of each line in Shiny for Python?",
+  "What does the render.express decorator return in Shiny for Python?",
+  "How can one use render.express to render HTML content in Shiny for Python with specific parameters like inline, container, and fillable?"
+]

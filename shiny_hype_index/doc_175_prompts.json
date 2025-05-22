@@ -1,0 +1,7 @@
+[
+  "What are reactive values and how do they relate to reactivity in Shiny Python?",
+  "How can I create a reactive value in Shiny Python and what are the parameters involved?",
+  "When using a reactive value in Shiny Python, how can I read the current value and what function should I call?",
+  "What methods are available for manipulating reactive values in Shiny Python, and how does the 'freeze' method differ from 'unset'?",
+  "In Shiny Python, under what circumstances would calling the 'get' method on a reactive value raise an error?"
+]

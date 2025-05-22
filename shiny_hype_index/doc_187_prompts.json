@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for using express.ui.update_select in Shiny for Python?",
+  "How does express.ui.update_select function change the value of a select input on the client side?",
+  "What happens if a parameter with a None value is passed to express.ui.update_select in Shiny for Python?",
+  "How can the set of choices be cleared in update_select function in Shiny for Python?",
+  "In update_select function, how is the Session instance handled if not provided explicitly in Shiny for Python?"
+]

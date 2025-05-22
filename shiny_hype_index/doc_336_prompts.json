@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the `ui.update_radio_buttons` function in Shiny for Python?",
+  "How are dictionaries used in providing choices for the radio buttons in the `ui.update_radio_buttons` function?",
+  "What does the `inline` parameter do in the `ui.update_radio_buttons` function?",
+  "How can you clear the set of choices for radio buttons using the `ui.update_radio_buttons` function?",
+  "When are the messages to change the settings of an input object sent to the client in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the @render.download decorator in Shiny for Python?",
+  "How should the decorated function handle the download in order to return a file with the same filename as the original?",
+  "When should the yield method be used instead of returning a string when using the @render.download decorator?",
+  "What parameters can be specified when using the @render.download decorator in Shiny for Python?",
+  "What other functions are related to render.download in Shiny for Python, as mentioned in the documentation?"
+]

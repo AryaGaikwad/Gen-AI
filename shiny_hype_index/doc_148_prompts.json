@@ -1,0 +1,7 @@
+[
+  "What does the `express.ui.card_header` function in Shiny for Python do?",
+  "How is the header container in the card different from the rest of the card in Shiny for Python?",
+  "What are the parameters that can be provided to the header container in Shiny for Python?",
+  "What is the default method for the returned Tag object when using `express.ui.card_header` in Shiny for Python?",
+  "In Shiny for Python, what does the `express.ui.card_header` function wrap?"
+]

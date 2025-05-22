@@ -1,0 +1,333 @@
+{
+  "metadata": {
+    "title": "Notifications – Shiny for Python",
+    "description": "",
+    "url": "components/display-messages/notifications/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Display Messages",
+        "Notifications"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Notifications"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\nui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True)\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_notification():\n    type_txt = \"notification\" if input.type() == \"default\" else input.type()\n    ui.notification_show(\n        f\"This {type_txt} will disappear after 2 seconds.\",\n        type=input.type(),\n        duration=2,\n    )"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.notification_show ui.notification_show(ui, *, action=None, duration=5, close_button=True, id=None, type='default', session=None)",
+        "ui.notification_remove ui.notification_remove(id, *, session=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.notification_show ui.notification_show(ui, *, action=None, duration=5, close_button=True, id=None, type='default', session=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.notification_remove ui.notification_remove(id, *, session=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A notification is a message that appears near the bottom corner of the app. Notifications normally disappear after a short period of time, and should multiple notifications appear together, they will stack on top of one another."
+    },
+    {
+      "type": "p",
+      "text": "To create a notification, call ui.notification_show(). Typically, you will want to create a reactive effect to call ui.show_notification() whenever a particular event occurs. For example, the reactive effect below will create a notification whenever the value of input.show() changes."
+    },
+    {
+      "type": "code",
+      "text": "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    ui.notification_show(\"You've been notified.\")"
+    },
+    {
+      "type": "p",
+      "text": "You can call ui.notification_remove() to remove a notification programatically, but usually app developers will let notifications expire on their own. Also, notifications come by default with a button that the user can click to close the notification prematurely."
+    },
+    {
+      "type": "h3",
+      "text": "Duration"
+    },
+    {
+      "type": "p",
+      "text": "By default, Shiny notifications will disappear after five seconds. To change how long a notification appears for, set the duration argument of ui.notification_show() to an integer number of seconds. Set duration to None to have the notification appear until the user closes it."
+    },
+    {
+      "type": "h3",
+      "text": "Type"
+    },
+    {
+      "type": "p",
+      "text": "Shiny notifications come in four types: default, messages, warnings and errors. To set the type of a notification, use the type argument of ui.notification_show()."
+    },
+    {
+      "type": "p",
+      "text": "See Also: Modal messages provide a similar, but alternative way to display information to the user."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Replace/update a notification"
+    },
+    {
+      "type": "p",
+      "text": "Assign a notification an id to replace any existing notification with the same id. In the example below, a persistant notification is created with duration=None and updated each time you click the notification button."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_or_update_notification():\n    ui.notification_show(\n        f\"You clicked the Show button {input.show()} times.\",\n        duration=None,\n        # compare to what happens if you comment out the line below\n        id=\"message\",\n    )"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Track and remove notifications"
+    },
+    {
+      "type": "p",
+      "text": "Track notifications, and use ui.notification_remove() to remove notifications one at a time."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\nui.input_action_button(\"remove\", \"Remove Notification\")\n\nids: list[str] = []\nn: int = 0\n\n@reactive.effect\n@reactive.event(input.show)\ndef _():\n    global ids\n    global n\n    # Save the ID for removal later\n    id = ui.notification_show(\"Message \" + str(n), duration=None)\n    ids.append(id)\n    n += 1\n\n@reactive.effect\n@reactive.event(input.remove)\ndef _():\n    global ids\n    if ids:\n        ui.notification_remove(ids.pop())"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\nui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True)\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_notification():\n    type_txt = \"notification\" if input.type() == \"default\" else input.type()\n    ui.notification_show(\n        f\"This {type_txt} will disappear after 2 seconds.\",\n        type=input.type(),\n        duration=2,\n    )",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\nui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True)\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_notification():\n    type_txt = \"notification\" if input.type() == \"default\" else input.type()\n    ui.notification_show(\n        f\"This {type_txt} will disappear after 2 seconds.\",\n        type=input.type(),\n        duration=2,\n    )",
+    "from shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\ntypes = [\"default\", \"message\", \"warning\", \"error\"]\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\"type\", \"Notification Type\", types, inline=True),\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        type_txt = \"notification\" if input.type() == \"default\" else input.type()\n\n        ui.notification_show(\n            f\"This {type_txt} will disappear after 2 seconds.\",\n            type=input.type(),\n            duration=2,\n        )\n\napp = App(app_ui, server)",
+    "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    ui.notification_show(\"You've been notified.\")",
+    "@reactive.effect\n@reactive.event(input.show)\ndef _():\n    ui.notification_show(\"You've been notified.\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_or_update_notification():\n    ui.notification_show(\n        f\"You clicked the Show button {input.show()} times.\",\n        duration=None,\n        # compare to what happens if you comment out the line below\n        id=\"message\",\n    )",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\n\n@reactive.effect\n@reactive.event(input.show)\ndef show_or_update_notification():\n    ui.notification_show(\n        f\"You clicked the Show button {input.show()} times.\",\n        duration=None,\n        # compare to what happens if you comment out the line below\n        id=\"message\",\n    )",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n)\n\ndef server(input, output, session):\n    @reactive.effect\n    @reactive.event(input.show)\n    def show_or_update_notification():\n        ui.notification_show(\n            f\"You clicked the Show button {input.show()} times.\",\n            duration=None,\n            # compare to what happens if you comment out the line below\n            id=\"message\",\n        )\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 225\n\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\nui.input_action_button(\"remove\", \"Remove Notification\")\n\nids: list[str] = []\nn: int = 0\n\n@reactive.effect\n@reactive.event(input.show)\ndef _():\n    global ids\n    global n\n    # Save the ID for removal later\n    id = ui.notification_show(\"Message \" + str(n), duration=None)\n    ids.append(id)\n    n += 1\n\n@reactive.effect\n@reactive.event(input.remove)\ndef _():\n    global ids\n    if ids:\n        ui.notification_remove(ids.pop())",
+    "from shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"show\", \"Show Notification\")\nui.input_action_button(\"remove\", \"Remove Notification\")\n\nids: list[str] = []\nn: int = 0\n\n@reactive.effect\n@reactive.event(input.show)\ndef _():\n    global ids\n    global n\n    # Save the ID for removal later\n    id = ui.notification_show(\"Message \" + str(n), duration=None)\n    ids.append(id)\n    n += 1\n\n@reactive.effect\n@reactive.event(input.remove)\ndef _():\n    global ids\n    if ids:\n        ui.notification_remove(ids.pop())",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"show\", \"Show Notification\"),\n    ui.input_action_button(\"remove\", \"Remove Notification\"),\n)\n\ndef server(input, output, session):\n    ids: list[str] = []\n    n: int = 0\n\n    @reactive.effect\n    @reactive.event(input.show)\n    def _():\n        nonlocal ids\n        nonlocal n\n        # Save the ID for removal later\n        id = ui.notification_show(\n            f\"Notification {n}\", duration=None, close_button=False\n        )\n        ids.append(id)\n        n += 1\n\n    @reactive.effect\n    @reactive.event(input.remove)\n    def _():\n        nonlocal ids\n        if ids:\n            ui.notification_remove(ids.pop())\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

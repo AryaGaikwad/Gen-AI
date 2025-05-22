@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_select function in Shiny for Python?",
+  "What happens if a parameter with a None value is passed to the ui.update_select function?",
+  "How does the ui.update_select function handle dictionaries when mapping choice values to labels?",
+  "What is the purpose of the Session instance parameter in the ui.update_select function?",
+  "How can the set of choices be cleared for update_select in Shiny for Python?"
+]

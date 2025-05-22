@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating a switch using express.ui.input_switch in Shiny for Python?",
+  "What is the difference between input_switch and input_checkbox in Shiny for Python?",
+  "What does the width parameter signify when using express.ui.input_switch in Shiny for Python?",
+  "What value is returned when the switch created with input_switch is checked or unchecked in Shiny for Python?",
+  "Which other input components are related to input_switch in Shiny for Python according to the documentation?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using the ui.input_text_area function in Shiny for Python?",
+  "What options are available for specifying the directions in which the textarea box can be resized in ui.input_text_area?",
+  "How can one specify when the input value should be updated when using the ui.input_text_area function?",
+  "What is the default behavior for enabling browser autocompletion of the text input in ui.input_text_area?",
+  "What is the default behavior for enabling browser spell checking of the text input in ui.input_text_area?"
+]

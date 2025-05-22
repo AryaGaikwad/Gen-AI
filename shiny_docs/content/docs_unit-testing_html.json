@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "title": "Unit testing – Shiny for Python",
+    "description": "",
+    "url": "docs/unit-testing.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🧪 Testing",
+        "Unit testing"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Unit testing"
+    },
+    {
+      "type": "p",
+      "text": "Testing is important to ensure your apps continue working as intended. There are two main approaches to testing Shiny apps: unit testing and end-to-end testing. Relatively speaking, unit tests much more limited compared to end-to-end, but they’re also simpler to write and maintain since they don’t depend on running the app in a browser. Unit tests also tend to force you to separate the app’s “business” logic from the reactive logic (which can be a good thing) since your app won’t have access to things like input or output in a unit test."
+    },
+    {
+      "type": "p",
+      "text": "In this article, we’ll provide a short guide on unit testing with pytest. See the next article for end-to-end testing."
+    },
+    {
+      "type": "h3",
+      "text": "Make your app testable"
+    },
+    {
+      "type": "p",
+      "text": "Consider the following Shiny app that filters a dataset based on a user’s selection of species."
+    },
+    {
+      "type": "code",
+      "text": "app.py"
+    },
+    {
+      "type": "code",
+      "text": "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_select(\n  \"species\", \"Enter a species\",\n  list(penguins.species.unique())\n)\n\n@render.data_frame\ndef display_dat():\n    idx = penguins.species.isin(input.species())\n    return penguins[idx]"
+    },
+    {
+      "type": "p",
+      "text": "None of the logic can be tested directly through a unit test.1 We can, however, put the logic for display_dat inside separate function, which can be then be tested independently of the Shiny app:"
+    },
+    {
+      "type": "code",
+      "text": "@render.data_frame\ndef display_dat():\n    return filter_penguins(input.species())\n\ndef filter_penguins(species):\n    return penguins[penguins.species.isin(species)]"
+    },
+    {
+      "type": "p",
+      "text": "Now that we have a function that doesn’t rely on a reactive input value, we can write a unit test for it. There are many unit testing frameworks available for Python, but we’ll use pytest in this article since it’s by far the most common."
+    },
+    {
+      "type": "h3",
+      "text": "pytest"
+    },
+    {
+      "type": "p",
+      "text": "pytest is a popular, open-source testing framework for Python. To get started, you’ll first want to install pytest:"
+    },
+    {
+      "type": "code",
+      "text": "pip install pytest"
+    },
+    {
+      "type": "p",
+      "text": "pytest expects tests to be in files with names that start with test_ or end with _test.py. It also expects test functions to start with test_. Here’s an example of a test file for the filter_penguins function:"
+    },
+    {
+      "type": "code",
+      "text": "test_filter_penguins.py"
+    },
+    {
+      "type": "code",
+      "text": "from app import filter_penguins\n\ndef test_filter_penguins():\n    assert filter_penguins([\"Adelie\"]).shape[0] == 152\n    assert filter_penguins([\"Gentoo\"]).shape[0] == 124\n    assert filter_penguins([\"Chinstrap\"]).shape[0] == 68\n    assert filter_penguins([\"Adelie\", \"Gentoo\"]).shape[0] == 276\n    assert filter_penguins([\"Adelie\", \"Gentoo\", \"Chinstrap\"]).shape[0] == 344"
+    },
+    {
+      "type": "p",
+      "text": "Assuming both the app.py and test_filter_penguins.py files are in the same directory, you can now run the test by typing pytest in your terminal. pytest will automatically locate the test file and run it with the results shown below."
+    },
+    {
+      "type": "code",
+      "text": "platform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\n.          [100%]\n(3 durations < 5s hidden.  Use -vv to show these durations.)"
+    },
+    {
+      "type": "p",
+      "text": "If a test fails, pytest will show you which test failed and why:"
+    },
+    {
+      "type": "code",
+      "text": "======================================================= test session starts =======================================================\nplatform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\nF       [100%]\n======= FAILURES =======\n________ test_double_number ________\n\n    def test_filter_penguins():\n>       assert filter_penguins([\"Adelie\"]).shape[0] == 150\nE       AssertionError: assert 152 == 150\nE        +  where 152 = filter_penguins([\"Adelie\"]).shape[0]"
+    },
+    {
+      "type": "p",
+      "text": "Unit testing is a great way to ensure that your “business” logic is working as expected. However, to fully ensure your app is working as intended, you’ll also want to write end-to-end tests. In the next article, we’ll show you how to write end-to-end tests for your Shiny app via Playwright."
+    },
+    {
+      "type": "h2",
+      "text": "Footnotes"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "You could test this with an end-to-end test, but that’s for the next article.↩︎"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "You could test this with an end-to-end test, but that’s for the next article.↩︎"
+    }
+  ],
+  "code_examples": [
+    "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_select(\n  \"species\", \"Enter a species\",\n  list(penguins.species.unique())\n)\n\n@render.data_frame\ndef display_dat():\n    idx = penguins.species.isin(input.species())\n    return penguins[idx]",
+    "from palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_select(\n  \"species\", \"Enter a species\",\n  list(penguins.species.unique())\n)\n\n@render.data_frame\ndef display_dat():\n    idx = penguins.species.isin(input.species())\n    return penguins[idx]",
+    "@render.data_frame\ndef display_dat():\n    return filter_penguins(input.species())\n\ndef filter_penguins(species):\n    return penguins[penguins.species.isin(species)]",
+    "@render.data_frame\ndef display_dat():\n    return filter_penguins(input.species())\n\ndef filter_penguins(species):\n    return penguins[penguins.species.isin(species)]",
+    "pip install pytest",
+    "pip install pytest",
+    "from app import filter_penguins\n\ndef test_filter_penguins():\n    assert filter_penguins([\"Adelie\"]).shape[0] == 152\n    assert filter_penguins([\"Gentoo\"]).shape[0] == 124\n    assert filter_penguins([\"Chinstrap\"]).shape[0] == 68\n    assert filter_penguins([\"Adelie\", \"Gentoo\"]).shape[0] == 276\n    assert filter_penguins([\"Adelie\", \"Gentoo\", \"Chinstrap\"]).shape[0] == 344",
+    "from app import filter_penguins\n\ndef test_filter_penguins():\n    assert filter_penguins([\"Adelie\"]).shape[0] == 152\n    assert filter_penguins([\"Gentoo\"]).shape[0] == 124\n    assert filter_penguins([\"Chinstrap\"]).shape[0] == 68\n    assert filter_penguins([\"Adelie\", \"Gentoo\"]).shape[0] == 276\n    assert filter_penguins([\"Adelie\", \"Gentoo\", \"Chinstrap\"]).shape[0] == 344",
+    "platform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\n.          [100%]\n(3 durations < 5s hidden.  Use -vv to show these durations.)",
+    "platform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\n.          [100%]\n(3 durations < 5s hidden.  Use -vv to show these durations.)",
+    "======================================================= test session starts =======================================================\nplatform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\nF       [100%]\n======= FAILURES =======\n________ test_double_number ________\n\n    def test_filter_penguins():\n>       assert filter_penguins([\"Adelie\"]).shape[0] == 150\nE       AssertionError: assert 152 == 150\nE        +  where 152 = filter_penguins([\"Adelie\"]).shape[0]",
+    "======================================================= test session starts =======================================================\nplatform darwin -- Python 3.10.12, pytest-7.4.4, pluggy-1.4.0\nconfigfile: pytest.ini\nplugins: asyncio-0.21.0, timeout-2.1.0, Faker-20.1.0, cov-4.1.0, playwright-0.4.4, rerunfailures-11.1.2, xdist-3.3.1, base-url-2.1.0, hydra-core-1.3.2, anyio-3.7.0, syrupy-4.0.5, shiny-1.0.0\nasyncio: mode=strict\n12 workers [1 item]\nF       [100%]\n======= FAILURES =======\n________ test_double_number ________\n\n    def test_filter_penguins():\n>       assert filter_penguins([\"Adelie\"]).shape[0] == 150\nE       AssertionError: assert 152 == 150\nE        +  where 152 = filter_penguins([\"Adelie\"]).shape[0]"
+  ],
+  "toc": [
+    {
+      "title": "Make your app testable",
+      "url": "docs/#make-your-app-testable"
+    },
+    {
+      "title": "pytest",
+      "url": "docs/#pytest"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

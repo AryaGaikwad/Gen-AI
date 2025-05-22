@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a fillable page using ui.page_fillable in Shiny for Python?",
+  "What does the parameter 'padding' represent in the ui.page_fillable function of Shiny for Python?",
+  "How can we control whether the page should fill the viewport's height on mobile devices using ui.page_fillable in Shiny for Python?",
+  "What is the purpose of the 'theme' parameter in the ui.page_fillable function of Shiny for Python?",
+  "In Shiny for Python, how can we specify the language code for the HTML page when creating a fillable page using ui.page_fillable?"
+]

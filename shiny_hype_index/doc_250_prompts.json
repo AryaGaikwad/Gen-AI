@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the ui.sidebar function to define the initial state of the sidebar?",
+  "What are the different CSS classes that can be added to the sidebar container element using the ui.sidebar function?",
+  "How can the maximum height of the horizontal sidebar on mobile devices be defined using the ui.sidebar function?",
+  "What is the purpose of the position parameter in the ui.sidebar function?",
+  "How can padding within the sidebar itself be customized using the ui.sidebar function?"
+]

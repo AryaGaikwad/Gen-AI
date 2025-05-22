@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.wrap_express_app` function in Shiny for Python?",
+  "What does the `express.wrap_express_app` function do with the Shiny Express mode app?",
+  "What Python package is created by `express.wrap_express_app` for the app?",
+  "Why is the Python package created by `express.wrap_express_app` necessary for relative imports?",
+  "What type of object does `express.wrap_express_app` return?"
+]

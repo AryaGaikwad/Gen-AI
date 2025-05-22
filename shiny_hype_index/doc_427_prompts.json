@@ -1,0 +1,7 @@
+[
+  "What does the `render.plot` function in Shiny for Python do?",
+  "What parameters can be specified when using the `render.plot` function in Shiny for Python?",
+  "What are the different types of objects that can be returned when using the `render.plot` function in Shiny for Python?",
+  "When should the `width` parameter be used in the `render.plot` function in Shiny for Python?",
+  "What is the recommended naming convention for the function decorated with `render.plot` in Shiny for Python?"
+]

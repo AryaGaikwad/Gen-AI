@@ -1,0 +1,7 @@
+[
+  "What are the different patterns available in Shiny for Python to make reactive programming easier in certain situations?",
+  "How can I ignore changes in certain reactive dependencies in a Shiny Python application?",
+  "How can I require user input before executing a reactive function in Shiny for Python?",
+  "How can I periodically check for changes to a reactive dependency in a Shiny Python application?",
+  "What is the purpose of using reactive polling in a Shiny Python application and how can it be implemented?"
+]

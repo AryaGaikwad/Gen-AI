@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a Bootstrap UI page container with ui.page_bootstrap?",
+  "How can the browser window title be set for a Bootstrap UI page container using ui.page_bootstrap?",
+  "What is the purpose of specifying the ISO 639-1 language code when creating a Bootstrap UI page container with ui.page_bootstrap?",
+  "How can a custom Shiny theme be applied to a Bootstrap UI page container using ui.page_bootstrap?",
+  "What does the ui.page_bootstrap function return when creating a Bootstrap UI page container?"
+]

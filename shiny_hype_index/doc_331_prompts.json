@@ -1,0 +1,7 @@
+[
+  "What parameters are required for using the ui.update_date function in Shiny for Python?",
+  "What happens if I provide None as the starting date parameter in the ui.update_date function?",
+  "How does the ui.update_date function handle arguments with None values?",
+  "How can I clear the set of choices for radio buttons, checkbox groups, and select inputs using the update functions?",
+  "When are the input updater functions' messages sent to the client in relation to other observers and outputs?"
+]

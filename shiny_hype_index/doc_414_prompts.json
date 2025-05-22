@@ -1,0 +1,7 @@
+[
+  "How can I append a message to a chat using the ui.Chat component in Shiny for Python?",
+  "What is the purpose of the .on_user_submit() callback in the ui.Chat component in Shiny for Python?",
+  "How can I handle errors that occur in response to user input when using the ui.Chat component in Shiny for Python?",
+  "What are the different formats supported for messages when using the .append_message() method in the ui.Chat component in Shiny for Python?",
+  "How can I transform user input before storing it in the chat messages when using the ui.Chat component in Shiny for Python?"
+]

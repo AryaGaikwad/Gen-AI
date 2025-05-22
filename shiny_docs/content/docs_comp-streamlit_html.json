@@ -1,0 +1,429 @@
+{
+  "metadata": {
+    "title": "Streamlit – Shiny for Python",
+    "description": "",
+    "url": "docs/comp-streamlit.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📊 Comparisons",
+        "Streamlit"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Streamlit"
+    },
+    {
+      "type": "p",
+      "text": "The idea of Streamlit is to simplify application development by rerunning the entire application script whenever any user input changes. This strategy leads to a great initial user experience, but quickly becomes constricting as your application grows in scope."
+    },
+    {
+      "type": "p",
+      "text": "Shiny and Streamlit differ in a few key ways:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Shiny’s reactive execution means that elements are minimally re-rendered.",
+        "You can build large Shiny applications without manually managing application state or caching data.",
+        "Shiny allows you to easily customize the look and feel of your application."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Shiny is designed to support your application’s growth without extensive rewriting; the patterns you learn when developing a simple app are robust enough to handle a complicated one."
+    },
+    {
+      "type": "h2",
+      "text": "Streamlit example"
+    },
+    {
+      "type": "p",
+      "text": "Consider this basic Streamlit application which filters a dataset and draws two plots. The nice thing about this application is that it’s very similar to a non-interactive script. This makes getting started very easy because all you need to do to turn this script into an application is to add some Streamlit function calls to your variables and outputs. At the beginning, Streamlit doesn’t demand that you change your code to fit into a particular structure."
+    },
+    {
+      "type": "p",
+      "text": "The way Streamlit achieves this is by rerunning your script from start to finish every time the user takes an action. While this works okay for small applications it is inefficient, and becomes intractable for larger more complicated ones. In this case clicking the Add Smoother button will cause the entire app to reload, even though the button is only used by one plot."
+    },
+    {
+      "type": "code",
+      "text": "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n\nwith st.sidebar:\n    mass = st.slider(\"Mass\", 2000, 8000, 6000)\n    smoother = st.checkbox(\"Add Smoother\")\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))"
+    },
+    {
+      "type": "p",
+      "text": "Video"
+    },
+    {
+      "type": "h2",
+      "text": "Shiny translation"
+    },
+    {
+      "type": "p",
+      "text": "Shiny express apps look very similar to Streamlit apps, but run much more efficiently. Unlike Streamlit, Shiny does not rerender the application every time an input is changed, but instead keeps track of the relationships between components and minimally rerenders the components which need to be updated. The framework does this automatically when the application is run, and so you don’t need to manually define the execution method for your app."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render, ui\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n    print(df)\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot"
+    },
+    {
+      "type": "p",
+      "text": "The main difference between Streamlit and Shiny is code organization. Since Streamlit runs everything from top to bottom it doesn’t particularly matter how your code is organized. In order to benefit from Shiny’s execution model, you need to organize your code into decorated functions."
+    },
+    {
+      "type": "p",
+      "text": "For example, take this part of the application code:"
+    },
+    {
+      "type": "code",
+      "text": "@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n@render.plot\ndef mass_distribution():\n    return dist_plot(filtered_data())\n\n@render.plot\ndef scatter():\n    return scatter_plot(filtered_data(), input.smoother())"
+    },
+    {
+      "type": "p",
+      "text": "These functions define the three main nodes of the application, as well as the relationships between them. The @render.plot and @reactive.calc decorators identify the functions as reactive functions which need to re-execute in response to upstream changes, and the filtered_data() and input.* calls define the relationships between these components. The decorators allow Shiny to construct a computation graph of the application as it runs, and only rerender an element when one of its upstream dependencies changes."
+    },
+    {
+      "type": "code",
+      "text": "flowchart LR\n  S[input.mass] --> F[Filtered Data]\n  F --> H((Distribution))\n  F --> SC((Scatterplot))\n  C[input.smoother] --> SC\n"
+    },
+    {
+      "type": "h1",
+      "text": "Extending the application"
+    },
+    {
+      "type": "p",
+      "text": "Organizing your app this way means that you can extend the application without rewriting it. For example, let’s add a button which resets the slider. In Shiny you can do this by adding a @reactive.effect function which calls the ui.update_slider() function. This adds a node to the computation graph and everything works as you’d expect it to. Importantly, we can extend the application without changing how we think about the overall application."
+    },
+    {
+      "type": "code",
+      "text": "flowchart LR\n  S[input.mass] --> F[Filtered Data]\n  F --> H((Distribution))\n  F --> SC((Scatterplot))\n  C[input.smoother] --> SC\n  R{Reset} -.-> S\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n    ui.input_action_button(\"reset\", \"Reset Slider\")\n\n\n@reactive.effect\n@reactive.event(input.reset)\ndef _():\n    ui.update_slider(\"mass\", value=6000)\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n        ui.input_action_button(\"reset\", \"Reset Slider\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @output\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @output\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot"
+    },
+    {
+      "type": "h3",
+      "text": "Streamlit requires rewriting"
+    },
+    {
+      "type": "p",
+      "text": "Streamlit is optimized for very simple applications, but the cost of that is that Streamlit applications can be quite challenging to extend. For example, to add a reset button to Streamlit you might expect that something like this would work. After all, if your script runs from top-to-bottom whenever a button is pressed, shouldn’t you be able to redefine a slider using an if statement?"
+    },
+    {
+      "type": "code",
+      "text": "import streamlit as st\n\nx = st.slider(\"x\", 0, 10, 5)\nbtn = st.button(\"Reset\")\nif btn:\n    x = st.slider(\"x\", 0, 10, 5)"
+    },
+    {
+      "type": "p",
+      "text": "Unfortunately, this doesn’t work because Streamlit maintains hidden application state, and resetting the slider value causes a name conflict. In order to get this to work you need to first initialize a state variable slider which matches the key of the slider input widget, then you need to define a callback function and pass that as an argument to the button function. Streamlit then uses the slider key to look for a variable with that same key session state. This variable defines the value of the slider."
+    },
+    {
+      "type": "p",
+      "text": "The difficulty here is that in order to get the app to work you need to change your mental model of how the application runs. Instead of thinking about your app as a simple Python script which reruns when anything changes, you need to start thinking about manually manipulating the state variables which persist across runs. The limitations of the simple rerun-everything model will require you to add more and more workarounds like this as your application grows in complexity."
+    },
+    {
+      "type": "code",
+      "text": "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n# You need to check for the variable in session state to avoid an error\nif \"slider\" not in st.session_state:\n    st.session_state[\"slider\"] = 6000\n\ndef reset_value():\n    st.session_state[\"slider\"] = 6000\n\n\nwith st.sidebar:\n    mass = st.slider(\n        label=\"Mass\",\n        min_value=2000,\n        max_value=8000,\n        key=\"slider\", # The `key` imports the number which is stored in `session_state`\n    )\n    smoother = st.checkbox(\"Add Smoother\")\n    reset = st.button(\"Reset Slider\", on_click=reset_value)\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))"
+    },
+    {
+      "type": "h1",
+      "text": "Customizing UI"
+    },
+    {
+      "type": "p",
+      "text": "Shiny embraces UI as HTML, and as a result it’s relatively easy to implement bespoke UI customizations. For example, lets change the color of one button without changing the colors of any other buttons in our app. Since Shiny allows you to add HTML attributes like class/style, and provides a CSS framework (Bootstrap), we can make primary button by just adding an appropriate class attribute."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\n\nui.input_action_button(\"default\", \"Default Button\")\nui.input_action_button(\"primary\", \"Primary Button\", class_=\"btn-outline-primary\")"
+    },
+    {
+      "type": "p",
+      "text": "You might not need to customize the CSS of your app that often, but it’s important to have the option if your application calls for it. For example, suppose your company wants to publish your application publicly on their website, but in order to do that you need to make sure that it matches their style guide. You can do that with Shiny because it supports the same styling patterns that your company is probably already using."
+    },
+    {
+      "type": "h3",
+      "text": "Streamlit"
+    },
+    {
+      "type": "p",
+      "text": "This task is almost impossible in Streamlit, and requires a JavaScript workaround."
+    },
+    {
+      "type": "code",
+      "text": "import streamlit as st\nimport streamlit.components.v1 as components\n\nst.button(\"red\", \"Red Button\")\nst.button(\"white\", \"White Button\")\n\n\ndef ChangeButtonColour(widget_label, font_color, background_color=\"transparent\"):\n    htmlstr = f\"\"\"\n        <script>\n            var elements = window.parent.document.querySelectorAll('button');\n            for (var i = 0; i < elements.length; ++i) {{\n                if (elements[i].innerText == '{widget_label}') {{\n                    elements[i].style.color ='{font_color}';\n                    elements[i].style.background = '{background_color}'\n                }}\n            }}\n        </script>\n        \"\"\"\n    components.html(f\"{htmlstr}\", height=0, width=0)\n\n\nChangeButtonColour(\"red\", \"white\", \"red\")"
+    },
+    {
+      "type": "p",
+      "text": "Despite its complexity, this is the best way to change the style of an individual element in Streamlit. How this pattern works is:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Return an empty html component with a script tag",
+        "Use that script to break out of the iframe and access the parent document",
+        "Search through the parent elements for those which matches a string",
+        "Change the style of those elements"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "This pattern is fairly tricky to understand, and can lead to some unexpected bugs. For instance changes to page structure or button names can cause the styling to behave unpredictably."
+    },
+    {
+      "type": "p",
+      "text": "Streamlit was designed around simple applications which didn’t require customized styling, so it’s no surprise that this type of styling is difficult. It is, however, an example of how the up-front simplicity of Streamlit has a significant cost when you go outside the boundaries of that simplicity. The fact that this is a fairly common workaround is an indication that Streamlit users commonly exceed those boundaries."
+    },
+    {
+      "type": "h1",
+      "text": "Privacy and security"
+    },
+    {
+      "type": "p",
+      "text": "Streamlit collects user information on everyone who visits a running Streamlit app unless you opt-out. The data is sent to a American server owned by Snowflake so that the company can analyze user behavior. This can cause legal and security problems because your application may be subject to data governance policies which forbid this type of data collection. For example, if your users do not explicitly provide consent to transfer data to a US company, sending data to Snowflake might be a GDPR violation. In order to prevent data collection you need to set gatherUsageStats = false in your Streamlit config file, which is an easy thing to forget to include in a given Streamlit deployment."
+    },
+    {
+      "type": "p",
+      "text": "Shiny does not collect or report user data of any kind, and it never will. We do not believe that open-source tools should collect user data without explicit consent."
+    },
+    {
+      "type": "h1",
+      "text": "Conclusion"
+    },
+    {
+      "type": "p",
+      "text": "Shiny allows you to build much more performant and extensible applications than Streamlit. The patterns that you use to build a simple Shiny application are the same ones that you use to build a complex one, and you never need to change your mental model of how the application works. This design will let your application grow along with the scope of your problem, and you can have confidence that the framework has the tools that you need to handle almost any requirement."
+    }
+  ],
+  "code_examples": [
+    "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n\nwith st.sidebar:\n    mass = st.slider(\"Mass\", 2000, 8000, 6000)\n    smoother = st.checkbox(\"Add Smoother\")\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))",
+    "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n\nwith st.sidebar:\n    mass = st.slider(\"Mass\", 2000, 8000, 6000)\n    smoother = st.checkbox(\"Add Smoother\")\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render, ui\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render, ui\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n    print(df)\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n    print(df)\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n@render.plot\ndef mass_distribution():\n    return dist_plot(filtered_data())\n\n@render.plot\ndef scatter():\n    return scatter_plot(filtered_data(), input.smoother())",
+    "@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n@render.plot\ndef mass_distribution():\n    return dist_plot(filtered_data())\n\n@render.plot\ndef scatter():\n    return scatter_plot(filtered_data(), input.smoother())",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n    ui.input_action_button(\"reset\", \"Reset Slider\")\n\n\n@reactive.effect\n@reactive.event(input.reset)\ndef _():\n    ui.update_slider(\"mass\", value=6000)\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import reactive, render\nfrom shiny.express import input, ui\n\ndf = load_penguins()\n\nwith ui.sidebar():\n    ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000)\n    ui.input_checkbox(\"smoother\", \"Add Smoother\")\n    ui.input_action_button(\"reset\", \"Reset Slider\")\n\n\n@reactive.effect\n@reactive.event(input.reset)\ndef _():\n    ui.update_slider(\"mass\", value=6000)\n\n\n@reactive.calc\ndef filtered_data():\n    filt_df = df.copy()\n    filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n    return filt_df\n\n\nwith ui.card():\n\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\nwith ui.card():\n\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n        ui.input_action_button(\"reset\", \"Reset Slider\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @output\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @output\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: horizontal\n#| viewerHeight: 800\nfrom pathlib import Path\n\nimport pandas as pd\nfrom palmerpenguins import load_penguins\nfrom plots import dist_plot, scatter_plot\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_slider(\"mass\", \"Mass\", 2000, 8000, 6000),\n        ui.input_checkbox(\"smoother\", \"Add Smoother\"),\n        ui.input_action_button(\"reset\", \"Reset Slider\"),\n    ),\n    ui.card(ui.output_plot(id=\"scatter\")),\n    ui.card(ui.output_plot(id=\"mass_distribution\")),\n)\n\n\ndef server(input, output, session):\n    df = load_penguins()\n\n    @reactive.calc\n    def filtered_data():\n        filt_df = df.copy()\n        filt_df = filt_df.loc[df[\"body_mass_g\"] < input.mass()]\n        return filt_df\n\n    @output\n    @render.plot\n    def mass_distribution():\n        return dist_plot(filtered_data())\n\n    @output\n    @render.plot\n    def scatter():\n        return scatter_plot(filtered_data(), input.smoother())\n\n\napp = App(app_ui, server)\n\n## file: requirements.txt\nshiny\npalmerpenguins\nplotnine\npandas\n\n## file: plots.py\nfrom plotnine import aes, geom_density, geom_point, ggplot, stat_smooth, theme_light\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"body_mass_g\", fill=\"species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"bill_length_mm\",\n                y=\"bill_depth_mm\",\n                color=\"species\",\n                group=\"species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot",
+    "import streamlit as st\n\nx = st.slider(\"x\", 0, 10, 5)\nbtn = st.button(\"Reset\")\nif btn:\n    x = st.slider(\"x\", 0, 10, 5)",
+    "import streamlit as st\n\nx = st.slider(\"x\", 0, 10, 5)\nbtn = st.button(\"Reset\")\nif btn:\n    x = st.slider(\"x\", 0, 10, 5)",
+    "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n# You need to check for the variable in session state to avoid an error\nif \"slider\" not in st.session_state:\n    st.session_state[\"slider\"] = 6000\n\ndef reset_value():\n    st.session_state[\"slider\"] = 6000\n\n\nwith st.sidebar:\n    mass = st.slider(\n        label=\"Mass\",\n        min_value=2000,\n        max_value=8000,\n        key=\"slider\", # The `key` imports the number which is stored in `session_state`\n    )\n    smoother = st.checkbox(\"Add Smoother\")\n    reset = st.button(\"Reset Slider\", on_click=reset_value)\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))",
+    "import streamlit as st\nimport pandas as pd\nfrom plotnine import ggplot, geom_density, aes, theme_light, geom_point, stat_smooth\nfrom pathlib import Path\n\ninfile = Path(__file__).parent / \"penguins.csv\"\ndf = pd.read_csv(infile)\n\n\ndef dist_plot(df):\n    plot = (\n        ggplot(df, aes(x=\"Body Mass (g)\", fill=\"Species\"))\n        + geom_density(alpha=0.2)\n        + theme_light()\n    )\n    return plot.draw()\n\n\ndef scatter_plot(df, smoother):\n    plot = (\n        ggplot(\n            df,\n            aes(\n                x=\"Bill Length (mm)\",\n                y=\"Bill Depth (mm)\",\n                color=\"Species\",\n                group=\"Species\",\n            ),\n        )\n        + geom_point()\n        + theme_light()\n    )\n\n    if smoother:\n        plot = plot + stat_smooth()\n\n    return plot.draw()\n\n# You need to check for the variable in session state to avoid an error\nif \"slider\" not in st.session_state:\n    st.session_state[\"slider\"] = 6000\n\ndef reset_value():\n    st.session_state[\"slider\"] = 6000\n\n\nwith st.sidebar:\n    mass = st.slider(\n        label=\"Mass\",\n        min_value=2000,\n        max_value=8000,\n        key=\"slider\", # The `key` imports the number which is stored in `session_state`\n    )\n    smoother = st.checkbox(\"Add Smoother\")\n    reset = st.button(\"Reset Slider\", on_click=reset_value)\n\nfilt_df = df.loc[df[\"Body Mass (g)\"] < mass]\n\nst.pyplot(scatter_plot(filt_df, smoother))\nst.pyplot(dist_plot(filt_df))",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\n\nui.input_action_button(\"default\", \"Default Button\")\nui.input_action_button(\"primary\", \"Primary Button\", class_=\"btn-outline-primary\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 100\nfrom shiny.express import ui\n\nui.input_action_button(\"default\", \"Default Button\")\nui.input_action_button(\"primary\", \"Primary Button\", class_=\"btn-outline-primary\")",
+    "import streamlit as st\nimport streamlit.components.v1 as components\n\nst.button(\"red\", \"Red Button\")\nst.button(\"white\", \"White Button\")\n\n\ndef ChangeButtonColour(widget_label, font_color, background_color=\"transparent\"):\n    htmlstr = f\"\"\"\n        <script>\n            var elements = window.parent.document.querySelectorAll('button');\n            for (var i = 0; i < elements.length; ++i) {{\n                if (elements[i].innerText == '{widget_label}') {{\n                    elements[i].style.color ='{font_color}';\n                    elements[i].style.background = '{background_color}'\n                }}\n            }}\n        </script>\n        \"\"\"\n    components.html(f\"{htmlstr}\", height=0, width=0)\n\n\nChangeButtonColour(\"red\", \"white\", \"red\")",
+    "import streamlit as st\nimport streamlit.components.v1 as components\n\nst.button(\"red\", \"Red Button\")\nst.button(\"white\", \"White Button\")\n\n\ndef ChangeButtonColour(widget_label, font_color, background_color=\"transparent\"):\n    htmlstr = f\"\"\"\n        <script>\n            var elements = window.parent.document.querySelectorAll('button');\n            for (var i = 0; i < elements.length; ++i) {{\n                if (elements[i].innerText == '{widget_label}') {{\n                    elements[i].style.color ='{font_color}';\n                    elements[i].style.background = '{background_color}'\n                }}\n            }}\n        </script>\n        \"\"\"\n    components.html(f\"{htmlstr}\", height=0, width=0)\n\n\nChangeButtonColour(\"red\", \"white\", \"red\")"
+  ],
+  "toc": [
+    {
+      "title": "Streamlit example",
+      "url": "docs/#streamlit-example"
+    },
+    {
+      "title": "Shiny translation",
+      "url": "docs/#shiny-translation"
+    },
+    {
+      "title": "Extending the application",
+      "url": "docs/#extending-the-application"
+    },
+    {
+      "title": "Streamlit requires rewriting",
+      "url": "docs/#streamlit-requires-rewriting"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/#customizing-ui"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/#streamlit"
+    },
+    {
+      "title": "Privacy and security",
+      "url": "docs/#privacy-and-security"
+    },
+    {
+      "title": "Conclusion",
+      "url": "docs/#conclusion"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a pair of text inputs for selecting dates using ui.input_date_range in Shiny for Python?",
+  "What are the valid options for the date format string used in ui.input_date_range in Shiny for Python?",
+  "How can the language for month and day names be customized in the ui.input_date_range function in Shiny for Python?",
+  "What options are available for setting the initial date range shown when the input object is first clicked in ui.input_date_range in Shiny for Python?",
+  "In Shiny for Python, how can you ensure that the datepicker closes immediately after a date is selected when using ui.input_date_range?"
+]

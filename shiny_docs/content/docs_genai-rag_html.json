@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "title": "RAG – Shiny for Python",
+    "description": "",
+    "url": "docs/genai-rag.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🤖 Generative AI",
+        "RAG"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "RAG"
+    },
+    {
+      "type": "p",
+      "text": "Large language models (LLMs) are trained on public data and have a training cutoff date, so they aren’t inherently aware of private or the latest information. As a result, LLMs may not have the necessary information to answer a user’s question, even though they might pretend to (a.k.a. hallucinate). This is a common problem, especially in an enterprise setting, where the information is proprietary and/or constantly changing. Unfortunately, this is also an environment where plausible but inaccurate answers can have serious consequences."
+    },
+    {
+      "type": "p",
+      "text": "There are roughly three general approaches to addressing this problem, going from the least to most complex:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "System prompt: If the information that the model needs to perform well can fit within a system prompt (i.e., fit within the relevant context window), you should consider that first.",
+        "Tool calling: Provide the LLM with tools it can use to retrieve the information that it needs. Compared to RAG, this has the benefit of not needing to pre-fetch/maintain an information database, compute document/query similarities, and can even be combined with RAG.",
+        "Retrieval-Augmented Generation (RAG): Among these options, this can be the most demanding to implement and maintain, but also offers the most control over when and how exactly the LLM gains access to the information it needs."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "If RAG sounds right for your use case, the next section gives a basic example of how to implement it using Shiny and chatlas. The last section provides some tips on how to scale up your RAG implementation."
+    },
+    {
+      "type": "h2",
+      "text": "RAG basics"
+    },
+    {
+      "type": "p",
+      "text": "The core concept of RAG is fairly simple, yet general: given a set of documents and a user query, find the document(s) that are the most similar to the query and supply those documents as additional context to the LLM. This requires choosing a numerical technique to compute similarity, of which there are many, each with its own strengths and weaknesses. The often tricky part of doing RAG well is finding the similarity measure that is both performant and effective for your use case."
+    },
+    {
+      "type": "p",
+      "text": "To demonstrate, let’s use a basic example derived from chatlas’s article on RAG. The main idea is to implement a function (get_top_k_similar_documents) that finds the top-k most similar documents to a user query. Note that similarity depends on two main factors:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The embedding model (for embedding text into a numerical vector space)."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here we use the popular all-MiniLM-L12-v2 model, which offers a nice balance between performance and speed."
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The similarity metric (for computing similarity between two vectors)."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here we use cosine similarity, which is a common choice for text embeddings."
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import numpy as np\nfrom sentence_transformers import SentenceTransformer\n\nembed_model = SentenceTransformer(\"sentence-transformers/all-MiniLM-L12-v2\")\n\n# A list of 'documents' (one document per list element)\ndocuments = [\n    \"The unicorn programming language was created by Horsey McHorseface.\",\n    \"It's known for its magical syntax and rainbow-colored variables.\",\n    \"Unicorn is a dynamically typed language with a focus on readability.\",\n    \"Some other programming languages include Python, Java, and C++.\",\n    \"Some other useless context...\",\n]\n\n# Compute embeddings for each document (do this once for performance reasons)\nembeddings = [embed_model.encode([doc])[0] for doc in documents]\n\ndef get_top_k_similar_documents(user_query, top_k=3):\n    # Compute embedding for the user query\n    query_embedding = embed_model.encode([user_query])[0]\n\n    # Calculate cosine similarity between the query and each document\n    similarities = np.dot(embeddings, query_embedding) / (\n        np.linalg.norm(embeddings, axis=1) * np.linalg.norm(query_embedding)\n    )\n\n    # Get the top-k most similar documents\n    top_indices = np.argsort(similarities)[-top_k:][::-1]\n    return [documents[i] for i in top_indices]"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatAnthropic\nfrom rag import get_top_k_similar_documents\n\nfrom shiny.express import ui\n\nchat_client = ChatAnthropic(\n    model=\"claude-3-7-sonnet-latest\",\n    system_prompt=\"\"\"\n    You are a helpful AI assistant. Using the provided context,\n    answer the user's question. If you cannot answer the question based on the\n    context, say so.\n   \"\"\",\n)\n\nchat = ui.Chat(\n    id=\"chat\",\n    messages=[\"Hello! How can I help you today?\"],\n)\nchat.ui()\n\nchat.update_user_input(value=\"Who created the unicorn language?\")\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    top_docs = get_top_k_similar_documents(user_input, top_k=3)\n    prompt = f\"Context: {top_docs}\\nQuestion: {user_input}\"\n    response = await chat_client.stream_async(prompt)\n    await chat.append_message_stream(response)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Without RAG",
+        "With RAG"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Scaling up"
+    },
+    {
+      "type": "p",
+      "text": "To scale this basic example up to your use case, you’ll not only want to consider an embedding model and similarity metric that better matches your use case, but also a more efficient way to store/retrieve your documents."
+    },
+    {
+      "type": "p",
+      "text": "Nowadays, there are many options for efficient storage/retrieval of documents (i.e., vector databases). That said, duckdb’s vector extension comes highly recommended, and here is a great blog post on building a database and retrieving from it with a custom embedding model. Many of these options will offer both a local and cloud-based solution, so you can choose the one that best fits your needs. For example, with duckdb, you can leverage MotherDuck for your hosting needs, as well as others like Pinecone and Weaviate."
+    }
+  ],
+  "code_examples": [
+    "import numpy as np\nfrom sentence_transformers import SentenceTransformer\n\nembed_model = SentenceTransformer(\"sentence-transformers/all-MiniLM-L12-v2\")\n\n# A list of 'documents' (one document per list element)\ndocuments = [\n    \"The unicorn programming language was created by Horsey McHorseface.\",\n    \"It's known for its magical syntax and rainbow-colored variables.\",\n    \"Unicorn is a dynamically typed language with a focus on readability.\",\n    \"Some other programming languages include Python, Java, and C++.\",\n    \"Some other useless context...\",\n]\n\n# Compute embeddings for each document (do this once for performance reasons)\nembeddings = [embed_model.encode([doc])[0] for doc in documents]\n\ndef get_top_k_similar_documents(user_query, top_k=3):\n    # Compute embedding for the user query\n    query_embedding = embed_model.encode([user_query])[0]\n\n    # Calculate cosine similarity between the query and each document\n    similarities = np.dot(embeddings, query_embedding) / (\n        np.linalg.norm(embeddings, axis=1) * np.linalg.norm(query_embedding)\n    )\n\n    # Get the top-k most similar documents\n    top_indices = np.argsort(similarities)[-top_k:][::-1]\n    return [documents[i] for i in top_indices]",
+    "import numpy as np\nfrom sentence_transformers import SentenceTransformer\n\nembed_model = SentenceTransformer(\"sentence-transformers/all-MiniLM-L12-v2\")\n\n# A list of 'documents' (one document per list element)\ndocuments = [\n    \"The unicorn programming language was created by Horsey McHorseface.\",\n    \"It's known for its magical syntax and rainbow-colored variables.\",\n    \"Unicorn is a dynamically typed language with a focus on readability.\",\n    \"Some other programming languages include Python, Java, and C++.\",\n    \"Some other useless context...\",\n]\n\n# Compute embeddings for each document (do this once for performance reasons)\nembeddings = [embed_model.encode([doc])[0] for doc in documents]\n\ndef get_top_k_similar_documents(user_query, top_k=3):\n    # Compute embedding for the user query\n    query_embedding = embed_model.encode([user_query])[0]\n\n    # Calculate cosine similarity between the query and each document\n    similarities = np.dot(embeddings, query_embedding) / (\n        np.linalg.norm(embeddings, axis=1) * np.linalg.norm(query_embedding)\n    )\n\n    # Get the top-k most similar documents\n    top_indices = np.argsort(similarities)[-top_k:][::-1]\n    return [documents[i] for i in top_indices]",
+    "from chatlas import ChatAnthropic\nfrom rag import get_top_k_similar_documents\n\nfrom shiny.express import ui\n\nchat_client = ChatAnthropic(\n    model=\"claude-3-7-sonnet-latest\",\n    system_prompt=\"\"\"\n    You are a helpful AI assistant. Using the provided context,\n    answer the user's question. If you cannot answer the question based on the\n    context, say so.\n   \"\"\",\n)\n\nchat = ui.Chat(\n    id=\"chat\",\n    messages=[\"Hello! How can I help you today?\"],\n)\nchat.ui()\n\nchat.update_user_input(value=\"Who created the unicorn language?\")\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    top_docs = get_top_k_similar_documents(user_input, top_k=3)\n    prompt = f\"Context: {top_docs}\\nQuestion: {user_input}\"\n    response = await chat_client.stream_async(prompt)\n    await chat.append_message_stream(response)",
+    "from chatlas import ChatAnthropic\nfrom rag import get_top_k_similar_documents\n\nfrom shiny.express import ui\n\nchat_client = ChatAnthropic(\n    model=\"claude-3-7-sonnet-latest\",\n    system_prompt=\"\"\"\n    You are a helpful AI assistant. Using the provided context,\n    answer the user's question. If you cannot answer the question based on the\n    context, say so.\n   \"\"\",\n)\n\nchat = ui.Chat(\n    id=\"chat\",\n    messages=[\"Hello! How can I help you today?\"],\n)\nchat.ui()\n\nchat.update_user_input(value=\"Who created the unicorn language?\")\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    top_docs = get_top_k_similar_documents(user_input, top_k=3)\n    prompt = f\"Context: {top_docs}\\nQuestion: {user_input}\"\n    response = await chat_client.stream_async(prompt)\n    await chat.append_message_stream(response)"
+  ],
+  "toc": [
+    {
+      "title": "RAG basics",
+      "url": "docs/#rag-basics"
+    },
+    {
+      "title": "Scaling up",
+      "url": "docs/#scaling-up"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

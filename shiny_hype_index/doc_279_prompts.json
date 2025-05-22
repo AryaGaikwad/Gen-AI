@@ -1,0 +1,7 @@
+[
+  "What is the default behavior of the ui.input_task_button when it is clicked by the user in terms of its value and functionality?",
+  "How can a developer prevent the ui.input_task_button from automatically resetting to its original state after a task completes?",
+  "What are the different parameters that can be passed to the ui.input_task_button function for customization?",
+  "In what scenario would a developer need to call update_task_button with state=\"busy\" to keep the ui.input_task_button in its busy state?",
+  "How does the behavior of the ui.input_task_button differ when auto_reset is set to False compared to when it is set to True?"
+]

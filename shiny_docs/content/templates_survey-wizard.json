@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Survey wizard form",
+    "description": "Use the survey-wizard template as a foundation for your next Shiny app.",
+    "url": "templates/survey-wizard/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Survey wizard form"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template survey-wizard --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "A simple survey wizard that simply writes responses to a file and displays a confirmation message when submitted. In this example, we use the shiny_validate package for input validation, providing direct feedback when the user enters invalid responses. We also make clever use of navset_hidden() to show/hide different steps of the form via action buttons."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Text input",
+        "Numeric input",
+        "Action button"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Cards",
+        "Tabs"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "pandas",
+        "shiny_validate"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template survey-wizard --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template survey-wizard --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

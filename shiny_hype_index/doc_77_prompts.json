@@ -1,0 +1,7 @@
+[
+  "How can I create a textarea input control for entry of unstructured text values in a Shiny Python app?",
+  "What parameters can be specified when using the ui.input_text_area function in Shiny for Python?",
+  "How can I access the value of a textarea input component within the server() function in Shiny for Python?",
+  "What does the value parameter of the ui.input_text_area function do in Shiny for Python?",
+  "How can I determine where a textarea input will appear within the layout of a Shiny Python app using ui.input_text_area?"
+]

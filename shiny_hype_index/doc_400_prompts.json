@@ -1,0 +1,7 @@
+[
+  "What are the two mandatory methods that subclasses must implement when creating a new output renderer in Shiny for Python?",
+  "What is the purpose of the .transform() method in the output renderer class?",
+  "How does the auto registration of an output renderer with the current session's Output class work in Shiny for Python?",
+  "When is the .render() method of an output renderer called in Shiny for Python?",
+  "What is the difference between render.renderer.ValueFn and render.renderer.AsyncValueFn in Shiny for Python?"
+]

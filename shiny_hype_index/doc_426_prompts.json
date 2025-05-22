@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create an output container for a static plot using ui.output_plot in Shiny for Python?",
+  "How can I control the behavior of sending coordinates to the server when the plot is clicked using ui.output_plot in Shiny for Python?",
+  "What does the parameter 'fill' signify in the ui.output_plot function in Shiny for Python?",
+  "How can I enable the user to draw a rectangle in the plotting area and send information about the brushed area to the server using ui.output_plot in Shiny for Python?",
+  "What is the default behavior of the 'inline' parameter in the ui.output_plot function in Shiny for Python?"
+]

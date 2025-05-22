@@ -1,0 +1,7 @@
+[
+  "What information can be accessed using the `session.ClientData` in Shiny for Python?",
+  "How can I reactively read the accent color of an output using `session.ClientData` in Shiny for Python?",
+  "What parameters are required to read the foreground color of an output reactively using `session.ClientData`?",
+  "How can I determine if an output is hidden using `session.ClientData` in Shiny for Python?",
+  "What client-side information can be obtained by calling the `pixelratio` method in `session.ClientData`?"
+]

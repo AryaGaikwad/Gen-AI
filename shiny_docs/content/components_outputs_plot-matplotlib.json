@@ -1,0 +1,364 @@
+{
+  "metadata": {
+    "title": "Plot (Matplotlib) – Shiny for Python",
+    "description": "",
+    "url": "components/outputs/plot-matplotlib/"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Outputs",
+        "Plot (Matplotlib)"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Plot (Matplotlib)"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"Number of bins\", 0, 100, 20)\n\n@render.plot(alt=\"A histogram\")  \ndef plot():  \n    df = load_penguins()\n    mass = df[\"body_mass_g\"]\n\n    fig, ax = plt.subplots()\n    ax.hist(mass, input.n(), density=True)\n    ax.set_title(\"Palmer Penguin Masses\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Density\")\n\n    return fig  "
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.output_plot ui.output_plot(id, width='100%', height='400px', *, inline=False, click=False, dblclick=False, hover=False, brush=False, fill=MISSING)",
+        "@render.plot render.plot(_fn=None, *, alt=None, width=MISSING, height=MISSING, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.output_plot ui.output_plot(id, width='100%', height='400px', *, inline=False, click=False, dblclick=False, hover=False, brush=False, fill=MISSING)"
+    },
+    {
+      "type": "p",
+      "text": "@render.plot render.plot(_fn=None, *, alt=None, width=MISSING, height=MISSING, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "Matplotlib is a popular Python library that can be used to create plots."
+    },
+    {
+      "type": "p",
+      "text": "Follow three steps to display a Matplotlib figure in your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.output_plot() to the UI of your app to create a div in which to display the figure. Where you call this function will determine where the figure will appear within the layout of the app. The id parameter you provide will be used to link to other parts of the Shiny app.",
+        "Define a function within the server() function that creates the figure. The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI. If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion. If you use matplotlib.pyplot to plot, your function does not need to return a value. Otherwise, your function should return one of the following objects: A matplotlib.figure.Figure instance A matplotlib.artist.Artist instance A list/tuple of Figure/Artist instances An object with a ‘figure’ attribute pointing to a matplotlib.figure.Figure instance A PIL.Image.Image instance",
+        "Decorate your plotting function with a @render.plot() decorator. If your plotting function is not the same as the id you used in the ui.output_plot(), you can add an additional @output(id=...) decorator. If you use the @output() decorator, make sure it is above the @render.plot() decorator."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.output_plot() to the UI of your app to create a div in which to display the figure. Where you call this function will determine where the figure will appear within the layout of the app. The id parameter you provide will be used to link to other parts of the Shiny app."
+    },
+    {
+      "type": "p",
+      "text": "Define a function within the server() function that creates the figure."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI.",
+        "If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion.",
+        "If you use matplotlib.pyplot to plot, your function does not need to return a value. Otherwise, your function should return one of the following objects: A matplotlib.figure.Figure instance A matplotlib.artist.Artist instance A list/tuple of Figure/Artist instances An object with a ‘figure’ attribute pointing to a matplotlib.figure.Figure instance A PIL.Image.Image instance"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI."
+    },
+    {
+      "type": "p",
+      "text": "If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion."
+    },
+    {
+      "type": "p",
+      "text": "If you use matplotlib.pyplot to plot, your function does not need to return a value. Otherwise, your function should return one of the following objects:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "A matplotlib.figure.Figure instance",
+        "A matplotlib.artist.Artist instance",
+        "A list/tuple of Figure/Artist instances",
+        "An object with a ‘figure’ attribute pointing to a matplotlib.figure.Figure instance",
+        "A PIL.Image.Image instance"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Decorate your plotting function with a @render.plot() decorator."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "If your plotting function is not the same as the id you used in the ui.output_plot(), you can add an additional @output(id=...) decorator.",
+        "If you use the @output() decorator, make sure it is above the @render.plot() decorator."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Plots as Inputs"
+    },
+    {
+      "type": "p",
+      "text": "You can use a plot as an input widget, collecting the locations of user clicks, double clicks, hovers, and brushes. To do this, set one or more of the following arguments of ui.output_plot() to True:."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "click - When click = True, the plot will allow the user to click in the plotting area, and will send the coordinates of the click to the server, where they can be accessed as a reactive variable named input.<id>_click(), where <id> is the id of the plot. The input value will be a dictionary with x and y elements indicating the mouse position.",
+        "dblclick - This is just like the click parameter, but for double-click events. The value can be accessed as input.<id>_dblclick().",
+        "hover - When hover = True, the plot will allow the user to hover over the plotting area, and will send the coordinates of the cursor to the server, where they can be accessed as a reactive variable named input.<id>_hover(), where <id> is the id of the plot. The input value will be a dictionary with x and y elements indicating the mouse position. To control the hover time or hover delay type, set hover to hover_opts().",
+        "brush - When brush = True, the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, where it can be accessed as a reactive variable named input.<id>_brush(), where <id> is the id of the plot. Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with xmin, xmax, ymin, and ymax elements indicating the brush area. To control the brush behavior, set brush to brush_opts()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "click - When click = True, the plot will allow the user to click in the plotting area, and will send the coordinates of the click to the server, where they can be accessed as a reactive variable named input.<id>_click(), where <id> is the id of the plot. The input value will be a dictionary with x and y elements indicating the mouse position."
+    },
+    {
+      "type": "p",
+      "text": "dblclick - This is just like the click parameter, but for double-click events. The value can be accessed as input.<id>_dblclick()."
+    },
+    {
+      "type": "p",
+      "text": "hover - When hover = True, the plot will allow the user to hover over the plotting area, and will send the coordinates of the cursor to the server, where they can be accessed as a reactive variable named input.<id>_hover(), where <id> is the id of the plot. The input value will be a dictionary with x and y elements indicating the mouse position. To control the hover time or hover delay type, set hover to hover_opts()."
+    },
+    {
+      "type": "p",
+      "text": "brush - When brush = True, the plot will allow the user to “brush” in the plotting area, and will send information about the brushed area to the server, where it can be accessed as a reactive variable named input.<id>_brush(), where <id> is the id of the plot. Brushing means that the user will be able to draw a rectangle in the plotting area and drag it around. The value will be a named list with xmin, xmax, ymin, and ymax elements indicating the brush area. To control the brush behavior, set brush to brush_opts()."
+    },
+    {
+      "type": "p",
+      "text": "Multiple output_image()/output_plot() calls may share the same id value; brushing one image or plot will cause any other brushes with the same id to disappear."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Plot as input"
+    },
+    {
+      "type": "p",
+      "text": "Use the click, dblclick, hover, and brush arguments of ui.output_plot() to collect information about the user’s mouse interactions as a reactive variable. The app below displays the values returned, but you can also call the values from within your computations to filter tables, perform calculations, and so on."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 720\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\nfrom shiny.ui import output_code, output_plot\n\noutput_plot(\n    \"plot\",\n    click=True,  \n    dblclick=True,  \n    hover=True,  \n    brush=True,  \n)\n\n\"Click:\"\noutput_code(\"clk\", placeholder=True)\n\"Double Click:\"\noutput_code(\"dblclk\", placeholder=True)\n\"Hover:\"\noutput_code(\"hvr\", placeholder=True)\n\"Brush\"\noutput_code(\"brsh\", placeholder=True)\n\nwith ui.hold():\n    # Note that this Express app uses `ui.hold()` so that we can\n    # manually add the `output_plot()` and `output_code()` to the page.\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.code\n    def clk():\n        return input.plot_click()\n\n    @render.code\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.code\n    def hvr():\n        return input.plot_hover()\n\n    @render.code\n    def brsh():\n        return input.plot_brush()"
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"Number of bins\", 0, 100, 20)\n\n@render.plot(alt=\"A histogram\")  \ndef plot():  \n    df = load_penguins()\n    mass = df[\"body_mass_g\"]\n\n    fig, ax = plt.subplots()\n    ax.hist(mass, input.n(), density=True)\n    ax.set_title(\"Palmer Penguin Masses\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Density\")\n\n    return fig  ",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"n\", \"Number of bins\", 0, 100, 20)\n\n@render.plot(alt=\"A histogram\")  \ndef plot():  \n    df = load_penguins()\n    mass = df[\"body_mass_g\"]\n\n    fig, ax = plt.subplots()\n    ax.hist(mass, input.n(), density=True)\n    ax.set_title(\"Palmer Penguin Masses\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Density\")\n\n    return fig  ",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 0, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")  \n    def plot():  \n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n\n        fig, ax = plt.subplots()\n        ax.hist(mass, input.n(), density=True)\n        ax.set_title(\"Palmer Penguin Masses\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Density\")\n\n        return fig  \n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 720\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 720\n\nimport matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\nfrom shiny.ui import output_code, output_plot\n\noutput_plot(\n    \"plot\",\n    click=True,  \n    dblclick=True,  \n    hover=True,  \n    brush=True,  \n)\n\n\"Click:\"\noutput_code(\"clk\", placeholder=True)\n\"Double Click:\"\noutput_code(\"dblclk\", placeholder=True)\n\"Hover:\"\noutput_code(\"hvr\", placeholder=True)\n\"Brush\"\noutput_code(\"brsh\", placeholder=True)\n\nwith ui.hold():\n    # Note that this Express app uses `ui.hold()` so that we can\n    # manually add the `output_plot()` and `output_code()` to the page.\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.code\n    def clk():\n        return input.plot_click()\n\n    @render.code\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.code\n    def hvr():\n        return input.plot_hover()\n\n    @render.code\n    def brsh():\n        return input.plot_brush()",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\nfrom shiny.ui import output_code, output_plot\n\noutput_plot(\n    \"plot\",\n    click=True,  \n    dblclick=True,  \n    hover=True,  \n    brush=True,  \n)\n\n\"Click:\"\noutput_code(\"clk\", placeholder=True)\n\"Double Click:\"\noutput_code(\"dblclk\", placeholder=True)\n\"Hover:\"\noutput_code(\"hvr\", placeholder=True)\n\"Brush\"\noutput_code(\"brsh\", placeholder=True)\n\nwith ui.hold():\n    # Note that this Express app uses `ui.hold()` so that we can\n    # manually add the `output_plot()` and `output_code()` to the page.\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.code\n    def clk():\n        return input.plot_click()\n\n    @render.code\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.code\n    def hvr():\n        return input.plot_hover()\n\n    @render.code\n    def brsh():\n        return input.plot_brush()",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.output_plot(\n        \"plot\",\n        click=True,  \n        dblclick=True,  \n        hover=True,  \n        brush=True,  \n    ),\n    \"Click:\",\n    ui.output_text_verbatim(\"clk\", placeholder=True),\n    \"Double Click:\",\n    ui.output_text_verbatim(\"dblclk\", placeholder=True),\n    \"Hover:\",\n    ui.output_text_verbatim(\"hvr\", placeholder=True),\n    \"Brush\",\n    ui.output_text_verbatim(\"brsh\", placeholder=True),\n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A histogram\")\n    def plot():\n        df = load_penguins()\n        mass = df[\"body_mass_g\"]\n        bill = df[\"bill_length_mm\"]\n\n        plt.scatter(mass, bill)\n        plt.xlabel(\"Mass (g)\")\n        plt.ylabel(\"Bill Length (mm)\")\n        plt.title(\"Penguin Mass vs Bill Length\")\n\n    @render.text\n    def clk():\n        return input.plot_click()\n\n    @render.text\n    def dblclk():\n        return input.plot_dblclick()\n\n    @render.text\n    def hvr():\n        return input.plot_hover()\n\n    @render.text\n    def brsh():\n        return input.plot_brush()\n\napp = App(app_ui, server, debug=True)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What function should I use in the UI of my Shiny app to create a div for displaying a Seaborn figure?",
+  "How should I name the function within the server() function that creates the figure for my Shiny app?",
+  "What are the possible objects that my plotting function should return in a Shiny app when using Seaborn?",
+  "How can I collect user interactions like clicks, double clicks, hovers, and brushes using a Seaborn plot in a Shiny app?",
+  "When using the @output() decorator in a Shiny app with Seaborn, where should it be placed relative to the @render.plot() decorator?"
+]

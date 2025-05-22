@@ -1,0 +1,7 @@
+[
+  "What is the main difference between Express and Core apps in terms of syntax modes?",
+  "How can you quickly identify if an app is an Express app?",
+  "What are the steps recommended in the translation guide when moving an Express app to Core?",
+  "How does Core handle UI components that take other components as children compared to Express?",
+  "In Core, why are layout components like ui.layout_columns() considered pure functions and not context managers?"
+]

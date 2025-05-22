@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_switch function in Shiny for Python?",
+  "How is the value of a switch input changed on the client using ui.update_switch in Shiny for Python?",
+  "In Shiny for Python, how are input updater functions like ui.update_switch executed in relation to observers and outputs?",
+  "What happens if any arguments with None values are passed to the ui.update_switch function in Shiny for Python?",
+  "In Shiny for Python, how can the set of choices be cleared for update_radio_buttons, update_checkbox_group, and update_select using ui.update_switch?"
+]

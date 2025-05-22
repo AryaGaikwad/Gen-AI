@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating an output container for a static plot using ui.output_plot in Shiny for Python?",
+  "How can I access the mouse coordinates when clicking on a plot created with ui.output_plot in Shiny for Python?",
+  "What does the brush parameter do when set to True in the ui.output_plot function in Shiny for Python?",
+  "How can I control the hover time or hover delay type when using the hover parameter in the ui.output_plot function in Shiny for Python?",
+  "What does the fill parameter do in the ui.output_plot function in Shiny for Python, and what is its default behavior if no value is provided?"
+]

@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "title": "Foundations – Shiny for Python",
+    "description": "",
+    "url": "docs/reactive-foundations.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "⚡ Reactivity",
+        "Foundations"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Foundations"
+    },
+    {
+      "type": "p",
+      "text": "At the heart of Shiny is a reactive programming framework. We often refer to this framework as “good magic” because it’s easy to get started with, but also decomposes into simple pieces which combine in powerful ways."
+    },
+    {
+      "type": "p",
+      "text": "The Quick Start introduced the most common form of reactivity: changes in input causing relevant render functions to re-execute (aka invalidate). For a refresher, here’s a basic example that displays a slider’s value as formatted text."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider label\", min=0, max=100, value=50)\n\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\""
+    },
+    {
+      "type": "p",
+      "text": "More generally, Shiny knows to re-execute reactive functions (e.g., render functions) when their reactive dependencies (e.g., input) change. In this section, we’ll cover the other main forms of reactive functions and dependencies:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Calculations with @reactive.calc Write your reactive calculation once, then call it as needed.",
+        "Side effects with @reactive.effect Effects are similar to @render.* functions, but they don’t return anything. They’re used for their side-effects (e.g., writing to a database, sending an email, etc.)",
+        "Reactive values with reactive.value Create input-like values that aren’t tied to input controls and can be updated. They’re often used to maintain state in an app."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Write your reactive calculation once, then call it as needed."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Effects are similar to @render.* functions, but they don’t return anything. They’re used for their side-effects (e.g., writing to a database, sending an email, etc.)"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Create input-like values that aren’t tied to input controls and can be updated. They’re often used to maintain state in an app."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In the next article, we’ll build on these foundational concepts to cover some useful reactivity patterns."
+    },
+    {
+      "type": "h3",
+      "text": "Calculations"
+    },
+    {
+      "type": "p",
+      "text": "Often times it’s useful to perform a calculation based on reactive dependencies (e.g., input values), then reuse that calculation in multiple places. @reactive.calc is designed for this purpose: it allows you to define a calculation once, then efficiently recall it as needed."
+    },
+    {
+      "type": "p",
+      "text": "For a basic example, say we need the square of an input value and display the result in multiple places. The @reactive.calc, x2, encapsulates the calculation, and the @render.* functions call for its value like an input value. And, although we call x2() multiple times, the calculation is only performed once per invalidation."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\n@reactive.calc\ndef x2():\n  return input.x() ** 2\n\n@render.ui\ndef out1():\n  return f\"Render UI: {x2()}\"\n\n@render.text\ndef out2():\n  return f\"Render text: {x2()}\""
+    },
+    {
+      "type": "p",
+      "text": "Reactive calculations can read any reactive dependency (e.g., input, reactive.value, and @reactive.calc) as well as be read by any reactive function (i.e., @render.*, @reactive.effect, and @reactive.calc). This makes, itself, both a reactive dependency and a reactive function."
+    },
+    {
+      "type": "h2",
+      "text": "Side effects"
+    },
+    {
+      "type": "p",
+      "text": "Often times it’s useful to perform side effects (e.g., write to a database, send an email, etc) in response to changes in reactive dependencies (e.g., input values). @reactive.effect is designed for this purpose: it expects a function which doesn’t return anything, but get used for its side effect(s). In programming lingo, a side effect is when a function modifies state other than its return value."
+    },
+    {
+      "type": "p",
+      "text": "For a basic example, lets write every value of a slider as it changes to the UI:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\n@reactive.effect\ndef _():\n    ui.insert_ui(ui.p(input.x()), selector=\"#x\", where=\"afterEnd\")"
+    },
+    {
+      "type": "p",
+      "text": "Often times, you’ll want to perform a side effect in response to a specific event (e.g., a button click). In the next article, we’ll cover how to do this with @reactive.event."
+    },
+    {
+      "type": "p",
+      "text": "A better way to implement the example above, which allows us to keep a history of all values, is covered in Reactive values with reactive.value."
+    },
+    {
+      "type": "h2",
+      "text": "Reactive values"
+    },
+    {
+      "type": "p",
+      "text": "A reactive.value, like an input value, is a reactive dependency (i.e., they can be used to invalidate reactive functions). Unlike input values, they’re not necessarily bound to input controls and can have their value updated programmatically. This makes them primarily useful for maintaining state in an app."
+    },
+    {
+      "type": "p",
+      "text": "For example, lets track the history of slider values visited by a user through a reactive.value. When initialized, it takes an initial value (here, an empty list). Then, a @reactive.effect appends the slider value whenever it changes. Note also, that since we are both getting and setting vals in the @reactive.effect, we need @reactive.event to prevent an infinite loop."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\nvals = reactive.value([])\n\n# Track the history of the slider\n@reactive.effect\n@reactive.event(input.x)\ndef _():\n    vals.set([input.x()] + vals())\n\n@render.ui\ndef out():\n    return [ui.p(x) for x in vals()]"
+    },
+    {
+      "type": "p",
+      "text": "Reactive values are often used to maintain state in an app. Here we’re using it to keep track of the history of a slider, but they can be used for many other things as well (what pages/tabs have been visited, what points have been clicked on a plot, etc.)."
+    },
+    {
+      "type": "p",
+      "text": "Be careful when using mutable objects (e.g., lists, dicts, etc.) as reactive values. If you modify the object in-place, Shiny won’t know that it’s changed and won’t invalidate any reactive functions that depend on it. See the article on handling mutability for more."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"val\", \"Slider label\", min=0, max=100, value=50)\n\n@render.text\ndef slider_val():\n    return f\"Slider value: {input.val()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\n@reactive.calc\ndef x2():\n  return input.x() ** 2\n\n@render.ui\ndef out1():\n  return f\"Render UI: {x2()}\"\n\n@render.text\ndef out2():\n  return f\"Render text: {x2()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\n@reactive.effect\ndef _():\n    ui.insert_ui(ui.p(input.x()), selector=\"#x\", where=\"afterEnd\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_slider(\"x\", \"Slider value\", min=0, max=100, value=10)\n\nvals = reactive.value([])\n\n# Track the history of the slider\n@reactive.effect\n@reactive.event(input.x)\ndef _():\n    vals.set([input.x()] + vals())\n\n@render.ui\ndef out():\n    return [ui.p(x) for x in vals()]"
+  ],
+  "toc": [
+    {
+      "title": "Calculations",
+      "url": "docs/#calculations"
+    },
+    {
+      "title": "Side effects",
+      "url": "docs/#effects"
+    },
+    {
+      "title": "Reactive values",
+      "url": "docs/#values"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

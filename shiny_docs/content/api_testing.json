@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "title": "index – Shiny for Python",
+    "description": "",
+    "url": "api/testing/"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Shiny Testing API"
+    },
+    {
+      "type": "p",
+      "text": "This page outlines Shiny’s Testing API reference."
+    },
+    {
+      "type": "p",
+      "text": "For an introduction to Shiny testing, see the unit testing and end to end testing tutorials."
+    },
+    {
+      "type": "h1",
+      "text": "Function reference"
+    },
+    {
+      "type": "h2",
+      "text": "UI Layouts"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app multiple UI component controller."
+    },
+    {
+      "type": "h2",
+      "text": "UI Inputs"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app input value controller."
+    },
+    {
+      "type": "h2",
+      "text": "Value boxes"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app valuebox controller."
+    },
+    {
+      "type": "h2",
+      "text": "Navigation (tab) panels"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app UI content controller."
+    },
+    {
+      "type": "h2",
+      "text": "Upload and download"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app uploading and downloading controller."
+    },
+    {
+      "type": "h2",
+      "text": "Chat interface"
+    },
+    {
+      "type": "p",
+      "text": "Methods for interacting with Shiny app chat controller."
+    },
+    {
+      "type": "h2",
+      "text": "Rendering Outputs"
+    },
+    {
+      "type": "p",
+      "text": "Render output in a variety of ways."
+    },
+    {
+      "type": "h2",
+      "text": "Playwright Expect"
+    },
+    {
+      "type": "p",
+      "text": "Methods for testing the state of a locator within a Shiny app."
+    },
+    {
+      "type": "h2",
+      "text": "Pytest"
+    },
+    {
+      "type": "p",
+      "text": "Fixtures used for testing Shiny apps with Pytest."
+    },
+    {
+      "type": "h2",
+      "text": "Run"
+    },
+    {
+      "type": "p",
+      "text": "Methods for starting a local Shiny app in the background"
+    }
+  ],
+  "code_examples": [],
+  "toc": [
+    {
+      "title": "Shiny Testing API",
+      "url": "api/testing/#shiny-testing-api"
+    },
+    {
+      "title": "Function reference",
+      "url": "api/testing/#function-reference"
+    },
+    {
+      "title": "UI Layouts",
+      "url": "api/testing/#ui-layouts"
+    },
+    {
+      "title": "UI Inputs",
+      "url": "api/testing/#ui-inputs"
+    },
+    {
+      "title": "Value boxes",
+      "url": "api/testing/#value-boxes"
+    },
+    {
+      "title": "Navigation (tab) panels",
+      "url": "api/testing/#navigation-tab-panels"
+    },
+    {
+      "title": "Upload and download",
+      "url": "api/testing/#upload-and-download"
+    },
+    {
+      "title": "Chat interface",
+      "url": "api/testing/#chat-interface"
+    },
+    {
+      "title": "Rendering Outputs",
+      "url": "api/testing/#rendering-outputs"
+    },
+    {
+      "title": "Playwright Expect",
+      "url": "api/testing/#playwright-expect"
+    },
+    {
+      "title": "Pytest",
+      "url": "api/testing/#pytest"
+    },
+    {
+      "title": "Run",
+      "url": "api/testing/#run"
+    }
+  ]
+}

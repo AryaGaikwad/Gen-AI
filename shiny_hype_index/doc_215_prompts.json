@@ -1,0 +1,7 @@
+[
+  "What function in Shiny for Python is used to display a modal dialog?",
+  "What parameters does the express.ui.modal_show function take?",
+  "How can you display a modal in a specific session using express.ui.modal_show in Shiny for Python?",
+  "What is the purpose of the modal_remove function in Shiny for Python?",
+  "How can you create a modal in Shiny for Python before displaying it using express.ui.modal_show?"
+]

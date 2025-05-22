@@ -1,0 +1,7 @@
+[
+  "How can I create a checkbox group in my Shiny app using Python?",
+  "What parameters do I need to specify when using the ui.input_checkbox_group function to define a checkbox group?",
+  "What is the purpose of the choices parameter in the ui.input_checkbox_group function?",
+  "How can I access the value of a checkbox group in the server function of my Shiny Python app?",
+  "When using a dictionary for choices in ui.input_checkbox_group, how are the keys and values utilized for the checkbox labels and values?"
+]

@@ -1,0 +1,298 @@
+{
+  "metadata": {
+    "title": "Plot (Seaborn) – Shiny for Python",
+    "description": "",
+    "url": "components/outputs/plot-seaborn/"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Outputs",
+        "Plot (Seaborn)"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Plot (Seaborn)"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_slider(\"n\", \"Number of bins\", 1, 100, 20)\n\n@render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \ndef plot():  \n    ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n    ax.set_title(\"Palmer Penguins\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Count\")\n    return ax  "
+    },
+    {
+      "type": "code",
+      "text": "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.output_plot ui.output_plot(id, width='100%', height='400px', *, inline=False, click=False, dblclick=False, hover=False, brush=False, fill=MISSING)",
+        "@render.plot render.plot(_fn=None, *, alt=None, width=MISSING, height=MISSING, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.output_plot ui.output_plot(id, width='100%', height='400px', *, inline=False, click=False, dblclick=False, hover=False, brush=False, fill=MISSING)"
+    },
+    {
+      "type": "p",
+      "text": "@render.plot render.plot(_fn=None, *, alt=None, width=MISSING, height=MISSING, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "Seaborn is a statistical plotting library that builds on top of Matplotlib."
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to display a Seaborn figure in your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.output_plot() to the UI of your app to create a div in which to display the figure. Where you call this function will determine where the figure will appear within the layout of the app. The id parameter you provide will be used to link to other parts of the Shiny app.",
+        "Define a function within the server() function that creates the figure. The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI. If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion. Your function should return one of the following objects: A matplotlib.figure.Figure instance A matplotlib.artist.Artist instance A list/tuple of Figure/Artist instances An object with a ‘figure’ attribute pointing to a matplotlib.figure.Figure instance A PIL.Image.Image instance",
+        "Decorate your plotting function with a @render.plot() decorator. If your plotting function is not the same as the id you used in the ui.output_plot(), you can add an additional @output(id=...) decorator. If you use the @output() decorator, make sure it is above the @render.plot() decorator."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.output_plot() to the UI of your app to create a div in which to display the figure. Where you call this function will determine where the figure will appear within the layout of the app. The id parameter you provide will be used to link to other parts of the Shiny app."
+    },
+    {
+      "type": "p",
+      "text": "Define a function within the server() function that creates the figure."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI.",
+        "If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion.",
+        "Your function should return one of the following objects:"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The name of the function should be the same value you passed into the id parameter in your ui.output_plot() function call in the UI."
+    },
+    {
+      "type": "p",
+      "text": "If your function calls reactive values, Shiny will update your figure whenever those values change, in a reactive fashion."
+    },
+    {
+      "type": "p",
+      "text": "Your function should return one of the following objects:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "A matplotlib.figure.Figure instance",
+        "A matplotlib.artist.Artist instance",
+        "A list/tuple of Figure/Artist instances",
+        "An object with a ‘figure’ attribute pointing to a matplotlib.figure.Figure instance",
+        "A PIL.Image.Image instance"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Decorate your plotting function with a @render.plot() decorator."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "If your plotting function is not the same as the id you used in the ui.output_plot(), you can add an additional @output(id=...) decorator.",
+        "If you use the @output() decorator, make sure it is above the @render.plot() decorator."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "You can use a plot as an input widget, collecting the locations of user clicks, double clicks, hovers, and brushes. To do this, follow the instructions provided for plots as inputs."
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 500\n\nimport seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)",
+    "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_slider(\"n\", \"Number of bins\", 1, 100, 20)\n\n@render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \ndef plot():  \n    ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n    ax.set_title(\"Palmer Penguins\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Count\")\n    return ax  ",
+    "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny.express import input, render, ui\n\npenguins = load_penguins()\n\nui.input_slider(\"n\", \"Number of bins\", 1, 100, 20)\n\n@render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \ndef plot():  \n    ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n    ax.set_title(\"Palmer Penguins\")\n    ax.set_xlabel(\"Mass (g)\")\n    ax.set_ylabel(\"Count\")\n    return ax  ",
+    "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)",
+    "import seaborn as sns\nfrom palmerpenguins import load_penguins\nfrom shiny import App, render, ui\n\npenguins = load_penguins()\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"Number of bins\", 1, 100, 20),\n    ui.output_plot(\"plot\"),  \n)\n\ndef server(input, output, session):\n    @render.plot(alt=\"A Seaborn histogram on penguin body mass in grams.\")  \n    def plot():  \n        ax = sns.histplot(data=penguins, x=\"body_mass_g\", bins=input.n())  \n        ax.set_title(\"Palmer Penguins\")\n        ax.set_xlabel(\"Mass (g)\")\n        ax.set_ylabel(\"Count\")\n        return ax  \n\napp = App(app_ui, server, debug=True)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

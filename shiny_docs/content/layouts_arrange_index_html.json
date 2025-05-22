@@ -1,0 +1,599 @@
+{
+  "metadata": {
+    "title": "Arrange Elements – Shiny for Python",
+    "description": "Layout elements into rows and columns that responsively adapt to a wide range of screen sizes.",
+    "url": "layouts/arrange/index.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Arrange Elements"
+    },
+    {
+      "type": "p",
+      "text": "Layout elements into rows and columns that responsively adapt to a wide range of screen sizes."
+    },
+    {
+      "type": "p",
+      "text": "Shiny provides two core functions for arranging elements into rows and columns:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.layout_columns() uses Bootstrap’s 12-column CSS Grid to create responsive and highly customizable layouts;",
+        "ui.layout_column_wrap() arranges elements into a grid with equally-sized cells."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_columns() uses Bootstrap’s 12-column CSS Grid to create responsive and highly customizable layouts;"
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_column_wrap() arranges elements into a grid with equally-sized cells."
+    },
+    {
+      "type": "p",
+      "text": "You can use these functions directly to create your own layout. Grid layouts can be used within a page, panel, or card and can even be nested within each other."
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.layout_columns ui.layout_columns(*args, col_widths=None, row_heights=None, fill=True, fillable=True, gap=None, class_=None, height=None, **kwargs)",
+        "ui.layout_column_wrap ui.layout_columns(*args, col_widths=None, row_heights=None, fill=True, fillable=True, gap=None, class_=None, height=None, **kwargs)",
+        "ui.page_fixed ui.page_fixed(*args, title=None, lang=None, **kwargs)",
+        "ui.page_fillable ui.page_fillable(*args, padding=None, gap=None, fillable_mobile=False, title=None, lang=None, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_columns ui.layout_columns(*args, col_widths=None, row_heights=None, fill=True, fillable=True, gap=None, class_=None, height=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_column_wrap ui.layout_columns(*args, col_widths=None, row_heights=None, fill=True, fillable=True, gap=None, class_=None, height=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.page_fixed ui.page_fixed(*args, title=None, lang=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.page_fillable ui.page_fillable(*args, padding=None, gap=None, fillable_mobile=False, title=None, lang=None, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Grid Layouts"
+    },
+    {
+      "type": "p",
+      "text": "Both ui.layout_columns() and ui.layout_column_wrap() follow the same general pattern: pass each function a series of elements to have them arranged into a grid layout."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_columns()\"\n\nwith ui.layout_columns():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_column_wrap()\"\n\nwith ui.layout_column_wrap():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)"
+    },
+    {
+      "type": "p",
+      "text": "Notice two things about the above apps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Both approaches create one or more rows, filling the rows with columns to hold its children.",
+        "Use the handle in the bottom right corner of the apps above to view each layout at different screen sizes (this works best on desktop screens). How do the layouts shift as the screen gets smaller or larger?"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Both approaches create one or more rows, filling the rows with columns to hold its children."
+    },
+    {
+      "type": "p",
+      "text": "Use the handle in the bottom right corner of the apps above to view each layout at different screen sizes (this works best on desktop screens). How do the layouts shift as the screen gets smaller or larger?"
+    },
+    {
+      "type": "h3",
+      "text": "How to choose between layout_columns() and layout_column_wrap()"
+    },
+    {
+      "type": "p",
+      "text": "For simple layouts, it can be hard to tell ui.layout_columns() and ui.layout_column_wrap() apart. Here’s a short set of questions to ask yourself to help you decide which function to use:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Are all of the items in your arrangement the same, such as a set of cards or plots? And do you want them all to have the same width and height? If yes: ui.layout_column_wrap() is best for a regularly-sized grid for a homogenous collection of elements.",
+        "Do you want to customize the layout’s column widths, or to have different layouts at different screen sizes (mobile vs desktop vs ultrawide)? If yes: ui.layout_columns() give you the tools to create highly customized, resposive column layouts.",
+        "For all other uses, pick the function you like the most. I happen to like ui.layout_columns() but you might prefer ui.layout_column_wrap()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Are all of the items in your arrangement the same, such as a set of cards or plots? And do you want them all to have the same width and height?"
+    },
+    {
+      "type": "p",
+      "text": "If yes: ui.layout_column_wrap() is best for a regularly-sized grid for a homogenous collection of elements."
+    },
+    {
+      "type": "p",
+      "text": "Do you want to customize the layout’s column widths, or to have different layouts at different screen sizes (mobile vs desktop vs ultrawide)?"
+    },
+    {
+      "type": "p",
+      "text": "If yes: ui.layout_columns() give you the tools to create highly customized, resposive column layouts."
+    },
+    {
+      "type": "p",
+      "text": "For all other uses, pick the function you like the most. I happen to like ui.layout_columns() but you might prefer ui.layout_column_wrap()."
+    },
+    {
+      "type": "h3",
+      "text": "Responsive, configurable column layouts"
+    },
+    {
+      "type": "p",
+      "text": "In the example above, we saw that, without your intervention, ui.layout_columns() will arrange the elements given to it into evenly sized columns. In the default case, ui.layout_columns() makes a choice about the column widths that make the most sense based on the number of items provided."
+    },
+    {
+      "type": "p",
+      "text": "For example, when given three items, ui.layout_columns() places each item in a column with 4 width units. You can use the col_widths argument to choose a different allocation of column width units. Keep in mind that Bootstrap’s CSS Grid uses 12 units per row. In the example below, we use col_widths=(2, 4, 6) to create a row with a small, medium, and large card."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(2, 4, 6)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)"
+    },
+    {
+      "type": "p",
+      "text": "There’s a lot more that layout_columns() can do with col_widths to make highly customized layouts."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Choose different layouts with a dictionary of column widths at specific breakpoints, e.g. col_widths={\"sm\": 4, \"md\": (2, 4, 6)}.",
+        "Insert empty space between items with a negative column width, e.g. col_widths=c(4, -4, 4) creates two columns 4 units wide with an empty space of 4 units between them."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Choose different layouts with a dictionary of column widths at specific breakpoints, e.g. col_widths={\"sm\": 4, \"md\": (2, 4, 6)}."
+    },
+    {
+      "type": "p",
+      "text": "Insert empty space between items with a negative column width, e.g. col_widths=c(4, -4, 4) creates two columns 4 units wide with an empty space of 4 units between them."
+    },
+    {
+      "type": "p",
+      "text": "Learn more in the API reference: Express | Core"
+    },
+    {
+      "type": "h3",
+      "text": "Uniform grid layouts"
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_column_wrap() arranges elements into a uniform grid, so its width argument applies a single value to all elements in the grid."
+    },
+    {
+      "type": "p",
+      "text": "When width is a fractional each item is given an equal portion of the row’s width. For example, width=1 / 2 gives each item half of the row width."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=1 / 2):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)"
+    },
+    {
+      "type": "p",
+      "text": "When width is a CSS unit, like \"300px\", ui.layout_column_wrap() ensures that every item is at least as wide as width. The items in the grid expand to fill horizontal space or contract when the layout container is smaller than width."
+    },
+    {
+      "type": "p",
+      "text": "Try resizing the app preview below to see how the layout shifts at different container widths."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=\"300px\"):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)"
+    },
+    {
+      "type": "h2",
+      "text": "Column nesting"
+    },
+    {
+      "type": "p",
+      "text": "Both ui.layout_columns() and ui.layout_column_wrap() can be nested, even within each other."
+    },
+    {
+      "type": "p",
+      "text": "Consider this page layout:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(4, 8)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n\n        with ui.layout_column_wrap(width=1 / 2):\n            with ui.card():\n                \"Card 2.1\"\n            with ui.card():\n                \"Card 2.2\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Controlling for page width and height"
+    },
+    {
+      "type": "p",
+      "text": "There are multiple types of Shiny grids: fluid, fixed, and fillable. The fluid grid system is recommended for most applications and is the default for Shiny functions like ui.page_navbar() and ui.page_sidebar(). So far, all the examples on this page have used the fluid grid system."
+    },
+    {
+      "type": "p",
+      "text": "Each grid system uses a flexibly sub-dividable 12-column grid for layout. They differ in how they interact with the viewer’s browser window:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The fluid system always occupies the full width of the web page and re-sizes its components dynamically as the size of the page changes.",
+        "The fixed system occupies a fixed width of 940 pixels by default and may assume other widths when Bootstrap’s responsive layout kicks in (e.g., when on a tablet).",
+        "The fillable system always occupies the full width and height of the web page and re-sizes its components dynamically as the size of the page changes."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The fluid system always occupies the full width of the web page and re-sizes its components dynamically as the size of the page changes."
+    },
+    {
+      "type": "p",
+      "text": "The fixed system occupies a fixed width of 940 pixels by default and may assume other widths when Bootstrap’s responsive layout kicks in (e.g., when on a tablet)."
+    },
+    {
+      "type": "p",
+      "text": "The fillable system always occupies the full width and height of the web page and re-sizes its components dynamically as the size of the page changes."
+    },
+    {
+      "type": "h3",
+      "text": "Fluid Grid System"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)"
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "p",
+      "text": "To make a fluid grid that adapts to the width of the user’s viewing window, build your app UI with ui.page_fluid."
+    },
+    {
+      "type": "h3",
+      "text": "Fixed Grid System"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)"
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "p",
+      "text": "To make a fixed grid that maintains a constant maximum width, build your app UI with ui.page_fluid."
+    },
+    {
+      "type": "p",
+      "text": "The fixed grid system maintains a fixed page width of 940 pixels by default. If Bootstrap responsive features are enabled (they are by default in Shiny) then the grid will also adapt to be 724px or 1170px wide depending on your viewport (e.g., when on a tablet). The fixed system does this by using Bootstrap .containers, whereas the fluid system uses Bootstrap .container-fluids. Learn more about the difference here."
+    },
+    {
+      "type": "p",
+      "text": "The main benefit of a fixed grid is that it provides stronger guarantees about how users will see the various elements of your UI laid out (because it’s not being dynamically laid out according to the width of the browser). The main drawback is that a fixed grid is more complex to work with. In general, we recommend using a fluid grid unless you absolutely require the lower level layout control afforded by a fixed grid."
+    },
+    {
+      "type": "h3",
+      "text": "Fillable Grid System"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 425\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True)\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)"
+    },
+    {
+      "type": "code",
+      "text": "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)"
+    },
+    {
+      "type": "p",
+      "text": "To make a fixed grid that maintains a constant maximum width, build your app UI with ui.page_fillable."
+    },
+    {
+      "type": "p",
+      "text": "ui.page_fluid() and ui.page_fixed() create web pages that are laid out from the top down, leaving whitespace at the bottom if the page content’s height is smaller than the browser window, and scrolling if the content is larger than the window."
+    },
+    {
+      "type": "p",
+      "text": "ui.page_fillable() is designed to latch the document body’s size to the size of the window. This makes it possible to fill it with content that also scales to the size of the window."
+    },
+    {
+      "type": "p",
+      "text": "For example, ui.page_fluid(ui.output_plot(\"plot\", height=\"100%\")) will not work as expected. The plot element’s effective height will be 0 because the plot’s containing elements (<div> and <body>) have automatic height. They determine their own height based on the height of their contained elements. However, ui.page_fillable(ui.output_plot(\"plot\", height=\"100%\")) will work as expected because ui.page_fillable() fixes the <body> height at 100% of the window height."
+    },
+    {
+      "type": "p",
+      "text": "Note that ui.page_fillable(ui.output_plot(\"plot\")) may not cause the plot to fill the page. Like most Shiny output widgets, ui.output_plot()’s default height is a fixed number of pixels. You must explicitly set height=\"100%\" if you want a plot (or htmlwidget, say) to fill its container."
+    },
+    {
+      "type": "p",
+      "text": "One must be careful what layouts/panels/elements come between the ui.page_fillable() and the plots/widgets. Any container that has an automatic height will cause children with height=\"100%\" to misbehave. Stick to functions that are designed for fill layouts, such as the ones in the Shiny package."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_columns()\"\n\nwith ui.layout_columns():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_columns()\"\n\nwith ui.layout_columns():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_columns()\",\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_column_wrap()\"\n\nwith ui.layout_column_wrap():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\n\"ui.layout_column_wrap()\"\n\nwith ui.layout_column_wrap():\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    \"ui.layout_column_wrap()\",\n    ui.layout_column_wrap(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(2, 4, 6)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(2, 4, 6)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        col_widths=(2, 4, 6),\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=1 / 2):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=1 / 2):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=1 / 2,  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 240\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=\"300px\"):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_column_wrap(width=\"300px\"):  \n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n    with ui.card():\n        \"Card 3\"\n    with ui.card():\n        \"Card 4\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_column_wrap(  \n        ui.card(\"Card 1\"),\n        ui.card(\"Card 2\"),\n        ui.card(\"Card 3\"),\n        ui.card(\"Card 4\"),\n        width=\"300px\",  \n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server=server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(4, 8)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n\n        with ui.layout_column_wrap(width=1 / 2):\n            with ui.card():\n                \"Card 2.1\"\n            with ui.card():\n                \"Card 2.2\"",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns(col_widths=(4, 8)):\n    with ui.card():\n        \"Card 1\"\n    with ui.card():\n        \"Card 2\"\n\n        with ui.layout_column_wrap(width=1 / 2):\n            with ui.card():\n                \"Card 2.1\"\n            with ui.card():\n                \"Card 2.2\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(\n        ui.card(\"Card 1\"),\n        ui.card(\n            \"Card 2\",\n            ui.layout_columns(\n                ui.card(\"Card 2.1\"),\n                ui.card(\"Card 2.2\"),\n                width=1 / 2,\n            ),\n        ),\n        col_widths=(4, 8),\n    ),\n)\n\n\ndef server(input, output, session):\n    return None\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 500\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fixed(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\"),\n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 425\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 425\n\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)\n",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True)\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True)\n\nwith ui.sidebar():\n    ui.input_slider(\"n\", \"N\", 0, 100, 20)\n\n\n@render.plot(alt=\"A histogram\")\ndef histogram():\n    np.random.seed(19680801)\n    x = 100 + 15 * np.random.randn(437)\n    plt.hist(x, input.n(), density=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)",
+    "import matplotlib.pyplot as plt\nimport numpy as np\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fillable(  \n    ui.layout_sidebar(\n        ui.sidebar(\n            ui.input_slider(\"n\", \"N\", 0, 100, 20),\n        ),\n        ui.output_plot(\"histogram\", height=\"100%\"),  \n    ),\n)  \n\n\ndef server(input, output, session):\n    @output\n    @render.plot(alt=\"A histogram\")\n    def histogram():\n        np.random.seed(19680801)\n        x = 100 + 15 * np.random.randn(437)\n        plt.hist(x, input.n(), density=True)\n\n\napp = App(app_ui, server, debug=True)"
+  ],
+  "toc": [
+    {
+      "title": "LAYOUTS",
+      "url": "layouts/index.html"
+    },
+    {
+      "title": "Navbars"
+    },
+    {
+      "title": "Navbar at Top",
+      "url": "layouts/navbars/index.html#navbar-at-top"
+    },
+    {
+      "title": "Navbar at Bottom",
+      "url": "layouts/navbars/index.html#navbar-at-bottom"
+    },
+    {
+      "title": "Sidebars"
+    },
+    {
+      "title": "Sidebar on Left",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-left"
+    },
+    {
+      "title": "Sidebar on Right",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-right"
+    },
+    {
+      "title": "Sidebar Within a Card",
+      "url": "layouts/sidebars/index.html#sidebar-within-a-card"
+    },
+    {
+      "title": "Collapsed Sidebar",
+      "url": "layouts/sidebars/index.html#collapsed-sidebar"
+    },
+    {
+      "title": "Tabs"
+    },
+    {
+      "title": "Tabset with Pill Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-navigation"
+    },
+    {
+      "title": "Tabset with Pill List Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-list-navigation"
+    },
+    {
+      "title": "Tabset with Tab Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-tab-navigation"
+    },
+    {
+      "title": "Card with a Tabbed Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-tabbed-tabset"
+    },
+    {
+      "title": "Card with a Pill Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-pill-tabset"
+    },
+    {
+      "title": "Vertically Collapsing Accordions",
+      "url": "layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+    },
+    {
+      "title": "Panels & Cards"
+    },
+    {
+      "title": "Floating Panel",
+      "url": "layouts/panels-cards/index.html#floating-panel"
+    },
+    {
+      "title": "Content Divided by Cards",
+      "url": "layouts/panels-cards/index.html#content-divided-by-cards"
+    },
+    {
+      "title": "Arrange Elements"
+    },
+    {
+      "title": "Grid Layouts",
+      "url": "layouts/arrange/index.html#grid-layouts"
+    },
+    {
+      "title": "Column Nesting",
+      "url": "layouts/arrange/index.html#column-nesting"
+    },
+    {
+      "title": "Controlling for Page Size",
+      "url": "layouts/arrange/index.html#controlling-for-page-width-and-height"
+    }
+  ]
+}

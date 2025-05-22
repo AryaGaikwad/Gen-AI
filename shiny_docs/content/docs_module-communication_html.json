@@ -1,0 +1,548 @@
+{
+  "metadata": {
+    "title": "Module Communication – Shiny for Python",
+    "description": "",
+    "url": "docs/module-communication.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📦 Modules",
+        "Module Communication"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Module Communication"
+    },
+    {
+      "type": "h2",
+      "text": "Communication between modules"
+    },
+    {
+      "type": "p",
+      "text": "Once you start breaking your app into modules, you might wonder how to pass values between your module and the rest of the application. For example, you might want to define an input label in the global application scope and pass that label to the module, or have user interactions with one module affect an output of another module. Since modules are just functions with a specific namespace, they can take and return both reactive and non-reactive arguments, which gives you a rich set of tools for handling application requirements."
+    },
+    {
+      "type": "p",
+      "text": "There are four main patterns you should be aware of when building Shiny modules:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Modules that take non-reactive arguments",
+        "Passing callbacks to modules",
+        "Modules that take reactive arguments",
+        "Modules that return reactive arguments"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Non-reactive arguments"
+    },
+    {
+      "type": "p",
+      "text": "The easiest way to communicate with modules is to pass non-reactive arguments to them. This is just like passing an argument to a normal Python function, and allows you to set specific module options. For example, say we wanted a counter module which allowed you to set the label and starting value."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To create the module, use the @module decorator on a function and give it two additional parameters, label and starting value."
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_module(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)"
+    },
+    {
+      "type": "p",
+      "text": "You can then pass in values when you call the module in your app. Note that you always need to provide an id to the module function to define its namespace. Using arguments like this makes your modules much more flexible and allows you to encapsulate some of the logic while maintaining the flexibility that your application needs."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| viewerHeight: 400\n## file: app.py\nfrom shiny.express import ui\nfrom .counter import counter_module\n\ncounter_module(\"counter1\", \"Counter 1\", starting_value=5)\ncounter_module(\"counter2\", \"Counter 2\", starting_value=3)\n\n## file: counter.py\nfrom shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_module(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n"
+    },
+    {
+      "type": "p",
+      "text": "Note that in the example above we used the relative import from .counter import ... instead of the absolute import from counter import .... This is necessary when running multiple Shinylive applications on one web page as we do here, so that different apps do not cause conflicts when importing their own counter modules. In normal Shiny Express applications, you can use either a relative or absolute import."
+    },
+    {
+      "type": "p",
+      "text": "To do this, you would first add an argument to the module UI function which sets the button label."
+    },
+    {
+      "type": "code",
+      "text": "from shiny import module, ui, render, reactive, event, App\n\n\n@module.ui\ndef counter_ui(custom_label = \"Increment counter\"):\n    return ui.card(\n        ui.h2(\"This is \", custom_label),\n        ui.input_action_button(id=\"button\", label=custom_label),\n        ui.output_code(id=\"out\"),\n    )"
+    },
+    {
+      "type": "p",
+      "text": "Next, you would add an argument to the server function which specifies the starting value for the counter."
+    },
+    {
+      "type": "code",
+      "text": "@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\""
+    },
+    {
+      "type": "p",
+      "text": "You can then set the options when you call the module in your app. Note that you always need to provide an id to the module function to define its namespace. Using arguments like this makes your modules much more flexible and allows you to encapsulate some of the logic while maintaining the flexibility that your application needs."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, ui\n# Note: In a normal Shiny Core app, use an absolute import, as in:\n# `from counter import ...`\nfrom .counter import counter_ui, counter_server\n\n\napp_ui = ui.page_fluid(\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    counter_server(\"counter1\", starting_value=5)\n    counter_server(\"counter2\", starting_value=3)\n\n\napp = App(app_ui, server)\n\n## file: counter.py\nfrom shiny import module, ui, render, reactive, event\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"\n"
+    },
+    {
+      "type": "p",
+      "text": "Note that in the example above we used the relative import from .counter import ... instead of the absolute import from counter import .... This is necessary when running multiple Shinylive applications on one web page as we do here, so that different apps do not cause conflicts when importing their own counter modules. In normal Shiny Core applications, you must use the absolute import (relative imports will generally not work with Shiny Core applications)."
+    },
+    {
+      "type": "h2",
+      "text": "Passing multiple UI elements to modules"
+    },
+    {
+      "type": "p",
+      "text": "In addition to passing numeric and string values to modules you can also pass any number of UI elements. This allows you to build layout modules similar to ui.sidebar_layout() which can take arbitrary Shiny elements and arrange them in some fashion."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "There are two sides to modules: a module can be written with Shiny Express or Core syntax, and a module can be used from a Shiny Express or Core application. In this section we’ll learn about both using and writing modules with Shiny Express."
+    },
+    {
+      "type": "p",
+      "text": "If a module used from within a Shiny Express application, you can pass it UI elements, but doing so requires understanding how UI elements work in Shiny Express."
+    },
+    {
+      "type": "p",
+      "text": "Suppose you want to use a module called table_cards_module(). We’ll just provide the signature here (the implementation will be later). If you want it to accept multiple arguments, they can be passed in as a list:"
+    },
+    {
+      "type": "code",
+      "text": "@module\ndef my_module(input, output, session, elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", [ui.h1(\"heading\"), ui.p(\"paragraph\")])"
+    },
+    {
+      "type": "p",
+      "text": "Notice that in order to display the elements that the user passed in, we just used a for loop and evaluated each element. This is similar to how you would print each item in a Jupyter notebook."
+    },
+    {
+      "type": "p",
+      "text": "Another method is to have your module take non-keyword argument with *args. With this method, you don’t have two wrap the elements in a list when using the module:"
+    },
+    {
+      "type": "code",
+      "text": "@module\ndef my_module(input, output, session, *elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", ui.h1(\"heading\"), ui.p(\"paragraph\"))"
+    },
+    {
+      "type": "p",
+      "text": "For example, let’s say we wanted to display two cards, one which displayed a standard table, and the other displaying an arbitrary set of elements. One way we could do this is by writing a module which rendered a table in one card and passed *args to a second card."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom .modules import table_cards\nfrom shiny.express import input, render, ui\n\ntext_tags = [ui.h1(\"A heading\"), ui.p(\"Some paragraph text\")]\n\n# The ui.hold prevents the plot from being placed on the page here,\n# but the dot_plot object can later be passed to the table_cards() module.\nwith ui.hold():\n    @render.plot\n    def dot_plot():\n        x = np.random.rand(input.dots())\n        y = np.random.rand(input.dots())\n        fig, ax = plt.subplots()\n        ax.scatter(x, y)\n        return fig\n\nreactive_tags = [\n    ui.input_numeric(\"dots\", \"Number of points\", value=25),\n    dot_plot\n]\n\n\ntable_cards(\"output_example\", reactive_tags),\n\ntable_cards(\"heading_example\", text_tags),\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\n\n@module\ndef table_cards(input, output, session, *args):\n    with ui.layout_columns():\n        with ui.card():\n            ui.card_header(\"Standard table\")\n            @render.table\n            def module_table():\n                df = pd.DataFrame({\"col1\": range(4), \"col2\": range(4)})\n                return df\n\n        with ui.card():\n            ui.card_header(\"New elements\")\n            for arg in args:\n                arg\n"
+    },
+    {
+      "type": "p",
+      "text": "There are two main ways to pass multiple UI elements to a module. First, you can have the module take a list as one of the arguments and pass that list to another container function."
+    },
+    {
+      "type": "code",
+      "text": "@module.ui\ndef mod_ui(elements):\n    return ui.div(elements)\n\nui = ui.page_fluid(mod_ui([ui.h1(\"heading\"), ui.p(\"paragraph\")]))"
+    },
+    {
+      "type": "p",
+      "text": "This is convenient because it lets the parent context pass in any number of elements to the module, but requires that you wrap the elements in a list before passing them to the module."
+    },
+    {
+      "type": "p",
+      "text": "The second method is to have your module take non keyword argument with *args. This is how Shiny’s container functions are designed, and using this pattern lets you to call the module UI just like you would any Shiny function."
+    },
+    {
+      "type": "code",
+      "text": "@module.ui\ndef mod_ui(*args):\n    return ui.div(*args)\n\nui = ui.page_fluid(mod_ui(ui.h1(\"heading\"), ui.p(\"paragraph\")))"
+    },
+    {
+      "type": "p",
+      "text": "For example, let’s say we wanted to display two cards, one which displayed a standard table, and the other displaying an arbitrary set of elements. One way we could do this is by writing a module which rendered a table in one card and passed *args to a second card."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom .modules import table_cards_server, table_cards_ui\nfrom shiny import App, render, ui\n\ntext_tags = [ui.h1(\"A heading\"), ui.p(\"Some paragraph text\")]\nreactive_tags = [\n    ui.input_numeric(\"dots\", \"Number of points\", value=25), ui.output_plot(\"dot_plot\")\n]\n\napp_ui = ui.page_fluid(\n    table_cards_ui(\"output_example\", reactive_tags),\n    table_cards_ui(\"heading_example\", text_tags),\n)\n\n\ndef server(input, output, session):\n    @render.plot\n    def dot_plot():\n        x = np.random.rand(input.dots())\n        y = np.random.rand(input.dots())\n        fig, ax = plt.subplots()\n        ax.scatter(x, y)\n        return fig\n\n    table_cards_server(\"heading_example\")\n    table_cards_server(\"output_example\")\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n@module.ui\ndef table_cards_ui(*args):\n    return ui.row(\n        ui.layout_column_wrap(\n            ui.card(\n                ui.card_header(\"Standard table\"), ui.output_table(\"module_table\")\n            ),\n            ui.card(ui.card_header(\"New elements\"), *args),\n            width = 1 / 2,\n        ),\n    )\n\n\n@module.server\ndef table_cards_server(input, output, session):\n    @render.table\n    def module_table():\n        df = pd.DataFrame({\"col1\": range(4), \"col2\": range(4)})\n        return df\n"
+    },
+    {
+      "type": "h2",
+      "text": "Passing reactives to modules"
+    },
+    {
+      "type": "p",
+      "text": "The modules we’ve seen so far are useful for cleaning up your code base, but we can do more to integrate them in an application’s reactive structure. For example, what if we wanted a global button which reset all of the counters in an application? To accomplish this, we can pass reactive objects and use them inside the module just as you would use them in an app."
+    },
+    {
+      "type": "p",
+      "text": "It is important to distinguish between calls to reactive objects like input.n() and the reactive object itself, input.n. While input.n is reactive object, calling input.n() returns the current value that object."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom .modules import counter\n\n\nwith ui.card():\n    ui.input_action_button(\"clear\", \"Clear counters\")\n\ncounter(\"counter1\", starting_value=5, global_clear=input.clear, label=\"Counter 1\")\n\ncounter(\"counter2\", starting_value=3, global_clear=input.clear, label=\"Counter 2\")\n\n## file: modules.py\nfrom shiny import reactive\nfrom shiny.express import module, render, ui\n\n@module\ndef counter(input, output, session, global_clear, starting_value=0, label=\"Increment counter\"):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(global_clear)\n    def clear_all():\n        count.set(0)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_counter():\n        count.set(count() + 1)\n\n\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n"
+    },
+    {
+      "type": "p",
+      "text": "While this app may look it’s doing something quite different, it’s actually following the same reactive rules as any other app. When we pass input.clear to each module as the global_clear parameter, we can use it inside the module just like we would use any other reactive object. You could retrieve its value with global_clear() or use it with @reactive.event(global_clear) to trigger a side effect. Since all of the module instances are receiving the same reactive object, when that object is invalidated, it will cause elements within those modules to invalidate and re-execute."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, module, reactive, render, ui\nfrom .modules import counter_ui, counter_server\n\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"clear\", \"Clear counters\"),\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    counter_server(\"counter1\", starting_value=5, global_clear=input.clear)\n    counter_server(\"counter2\", starting_value=3, global_clear=input.clear)\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nfrom shiny import App, module, reactive, render, ui\n\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, global_clear, starting_value=0):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(global_clear)\n    def clear_all():\n        count.set(0)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_counter():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\""
+    },
+    {
+      "type": "p",
+      "text": "While this app may look it’s doing something quite different, it’s actually following the same reactive rules as any other app. When we pass input.clear to each module as the global_clear parameter, we can use it inside the module just like we would use any other reactive object. You could retrieve its value with global_clear() or use it with @reactive.event(global_clear) to trigger a side effect. Since all of the module instances are receiving the same reactive object, when that object is invalidated, it will cause elements within those modules to invalidate and re-execute."
+    },
+    {
+      "type": "h2",
+      "text": "Passing callbacks to modules"
+    },
+    {
+      "type": "p",
+      "text": "Another common problem with modules is to change some piece of application state from within the module. One intuitive way to do this is to define a state-modifying function at the application level, and pass that function down to the module. When the function is called within the module code, it will update the global application state."
+    },
+    {
+      "type": "p",
+      "text": "For example, let’s add a text output that adds up the total number of button clicks for a session. To do this we create a reactive.value and a function which increments that value by one. We then pass this function down to the module and call it whenever the module button is clicked. This updates the reactive.value at the application level."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom .modules import counter\n\nglobal_tally = reactive.value(0)\n\ndef increment_counter():\n    global_tally.set(global_tally() + 1)\n\nwith ui.card():\n    @render.text\n    def total_counts():\n        return f\"Total counts: {global_tally()}\"\n\ncounter(\"counter1\", _on_click=increment_counter, label=\"Counter 1\")\n\ncounter(\"counter2\", _on_click=increment_counter, label=\"Counter 2\")\n\n## file: modules.py\nfrom shiny import reactive\nfrom shiny.express import module, render, ui\n\n@module\ndef counter(input, output, session, _on_click, starting_value=0, label=\"Increment counter\"):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_button():\n        _on_click()\n        count.set(count() + 1)\n\n\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\n\nfrom shiny import App, module, reactive, render, ui\nfrom .modules import counter_ui, counter_server\n\napp_ui = ui.page_fluid(\n    ui.output_text(\"total_counts\"),\n    ui.br(),\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    global_tally =  reactive.value(0)\n\n    def increment_counter():\n        global_tally.set(global_tally() + 1)\n\n    @render.text\n    def total_counts():\n        return f\"Total counts: {global_tally()}\"\n\n    counter_server(\"counter1\", _on_click=increment_counter)\n    counter_server(\"counter2\", _on_click=increment_counter)\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nfrom shiny import App, module, reactive, render, ui\n\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, _on_click, starting_value=0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_button():\n        _on_click()\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\""
+    },
+    {
+      "type": "p",
+      "text": "We could accomplish the same thing by passing the reactive value itself down to the module, and while this works, it’s not a great idea. Passing the reactive value creates a tight coupling between the module and the particular context in which it was called. The module would be expecting a particular type of reactive value and wouldn’t work for anything else. Additionally the update logic would be split between the application context and the module which makes it harder to reason about. Passing a callback is more flexible because the module can be used to do a variety of things. For example, by passing a different callback you could use the same module in another application which did something else when the button was clicked."
+    },
+    {
+      "type": "h2",
+      "text": "Returning reactives from modules"
+    },
+    {
+      "type": "p",
+      "text": "Just like we can pass reactives to modules and use them inside the module code we can also return reactive objects from modules to use them in the larger application. For example, one common form of dynamic user interface is to populate a drop-down menu based on another drop-down. You might have one menu which lets the user select a state, and a second which only shows cities in that state. To make it a reusable component, you can extract it into a module so that it could be easily added into other applications."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To do this, you can have the module function return one of the reactive objects which are defined in the module. This reactive object can then be used in the application context like any other reactive object."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import render, ui\nfrom .modules import city_state\n\ncity = city_state(\"cities\")\n\n@render.text\ndef selected_city():\n    return f\"You selected '{city()}'\"\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\nfrom shiny import reactive, req\n\ndata = {\n    \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n    \"city\": [\n        \"New York\",\n        \"Denver\",\n        \"Portland\",\n        \"Detroit\",\n        \"Buffalo\",\n        \"Colorado Springs\",\n        \"Salem\",\n        \"Grand Rapids\",\n        \"Rochester\",\n        \"Aurora\",\n        \"Eugene\",\n        \"Warren\",\n        \"Yonkers\",\n        \"Lakewood\",\n        \"Gresham\",\n        \"Sterling Heights\",\n        \"Syracuse\",\n        \"Fort Collins\",\n        \"Hillsboro\",\n        \"Ann Arbor\",\n    ],\n}\ndf = pd.DataFrame(data)\n\n\n@module\ndef city_state(input, output, session):\n    ui.input_selectize(\n        \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n    )\n\n    @render.express\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return input.cities\n"
+    },
+    {
+      "type": "p",
+      "text": "To do this, you can have the module’s server function return one of the reactive objects which are defined in the module. This reactive object can then be used in the application context like any other reactive object."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, render, ui\nfrom .modules import city_state_ui, city_state_server\n\napp_ui = ui.page_fluid(city_state_ui(\"cities\"), ui.output_text(\"selected_city\"))\n\n\ndef server(input, output, session):\n    city = city_state_server(\"cities\")\n\n    @render.text\n    def selected_city():\n        return f\"You selected '{city()}'\"\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n\n@module.ui\ndef city_state_ui():\n    return ([\n        ui.input_selectize(\n            \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n        ),\n        ui.output_ui(\"cities_ui\"),\n    ])\n\n\n@module.server\ndef city_state_server(input, output, session):\n    data = {\n        \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n        \"city\": [\n            \"New York\",\n            \"Denver\",\n            \"Portland\",\n            \"Detroit\",\n            \"Buffalo\",\n            \"Colorado Springs\",\n            \"Salem\",\n            \"Grand Rapids\",\n            \"Rochester\",\n            \"Aurora\",\n            \"Eugene\",\n            \"Warren\",\n            \"Yonkers\",\n            \"Lakewood\",\n            \"Gresham\",\n            \"Sterling Heights\",\n            \"Syracuse\",\n            \"Fort Collins\",\n            \"Hillsboro\",\n            \"Ann Arbor\",\n        ],\n    }\n    df = pd.DataFrame(data)\n\n    @render.ui\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        return ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return input.cities\n"
+    },
+    {
+      "type": "h3",
+      "text": "Multiple returns"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes you may want to retrieve multiple reactive objects from the module context. To do this you can use either a tuple or namedtuple to send multiple reactives from a module to another context. For example, if you wanted to retrieve both the city and state reactives from the module could you have the module return both of them with return (input.cities, input.state). This tuple could then be unpacked in the application context with city, state = city_state_server(\"cities\")."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import render, ui\nfrom .modules import city_state\n\n(city, state) = city_state(\"cities\")\n\n@render.text\ndef selected_city():\n    return f\"You selected '{city()}' in '{state()}'\"\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\nfrom shiny import reactive, req\n\ndata = {\n    \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n    \"city\": [\n        \"New York\",\n        \"Denver\",\n        \"Portland\",\n        \"Detroit\",\n        \"Buffalo\",\n        \"Colorado Springs\",\n        \"Salem\",\n        \"Grand Rapids\",\n        \"Rochester\",\n        \"Aurora\",\n        \"Eugene\",\n        \"Warren\",\n        \"Yonkers\",\n        \"Lakewood\",\n        \"Gresham\",\n        \"Sterling Heights\",\n        \"Syracuse\",\n        \"Fort Collins\",\n        \"Hillsboro\",\n        \"Ann Arbor\",\n    ],\n}\ndf = pd.DataFrame(data)\n\n\n@module\ndef city_state(input, output, session):\n    ui.input_selectize(\n        \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n    )\n\n    @render.express\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return (input.cities, input.state)\n"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, render, ui\nfrom .modules import city_state_ui, city_state_server\n\napp_ui = ui.page_fluid(city_state_ui(\"cities\"), ui.output_text(\"selected_city\"))\n\n\ndef server(input, output, session):\n    (city, state) = city_state_server(\"cities\")\n\n    @render.text\n    def selected_city():\n        return f\"You selected '{city()}' in '{state()}'\"\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n\n@module.ui\ndef city_state_ui():\n    return ([\n        ui.input_selectize(\n            \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n        ),\n        ui.output_ui(\"cities_ui\"),\n    ])\n\n\n@module.server\ndef city_state_server(input, output, session):\n    data = {\n        \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n        \"city\": [\n            \"New York\",\n            \"Denver\",\n            \"Portland\",\n            \"Detroit\",\n            \"Buffalo\",\n            \"Colorado Springs\",\n            \"Salem\",\n            \"Grand Rapids\",\n            \"Rochester\",\n            \"Aurora\",\n            \"Eugene\",\n            \"Warren\",\n            \"Yonkers\",\n            \"Lakewood\",\n            \"Gresham\",\n            \"Sterling Heights\",\n            \"Syracuse\",\n            \"Fort Collins\",\n            \"Hillsboro\",\n            \"Ann Arbor\",\n        ],\n    }\n    df = pd.DataFrame(data)\n\n    @render.ui\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        return ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return (input.cities, input.state)\n"
+    },
+    {
+      "type": "p",
+      "text": "If your return value has more objects, it may be useful to return a namedtuple. Named tuples are similar to tuples except that they allow you to set specific named attributes, which makes them useful for data validation because if you don’t pass the right attributes to a named tuple it will fail early and loudly."
+    },
+    {
+      "type": "h2",
+      "text": "Using modules with Shiny Core and Express syntax"
+    },
+    {
+      "type": "p",
+      "text": "In all the examples we’ve seen so far, a Shiny Express app uses modules created with Shiny Express syntax, or a Shiny Core app uses modules created with Shiny Core syntax. It is also possible for an Express app to use a module written with Core syntax. To do so, in your Express app, simply call both the UI and server components of the Core-syntax module."
+    },
+    {
+      "type": "p",
+      "text": "This is a Shiny Express app which illustrates how to use both types of modules: one written with Express syntax, and the other written with Core syntax."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| viewerHeight: 400\n## file: app.py\n# This Shiny Express app illustrates how to use modules with Express and Core syntax\nfrom shiny.express import ui\nfrom .counter_express import counter_express\nfrom .counter_core import counter_server, counter_ui\n\n# Use a module that was made with Shiny Express syntax\ncounter_express(\"counter1\", label=\"Counter 1 (Express)\", starting_value=5)\n\n# Use a module that was made with Shiny Core syntax: Call the ui and server components\n# with the same `id`, and pass in any additional arguments.\ncounter_ui(\"counter2\", label=\"Counter 2 (Core)\")\ncounter_server(\"counter2\", starting_value=2)\n\n## file: counter_express.py\n# Counter module implemented with Shiny Express syntax\nfrom shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_express(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n## file: counter_core.py\n# Counter module implemented with Shiny Core syntax\nfrom shiny import module, ui, render, reactive, event\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"\n"
+    },
+    {
+      "type": "h2",
+      "text": "Conclusion"
+    },
+    {
+      "type": "p",
+      "text": "Modules are the main way to grow and scale your Shiny application code. They let you break up your app into tractable parts, define how those parts communicate with one another, and reuse components across applications. While mastering modules takes quite a bit of time, you can accomplish almost anything with the four patterns listed in this article."
+    }
+  ],
+  "code_examples": [
+    "from shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_module(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)",
+    "from shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_module(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| viewerHeight: 400\n## file: app.py\nfrom shiny.express import ui\nfrom .counter import counter_module\n\ncounter_module(\"counter1\", \"Counter 1\", starting_value=5)\ncounter_module(\"counter2\", \"Counter 2\", starting_value=3)\n\n## file: counter.py\nfrom shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_module(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n",
+    "from shiny import module, ui, render, reactive, event, App\n\n\n@module.ui\ndef counter_ui(custom_label = \"Increment counter\"):\n    return ui.card(\n        ui.h2(\"This is \", custom_label),\n        ui.input_action_button(id=\"button\", label=custom_label),\n        ui.output_code(id=\"out\"),\n    )",
+    "from shiny import module, ui, render, reactive, event, App\n\n\n@module.ui\ndef counter_ui(custom_label = \"Increment counter\"):\n    return ui.card(\n        ui.h2(\"This is \", custom_label),\n        ui.input_action_button(id=\"button\", label=custom_label),\n        ui.output_code(id=\"out\"),\n    )",
+    "@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"",
+    "@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, ui\n# Note: In a normal Shiny Core app, use an absolute import, as in:\n# `from counter import ...`\nfrom .counter import counter_ui, counter_server\n\n\napp_ui = ui.page_fluid(\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    counter_server(\"counter1\", starting_value=5)\n    counter_server(\"counter2\", starting_value=3)\n\n\napp = App(app_ui, server)\n\n## file: counter.py\nfrom shiny import module, ui, render, reactive, event\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"\n",
+    "@module\ndef my_module(input, output, session, elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", [ui.h1(\"heading\"), ui.p(\"paragraph\")])",
+    "@module\ndef my_module(input, output, session, elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", [ui.h1(\"heading\"), ui.p(\"paragraph\")])",
+    "@module\ndef my_module(input, output, session, *elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", ui.h1(\"heading\"), ui.p(\"paragraph\"))",
+    "@module\ndef my_module(input, output, session, *elements):\n    for el in elements:\n        with ui.card():\n            el\n\nmy_module(\"mod1\", ui.h1(\"heading\"), ui.p(\"paragraph\"))",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom .modules import table_cards\nfrom shiny.express import input, render, ui\n\ntext_tags = [ui.h1(\"A heading\"), ui.p(\"Some paragraph text\")]\n\n# The ui.hold prevents the plot from being placed on the page here,\n# but the dot_plot object can later be passed to the table_cards() module.\nwith ui.hold():\n    @render.plot\n    def dot_plot():\n        x = np.random.rand(input.dots())\n        y = np.random.rand(input.dots())\n        fig, ax = plt.subplots()\n        ax.scatter(x, y)\n        return fig\n\nreactive_tags = [\n    ui.input_numeric(\"dots\", \"Number of points\", value=25),\n    dot_plot\n]\n\n\ntable_cards(\"output_example\", reactive_tags),\n\ntable_cards(\"heading_example\", text_tags),\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\n\n@module\ndef table_cards(input, output, session, *args):\n    with ui.layout_columns():\n        with ui.card():\n            ui.card_header(\"Standard table\")\n            @render.table\n            def module_table():\n                df = pd.DataFrame({\"col1\": range(4), \"col2\": range(4)})\n                return df\n\n        with ui.card():\n            ui.card_header(\"New elements\")\n            for arg in args:\n                arg\n",
+    "@module.ui\ndef mod_ui(elements):\n    return ui.div(elements)\n\nui = ui.page_fluid(mod_ui([ui.h1(\"heading\"), ui.p(\"paragraph\")]))",
+    "@module.ui\ndef mod_ui(elements):\n    return ui.div(elements)\n\nui = ui.page_fluid(mod_ui([ui.h1(\"heading\"), ui.p(\"paragraph\")]))",
+    "@module.ui\ndef mod_ui(*args):\n    return ui.div(*args)\n\nui = ui.page_fluid(mod_ui(ui.h1(\"heading\"), ui.p(\"paragraph\")))",
+    "@module.ui\ndef mod_ui(*args):\n    return ui.div(*args)\n\nui = ui.page_fluid(mod_ui(ui.h1(\"heading\"), ui.p(\"paragraph\")))",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom .modules import table_cards_server, table_cards_ui\nfrom shiny import App, render, ui\n\ntext_tags = [ui.h1(\"A heading\"), ui.p(\"Some paragraph text\")]\nreactive_tags = [\n    ui.input_numeric(\"dots\", \"Number of points\", value=25), ui.output_plot(\"dot_plot\")\n]\n\napp_ui = ui.page_fluid(\n    table_cards_ui(\"output_example\", reactive_tags),\n    table_cards_ui(\"heading_example\", text_tags),\n)\n\n\ndef server(input, output, session):\n    @render.plot\n    def dot_plot():\n        x = np.random.rand(input.dots())\n        y = np.random.rand(input.dots())\n        fig, ax = plt.subplots()\n        ax.scatter(x, y)\n        return fig\n\n    table_cards_server(\"heading_example\")\n    table_cards_server(\"output_example\")\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n@module.ui\ndef table_cards_ui(*args):\n    return ui.row(\n        ui.layout_column_wrap(\n            ui.card(\n                ui.card_header(\"Standard table\"), ui.output_table(\"module_table\")\n            ),\n            ui.card(ui.card_header(\"New elements\"), *args),\n            width = 1 / 2,\n        ),\n    )\n\n\n@module.server\ndef table_cards_server(input, output, session):\n    @render.table\n    def module_table():\n        df = pd.DataFrame({\"col1\": range(4), \"col2\": range(4)})\n        return df\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom .modules import counter\n\n\nwith ui.card():\n    ui.input_action_button(\"clear\", \"Clear counters\")\n\ncounter(\"counter1\", starting_value=5, global_clear=input.clear, label=\"Counter 1\")\n\ncounter(\"counter2\", starting_value=3, global_clear=input.clear, label=\"Counter 2\")\n\n## file: modules.py\nfrom shiny import reactive\nfrom shiny.express import module, render, ui\n\n@module\ndef counter(input, output, session, global_clear, starting_value=0, label=\"Increment counter\"):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(global_clear)\n    def clear_all():\n        count.set(0)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_counter():\n        count.set(count() + 1)\n\n\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, module, reactive, render, ui\nfrom .modules import counter_ui, counter_server\n\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"clear\", \"Clear counters\"),\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    counter_server(\"counter1\", starting_value=5, global_clear=input.clear)\n    counter_server(\"counter2\", starting_value=3, global_clear=input.clear)\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nfrom shiny import App, module, reactive, render, ui\n\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, global_clear, starting_value=0):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(global_clear)\n    def clear_all():\n        count.set(0)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_counter():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom .modules import counter\n\nglobal_tally = reactive.value(0)\n\ndef increment_counter():\n    global_tally.set(global_tally() + 1)\n\nwith ui.card():\n    @render.text\n    def total_counts():\n        return f\"Total counts: {global_tally()}\"\n\ncounter(\"counter1\", _on_click=increment_counter, label=\"Counter 1\")\n\ncounter(\"counter2\", _on_click=increment_counter, label=\"Counter 2\")\n\n## file: modules.py\nfrom shiny import reactive\nfrom shiny.express import module, render, ui\n\n@module\ndef counter(input, output, session, _on_click, starting_value=0, label=\"Increment counter\"):\n    count = reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_button():\n        _on_click()\n        count.set(count() + 1)\n\n\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\n\nfrom shiny import App, module, reactive, render, ui\nfrom .modules import counter_ui, counter_server\n\napp_ui = ui.page_fluid(\n    ui.output_text(\"total_counts\"),\n    ui.br(),\n    counter_ui(\"counter1\", \"Counter 1\"),\n    counter_ui(\"counter2\", \"Counter 2\"),\n)\n\n\ndef server(input, output, session):\n    global_tally =  reactive.value(0)\n\n    def increment_counter():\n        global_tally.set(global_tally() + 1)\n\n    @render.text\n    def total_counts():\n        return f\"Total counts: {global_tally()}\"\n\n    counter_server(\"counter1\", _on_click=increment_counter)\n    counter_server(\"counter2\", _on_click=increment_counter)\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nfrom shiny import App, module, reactive, render, ui\n\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, _on_click, starting_value=0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def increment_button():\n        _on_click()\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import render, ui\nfrom .modules import city_state\n\ncity = city_state(\"cities\")\n\n@render.text\ndef selected_city():\n    return f\"You selected '{city()}'\"\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\nfrom shiny import reactive, req\n\ndata = {\n    \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n    \"city\": [\n        \"New York\",\n        \"Denver\",\n        \"Portland\",\n        \"Detroit\",\n        \"Buffalo\",\n        \"Colorado Springs\",\n        \"Salem\",\n        \"Grand Rapids\",\n        \"Rochester\",\n        \"Aurora\",\n        \"Eugene\",\n        \"Warren\",\n        \"Yonkers\",\n        \"Lakewood\",\n        \"Gresham\",\n        \"Sterling Heights\",\n        \"Syracuse\",\n        \"Fort Collins\",\n        \"Hillsboro\",\n        \"Ann Arbor\",\n    ],\n}\ndf = pd.DataFrame(data)\n\n\n@module\ndef city_state(input, output, session):\n    ui.input_selectize(\n        \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n    )\n\n    @render.express\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return input.cities\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, render, ui\nfrom .modules import city_state_ui, city_state_server\n\napp_ui = ui.page_fluid(city_state_ui(\"cities\"), ui.output_text(\"selected_city\"))\n\n\ndef server(input, output, session):\n    city = city_state_server(\"cities\")\n\n    @render.text\n    def selected_city():\n        return f\"You selected '{city()}'\"\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n\n@module.ui\ndef city_state_ui():\n    return ([\n        ui.input_selectize(\n            \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n        ),\n        ui.output_ui(\"cities_ui\"),\n    ])\n\n\n@module.server\ndef city_state_server(input, output, session):\n    data = {\n        \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n        \"city\": [\n            \"New York\",\n            \"Denver\",\n            \"Portland\",\n            \"Detroit\",\n            \"Buffalo\",\n            \"Colorado Springs\",\n            \"Salem\",\n            \"Grand Rapids\",\n            \"Rochester\",\n            \"Aurora\",\n            \"Eugene\",\n            \"Warren\",\n            \"Yonkers\",\n            \"Lakewood\",\n            \"Gresham\",\n            \"Sterling Heights\",\n            \"Syracuse\",\n            \"Fort Collins\",\n            \"Hillsboro\",\n            \"Ann Arbor\",\n        ],\n    }\n    df = pd.DataFrame(data)\n\n    @render.ui\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        return ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return input.cities\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import render, ui\nfrom .modules import city_state\n\n(city, state) = city_state(\"cities\")\n\n@render.text\ndef selected_city():\n    return f\"You selected '{city()}' in '{state()}'\"\n\n## file: modules.py\nimport pandas as pd\nfrom shiny.express import module, render, ui\nfrom shiny import reactive, req\n\ndata = {\n    \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n    \"city\": [\n        \"New York\",\n        \"Denver\",\n        \"Portland\",\n        \"Detroit\",\n        \"Buffalo\",\n        \"Colorado Springs\",\n        \"Salem\",\n        \"Grand Rapids\",\n        \"Rochester\",\n        \"Aurora\",\n        \"Eugene\",\n        \"Warren\",\n        \"Yonkers\",\n        \"Lakewood\",\n        \"Gresham\",\n        \"Sterling Heights\",\n        \"Syracuse\",\n        \"Fort Collins\",\n        \"Hillsboro\",\n        \"Ann Arbor\",\n    ],\n}\ndf = pd.DataFrame(data)\n\n\n@module\ndef city_state(input, output, session):\n    ui.input_selectize(\n        \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n    )\n\n    @render.express\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return (input.cities, input.state)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, render, ui\nfrom .modules import city_state_ui, city_state_server\n\napp_ui = ui.page_fluid(city_state_ui(\"cities\"), ui.output_text(\"selected_city\"))\n\n\ndef server(input, output, session):\n    (city, state) = city_state_server(\"cities\")\n\n    @render.text\n    def selected_city():\n        return f\"You selected '{city()}' in '{state()}'\"\n\n\napp = App(app_ui, server)\n\n## file: modules.py\nimport pandas as pd\nfrom shiny import module, render, ui\n\n\n@module.ui\ndef city_state_ui():\n    return ([\n        ui.input_selectize(\n            \"state\", \"State\", choices=[\"NY\", \"CO\", \"OR\", \"MI\"], selected=\"NY\"\n        ),\n        ui.output_ui(\"cities_ui\"),\n    ])\n\n\n@module.server\ndef city_state_server(input, output, session):\n    data = {\n        \"state\": [\"NY\", \"CO\", \"OR\", \"MI\"] * 5,\n        \"city\": [\n            \"New York\",\n            \"Denver\",\n            \"Portland\",\n            \"Detroit\",\n            \"Buffalo\",\n            \"Colorado Springs\",\n            \"Salem\",\n            \"Grand Rapids\",\n            \"Rochester\",\n            \"Aurora\",\n            \"Eugene\",\n            \"Warren\",\n            \"Yonkers\",\n            \"Lakewood\",\n            \"Gresham\",\n            \"Sterling Heights\",\n            \"Syracuse\",\n            \"Fort Collins\",\n            \"Hillsboro\",\n            \"Ann Arbor\",\n        ],\n    }\n    df = pd.DataFrame(data)\n\n    @render.ui\n    def cities_ui():\n        opts = df[df[\"state\"] == input.state()][\"city\"].unique().tolist()\n        return ui.input_selectize(\"cities\", \"Cities\", choices=opts, selected=opts[0])\n\n    return (input.cities, input.state)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| viewerHeight: 400\n## file: app.py\n# This Shiny Express app illustrates how to use modules with Express and Core syntax\nfrom shiny.express import ui\nfrom .counter_express import counter_express\nfrom .counter_core import counter_server, counter_ui\n\n# Use a module that was made with Shiny Express syntax\ncounter_express(\"counter1\", label=\"Counter 1 (Express)\", starting_value=5)\n\n# Use a module that was made with Shiny Core syntax: Call the ui and server components\n# with the same `id`, and pass in any additional arguments.\ncounter_ui(\"counter2\", label=\"Counter 2 (Core)\")\ncounter_server(\"counter2\", starting_value=2)\n\n## file: counter_express.py\n# Counter module implemented with Shiny Express syntax\nfrom shiny import reactive\nfrom shiny.express import module, ui, render\n\n@module\ndef counter_express(input, output, session, label=\"Increment counter\", starting_value=0):\n    count = reactive.value(starting_value)\n    with ui.card():\n        ui.card_header(\"This is \" + label)\n        ui.input_action_button(id=\"button\", label=label)\n\n        @render.code\n        def out():\n            return f\"Click count is {count()}\"\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n## file: counter_core.py\n# Counter module implemented with Shiny Core syntax\nfrom shiny import module, ui, render, reactive, event\n\n@module.ui\ndef counter_ui(label: str = \"Increment counter\"):\n    return ui.card(\n        ui.card_header(\"This is \" + label),\n        ui.input_action_button(id=\"button\", label=label),\n        ui.output_code(id=\"out\"),\n    )\n\n\n@module.server\ndef counter_server(input, output, session, starting_value = 0):\n    count =  reactive.value(starting_value)\n\n    @reactive.effect\n    @reactive.event(input.button)\n    def _():\n        count.set(count() + 1)\n\n    @render.code\n    def out():\n        return f\"Click count is {count()}\"\n"
+  ],
+  "toc": [
+    {
+      "title": "Communication between modules",
+      "url": "docs/#communication-between-modules"
+    },
+    {
+      "title": "Non-reactive arguments",
+      "url": "docs/#non-reactive-arguments"
+    },
+    {
+      "title": "Passing multiple UI elements to modules",
+      "url": "docs/#passing-multiple-ui-elements-to-modules"
+    },
+    {
+      "title": "Passing reactives to modules",
+      "url": "docs/#passing-reactives-to-modules"
+    },
+    {
+      "title": "Passing callbacks to modules",
+      "url": "docs/#passing-callbacks-to-modules"
+    },
+    {
+      "title": "Returning reactives from modules",
+      "url": "docs/#returning-reactives-from-modules"
+    },
+    {
+      "title": "Multiple returns",
+      "url": "docs/#multiple-returns"
+    },
+    {
+      "title": "Using modules with Shiny Core and Express syntax",
+      "url": "docs/#using-modules-with-shiny-core-and-express-syntax"
+    },
+    {
+      "title": "Conclusion",
+      "url": "docs/#conclusion"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

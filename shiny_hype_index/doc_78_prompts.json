@@ -1,0 +1,7 @@
+[
+  "How can I create a text box in my Shiny Python app using the ui.input_text function?",
+  "What parameters do I need to specify when using the ui.input_text function to define the identifier and label of the text box?",
+  "How can I access the value of a text box in the server function of my Shiny Python app?",
+  "What is the default initial value of a text box created using the ui.input_text function in Shiny Python?",
+  "Where should I call the ui.input_text function in my app's UI layout to determine where the text box will appear?"
+]

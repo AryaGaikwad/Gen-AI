@@ -1,0 +1,7 @@
+[
+  "What parameters are required for creating a pair of text inputs with calendars for date selection using ui.input_date_range in Shiny for Python?",
+  "How can I specify the initial start and end dates when using ui.input_date_range in Shiny for Python?",
+  "What are the options for the date range shown when the input object is first clicked in ui.input_date_range in Shiny for Python?",
+  "How can I customize the language used for month and day names in ui.input_date_range in Shiny for Python?",
+  "What are the different date format string values that can be used to display dates in the browser when using ui.input_date_range in Shiny for Python?"
+]

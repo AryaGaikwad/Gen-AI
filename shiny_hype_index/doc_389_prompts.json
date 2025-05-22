@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the session.require_active_session function in Shiny for Python?",
+  "How can a Shiny developer access client-side information such as URL components and pixel ratio of the device?",
+  "When should a Shiny developer use the session.Session.send_custom_message function?",
+  "What is the role of the input_handler.input_handlers method in managing Shiny input handlers?",
+  "How can a Shiny developer register a function to be called after the client has disconnected in a Shiny session?"
+]

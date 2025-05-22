@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Query Chat",
+    "description": "Use the querychat template as a foundation for your next Shiny app.",
+    "url": "templates/querychat/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Query Chat"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template querychat --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "p",
+      "text": "This app template allows end users to ask questions about a dataset using natural language. It leverages the querychat package to make the implementation as simple as possible. Under the hood, querychat instructs the LLM to translate user questions into formal SQL queries, which are then executed against the dataset. The resulting “modified” data is then made available as a reactive calculation so you make further use of it in your app."
+    },
+    {
+      "type": "p",
+      "text": "To learn more, visit querychat’s website"
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Chat"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "p",
+      "text": "chatlas querychat"
+    }
+  ],
+  "code_examples": [
+    "shiny create --template querychat --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template querychat --github posit-dev/py-shiny-templates/gen-ai"
+  ],
+  "toc": []
+}

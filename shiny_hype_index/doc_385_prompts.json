@@ -1,0 +1,7 @@
+[
+  "What is the default behavior when running a Shiny app using the `run_app` function?",
+  "How can you specify a different name for the application when running it with `run_app`?",
+  "What is the purpose of setting the `autoreload_port` parameter to 0 when using the `run_app` function?",
+  "How can you exclude specific files from being monitored for changes when using the `run_app` function?",
+  "What is the purpose of the `launch_browser` parameter in the `run_app` function?"
+]

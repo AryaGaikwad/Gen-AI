@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the session.get_current_session function in Shiny for Python?",
+  "How can a Shiny developer raise an exception if no session is currently active using the session.require_active_session function?",
+  "What information can a developer access using the session.ClientData class in Shiny for Python?",
+  "How can a Shiny developer send a custom message to the client using the session.Session.send_custom_message function?",
+  "What is the purpose of the session.Session.on_flushed function in Shiny for Python and how can it be used?"
+]

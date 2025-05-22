@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Streaming database updates",
+    "description": "Use the monitor-database template as a foundation for your next Shiny app.",
+    "url": "templates/monitor-database/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Streaming database updates"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template monitor-database --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Efficiently monitor a database for updates and visualize the data in real-time. In this case, we’re monitoring an SQLite database with simulated model accuracy data, but the core logic can easily adapt to other databases and use cases. Note also that this template has:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "A switch input to toggle the data update on and off (thanks to reactive isolation, this is easy!).",
+        "A dynamically updating plot and value box icons (when model accuracy gets above/below a certain threshold). And this all happens without any layout shifts!"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "And this all happens without any layout shifts!"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Checkbox group input",
+        "Switch input",
+        "Value box",
+        "Plotly output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "numpy",
+        "pandas",
+        "plotly",
+        "shinywidgets",
+        "sqlite3"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template monitor-database --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-database --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

@@ -1,0 +1,7 @@
+[
+  "What parameters are required for using the ui.update_text function in Shiny for Python?",
+  "How are input updater functions related to changing the settings of an input object in Shiny for Python?",
+  "What happens if some arguments have None values when using the ui.update_text function in Shiny for Python?",
+  "How can the set of choices for radio buttons, checkbox groups, and select inputs be cleared in Shiny for Python using update functions?",
+  "How is the syntax of the ui.update_text function in Shiny for Python similar to the functions that create the inputs initially?"
+]

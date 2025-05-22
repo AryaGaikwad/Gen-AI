@@ -1,0 +1,7 @@
+[
+  "How can I add a switch to my Shiny Python app's user interface?",
+  "What parameters do I need to specify when using the ui.input_switch() function to create a switch?",
+  "How can I access the value of a switch in the server function of my Shiny Python app?",
+  "What is the default initial value of a switch created using the ui.input_switch() function in Shiny for Python?",
+  "Where should I call the ui.input_switch() function to determine the placement of the switch within the layout of my Shiny Python app?"
+]

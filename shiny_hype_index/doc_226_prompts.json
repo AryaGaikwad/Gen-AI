@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.insert_ui` function take?",
+  "How can you specify where the UI object should be inserted relative to the selector element?",
+  "What is the purpose of the `immediate` parameter in the `express.ui.insert_ui` function?",
+  "How does the `insert_ui` function differ from the `ui` function in Shiny for Python?",
+  "When should you use the `remove_ui` function in conjunction with the `insert_ui` function in Shiny for Python?"
+]

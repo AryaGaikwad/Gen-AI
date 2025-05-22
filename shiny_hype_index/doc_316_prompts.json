@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for including a CSS file using ui.include_css in Shiny for Python?",
+  "How does the \"link_files\" method differ from the \"link\" method when including a CSS file using ui.include_css in Shiny for Python?",
+  "What does the ui.include_css function return when the method parameter is set to \"inline\" in Shiny for Python?",
+  "What is the default behavior of ui.include_css in terms of placing the CSS tag in the document, and why might this not be optimal for performance?",
+  "How can a Shiny developer ensure that the CSS file is placed in the head of the document rather than the body when using ui.include_css in Python?"
+]

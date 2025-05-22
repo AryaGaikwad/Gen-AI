@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to ui.value_box in Shiny for Python to customize the appearance of the value box?",
+  "How can I specify the layout of the showcase in a value box using ui.value_box in Shiny for Python?",
+  "What are the supported color themes that can be used in the theme parameter of the value box in Shiny for Python?",
+  "How can I make an icon appear when hovering over the card body in a value box created with ui.value_box in Shiny for Python?",
+  "What is the purpose of providing a unique identifier when creating a value box using ui.value_box in Shiny for Python?"
+]

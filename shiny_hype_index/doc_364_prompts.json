@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.ui` function in Shiny for Python?",
+  "How does the `render.ui` function differ from using the `express` function in Shiny Express syntax?",
+  "What type of object does a function need to return in order to be used with the `render.ui` function?",
+  "How should the name of the decorated function relate to the `output_ui` container's id when using `render.ui`?",
+  "Which other functions are related to `render.ui` according to the documentation?"
+]

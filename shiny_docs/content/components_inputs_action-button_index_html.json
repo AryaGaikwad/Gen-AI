@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "title": "Action Button – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/action-button/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "Action Button"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Action Button"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.row(\n        ui.column(6, ui.input_action_button(\"action_button\", \"Increase Number\")),\n        ui.column(6, ui.output_text(\"counter\").add_class(\"display-5 mb-0\")),\n        {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n    ).add_class(\"text-center\")\n)\n\ndef server(input, output, session):\n    count = reactive.value(0)\n\n    @reactive.effect\n    @reactive.event(input.action_button)\n    def _():\n        count.set(count() + 1)\n\n    @render.text\n    def counter():\n        return f\"{count()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"action_button\", \"Action\")  \n\n@render.text()\n@reactive.event(input.action_button)\ndef counter():\n    return f\"{input.action_button()}\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"action_button\", \"Action\"),  \n    ui.output_text(\"counter\"),\n)\n\ndef server(input, output, session):\n    @render.text()\n    @reactive.event(input.action_button)\n    def counter():\n        return f\"{input.action_button()}\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_action_button ui.input_action_button(id, label, *, icon=None, width=None, **kwargs)",
+        "reactive.event reactive.event(*args, ignore_none=True, ignore_init=False)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_action_button ui.input_action_button(id, label, *, icon=None, width=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "reactive.event reactive.event(*args, ignore_none=True, ignore_init=False)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "An action button appears as a button and has a value that increments each time the user presses the button."
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add an action button to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_action_button() to the UI of your app to create an action button. Where you call this function will determine where the button will appear within the app’s layout.",
+        "Specify the id and label parameters of ui.input_action_button() to define the button’s identifier and label."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_action_button() to the UI of your app to create an action button. Where you call this function will determine where the button will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_action_button() to define the button’s identifier and label."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of an action button:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<action_button_id()> (e.g., input.action_button()) to access the value of the action button. The server value of an action button is an integer representing the number of clicks."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "See also: Action Link"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.row(\n        ui.column(6, ui.input_action_button(\"action_button\", \"Increase Number\")),\n        ui.column(6, ui.output_text(\"counter\").add_class(\"display-5 mb-0\")),\n        {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n    ).add_class(\"text-center\")\n)\n\ndef server(input, output, session):\n    count = reactive.value(0)\n\n    @reactive.effect\n    @reactive.event(input.action_button)\n    def _():\n        count.set(count() + 1)\n\n    @render.text\n    def counter():\n        return f\"{count()}\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.row(\n        ui.column(6, ui.input_action_button(\"action_button\", \"Increase Number\")),\n        ui.column(6, ui.output_text(\"counter\").add_class(\"display-5 mb-0\")),\n        {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n    ).add_class(\"text-center\")\n)\n\ndef server(input, output, session):\n    count = reactive.value(0)\n\n    @reactive.effect\n    @reactive.event(input.action_button)\n    def _():\n        count.set(count() + 1)\n\n    @render.text\n    def counter():\n        return f\"{count()}\"\n\napp = App(app_ui, server)",
+    "from shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"action_button\", \"Action\")  \n\n@render.text()\n@reactive.event(input.action_button)\ndef counter():\n    return f\"{input.action_button()}\"",
+    "from shiny import reactive, render\nfrom shiny.express import input, ui\n\nui.input_action_button(\"action_button\", \"Action\")  \n\n@render.text()\n@reactive.event(input.action_button)\ndef counter():\n    return f\"{input.action_button()}\"",
+    "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"action_button\", \"Action\"),  \n    ui.output_text(\"counter\"),\n)\n\ndef server(input, output, session):\n    @render.text()\n    @reactive.event(input.action_button)\n    def counter():\n        return f\"{input.action_button()}\"\n\napp = App(app_ui, server)",
+    "from shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_action_button(\"action_button\", \"Action\"),  \n    ui.output_text(\"counter\"),\n)\n\ndef server(input, output, session):\n    @render.text()\n    @reactive.event(input.action_button)\n    def counter():\n        return f\"{input.action_button()}\"\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – SQL database explorer",
+    "description": "Use the database-explorer template as a foundation for your next Shiny app.",
+    "url": "templates/database-explorer/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "SQL database explorer"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template database-explorer --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Run queries on an SQL database and view the results in a data grid. This app demonstrates how to initialize, populate, and connect to an SQL database using the duckdb package. It also shows how to run SQL queries and display results in an interactive data grid. Note also the use of Shiny modules to encapsulate and reuse the logic behind each card."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Action button",
+        "Text area input",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "duckdb",
+        "pandas"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template database-explorer --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template database-explorer --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

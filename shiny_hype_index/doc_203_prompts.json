@@ -1,0 +1,7 @@
+[
+  "What does the function express.ui.update_task_button do in Shiny for Python?",
+  "How can I manually change the state of a task button using express.ui.update_task_button?",
+  "What are the possible states that the button can be set to using express.ui.update_task_button?",
+  "What are the parameters required for using the express.ui.update_task_button function in Shiny for Python?",
+  "How can I prevent a task button from automatically resetting to \"ready\" after a click using express.ui.update_task_button in Shiny for Python?"
+]

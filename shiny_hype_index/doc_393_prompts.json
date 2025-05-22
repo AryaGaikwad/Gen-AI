@@ -1,0 +1,7 @@
+[
+  "What is the purpose of ui.modal in Shiny for Python?",
+  "What parameters can be specified when creating a modal dialog using ui.modal?",
+  "How can the size of the modal dialogue box be adjusted when using ui.modal?",
+  "What happens if easy_close is set to False when creating a modal dialog with ui.modal?",
+  "How can the modal dialog be dismissed when easy_close is set to False in ui.modal?"
+]

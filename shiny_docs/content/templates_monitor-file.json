@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Streaming file updates",
+    "description": "Use the monitor-file template as a foundation for your next Shiny app.",
+    "url": "templates/monitor-file/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Streaming file updates"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template monitor-file --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template monitor-file --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Efficiently monitor a file for updates and visualize the data in real-time. In this case, we’re monitoring fake server logs, but you adapt this template to reactively read any file that updates over time. Note also that this app shows the entire log in a data grid, and the most recent log entry in value boxes."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Value box",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "pandas"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template monitor-file --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-file --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-file --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template monitor-file --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

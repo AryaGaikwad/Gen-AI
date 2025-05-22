@@ -1,0 +1,7 @@
+[
+  "What are the two main approaches to testing Shiny apps mentioned in the documentation?",
+  "How does unit testing in Shiny apps differ from end-to-end testing in terms of complexity and dependencies?",
+  "Why is it recommended to separate the app's \"business\" logic from reactive logic when writing unit tests?",
+  "Which testing framework is recommended for unit testing Shiny apps in Python, and how can it be installed?",
+  "What naming conventions and requirements does pytest have for test files and functions in the context of unit testing Shiny apps?"
+]

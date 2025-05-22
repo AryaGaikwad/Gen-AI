@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for using the express.ui.include_css function in Shiny for Python?",
+  "How does the method parameter 'link_files' differ from 'link' in the express.ui.include_css function?",
+  "What does the express.ui.include_css function return when the method parameter is set to 'inline'?",
+  "How can you prevent Flash of Unstyled Content (FOUC) when using the express.ui.include_css function in Shiny for Python?",
+  "In what directory should the CSS file be located to ensure optimal performance when using the express.ui.include_css function in Shiny for Python?"
+]

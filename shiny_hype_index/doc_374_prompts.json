@@ -1,0 +1,7 @@
+[
+  "What is the main difference between reactive calculations and reactive effects in Shiny for Python?",
+  "How does the execution strategy differ between reactive calculations and reactive effects in Shiny for Python?",
+  "What parameters can be set when marking a function as a reactive effect in Shiny for Python?",
+  "How can you specify a higher priority for an effect in Shiny for Python?",
+  "What is the purpose of using reactive effects in Shiny for Python, and what are they specifically useful for?"
+]

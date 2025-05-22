@@ -1,0 +1,7 @@
+[
+  "What does the `ui.input_dark_mode` function in Shiny for Python do?",
+  "What parameters can be specified when using the `ui.input_dark_mode` function?",
+  "How can the initial mode of the dark mode switch be set using `ui.input_dark_mode`?",
+  "What is the purpose of providing an optional ID for the dark mode switch in `ui.input_dark_mode`?",
+  "Where can I find references for customizing color modes when using the `ui.input_dark_mode` function in Shiny for Python?"
+]

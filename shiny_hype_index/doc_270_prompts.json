@@ -1,0 +1,7 @@
+[
+  "What parameters are required for creating a group of checkboxes using ui.input_checkbox_group in Shiny for Python?",
+  "How can you specify the values that should be initially selected in a checkbox group using ui.input_checkbox_group?",
+  "What is the purpose of the 'inline' parameter in the ui.input_checkbox_group function?",
+  "How can you set the CSS width for a group of checkboxes created using ui.input_checkbox_group?",
+  "What type of object does the ui.input_checkbox_group function return?"
+]

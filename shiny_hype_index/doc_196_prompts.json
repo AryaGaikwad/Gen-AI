@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the express.ui.update_radio_buttons function?",
+  "How are choices represented in the express.ui.update_radio_buttons function?",
+  "What does the note mention about input updater functions in Shiny for Python?",
+  "How can the set of choices be cleared for radio buttons using express.ui.update_radio_buttons?",
+  "What happens if there are arguments with None values in the express.ui.update_radio_buttons function?"
+]

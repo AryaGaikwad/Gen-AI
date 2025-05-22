@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_text_area function in Shiny for Python?",
+  "How does the ui.update_text_area function change a text input on the client side?",
+  "What happens if a parameter with a None value is passed to the ui.update_text_area function?",
+  "How can the set of choices be cleared for update_radio_buttons, update_checkbox_group, and update_select functions?",
+  "When are the messages to change the settings of an input object sent to the client by the input updater functions in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the steps to display a Matplotlib figure in a Shiny Python app?",
+  "How can I use a plot as an input widget in Shiny Python?",
+  "What are the different reactive variables that can be accessed for user interactions like click, double-click, hover, and brush in a plot?",
+  "How should I name the function within the server() function that creates the figure for a Shiny Python app?",
+  "How can I control the behavior of hover and brush interactions in a Shiny Python plot?"
+]

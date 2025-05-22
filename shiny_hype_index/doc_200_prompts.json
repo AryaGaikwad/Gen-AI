@@ -1,0 +1,7 @@
+[
+  "What parameters does the express.ui.update_navs function require?",
+  "How are input values initially selected using express.ui.update_navs?",
+  "What happens if a parameter with a None value is passed to the express.ui.update_navs function?",
+  "How can the set of choices in update_radio_buttons, update_checkbox_group, and update_select be cleared?",
+  "In what order are messages sent to the client by the input updater functions in Shiny for Python?"
+]

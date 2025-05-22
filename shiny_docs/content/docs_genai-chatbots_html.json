@@ -1,0 +1,1009 @@
+{
+  "metadata": {
+    "title": "Chatbots – Shiny for Python",
+    "description": "",
+    "url": "docs/genai-chatbots.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🤖 Generative AI",
+        "Chatbots"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Chatbots"
+    },
+    {
+      "type": "p",
+      "text": "In this article, you’ll learn how to build a chatbot powered by a Large Language Model (LLM) shiny and chatlas."
+    },
+    {
+      "type": "h2",
+      "text": "Get started"
+    },
+    {
+      "type": "h3",
+      "text": "Choose a template"
+    },
+    {
+      "type": "p",
+      "text": "Pick from the following LLM providers below to start your chatbot. Copy & paste the relevant shiny create terminal command to get the relevant source files on your machine."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Ollama",
+        "Anthropic",
+        "OpenAI",
+        "Google",
+        "Bedrock Anthropic",
+        "Azure OpenAI",
+        "LangChain",
+        "Other",
+        "Help me choose!"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-ollama"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-anthropic"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-openai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-gemini"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-anthropic-aws"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-azure-openai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-langchain"
+    },
+    {
+      "type": "p",
+      "text": "chatlas supports a wide variety of LLM providers including Vertex, Snowflake, Groq, Perplexity, and more. In this case, you can start from any template and swap out the chat_client with the relevant chat constructor (e.g., ChatVertex())."
+    },
+    {
+      "type": "p",
+      "text": "If you’re not sure which provider to choose, chatlas provides a great guide to help you decide."
+    },
+    {
+      "type": "p",
+      "text": "When you run the shiny create command, you’ll be provided with some tips on where to obtain the necessary API keys (if any) and how to securely add them to your app."
+    },
+    {
+      "type": "p",
+      "text": "Also, if you’re not ready to sign up for a cloud provider (e.g., Anthropic, OpenAI, etc.), you can run models locally (for free!) with the Ollama template. This is a great way to get started and learn about LLMs without any cost, and without sharing your data with a cloud provider."
+    },
+    {
+      "type": "p",
+      "text": "Once your credentials (if any) are in place, run the app. Congrats, you now have a streaming chat interface powered by an LLM of your choice! 🎉"
+    },
+    {
+      "type": "h3",
+      "text": "Inspect the code"
+    },
+    {
+      "type": "p",
+      "text": "Go ahead and open the app.py file from your template, you’ll see something roughly like this:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny.express import ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"my_chat\")\nchat.ui()\n\n@chat.on_user_submit\nasync def handle_user_input(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"my_chat\")\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"my_chat\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @chat.on_user_submit\n    async def handle_user_input(user_input: str):\n        response = await chat_client.stream_async(user_input)\n        await chat.append_message_stream(response)\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "From here, we can see the key requirements for streaming reponses from an LLM:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Initialize a chat_client (e.g., ChatOllama()) to interact with the LLM. chatlas isn’t required for this, but it’s highly recommended.",
+        "Initialize a Chat() instance.",
+        "Display it’s UI element with chat.ui(). Here you can specify startup messages, customize icons, and more.",
+        "Decorate a @chat.on_user_submit function to fire when the user submits input. Here, chat_client generates a response stream, which is passed along to the .append_message_stream() method for display."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "chatlas isn’t required for this, but it’s highly recommended."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here you can specify startup messages, customize icons, and more."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here, chat_client generates a response stream, which is passed along to the .append_message_stream() method for display."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In this article, our primary focus is the UI portion of the chatbot (i.e., chat). That said, since LLM model choice and prompt design are so important for generating good responses, we’ll briefly touch on that first."
+    },
+    {
+      "type": "h3",
+      "text": "Models & prompts"
+    },
+    {
+      "type": "p",
+      "text": "With chatlas, it’s very easy to switch between the model and system prompt behind your chat_client. Just change the model and system_prompt parameters:"
+    },
+    {
+      "type": "code",
+      "text": "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)"
+    },
+    {
+      "type": "p",
+      "text": "If you’re new to programming with LLMs, we highly recommend visiting the chatlas website for guidance on where to start, choosing a model, and designing an effective system prompt."
+    },
+    {
+      "type": "p",
+      "text": "If you’re not yet ready learn about LLMs, that’s okay! We can still dive into chat UI features without knowing much about LLMs."
+    },
+    {
+      "type": "p",
+      "text": "Interactively experiment with different models and prompts with the playground template. It’s also a great learning resource on how to leverage reactivity for dynamic prompts and model selection."
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template chat-ai-playground"
+    },
+    {
+      "type": "h2",
+      "text": "Add messages"
+    },
+    {
+      "type": "h3",
+      "text": "On startup"
+    },
+    {
+      "type": "p",
+      "text": "Show message(s) when the chat first loads by providing messages to chat.ui(). Messages are interpreted as markdown, so you can use markdown (or HTML) to format the text as you like."
+    },
+    {
+      "type": "p",
+      "text": "Startup messages are a great place to introduce the chatbot with a brief description of what it can do and, optionally, some input suggestions to help the user get started quickly. Messages can also contain arbitrary Shiny UI components, so you could even include something like a tooltip to provide additional details on demand."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "chat.ui(\n  messages=[\"**Hello!** How can I help you today?\"]\n)"
+    },
+    {
+      "type": "code",
+      "text": "ui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n)"
+    },
+    {
+      "type": "h3",
+      "text": "On user submit"
+    },
+    {
+      "type": "p",
+      "text": "Every chat instance should have a @chat.on_user_submit callback. This is where you’ll receive the user’s input and append a response to the chat. In your started template, the response stream is provided by chatlas via chat_client.stream_async(prompt). As it turns out, stream is an generator of markdown strings, and the .append_message_stream() method can work with any generator of strings. This is useful to know if you want to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use another framework for reponse generation (e.g., LangChain).",
+        "Transform the stream as it’s being generated (e.g., capitalize the response)."
+      ]
+    },
+    {
+      "type": "code",
+      "text": "@chat.on_user_submit\nasync def _(user_input: str):\n    stream = stream_generator(user_input)\n    await chat.append_message_stream(stream)\n\n# 'Wrap' the stream to capitialize the response\nasync def stream_generator(user_input):\n    stream = await chat_client.stream_async(user_input)\n    async for chunk in stream:\n        yield chunk.upper()"
+    },
+    {
+      "type": "h2",
+      "text": "Bookmark messages"
+    },
+    {
+      "type": "p",
+      "text": "When a Shiny app reloads, the app returns to it’s original state, unless the URL includes bookmarked state.1 Automatically updating the URL to include a bookmark of the chat state is a great way to help users return to their work if they accidentally refresh the page or unexpectedly lose their connection."
+    },
+    {
+      "type": "p",
+      "text": "Adding bookmark support to an app generally requires some extra effort. At the very least, Shiny needs to know where and when to save state, and in some cases, how to save/restore it as well.2 The .enable_bookmarking() method makes this all a bit easier for bookmarking both the chat and chat_client instances."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny.express import ui\n\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])\n\nchat.enable_bookmarking(\n    chat_client,\n    bookmark_store=\"url\", # or \"server\"\n    bookmark_on=\"response\", # or None\n)"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"])\n)\n\ndef server(input):\n    chat_client = ChatOllama(model=\"llama3.2\")\n    chat = ui.Chat(id=\"chat\")\n\n    chat.enable_bookmarking(\n        chat_client,\n        bookmark_on=\"response\", # or None\n    )\n\napp = App(app_ui, server, bookmark_store=\"url\")"
+    },
+    {
+      "type": "p",
+      "text": "Adding this .enable_bookmarking() call handles the where, when, and how of bookmarking chat state:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Where (store) \"url\" store the state in the URL. \"server\" store the state on the server. Consider this over \"url\" if you want to support a large amount of state, or have other bookmark state that can’t be serialized to JSON.",
+        "When (bookmark_on) \"response\": triggers a bookmark when an \"assistant\" response is appended. None: don’t trigger a bookmark. This assumes you’ll be triggering bookmarks through other means (e.g., a button).",
+        "How is handled automatically by registering the relevant on_bookmark and on_restore callbacks."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "\"url\" store the state in the URL.",
+        "\"server\" store the state on the server. Consider this over \"url\" if you want to support a large amount of state, or have other bookmark state that can’t be serialized to JSON."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "\"response\": triggers a bookmark when an \"assistant\" response is appended.",
+        "None: don’t trigger a bookmark. This assumes you’ll be triggering bookmarks through other means (e.g., a button)."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Also note that when .enable_bookmarking() triggers a bookmark for you, it’ll also update the URL query string to include the bookmark state. This way, when the user unexpectedly loses connection, they can load the current URL to restore the chat state, or go back to the original URL to start over."
+    },
+    {
+      "type": "h2",
+      "text": "Layout"
+    },
+    {
+      "type": "h3",
+      "text": "Fill"
+    },
+    {
+      "type": "p",
+      "text": "Fill the page on desktop (and mobile) with the fillable=True (and fillable_mobile=True) page options. This way, the input stays anchored to the bottom of the page, and the chat fills the remaining space."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(\n  fillable=True,\n  fillable_mobile=True,\n)\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"]),\n    fillable_mobile=True,\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Sidebar"
+    },
+    {
+      "type": "p",
+      "text": "To have the chat fill a sidebar, set height to 100% on both the sidebar and chat."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Card layout"
+    },
+    {
+      "type": "p",
+      "text": "Another useful UI pattern is to embed the chat component inside a ui.card(). If nothing else, this will help visually separate the chat from the rest of the app. It also provides a natural place to provide a header (with perhaps a tooltip with more info about your chatbot). Cards also come with other handy features like full_screen=True to make the chat full-screen when embedded inside a larger app."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\nfrom faicons import icon_svg\n\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Welcome to Posit chat\"\n        with ui.tooltip():\n            icon_svg(\"question\")\n            \"This chat is brought to you by Posit.\"\n    chat.ui(\n        messages=[\"Hello! How can I help you today?\"]\n    )"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n  ui.card(\n      ui.card_header(\n          \"Welcome to Posit chat\",\n          ui.tooltip(\n              icon_svg(\"question\"),\n              \"This chat is brought to you by Posit.\"\n          ),\n          class_=\"d-flex justify-content-between align-items-center\"\n      ),\n      ui.chat_ui(\n          id=\"chat\",\n          messages=[\"Hello! How can I help you today?\"],\n      ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Theming"
+    },
+    {
+      "type": "h3",
+      "text": "Custom CSS"
+    },
+    {
+      "type": "p",
+      "text": "To customize main colors and fonts, provide a ui.Theme() to the theme page option. Theming customization may be done directly on ui.Theme() (e.g., .add_defaults()) and/or created from a brand-yml file and applied with ui.Theme().from_brand(). Note you can also introduce a dark mode toggle with ui.input_dark_mode()."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),\n    title=ui.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    )\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content region\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content region\",\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),  # <<\n    title=ui.tags.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    ),\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h3",
+      "text": "Custom icons"
+    },
+    {
+      "type": "p",
+      "text": "Customize the assistant icon by supplying HTML/SVG to icon_assistant when creating the UI element (or when appending a message). The faicons package makes it easy to do this for font awesome, but other icon libraries (e.g., Bootstrap icons, heroicons, etc.) or custom SVGs are also possible by providing inline SVGs as a string to ui.HTML()."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)"
+    },
+    {
+      "type": "code",
+      "text": "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)"
+    },
+    {
+      "type": "p",
+      "text": "HTML <img> tags also work. By default, they fill their container, and may get clipped by the container’s border-radius. To scale down the image, add a icon CSS class, or border-0 to remove the border and border-radius."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\"\n  )\n)"
+    },
+    {
+      "type": "code",
+      "text": "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\",\n  )\n)"
+    },
+    {
+      "type": "h2",
+      "text": "Recommend input"
+    },
+    {
+      "type": "h3",
+      "text": "Suggest input"
+    },
+    {
+      "type": "p",
+      "text": "Help users start or continue a conversation by providing input suggestions. To create one, add a suggestion CSS class to relevant portion(s) of the message text. You can also add a submit class to make the suggestion submit the input automatically. Try clicking on the suggestions (or accessing via keyboard) below to see how they work."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\n\nfrom shiny.express import ui\n\nwelcome = \"\"\"\n**Hello!** How can I help you today?\n\nHere are a couple suggestions:\n\n* <span class=\"suggestion\">Tell me a joke</span>\n* <span class=\"suggestion submit\">Tell me a story</span>\n\"\"\"\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")"
+    },
+    {
+      "type": "p",
+      "text": "Suggestions are a great way to help guide users throughout a multi-turn conversation (for real examples, see here). To accomplish this, you’ll need to instruct the AI how to generate suggestions itself. We’ve found that adding a section like the one below to your system_prompt to be effective for this:"
+    },
+    {
+      "type": "code",
+      "text": "## Showing prompt suggestions\n\nIf you find it appropriate to suggest prompts the user might want to write, wrap the text of each prompt in `<span class=\"suggestion\">` tags.\nAlso use \"Suggested next steps:\" to introduce the suggestions. For example:\n\n```\nSuggested next steps:\n\n1. <span class=\"suggestion\">Suggestion 1.</span>\n2. <span class=\"suggestion\">Suggestion 2.</span>\n3. <span class=\"suggestion\">Suggestion 3.</span>\n```"
+    },
+    {
+      "type": "p",
+      "text": "Input suggestions can also things other than text, like images or cards. To create one, supply a data-suggestion attribute with the suggestion text on the desired HTML element. As shown below, we highly recommend using a ui.card() in this scenario – it should be fairly obvious to the user that it’s clickable, and comes with a nice hover effect."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n#| editorHeight: 300\n\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import expressify, ui\nfrom suggestions import card_suggestions\n\nwith ui.hold() as suggestions:\n    card_suggestions()\n\nwelcome = f\"\"\"\n**Hello!** How can I help you today?\n\nHere are a couple suggestions:\n\n{suggestions[0]}\n\"\"\"\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")\n\n## file: suggestions.py\nfrom shiny.express import expressify, ui\n\n@expressify\ndef card_suggestion(title: str, suggestion: str, img_src: str, img_alt: str):\n    with ui.card(data_suggestion=suggestion):\n        ui.card_header(title)\n        ui.fill.as_fill_item(\n            ui.img(\n                src=img_src,\n                alt=img_alt,\n            )\n        )\n\n@expressify\ndef card_suggestions():\n    with ui.layout_column_wrap(height=200):\n        card_suggestion(\n            title=\"Learn Python\",\n            suggestion=\"Teach me Python\",\n            img_src=\"https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg\",\n            img_alt=\"Python logo\",\n        )\n        card_suggestion(\n            title=\"Learn R\",\n            suggestion=\"Teach me R\",\n            img_src=\"https://upload.wikimedia.org/wikipedia/commons/1/1b/R_logo.svg\",\n            img_alt=\"R logo\",\n        )"
+    },
+    {
+      "type": "p",
+      "text": "Any suggestion can be auto-submitted by holding Ctrl/Cmd when clicking on it. Morever, you can opt-out of auto-submitting any suggestion by holding Alt/Option when clicking on a suggestion."
+    },
+    {
+      "type": "h3",
+      "text": "Update input"
+    },
+    {
+      "type": "p",
+      "text": "Input suggestions are a great starting point for recommending input to user, but more advanced use cases may require programmatically updating the user input. With chat.update_user_input(), you can change placeholder text, the input value, and even focus or submit that value on the user’s behalf."
+    },
+    {
+      "type": "p",
+      "text": "For example, the app below collects some user input through a set of inputs in the sidebar, which effectively just prepopulates the starting user prompt, which the user can then further modify as they see fit:"
+    },
+    {
+      "type": "p",
+      "text": "The app above is available as a template:"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template data-sci-adventure \\\n    --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "h2",
+      "text": "Interactive messages"
+    },
+    {
+      "type": "p",
+      "text": "Messages can contain Shiny UI elements like inputs, outputs, etc. This allows you to collect user input, display rich interactive output (e.g., Jupyter Widgets), or provide additional context (e.g. tooltips) from within the chat."
+    },
+    {
+      "type": "p",
+      "text": "For example, in the “What’s for Dinner?” app, when the user requests to extract recipe, a message is shown with a human readable version of recipe, as well as a download button to get the recipe in a structured JSON format:"
+    },
+    {
+      "type": "p",
+      "text": "The app above is available as a template:"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dinner-recipe \\\n    --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "p",
+      "text": "For a more basic example, here’s a startup message with an input field:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nwith ui.hold() as welcome:\n    \"**Hello!** What's your name?\"\n    ui.input_text(\"name\", None, placeholder=\"Enter name here\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])"
+    },
+    {
+      "type": "p",
+      "text": "Probably the most interesting way in which interactive messages can be used is from a custom tool call display. For example, you could have a tool that displays a Data Grid or Jupyter Widget (e.g., a plotly graph)."
+    },
+    {
+      "type": "h2",
+      "text": "Message streams"
+    },
+    {
+      "type": "h3",
+      "text": "Non-blocking streams"
+    },
+    {
+      "type": "p",
+      "text": "Under-the-hood, .append_message_stream() launches a non-blocking extended task. This allows the app to be responsive while the AI generates the response, even when multiple concurrent users are on a single Python process."
+    },
+    {
+      "type": "p",
+      "text": "A few other benefits of an extended task is that they make it easy to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Reactively read for the .result().",
+        "Reactively read for the .status().",
+        ".cancel() the stream."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To grab the latest message stream, read the .latest_message_stream property on the chat object. This property always points to the most recent message stream, making it easy to work with it in a reactive context. Here’s an example of reactively reading the status and result of the latest message stream:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n#| editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\nfrom shiny.express import render, ui\n\nchat = ui.Chat(\"chat\")\n\n@render.code\ndef stream_status():\n    return f\"Status: {chat.latest_message_stream.status()}\"\n\nchat.ui(placeholder=\"Type anything here and press Enter\")\n\n@render.text\nasync def stream_result():\n    return f\"Result: {chat.latest_message_stream.result()}\"\n\n@chat.on_user_submit\nasync def _(message: str):\n    await chat.append_message_stream(stream_generator())\n\n## file: app_utils.py\nimport asyncio\n\nasync def stream_generator():\n    for i in range(5):\n        await asyncio.sleep(0.5)\n        yield f\"Message {i} \\n\\n\""
+    },
+    {
+      "type": "p",
+      "text": "Providing good UI/UX for canceling a stream is a bit more involved, but it can be done with a button that cancels the stream and notifies the user. See the example below for an approach to this:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n#| editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\n    \"cancel\",\n    \"Cancel stream\",\n    class_=\"btn btn-danger\",\n)\n\nchat = ui.Chat(\"chat\")\nchat.ui(placeholder=\"Type anything here and press Enter\")\n\n@chat.on_user_submit\nasync def _(message: str):\n    await chat.append_message_stream(stream_generator())\n\n@reactive.effect\n@reactive.event(input.cancel)\ndef _():\n    chat.latest_message_stream.cancel()\n    ui.notification_show(\"Stream cancelled\", type=\"warning\")\n\n@reactive.effect\ndef _():\n    ui.update_action_button(\n        \"cancel\",\n        disabled=chat.latest_message_stream.status() != \"running\"\n    )\n\n\n## file: app_utils.py\nimport asyncio\n\nasync def stream_generator():\n    for i in range(3):\n        await asyncio.sleep(0.75)\n        yield f\"Message {i} \\n\\n\""
+    },
+    {
+      "type": "h3",
+      "text": "Streaming context"
+    },
+    {
+      "type": "p",
+      "text": "An alternative way to append a streaming messages is through the .message_stream_context() context manager. Compared to .append_message_stream(), it provides a bit more control over the stream’s lifecycle and content, but has the downside of not being non-blocking by default. You’ll find it useful when you want to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Overwrite/replace content that already exists in a message.",
+        "Insert a new stream inside an existing stream."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The example below demonstrates both of these use cases. Note how the inner stream is used to show progress, and the outer stream is used to provide context:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n#| editorHeight: 300\nimport asyncio\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nwelcome = f\"\"\"\n**Hello!** Press the button below to append a stream.\n\n{ui.input_task_button(\"do_stream\", \"Stream\", class_=\"btn btn-primary\")}\n\"\"\"\n\nchat = ui.Chat(id=\"my_chat\")\nchat.ui(messages=[welcome])\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    async with chat.message_stream_context() as outer:\n        await outer.append(\"Starting stream 🔄...\\n\\nProgress:\")\n        async with chat.message_stream_context() as inner:\n            for x in [0, 50, 100]:\n                await inner.replace(f\" {x}%\")\n                await asyncio.sleep(1)\n        await outer.replace(\"Completed stream ✅\")"
+    },
+    {
+      "type": "p",
+      "text": "As you’ll learn in tool calling, a .message_stream() can also be nested inside an non-blocking .append_message_stream(), which is primarily useful for showing tool progress/results."
+    },
+    {
+      "type": "h2",
+      "text": "Troubleshooting"
+    },
+    {
+      "type": "h3",
+      "text": "Error handling"
+    },
+    {
+      "type": "p",
+      "text": "When an error occurs in the @chat.on_user_submit callback, the app displays a dismissible notification about the error. When running locally, the actual error message is shown, but in production, only a generic message is shown (i.e., the error is sanitized since it may contain sensitive information). If you’d prefer to have errors stop the app, that can also be done through the on_error argument of Chat (see the documentation for more information)."
+    },
+    {
+      "type": "p",
+      "text": "Another way to handle error is to catch them yourself and append a message to the chat. This way, you can might provide a better experience with “known” errors, like when the user enters an invalid/unexpected input:"
+    },
+    {
+      "type": "code",
+      "text": "def format_as_error(x: str):\n    return f'<span class=\"text-danger\">{x}</span>'\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    if not user_input.startswith(\"http\"):\n        msg = format_as_error(\"Please enter a valid URL\")\n        return await chat.append_message(msg)\n\n    try:\n        contents = scrape_page_with_url(input)\n    except Exception:\n        msg = \"I'm sorry, I couldn't extract content from that URL. Please try again.\"\n        return await chat.append_message(format_as_error(msg))\n\n    response = await chat_client.stream_async(contents)\n    await chat.append_message_stream(response)"
+    },
+    {
+      "type": "h3",
+      "text": "Debugging"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes response generation from an LLM might not be quite what you expect, leaving you to wonder what went wrong. With chatlas, your primary interactive debugging tool is to set echo=\"all\" in the .stream_async() method to see the context of the chat history (emitted to your Python console). For lower-level debugging, you can also enable logging and/or access the full chat history via the chat_client.get_turns() method. For more, see chatlas’ troubleshooting guide."
+    },
+    {
+      "type": "p",
+      "text": "Since chatlas builds on top of official Python SDKs like openai and anthropic, monitoring solutions that integrate with their logging mechanism can be used to monitor and debug your chatbot in production."
+    },
+    {
+      "type": "h2",
+      "text": "Message history"
+    },
+    {
+      "type": "p",
+      "text": "The chat.messages() method returns a tuple of all the messages appended after startup. Use this if you want to obtain a record of messages as they appear in the UI. This makes implementing something like download feature easy:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 375\nimport json\nfrom shiny.express import render, ui\n\nui.page_opts(fillable=True, fillable_mobile=True)\n\nchat = ui.Chat(\"chat\")\n\nchat.ui(messages=[\"Welcome!\"])\n\n@render.download(filename=\"messages.json\", label=\"Download messages\")\ndef download():\n    yield json.dumps(chat.messages())\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")"
+    },
+    {
+      "type": "p",
+      "text": "Beware that chat.messages() only returns only the content sent to the UI, not necessarily the full message content sent/returned by the LLM. This means, if your chat history contains “background” context, you may instead want that full back-end message history. Note that with chatlas, you can access and set that additional context via the .get_turns() and .set_turns() methods on the chat_client."
+    },
+    {
+      "type": "p",
+      "text": "For a more advanced example of how you can combine reactivity with chat.messages() to add a “New chat” button with a dropdown to select previous chats, see the example below:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n#| editorHeight: 400\n\nfrom datetime import datetime\nfrom faicons import icon_svg\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True, fillable_mobile=True)\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"**Hello!** How can I help you today?\"])\n\nwith ui.layout_columns(fill=False):\n    ui.input_action_button(\"new\", \"New chat\", icon=icon_svg(\"plus\"))\n\n    @render.express\n    def history_ui():\n        if not history():\n            return\n        choices = list(history().keys())\n        choices_dict = dict(zip(choices, choices))\n        ui.input_select(\n            \"previous_chat\", None,\n            choices={\"\": \"Choose a previous chat\", **choices_dict}\n        )\n\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")\n\n# Track chat history\nhistory = reactive.value({})\n\n# When a new chat is started, add the current chat messages\n# to the history, clear the chat, and append a new start message\n@reactive.effect\n@reactive.event(input.new)\nasync def _():\n    stamp = datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")\n    hist = {**history(), stamp: chat.messages()}\n    history.set(hist)\n    await chat.clear_messages()\n    await chat.append_message(f\"Chat started at {stamp}\")\n\n# When a previous chat is selected, clear the current chat,\n# and append the messages from the selected chat\n@reactive.effect\n@reactive.event(input.previous_chat)\nasync def _():\n    if not input.previous_chat():\n        return\n    msgs = history()[input.previous_chat()]\n    await chat.clear_messages()\n    for msg in msgs:\n        await chat.append_message(msg)"
+    },
+    {
+      "type": "h2",
+      "text": "Next steps"
+    },
+    {
+      "type": "p",
+      "text": "The next article covers a more generic way to stream generative AI: the ui.MarkdownStream() component. This component is useful when you don’t want a full chat interface, but still want to stream in some content from an LLM."
+    },
+    {
+      "type": "p",
+      "text": "Skip to other articles in the series if you want to learn about other generally useful Generative AI techniques like tool calls, structured output, and RAG."
+    },
+    {
+      "type": "h2",
+      "text": "Footnotes"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "This can be especially frustrating behavior since hosted apps, by default, will close a idle session after a certain (configurable) amount of time.↩︎",
+        "When server-side state can’t be fully determined by the UI’s input values alone, you’ll need to register on_bookmark and on_restore callbacks to save and restore that server-state.↩︎"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "This can be especially frustrating behavior since hosted apps, by default, will close a idle session after a certain (configurable) amount of time.↩︎"
+    },
+    {
+      "type": "p",
+      "text": "When server-side state can’t be fully determined by the UI’s input values alone, you’ll need to register on_bookmark and on_restore callbacks to save and restore that server-state.↩︎"
+    }
+  ],
+  "code_examples": [
+    "shiny create --template chat-ai-ollama",
+    "shiny create --template chat-ai-ollama",
+    "shiny create --template chat-ai-anthropic",
+    "shiny create --template chat-ai-anthropic",
+    "shiny create --template chat-ai-openai",
+    "shiny create --template chat-ai-openai",
+    "shiny create --template chat-ai-gemini",
+    "shiny create --template chat-ai-gemini",
+    "shiny create --template chat-ai-anthropic-aws",
+    "shiny create --template chat-ai-anthropic-aws",
+    "shiny create --template chat-ai-azure-openai",
+    "shiny create --template chat-ai-azure-openai",
+    "shiny create --template chat-ai-langchain",
+    "shiny create --template chat-ai-langchain",
+    "from chatlas import ChatOllama\nfrom shiny.express import ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"my_chat\")\nchat.ui()\n\n@chat.on_user_submit\nasync def handle_user_input(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)",
+    "from chatlas import ChatOllama\nfrom shiny.express import ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"my_chat\")\nchat.ui()\n\n@chat.on_user_submit\nasync def handle_user_input(user_input: str):\n    response = await chat_client.stream_async(user_input)\n    await chat.append_message_stream(response)",
+    "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"my_chat\")\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"my_chat\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @chat.on_user_submit\n    async def handle_user_input(user_input: str):\n        response = await chat_client.stream_async(user_input)\n        await chat.append_message_stream(response)\n\napp = App(app_ui, server)",
+    "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"my_chat\")\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"my_chat\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @chat.on_user_submit\n    async def handle_user_input(user_input: str):\n        response = await chat_client.stream_async(user_input)\n        await chat.append_message_stream(response)\n\napp = App(app_ui, server)",
+    "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)",
+    "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)",
+    "shiny create --template chat-ai-playground",
+    "shiny create --template chat-ai-playground",
+    "chat.ui(\n  messages=[\"**Hello!** How can I help you today?\"]\n)",
+    "chat.ui(\n  messages=[\"**Hello!** How can I help you today?\"]\n)",
+    "ui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n)",
+    "ui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n)",
+    "@chat.on_user_submit\nasync def _(user_input: str):\n    stream = stream_generator(user_input)\n    await chat.append_message_stream(stream)\n\n# 'Wrap' the stream to capitialize the response\nasync def stream_generator(user_input):\n    stream = await chat_client.stream_async(user_input)\n    async for chunk in stream:\n        yield chunk.upper()",
+    "@chat.on_user_submit\nasync def _(user_input: str):\n    stream = stream_generator(user_input)\n    await chat.append_message_stream(stream)\n\n# 'Wrap' the stream to capitialize the response\nasync def stream_generator(user_input):\n    stream = await chat_client.stream_async(user_input)\n    async for chunk in stream:\n        yield chunk.upper()",
+    "from chatlas import ChatOllama\nfrom shiny.express import ui\n\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])\n\nchat.enable_bookmarking(\n    chat_client,\n    bookmark_store=\"url\", # or \"server\"\n    bookmark_on=\"response\", # or None\n)",
+    "from chatlas import ChatOllama\nfrom shiny.express import ui\n\nchat_client = ChatOllama(model=\"llama3.2\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])\n\nchat.enable_bookmarking(\n    chat_client,\n    bookmark_store=\"url\", # or \"server\"\n    bookmark_on=\"response\", # or None\n)",
+    "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"])\n)\n\ndef server(input):\n    chat_client = ChatOllama(model=\"llama3.2\")\n    chat = ui.Chat(id=\"chat\")\n\n    chat.enable_bookmarking(\n        chat_client,\n        bookmark_on=\"response\", # or None\n    )\n\napp = App(app_ui, server, bookmark_store=\"url\")",
+    "from chatlas import ChatOllama\nfrom shiny import ui, App\n\napp_ui = ui.page_fixed(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"])\n)\n\ndef server(input):\n    chat_client = ChatOllama(model=\"llama3.2\")\n    chat = ui.Chat(id=\"chat\")\n\n    chat.enable_bookmarking(\n        chat_client,\n        bookmark_on=\"response\", # or None\n    )\n\napp = App(app_ui, server, bookmark_store=\"url\")",
+    "from shiny.express import ui\n\nui.page_opts(\n  fillable=True,\n  fillable_mobile=True,\n)\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])",
+    "from shiny.express import ui\n\nui.page_opts(\n  fillable=True,\n  fillable_mobile=True,\n)\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"Welcome!\"])",
+    "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"]),\n    fillable_mobile=True,\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n    ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"]),\n    fillable_mobile=True,\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content\"",
+    "from shiny.express import ui\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content\"",
+    "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny.express import ui\nfrom faicons import icon_svg\n\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Welcome to Posit chat\"\n        with ui.tooltip():\n            icon_svg(\"question\")\n            \"This chat is brought to you by Posit.\"\n    chat.ui(\n        messages=[\"Hello! How can I help you today?\"]\n    )",
+    "from shiny.express import ui\nfrom faicons import icon_svg\n\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Welcome to Posit chat\"\n        with ui.tooltip():\n            icon_svg(\"question\")\n            \"This chat is brought to you by Posit.\"\n    chat.ui(\n        messages=[\"Hello! How can I help you today?\"]\n    )",
+    "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n  ui.card(\n      ui.card_header(\n          \"Welcome to Posit chat\",\n          ui.tooltip(\n              icon_svg(\"question\"),\n              \"This chat is brought to you by Posit.\"\n          ),\n          class_=\"d-flex justify-content-between align-items-center\"\n      ),\n      ui.chat_ui(\n          id=\"chat\",\n          messages=[\"Hello! How can I help you today?\"],\n      ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny import ui, App\n\napp_ui = ui.page_fillable(\n  ui.card(\n      ui.card_header(\n          \"Welcome to Posit chat\",\n          ui.tooltip(\n              icon_svg(\"question\"),\n              \"This chat is brought to you by Posit.\"\n          ),\n          class_=\"d-flex justify-content-between align-items-center\"\n      ),\n      ui.chat_ui(\n          id=\"chat\",\n          messages=[\"Hello! How can I help you today?\"],\n      ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny.express import ui\n\nui.page_opts(\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),\n    title=ui.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    )\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content region\"",
+    "from shiny.express import ui\n\nui.page_opts(\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),\n    title=ui.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    )\n)\n\nchat = ui.Chat(id=\"chat\")\n\nwith ui.sidebar(width=300, style=\"height:100%\"):\n    chat.ui(height=\"100%\", messages=[\"Welcome!\"])\n\n\"Main content region\"",
+    "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content region\",\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),  # <<\n    title=ui.tags.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    ),\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from shiny import ui, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.chat_ui(id=\"chat\", messages=[\"Welcome!\"], height=\"100%\"),\n        width=300, style=\"height:100%\"\n    ),\n    \"Main content region\",\n    theme=ui.Theme().add_defaults(primary=\"#a855f7\"),  # <<\n    title=ui.tags.div(\n        \"My themed chat app\",\n        ui.input_dark_mode(mode=\"dark\"),\n        class_=\"d-flex justify-content-between w-100\",\n    ),\n)\n\ndef server(input):\n    chat = ui.Chat(id=\"chat\")\n\napp = App(app_ui, server)",
+    "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)",
+    "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)",
+    "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)",
+    "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=icon_svg(\"slack\"),\n)",
+    "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\"\n  )\n)",
+    "from faicons import icon_svg\n\nchat.ui(\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\"\n  )\n)",
+    "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\",\n  )\n)",
+    "from faicons import icon_svg\n\nui.chat_ui(\n  id=\"chat\",\n  messages=[\"**Hello!** How can I help you today?\"],\n  icon_assistant=ui.img(\n    src=\"https://raw.githubusercontent.com/posit-dev/py-shiny/c1445b2/tests/playwright/shiny/components/chat/icon/img/shiny.png\",\n  )\n)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\n\nfrom shiny.express import ui\n\nwelcome = \"\"\"\n**Hello!** How can I help you today?\n\nHere are a couple suggestions:\n\n* <span class=\"suggestion\">Tell me a joke</span>\n* <span class=\"suggestion submit\">Tell me a story</span>\n\"\"\"\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")",
+    "## Showing prompt suggestions\n\nIf you find it appropriate to suggest prompts the user might want to write, wrap the text of each prompt in `<span class=\"suggestion\">` tags.\nAlso use \"Suggested next steps:\" to introduce the suggestions. For example:\n\n```\nSuggested next steps:\n\n1. <span class=\"suggestion\">Suggestion 1.</span>\n2. <span class=\"suggestion\">Suggestion 2.</span>\n3. <span class=\"suggestion\">Suggestion 3.</span>\n```",
+    "## Showing prompt suggestions\n\nIf you find it appropriate to suggest prompts the user might want to write, wrap the text of each prompt in `<span class=\"suggestion\">` tags.\nAlso use \"Suggested next steps:\" to introduce the suggestions. For example:\n\n```\nSuggested next steps:\n\n1. <span class=\"suggestion\">Suggestion 1.</span>\n2. <span class=\"suggestion\">Suggestion 2.</span>\n3. <span class=\"suggestion\">Suggestion 3.</span>\n```",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n#| editorHeight: 300\n\n## file: app.py\nfrom shiny import reactive\nfrom shiny.express import expressify, ui\nfrom suggestions import card_suggestions\n\nwith ui.hold() as suggestions:\n    card_suggestions()\n\nwelcome = f\"\"\"\n**Hello!** How can I help you today?\n\nHere are a couple suggestions:\n\n{suggestions[0]}\n\"\"\"\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")\n\n## file: suggestions.py\nfrom shiny.express import expressify, ui\n\n@expressify\ndef card_suggestion(title: str, suggestion: str, img_src: str, img_alt: str):\n    with ui.card(data_suggestion=suggestion):\n        ui.card_header(title)\n        ui.fill.as_fill_item(\n            ui.img(\n                src=img_src,\n                alt=img_alt,\n            )\n        )\n\n@expressify\ndef card_suggestions():\n    with ui.layout_column_wrap(height=200):\n        card_suggestion(\n            title=\"Learn Python\",\n            suggestion=\"Teach me Python\",\n            img_src=\"https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg\",\n            img_alt=\"Python logo\",\n        )\n        card_suggestion(\n            title=\"Learn R\",\n            suggestion=\"Teach me R\",\n            img_src=\"https://upload.wikimedia.org/wikipedia/commons/1/1b/R_logo.svg\",\n            img_alt=\"R logo\",\n        )",
+    "shiny create --template data-sci-adventure \\\n    --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template data-sci-adventure \\\n    --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template dinner-recipe \\\n    --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template dinner-recipe \\\n    --github posit-dev/py-shiny-templates/gen-ai",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nwith ui.hold() as welcome:\n    \"**Hello!** What's your name?\"\n    ui.input_text(\"name\", None, placeholder=\"Enter name here\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n#| editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\nfrom shiny.express import render, ui\n\nchat = ui.Chat(\"chat\")\n\n@render.code\ndef stream_status():\n    return f\"Status: {chat.latest_message_stream.status()}\"\n\nchat.ui(placeholder=\"Type anything here and press Enter\")\n\n@render.text\nasync def stream_result():\n    return f\"Result: {chat.latest_message_stream.result()}\"\n\n@chat.on_user_submit\nasync def _(message: str):\n    await chat.append_message_stream(stream_generator())\n\n## file: app_utils.py\nimport asyncio\n\nasync def stream_generator():\n    for i in range(5):\n        await asyncio.sleep(0.5)\n        yield f\"Message {i} \\n\\n\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 350\n#| editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\n    \"cancel\",\n    \"Cancel stream\",\n    class_=\"btn btn-danger\",\n)\n\nchat = ui.Chat(\"chat\")\nchat.ui(placeholder=\"Type anything here and press Enter\")\n\n@chat.on_user_submit\nasync def _(message: str):\n    await chat.append_message_stream(stream_generator())\n\n@reactive.effect\n@reactive.event(input.cancel)\ndef _():\n    chat.latest_message_stream.cancel()\n    ui.notification_show(\"Stream cancelled\", type=\"warning\")\n\n@reactive.effect\ndef _():\n    ui.update_action_button(\n        \"cancel\",\n        disabled=chat.latest_message_stream.status() != \"running\"\n    )\n\n\n## file: app_utils.py\nimport asyncio\n\nasync def stream_generator():\n    for i in range(3):\n        await asyncio.sleep(0.75)\n        yield f\"Message {i} \\n\\n\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n#| editorHeight: 300\nimport asyncio\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nwelcome = f\"\"\"\n**Hello!** Press the button below to append a stream.\n\n{ui.input_task_button(\"do_stream\", \"Stream\", class_=\"btn btn-primary\")}\n\"\"\"\n\nchat = ui.Chat(id=\"my_chat\")\nchat.ui(messages=[welcome])\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    async with chat.message_stream_context() as outer:\n        await outer.append(\"Starting stream 🔄...\\n\\nProgress:\")\n        async with chat.message_stream_context() as inner:\n            for x in [0, 50, 100]:\n                await inner.replace(f\" {x}%\")\n                await asyncio.sleep(1)\n        await outer.replace(\"Completed stream ✅\")",
+    "def format_as_error(x: str):\n    return f'<span class=\"text-danger\">{x}</span>'\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    if not user_input.startswith(\"http\"):\n        msg = format_as_error(\"Please enter a valid URL\")\n        return await chat.append_message(msg)\n\n    try:\n        contents = scrape_page_with_url(input)\n    except Exception:\n        msg = \"I'm sorry, I couldn't extract content from that URL. Please try again.\"\n        return await chat.append_message(format_as_error(msg))\n\n    response = await chat_client.stream_async(contents)\n    await chat.append_message_stream(response)",
+    "def format_as_error(x: str):\n    return f'<span class=\"text-danger\">{x}</span>'\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    if not user_input.startswith(\"http\"):\n        msg = format_as_error(\"Please enter a valid URL\")\n        return await chat.append_message(msg)\n\n    try:\n        contents = scrape_page_with_url(input)\n    except Exception:\n        msg = \"I'm sorry, I couldn't extract content from that URL. Please try again.\"\n        return await chat.append_message(format_as_error(msg))\n\n    response = await chat_client.stream_async(contents)\n    await chat.append_message_stream(response)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 375\nimport json\nfrom shiny.express import render, ui\n\nui.page_opts(fillable=True, fillable_mobile=True)\n\nchat = ui.Chat(\"chat\")\n\nchat.ui(messages=[\"Welcome!\"])\n\n@render.download(filename=\"messages.json\", label=\"Download messages\")\ndef download():\n    yield json.dumps(chat.messages())\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n#| editorHeight: 400\n\nfrom datetime import datetime\nfrom faicons import icon_svg\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True, fillable_mobile=True)\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[\"**Hello!** How can I help you today?\"])\n\nwith ui.layout_columns(fill=False):\n    ui.input_action_button(\"new\", \"New chat\", icon=icon_svg(\"plus\"))\n\n    @render.express\n    def history_ui():\n        if not history():\n            return\n        choices = list(history().keys())\n        choices_dict = dict(zip(choices, choices))\n        ui.input_select(\n            \"previous_chat\", None,\n            choices={\"\": \"Choose a previous chat\", **choices_dict}\n        )\n\n\n@chat.on_user_submit\nasync def _(user_input: str):\n    await chat.append_message(f\"You said: {user_input}\")\n\n# Track chat history\nhistory = reactive.value({})\n\n# When a new chat is started, add the current chat messages\n# to the history, clear the chat, and append a new start message\n@reactive.effect\n@reactive.event(input.new)\nasync def _():\n    stamp = datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\")\n    hist = {**history(), stamp: chat.messages()}\n    history.set(hist)\n    await chat.clear_messages()\n    await chat.append_message(f\"Chat started at {stamp}\")\n\n# When a previous chat is selected, clear the current chat,\n# and append the messages from the selected chat\n@reactive.effect\n@reactive.event(input.previous_chat)\nasync def _():\n    if not input.previous_chat():\n        return\n    msgs = history()[input.previous_chat()]\n    await chat.clear_messages()\n    for msg in msgs:\n        await chat.append_message(msg)"
+  ],
+  "toc": [
+    {
+      "title": "Get started",
+      "url": "docs/#get-started"
+    },
+    {
+      "title": "Choose a template",
+      "url": "docs/#choose-a-template"
+    },
+    {
+      "title": "Inspect the code",
+      "url": "docs/#inspect-the-code"
+    },
+    {
+      "title": "Models & prompts",
+      "url": "docs/#models-prompts"
+    },
+    {
+      "title": "Add messages",
+      "url": "docs/#add-messages"
+    },
+    {
+      "title": "On startup",
+      "url": "docs/#startup-messages"
+    },
+    {
+      "title": "On user submit",
+      "url": "docs/#on-user-submit"
+    },
+    {
+      "title": "Bookmark messages",
+      "url": "docs/#bookmark-messages"
+    },
+    {
+      "title": "Layout",
+      "url": "docs/#layout"
+    },
+    {
+      "title": "Fill",
+      "url": "docs/#fill"
+    },
+    {
+      "title": "Sidebar",
+      "url": "docs/#sidebar"
+    },
+    {
+      "title": "Card layout",
+      "url": "docs/#card-layout"
+    },
+    {
+      "title": "Theming",
+      "url": "docs/#theming"
+    },
+    {
+      "title": "Custom CSS",
+      "url": "docs/#custom-css"
+    },
+    {
+      "title": "Custom icons",
+      "url": "docs/#custom-icons"
+    },
+    {
+      "title": "Recommend input",
+      "url": "docs/#recommend-input"
+    },
+    {
+      "title": "Suggest input",
+      "url": "docs/#suggest-input"
+    },
+    {
+      "title": "Update input",
+      "url": "docs/#update-input"
+    },
+    {
+      "title": "Interactive messages",
+      "url": "docs/#interactive-messages"
+    },
+    {
+      "title": "Message streams",
+      "url": "docs/#message-streams"
+    },
+    {
+      "title": "Non-blocking streams",
+      "url": "docs/#non-blocking-streams"
+    },
+    {
+      "title": "Streaming context",
+      "url": "docs/#message-stream-context"
+    },
+    {
+      "title": "Troubleshooting",
+      "url": "docs/#troubleshooting"
+    },
+    {
+      "title": "Error handling",
+      "url": "docs/#error-handling"
+    },
+    {
+      "title": "Debugging",
+      "url": "docs/#debugging"
+    },
+    {
+      "title": "Message history",
+      "url": "docs/#message-history"
+    },
+    {
+      "title": "Next steps",
+      "url": "docs/#next-steps"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

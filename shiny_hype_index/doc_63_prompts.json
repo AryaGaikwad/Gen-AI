@@ -1,0 +1,7 @@
+[
+  "How can I add a dark mode switch to my Shiny app using the `ui.input_dark_mode` function?",
+  "What does specifying the `id` parameter in the `ui.input_dark_mode` function allow me to do?",
+  "How can I force a specific initial mode (dark or light) for the dark mode switch in my Shiny app?",
+  "How can I access the value of a dark mode switch in the server function of my Shiny app?",
+  "How can I add a dark mode switch to a navbar in Shiny using the `ui.page_navbar` and `ui.nav_spacer` functions?"
+]

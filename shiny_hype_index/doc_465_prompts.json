@@ -1,0 +1,7 @@
+[
+  "How can I add a navigation bar to my Shiny app using ui.page_navbar()?",
+  "How can I control the items displayed in the navbar of my Shiny app?",
+  "What is the purpose of setting the title argument in ui.page_navbar() for a Shiny app?",
+  "How can I pin the navbar to the bottom of my Shiny app using ui.page_navbar()?",
+  "What input value can be created by passing a string to the id argument in ui.page_navbar() for a Shiny app?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the steps required to create a custom Tabulator element for a Shiny app?",
+  "How can I implement the find() method in a custom output binding in Shiny?",
+  "What is the purpose of the renderValue() method in a custom output binding in Shiny?",
+  "How can I use the output_tabulator() function to render a table in my Shiny app?",
+  "What is the role of the render_tabulator() decorator in passing data to the client-side code in a Shiny app?"
+]

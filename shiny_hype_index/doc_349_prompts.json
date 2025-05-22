@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for the ui.insert_accordion_panel function in Shiny for Python?",
+  "How can I specify whether the panel should be added before or after the target in the ui.insert_accordion_panel function?",
+  "What should be provided as the default value for the Shiny session object when using the ui.insert_accordion_panel function?",
+  "In what scenarios would the \"before\" and \"after\" options be used in the ui.insert_accordion_panel function?",
+  "What other functions are related to ui.insert_accordion_panel that I should be aware of in Shiny for Python?"
+]

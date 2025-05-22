@@ -1,0 +1,7 @@
+[
+  "What parameters can be customized when using the ui.notification_show function in Shiny for Python?",
+  "How can I specify the duration for which a notification message is displayed using ui.notification_show in Shiny for Python?",
+  "What are the available color options for the notifications displayed using ui.notification_show in Shiny for Python?",
+  "Does ui.notification_show in Shiny for Python allow for displaying a button to make the notification disappear when clicked?",
+  "How can I replace an existing notification with a new one using the ui.notification_show function in Shiny for Python?"
+]

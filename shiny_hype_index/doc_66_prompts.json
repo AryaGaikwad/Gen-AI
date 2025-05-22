@@ -1,0 +1,7 @@
+[
+  "How can I add a file input component to my Shiny app using the ui.input_file function?",
+  "What are the parameters that can be specified when using ui.input_file to create a file upload component?",
+  "How can I access the value of the file input in the server function of my Shiny app?",
+  "What keys are contained in the dictionary returned by the file input component in Shiny?",
+  "Is there a way to limit the data type to only CSV files when using the file input component in Shiny for Python?"
+]

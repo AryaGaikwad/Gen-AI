@@ -1,0 +1,672 @@
+{
+  "metadata": {
+    "title": "Streaming – Shiny for Python",
+    "description": "",
+    "url": "docs/genai-stream.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🤖 Generative AI",
+        "Streaming"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Streaming"
+    },
+    {
+      "type": "p",
+      "text": "In this article, you’ll learn how to stream markdown/HTML content into your app via MarkdownStream(). This component is general purpose, but it’s particularly useful in a generative AI setting where displaying markdown strings as it’s being generated is a common requirement."
+    },
+    {
+      "type": "p",
+      "text": "Compared to the Chat() component, MarkdownStream()’s API is simpler and focuses solely on a streaming display without the conversational UI elements. The possible experiences you can create around MarkdownStream() are vast, but as we’ll see shortly, a common pattern is populate a LLM prompt template based on user input."
+    },
+    {
+      "type": "h2",
+      "text": "Get started"
+    },
+    {
+      "type": "h3",
+      "text": "Choose a template"
+    },
+    {
+      "type": "p",
+      "text": "Pick from the following LLM providers below to start your streaming markdown app. Copy & paste the relevant shiny create terminal command to get the relevant source files on your machine."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Ollama",
+        "Anthropic",
+        "OpenAI",
+        "Google",
+        "Bedrock Anthropic",
+        "Azure OpenAI",
+        "LangChain",
+        "Other",
+        "Help me choose!"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-ollama"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-anthropic"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-openai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-gemini"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-anthropic-aws"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-azure-openai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stream-ai-langchain"
+    },
+    {
+      "type": "p",
+      "text": "chatlas’s supports a wide variety of LLM providers including Vertex, Snowflake, Groq, Perplexity, and more. In this case, you can start from any template and swap out the chat_client with the relevant chat constructor (e.g., ChatVertex())."
+    },
+    {
+      "type": "p",
+      "text": "If you’re not sure which provider to choose, chatlas provides a great guide to help you decide."
+    },
+    {
+      "type": "p",
+      "text": "When you run the shiny create command, you’ll be provided some tips on where to go to obtain the necessary API keys (if any) and how to securely get them into your app."
+    },
+    {
+      "type": "p",
+      "text": "Also, if you’re not ready to sign up for a cloud provider (e.g., Anthropic, OpenAI, etc), you can run models locally (for free!) with the Ollama template. This is a great way to get started and learn about LLMs without any cost, and without sharing your data with a cloud provider."
+    },
+    {
+      "type": "p",
+      "text": "Once your credentials (if any) are in place, run the app. Congrats, you now have a streaming markdown interface powered by an LLM of your choice! 🎉"
+    },
+    {
+      "type": "h3",
+      "text": "Inspect the code"
+    },
+    {
+      "type": "p",
+      "text": "Go ahead and open the app.py file from your template, you’ll see something roughly like this:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nwith ui.sidebar():\n    ui.input_select(\n        \"comic\",\n        \"Choose a comedian\",\n        choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n    )\n    ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\nstream = ui.MarkdownStream(id=\"my_stream\")\nstream.ui(\n    content=\"Press the button and I'll tell you a joke.\",\n)\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n    response = await chat_client.stream_async(prompt)\n    await stream.stream(response)"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOllama\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_select(\n            \"comic\",\n            \"Choose a comedian\",\n            choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n        ),\n        ui.input_action_button(\"go\", \"Tell me a joke\"),\n    ),\n    ui.output_markdown_stream(\"my_stream\"),\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"my_stream\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @reactive.effect\n    @reactive.event(input.go)\n    async def do_joke():\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n        await stream.stream(response)\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "From here, we can see the key requirements for streaming from an LLM:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Initialize a chat_client (e.g., ChatOllama()) to interact with the LLM. chatlas isn’t required for this, but it’s highly recommended.",
+        "Initialize a MarkdownStream() component.",
+        "Display it’s UI element with stream.ui(). Here you can specify initial content, sizing, and more.",
+        "Define the action which triggers the LLM to generate content. In this case, it’s a button click that prompts the LLM to generate a joke. Here, chat_client generates a response stream, which is passed along to the .stream() method for display."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "chatlas isn’t required for this, but it’s highly recommended."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here you can specify initial content, sizing, and more."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "In this case, it’s a button click that prompts the LLM to generate a joke.",
+        "Here, chat_client generates a response stream, which is passed along to the .stream() method for display."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In this article, our primary focus is the UI portion of the markdown stream (i.e., stream). That said, since LLM model choice and prompt design are so important for generating good responses, we’ll briefly touch on that first."
+    },
+    {
+      "type": "h3",
+      "text": "Models & prompts"
+    },
+    {
+      "type": "p",
+      "text": "With chatlas, it’s very easy to switch between the model and system prompt behind your chat_client. Just change the model and system_prompt parameters:"
+    },
+    {
+      "type": "code",
+      "text": "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)"
+    },
+    {
+      "type": "p",
+      "text": "If you’re new to programming with LLMs, we highly recommend visiting the chatlas website for guidance on where to start, choosing a model, and designing an effective system prompt."
+    },
+    {
+      "type": "p",
+      "text": "If you’re not yet ready learn about LLMs, that’s okay! We can still dive into stream UI features without knowing much about LLMs."
+    },
+    {
+      "type": "h2",
+      "text": "Content APIs"
+    },
+    {
+      "type": "h3",
+      "text": "Starting content"
+    },
+    {
+      "type": "p",
+      "text": "Show content to the user when the MarkdownStream() UI is first displayed by providing a string to the content parameter in stream.ui()."
+    },
+    {
+      "type": "p",
+      "text": "This is typically most useful for providing a welcome message or instructions to the user."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "stream.ui(\n  content=\"Press the button and I'll tell you a joke.\"\n)"
+    },
+    {
+      "type": "code",
+      "text": "ui.output_markdown_stream(\n  content=\"Press the button and I'll tell you a joke.\"\n)"
+    },
+    {
+      "type": "h3",
+      "text": "Appending content"
+    },
+    {
+      "type": "p",
+      "text": "When you .stream() content, you have the choice of whether or not to clear the existing content. By default, existing content is cleared, but you can instead append to the existing content by passing clear=False to stream.stream()."
+    },
+    {
+      "type": "code",
+      "text": "await stream.stream(response, clear=False)"
+    },
+    {
+      "type": "h3",
+      "text": "Content generators"
+    },
+    {
+      "type": "p",
+      "text": "In your starter template, the response stream is provided by chatlas via chat_client.stream_async(prompt). As it turns out, that response object is an generator of markdown strings, and the .stream() method can work with any generator of strings. This is useful to know if you want to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use another framework for reponse generation (e.g., LangChain).",
+        "Transform the stream as it’s being generated (e.g., highlight keywords).",
+        "Manually create a generator (to say, show progress on a non-blocking task)."
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n#| editorHeight: 250\nimport asyncio\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"do_stream\", \"Do stream\", class_=\"btn btn-primary\")\n\nstream = ui.MarkdownStream(\"stream\")\nstream.ui()\n\nasync def simple_generator():\n    yield \"Hello \"\n    await asyncio.sleep(1)\n    yield \"`MarkdownStream()`!\"\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    await stream.stream(simple_generator())"
+    },
+    {
+      "type": "h3",
+      "text": "Content types"
+    },
+    {
+      "type": "p",
+      "text": "MarkdownStream() supports several different content types through the content_type parameter. The default markdown content type is the most broadly useful, since it not only parses and renders markdown strings, but also renders HTML content."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "markdown: render markdown (specifically CommonMark) as HTML. Currently, you can’t customize the markdown renderer. If you need to customize, apply ui.markdown() to the content before streaming.",
+        "html: render a string of HTML as HTML.",
+        "text: render a string of plain text verbatim.",
+        "semi-markdown: render a string of markdown as HTML, but with HTML tags escaped."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Currently, you can’t customize the markdown renderer. If you need to customize, apply ui.markdown() to the content before streaming."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Interactive content"
+    },
+    {
+      "type": "p",
+      "text": "Similar to Chat(), MarkdownStream() supports interactive content, meaning that content can include Shiny UI elements like inputs, outputs, etc. This allows you to collect user input, display rich interactive output (e.g., Jupyter Widgets), or provide additional context (e.g. tooltips) from within the message stream."
+    },
+    {
+      "type": "p",
+      "text": "For a basic example, here’s a startup message with an input field:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nwith ui.hold() as welcome:\n    \"**Hello!** What's your name?\"\n    ui.input_text(\"name\", None, placeholder=\"Enter name here\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])"
+    },
+    {
+      "type": "p",
+      "text": "Probably the most interesting way in which interactive messages can be used is from a custom tool call display. For example, you could have a tool that displays a Data Grid or Jupyter Widget (e.g., a plotly graph)."
+    },
+    {
+      "type": "h2",
+      "text": "Card layout"
+    },
+    {
+      "type": "p",
+      "text": "When embedding a stream within a larger app, it’s often useful to place it within a ui.card(). This provides a clear visual separation between the stream and other content, and allows you to easily add a header, footer, or other elements around the stream."
+    },
+    {
+      "type": "p",
+      "text": "In this case, it’s also useful to know that a sidebar layout can also placed within a card:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\n# Get the card to fill the page\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light-subtle\",\n)\n\n# Create and display a MarkdownStream()\nstream = ui.MarkdownStream(id=\"my_stream\")\n\nwith ui.card():\n    ui.card_header(\"Streaming Joke Generator\")\n\n    # Put sidebar layout in the card\n    with ui.layout_sidebar():\n        with ui.sidebar():\n            ui.input_select(\n                \"comic\",\n                \"Choose a comedian\",\n                choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                width=\"auto\",\n            )\n            ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\n        stream.ui(content=\"Press the button and I'll tell you a joke.\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, App\nfrom faicons import icon_svg\n\napp_ui = ui.page_fillable(\n    ui.card(\n        ui.card_header(\"Streaming Joke Generator\"),\n        ui.layout_sidebar(\n            ui.sidebar(\n                ui.input_select(\n                    \"comic\",\n                    \"Choose a comedian\",\n                    choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                    width=\"auto\",\n                ),\n                ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\"),\n            ),\n            ui.output_markdown_stream(\"stream\", content=\"Press the button and I'll tell you a joke.\"),\n        ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"stream\")\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "If you want multiple cards in an app, it’s useful to know about Shiny’s grid layout options."
+    },
+    {
+      "type": "p",
+      "text": "A nice result of placing a stream in a card is that when it overflows the card (either because it has a specified height or because it’s in a fillable page), the card will automatically scroll to show the new content."
+    },
+    {
+      "type": "p",
+      "text": "This can be disabled by setting auto_scroll=False when creating the UI element."
+    },
+    {
+      "type": "h2",
+      "text": "Non-blocking streams"
+    },
+    {
+      "type": "p",
+      "text": "Similar to Chat()’s .append_message_stream(), MarkdownStream()’s .stream() launches a non-blocking extended task. This allows the app to be responsive while the AI generates the response, even when multiple concurrent users are on a single Python process."
+    },
+    {
+      "type": "p",
+      "text": "A few other benefits of an extended task is that they make it easy to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Reactively read for the .result().",
+        "Reactively read for the .status().",
+        ".cancel() the stream."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To grab the latest message stream, read the .latest_stream property on the stream object. This property always points to the most recent stream, making it easy to work with it in a reactive context. Here’s an example of reactively reading the status and result of the latest stream:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 350\n# | editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nstream = ui.MarkdownStream(\"stream\")\n\nui.input_action_button(\"start_stream\", \"Start stream\", class_=\"btn-primary\")\n\n@render.code\ndef stream_status():\n    return f\"Status: {stream.latest_stream.status()}\"\n\n\nstream.ui(content=\"Press the button to start streaming.\")\n\n\n@render.text\nasync def stream_result():\n    return f\"Result: {stream.latest_stream.result()}\"\n\n\n@reactive.effect\n@reactive.event(input.start_stream)\nasync def _():\n    await stream.stream(stream_generator())\n\n\n## file: app_utils.py\nimport asyncio\n\n\nasync def stream_generator():\n    for i in range(5):\n        await asyncio.sleep(0.5)\n        yield f\"Message {i} \\n\\n\""
+    },
+    {
+      "type": "p",
+      "text": "Providing good UI/UX for canceling a stream is a bit more involved, but it can be done with a button that cancels the stream and notifies the user. See the example below for an approach to this:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 350\n# | editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\n\nwith ui.layout_column_wrap():\n    ui.input_action_button(\n        \"do_stream\",\n        \"Start stream\",\n        class_=\"btn btn-primary\",\n    )\n\n    ui.input_action_button(\n        \"cancel\",\n        \"Cancel stream\",\n        class_=\"btn btn-danger\",\n    )\n\nstream = ui.MarkdownStream(\"stream\")\nstream.ui(content=\"Press the button to start streaming.\")\n\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    await stream.stream(stream_generator())\n\n\n@reactive.effect\n@reactive.event(input.cancel)\ndef _():\n    stream.latest_stream.cancel()\n    ui.notification_show(\"Stream cancelled\", type=\"warning\")\n\n\n@reactive.effect\ndef _():\n    ui.update_action_button(\n        \"cancel\", disabled=stream.latest_stream.status() != \"running\"\n    )\n\n\n## file: app_utils.py\nimport asyncio\n\n\nasync def stream_generator():\n    for i in range(3):\n        await asyncio.sleep(0.75)\n        yield f\"Message {i} \\n\\n\""
+    },
+    {
+      "type": "h2",
+      "text": "Troubleshooting"
+    },
+    {
+      "type": "h3",
+      "text": "Error handling"
+    },
+    {
+      "type": "p",
+      "text": "Usually, when an error occurs in a reactive.effect, the error crashes the app, forcing the user to refresh the page. This behavior is intentional since, when an error occurs in a reactive.effect, the user isn’t notified of the error, and the app is in an unknown state."
+    },
+    {
+      "type": "p",
+      "text": "Since LLM response generation can be flaky (e.g., due to rate/context limits, network issues, etc), you may want to handle errors during response more gracefully."
+    },
+    {
+      "type": "p",
+      "text": "As it turns out, when an error occurs inside a .stream(), the error is caught and re-thrown by a special NotifyException which notifies the user of the error, and allows the app to continue running. When running locally, the actual error message is shown, but in production, only a generic message is shown (i.e., the error is sanitized since it may contain sensitive information)."
+    },
+    {
+      "type": "p",
+      "text": "This is should be good enough to catch most errors that occur during response generation. However, it’s also good to be aware though that other errors that might occur elsewhere in a reactive.effect will still crash the app. If you’d like to protect against this, you can wrap them in a try/except block, and re-raise the error as a NotifyException, like this:"
+    },
+    {
+      "type": "code",
+      "text": "from shiny.types import NotifyException\nfrom shiny import reactive\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    try:\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n    except Exception as e:\n        raise NotifyException(f\"An error occurred in do_joke: {e}\") from e\n    await stream.stream(response)"
+    },
+    {
+      "type": "p",
+      "text": "If you’d like to customize how MarkdownStream() handles errors, you can do so by setting the on_error parameter in the constructor. See the documentation."
+    },
+    {
+      "type": "h3",
+      "text": "Debugging"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes response generation from an LLM might not be quite what you expect, leaving you to wonder what went wrong. With chatlas, your primary interactive debugging tool is to set echo=\"all\" in the .stream_async() method to see the context of the chat history (emitted to your Python console). For lower-level debugging, you can also enable logging and/or access the full chat history via the chat_client.get_turns() method. For more, see chatlas’ troubleshooting guide."
+    },
+    {
+      "type": "p",
+      "text": "Since chatlas builds on top of official Python SDKs like openai and anthropic, monitoring solutions that integrate with their logging mechanism can be used to monitor and debug your chatbot in production."
+    },
+    {
+      "type": "h2",
+      "text": "Next steps"
+    },
+    {
+      "type": "p",
+      "text": "The next article covers a very useful technique for both chatbots and streaming markdown: tool calling."
+    },
+    {
+      "type": "p",
+      "text": "Skip to other articles in the series if you want to learn about other generally useful Generative AI techniques like tool calls, structured output, and RAG."
+    }
+  ],
+  "code_examples": [
+    "shiny create --template stream-ai-ollama",
+    "shiny create --template stream-ai-ollama",
+    "shiny create --template stream-ai-anthropic",
+    "shiny create --template stream-ai-anthropic",
+    "shiny create --template stream-ai-openai",
+    "shiny create --template stream-ai-openai",
+    "shiny create --template stream-ai-gemini",
+    "shiny create --template stream-ai-gemini",
+    "shiny create --template stream-ai-anthropic-aws",
+    "shiny create --template stream-ai-anthropic-aws",
+    "shiny create --template stream-ai-azure-openai",
+    "shiny create --template stream-ai-azure-openai",
+    "shiny create --template stream-ai-langchain",
+    "shiny create --template stream-ai-langchain",
+    "from chatlas import ChatOllama\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nwith ui.sidebar():\n    ui.input_select(\n        \"comic\",\n        \"Choose a comedian\",\n        choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n    )\n    ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\nstream = ui.MarkdownStream(id=\"my_stream\")\nstream.ui(\n    content=\"Press the button and I'll tell you a joke.\",\n)\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n    response = await chat_client.stream_async(prompt)\n    await stream.stream(response)",
+    "from chatlas import ChatOllama\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\n# Might instead be ChatAnthropic, ChatOpenAI, or some other provider\nchat_client = ChatOllama(model=\"llama3.2\")\n\nwith ui.sidebar():\n    ui.input_select(\n        \"comic\",\n        \"Choose a comedian\",\n        choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n    )\n    ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\nstream = ui.MarkdownStream(id=\"my_stream\")\nstream.ui(\n    content=\"Press the button and I'll tell you a joke.\",\n)\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n    response = await chat_client.stream_async(prompt)\n    await stream.stream(response)",
+    "from chatlas import ChatOllama\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_select(\n            \"comic\",\n            \"Choose a comedian\",\n            choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n        ),\n        ui.input_action_button(\"go\", \"Tell me a joke\"),\n    ),\n    ui.output_markdown_stream(\"my_stream\"),\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"my_stream\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @reactive.effect\n    @reactive.event(input.go)\n    async def do_joke():\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n        await stream.stream(response)\n\napp = App(app_ui, server)",
+    "from chatlas import ChatOllama\nfrom shiny import App, reactive, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_select(\n            \"comic\",\n            \"Choose a comedian\",\n            choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n        ),\n        ui.input_action_button(\"go\", \"Tell me a joke\"),\n    ),\n    ui.output_markdown_stream(\"my_stream\"),\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"my_stream\")\n    chat_client = ChatOllama(model=\"llama3.2\")\n\n    @reactive.effect\n    @reactive.event(input.go)\n    async def do_joke():\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n        await stream.stream(response)\n\napp = App(app_ui, server)",
+    "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)",
+    "chat_client = ChatOllama(\n  model=\"llama3.2\",\n  system_prompt=\"You are a helpful assistant\",\n)",
+    "stream.ui(\n  content=\"Press the button and I'll tell you a joke.\"\n)",
+    "stream.ui(\n  content=\"Press the button and I'll tell you a joke.\"\n)",
+    "ui.output_markdown_stream(\n  content=\"Press the button and I'll tell you a joke.\"\n)",
+    "ui.output_markdown_stream(\n  content=\"Press the button and I'll tell you a joke.\"\n)",
+    "await stream.stream(response, clear=False)",
+    "await stream.stream(response, clear=False)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 150\n#| editorHeight: 250\nimport asyncio\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\nui.input_action_button(\"do_stream\", \"Do stream\", class_=\"btn btn-primary\")\n\nstream = ui.MarkdownStream(\"stream\")\nstream.ui()\n\nasync def simple_generator():\n    yield \"Hello \"\n    await asyncio.sleep(1)\n    yield \"`MarkdownStream()`!\"\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    await stream.stream(simple_generator())",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 300\nfrom shiny.express import ui\n\nwith ui.hold() as welcome:\n    \"**Hello!** What's your name?\"\n    ui.input_text(\"name\", None, placeholder=\"Enter name here\")\n\nchat = ui.Chat(id=\"chat\")\nchat.ui(messages=[welcome])",
+    "from shiny.express import ui\n\n# Get the card to fill the page\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light-subtle\",\n)\n\n# Create and display a MarkdownStream()\nstream = ui.MarkdownStream(id=\"my_stream\")\n\nwith ui.card():\n    ui.card_header(\"Streaming Joke Generator\")\n\n    # Put sidebar layout in the card\n    with ui.layout_sidebar():\n        with ui.sidebar():\n            ui.input_select(\n                \"comic\",\n                \"Choose a comedian\",\n                choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                width=\"auto\",\n            )\n            ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\n        stream.ui(content=\"Press the button and I'll tell you a joke.\")",
+    "from shiny.express import ui\n\n# Get the card to fill the page\nui.page_opts(\n    fillable=True,\n    fillable_mobile=True,\n    class_=\"bg-light-subtle\",\n)\n\n# Create and display a MarkdownStream()\nstream = ui.MarkdownStream(id=\"my_stream\")\n\nwith ui.card():\n    ui.card_header(\"Streaming Joke Generator\")\n\n    # Put sidebar layout in the card\n    with ui.layout_sidebar():\n        with ui.sidebar():\n            ui.input_select(\n                \"comic\",\n                \"Choose a comedian\",\n                choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                width=\"auto\",\n            )\n            ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\")\n\n        stream.ui(content=\"Press the button and I'll tell you a joke.\")",
+    "from shiny import ui, App\nfrom faicons import icon_svg\n\napp_ui = ui.page_fillable(\n    ui.card(\n        ui.card_header(\"Streaming Joke Generator\"),\n        ui.layout_sidebar(\n            ui.sidebar(\n                ui.input_select(\n                    \"comic\",\n                    \"Choose a comedian\",\n                    choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                    width=\"auto\",\n                ),\n                ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\"),\n            ),\n            ui.output_markdown_stream(\"stream\", content=\"Press the button and I'll tell you a joke.\"),\n        ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"stream\")\n\napp = App(app_ui, server)",
+    "from shiny import ui, App\nfrom faicons import icon_svg\n\napp_ui = ui.page_fillable(\n    ui.card(\n        ui.card_header(\"Streaming Joke Generator\"),\n        ui.layout_sidebar(\n            ui.sidebar(\n                ui.input_select(\n                    \"comic\",\n                    \"Choose a comedian\",\n                    choices=[\"Jerry Seinfeld\", \"Ali Wong\", \"Mitch Hedberg\"],\n                    width=\"auto\",\n                ),\n                ui.input_action_button(\"go\", \"Tell me a joke\", class_=\"btn-primary\"),\n            ),\n            ui.output_markdown_stream(\"stream\", content=\"Press the button and I'll tell you a joke.\"),\n        ),\n    ),\n    fillable_mobile=True,\n    class_=\"bg-light\",\n)\n\ndef server(input):\n    stream = ui.MarkdownStream(id=\"stream\")\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 350\n# | editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nstream = ui.MarkdownStream(\"stream\")\n\nui.input_action_button(\"start_stream\", \"Start stream\", class_=\"btn-primary\")\n\n@render.code\ndef stream_status():\n    return f\"Status: {stream.latest_stream.status()}\"\n\n\nstream.ui(content=\"Press the button to start streaming.\")\n\n\n@render.text\nasync def stream_result():\n    return f\"Result: {stream.latest_stream.result()}\"\n\n\n@reactive.effect\n@reactive.event(input.start_stream)\nasync def _():\n    await stream.stream(stream_generator())\n\n\n## file: app_utils.py\nimport asyncio\n\n\nasync def stream_generator():\n    for i in range(5):\n        await asyncio.sleep(0.5)\n        yield f\"Message {i} \\n\\n\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n# | standalone: true\n# | components: [editor, viewer]\n# | layout: vertical\n# | viewerHeight: 350\n# | editorHeight: 300\n\n## file: app.py\nfrom app_utils import stream_generator\n\nfrom shiny import reactive\nfrom shiny.express import input, ui\n\n\nwith ui.layout_column_wrap():\n    ui.input_action_button(\n        \"do_stream\",\n        \"Start stream\",\n        class_=\"btn btn-primary\",\n    )\n\n    ui.input_action_button(\n        \"cancel\",\n        \"Cancel stream\",\n        class_=\"btn btn-danger\",\n    )\n\nstream = ui.MarkdownStream(\"stream\")\nstream.ui(content=\"Press the button to start streaming.\")\n\n\n@reactive.effect\n@reactive.event(input.do_stream)\nasync def _():\n    await stream.stream(stream_generator())\n\n\n@reactive.effect\n@reactive.event(input.cancel)\ndef _():\n    stream.latest_stream.cancel()\n    ui.notification_show(\"Stream cancelled\", type=\"warning\")\n\n\n@reactive.effect\ndef _():\n    ui.update_action_button(\n        \"cancel\", disabled=stream.latest_stream.status() != \"running\"\n    )\n\n\n## file: app_utils.py\nimport asyncio\n\n\nasync def stream_generator():\n    for i in range(3):\n        await asyncio.sleep(0.75)\n        yield f\"Message {i} \\n\\n\"",
+    "from shiny.types import NotifyException\nfrom shiny import reactive\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    try:\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n    except Exception as e:\n        raise NotifyException(f\"An error occurred in do_joke: {e}\") from e\n    await stream.stream(response)",
+    "from shiny.types import NotifyException\nfrom shiny import reactive\n\n@reactive.effect\n@reactive.event(input.go)\nasync def do_joke():\n    try:\n        prompt = f\"Pretend you are {input.comic()} and tell me a funny joke.\"\n        response = await chat_client.stream_async(prompt)\n    except Exception as e:\n        raise NotifyException(f\"An error occurred in do_joke: {e}\") from e\n    await stream.stream(response)"
+  ],
+  "toc": [
+    {
+      "title": "Get started",
+      "url": "docs/#get-started"
+    },
+    {
+      "title": "Choose a template",
+      "url": "docs/#choose-a-template"
+    },
+    {
+      "title": "Inspect the code",
+      "url": "docs/#inspect-the-code"
+    },
+    {
+      "title": "Models & prompts",
+      "url": "docs/#models-prompts"
+    },
+    {
+      "title": "Content APIs",
+      "url": "docs/#content-apis"
+    },
+    {
+      "title": "Starting content",
+      "url": "docs/#starting-content"
+    },
+    {
+      "title": "Appending content",
+      "url": "docs/#appending-content"
+    },
+    {
+      "title": "Content generators",
+      "url": "docs/#content-generators"
+    },
+    {
+      "title": "Content types",
+      "url": "docs/#content-types"
+    },
+    {
+      "title": "Interactive content",
+      "url": "docs/#interactive-content"
+    },
+    {
+      "title": "Card layout",
+      "url": "docs/#card-layout"
+    },
+    {
+      "title": "Non-blocking streams",
+      "url": "docs/#non-blocking-streams"
+    },
+    {
+      "title": "Troubleshooting",
+      "url": "docs/#troubleshooting"
+    },
+    {
+      "title": "Error handling",
+      "url": "docs/#error-handling"
+    },
+    {
+      "title": "Debugging",
+      "url": "docs/#debugging"
+    },
+    {
+      "title": "Next steps",
+      "url": "docs/#next-steps"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

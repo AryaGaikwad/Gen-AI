@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the express.ui.update_switch function in Shiny for Python?",
+  "What happens if the Session instance is not provided when using the express.ui.update_switch function?",
+  "How are input updater functions different from observers in Shiny for Python?",
+  "Can arguments with None values have an impact on the input object on the client when using update functions in Shiny for Python?",
+  "How can the set of choices be cleared for radio buttons, checkbox groups, and select inputs using the update functions in Shiny for Python?"
+]

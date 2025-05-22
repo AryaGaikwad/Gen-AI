@@ -1,0 +1,7 @@
+[
+  "What are the benefits of using MarkdownStream() over the Chat() component in a generative AI setting?",
+  "How can I get started with creating a streaming markdown app using LLM providers like Ollama, Anthropic, and OpenAI?",
+  "What are the key requirements for streaming content from an LLM using MarkdownStream()?",
+  "How can I customize the content type rendered by MarkdownStream(), and what are the options available?",
+  "What are the advantages of using a non-blocking stream with MarkdownStream() over a blocking stream for response generation from an LLM?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required when adding a tooltip to a UI element in Shiny for Python?",
+  "How does the tooltip placement relative to its trigger element work in Shiny for Python?",
+  "What is the recommended practice for making tooltip triggers accessible to keyboard and assistive technology users in Shiny for Python?",
+  "How does Shiny for Python handle the accessibility of tooltip triggers when using non-interactive elements?",
+  "In Shiny for Python, how does the tooltip function behave when the trigger element contains multiple HTML elements?"
+]

@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Location distance calculator",
+    "description": "Use the map-distance template as a foundation for your next Shiny app.",
+    "url": "templates/map-distance/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Location distance calculator"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template map-distance --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template map-distance --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Run queries on an SQL database and view the results in a data grid. This app demonstrates how to initialize, populate, and connect to an SQL database using the duckdb package. It also shows how to run SQL queries and display results in an interactive data grid. Note also the use of Shiny modules to encapsulate and reuse the logic behind each card."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Select input",
+        "Value box",
+        "Map"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "geopy",
+        "ipyleaflet",
+        "requests",
+        "shinywidgets"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template map-distance --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template map-distance --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template map-distance --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template map-distance --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

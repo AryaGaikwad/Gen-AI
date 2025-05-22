@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to set the initial state of the sidebar in the Shiny app?",
+  "How can one set the width of the sidebar using the express.ui.sidebar function in Shiny for Python?",
+  "What options are available for setting the position of the sidebar relative to the main content in Shiny?",
+  "In Shiny, how can one define the maximum height of the horizontal sidebar when viewed on mobile devices using express.ui.sidebar?",
+  "What input is required if a user wants to reactively read or update the collapsible state of the sidebar in a Shiny app using express.ui.sidebar?"
+]

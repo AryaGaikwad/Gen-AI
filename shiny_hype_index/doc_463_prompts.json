@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.update_tooltip function in Shiny for Python?",
+  "How can I update the contents of a tooltip using ui.update_tooltip in Shiny for Python?",
+  "What parameters does the ui.update_tooltip function in Shiny for Python accept?",
+  "How can I open or close a tooltip using the ui.update_tooltip function in Shiny for Python?",
+  "When using ui.update_tooltip in Shiny for Python, what is the default value for the Shiny session object parameter?"
+]

@@ -1,0 +1,7 @@
+[
+  "What options can be specified for a data table using the render.DataTable class in Shiny for Python?",
+  "What parameter should be used to set the maximum vertical space for the data table in CSS units or pixels?",
+  "How can you customize the message displayed below the grid when not all rows are being shown in a data table?",
+  "What are the supported values for the selection_mode parameter in the render.DataTable class?",
+  "What is the purpose of the styles parameter in the render.DataTable class of Shiny for Python?"
+]

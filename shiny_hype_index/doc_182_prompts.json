@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the reactive.file_reader decorator in Shiny for Python?",
+  "What types of files does the file_reader decorator work with?",
+  "What are the parameters required when using the reactive.file_reader decorator?",
+  "How does the reactive file reader handle invalidations triggered by reactive dependencies?",
+  "Is it possible to specify the interval for checking file metadata when using reactive.file_reader?"
+]

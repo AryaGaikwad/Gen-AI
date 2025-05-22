@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a fixed page using ui.page_fixed in Shiny for Python?",
+  "What is the default value for the browser window title when using ui.page_fixed in Shiny for Python?",
+  "How can a custom Shiny theme be applied to a fixed page created with ui.page_fixed in Shiny for Python?",
+  "What does the lang parameter represent when creating a fixed page using ui.page_fixed in Shiny for Python?",
+  "How can one modify the theme of a Shiny app without entirely replacing the Bootstrap CSS when using ui.page_fixed in Shiny for Python?"
+]

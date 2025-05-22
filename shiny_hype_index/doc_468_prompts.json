@@ -1,0 +1,7 @@
+[
+  "What are the possible values that can be assigned to the parameter \"col_widths\" in the ui.layout_columns function in Shiny for Python?",
+  "What options are available for specifying the heights of rows in the ui.layout_columns function in Shiny for Python?",
+  "How can I ensure that a layout container in ui.layout_columns does not shrink below a minimum height or grow beyond a maximum height?",
+  "What does the \"fill\" parameter control in the ui.layout_columns function in Shiny for Python?",
+  "What is the purpose of the \"gap\" parameter in the ui.layout_columns function in Shiny for Python?"
+]

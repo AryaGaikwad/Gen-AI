@@ -1,0 +1,7 @@
+[
+  "What steps are involved in making a reactive Data Grid in a Shiny Python app?",
+  "How can a Data Grid collect input from the user in Shiny Python?",
+  "What is the purpose of setting render.DataGrid(filters=True) in a Data Grid in Shiny Python?",
+  "How can one programmatically update the data frame filters in a Data Grid in Shiny Python?",
+  "What is the significance of setting summary=False in render.DataGrid() for customizing the summary statement in a Data Grid in Shiny Python?"
+]

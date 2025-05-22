@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for the ui.insert_ui function in Shiny for Python?",
+  "How can I specify the position where the UI object should be inserted relative to a selector element in Shiny for Python?",
+  "What is the purpose of the \"multiple\" parameter in the ui.insert_ui function in Shiny for Python?",
+  "How does the UI generated with insert_ui differ from the UI generated with ui in Shiny for Python?",
+  "When using the ui.insert_ui function in Shiny for Python, how can I ensure that the UI object is only inserted or removed after all outputs have been updated and all effects have been run?"
+]

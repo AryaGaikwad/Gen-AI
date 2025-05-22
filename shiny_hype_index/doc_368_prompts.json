@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using the render.DataGrid class in Shiny for Python?",
+  "What does the render.DataGrid class in Shiny for Python allow you to do with the data grid?",
+  "What are the differences between DataGrid and DataTable classes in Shiny for Python?",
+  "How can you customize the message displayed below the grid in the render.DataGrid class?",
+  "What does the deprecated row_selection_mode parameter in the render.DataGrid class correspond to now?"
+]

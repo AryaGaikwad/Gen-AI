@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the function express.is_express_app in Shiny for Python?",
+  "What parameters does the express.is_express_app function require for detecting a Shiny express app?",
+  "What does the express.is_express_app function return if the app file provided is not a Shiny express app?",
+  "Can the app filename parameter in the express.is_express_app function accept both relative and absolute paths?",
+  "When using the express.is_express_app function, is it mandatory to provide a directory containing the app file, or can it be left as None in certain cases?"
+]

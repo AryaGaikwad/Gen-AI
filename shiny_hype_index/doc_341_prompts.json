@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_action_button function in Shiny for Python?",
+  "How does the ui.update_action_button function change the appearance of an action button on the client?",
+  "What does the Note section of the documentation explain about the behavior of input updater functions in Shiny for Python?",
+  "In Shiny for Python, how can you clear the set of choices for radio buttons, checkbox groups, and select inputs using the update functions?",
+  "When using the ui.update_action_button function, what happens if any arguments have None values?"
+]

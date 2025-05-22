@@ -1,0 +1,7 @@
+[
+  "What are the relevant functions for working with progress bars in Shiny for Python?",
+  "How can I update the progress bar object as the computation runs in Shiny for Python?",
+  "What is the purpose of using ui.Progress() to create a computation manager in Shiny for Python?",
+  "How can I set the minimum and maximum values of a progress bar in Shiny for Python?",
+  "How can I ensure a responsive progress bar in Shiny for Python when the computation runs?"
+]

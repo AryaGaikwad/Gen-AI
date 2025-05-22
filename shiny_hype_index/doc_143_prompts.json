@@ -1,0 +1,7 @@
+[
+  "What are the different criteria used by page_auto to determine which page function to use in a Shiny app?",
+  "What are the parameters that can be set using the express.ui.page_opts function in Shiny for Python?",
+  "How can a custom Shiny theme be applied to a Shiny app using the page_opts function?",
+  "When would the page_fillable function be used in a Shiny app based on the page_opts settings?",
+  "Can the default page function chosen by page_auto be overridden using the page_fn parameter in the express.ui.page_opts function?"
+]

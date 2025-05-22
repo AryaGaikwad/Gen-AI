@@ -1,0 +1,679 @@
+{
+  "metadata": {
+    "title": "express.ui.sidebar – Shiny for Python",
+    "description": "",
+    "url": "api/express/express.ui.sidebar.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Layouts and other UI tools",
+        "express.ui.sidebar"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "express.ui.sidebar"
+    },
+    {
+      "type": "code",
+      "text": "express.ui.sidebar(\n    position='left',\n    open=None,\n    width=250,\n    id=None,\n    title=None,\n    bg=None,\n    fg=None,\n    class_=None,\n    max_height_mobile=None,\n    gap=None,\n    padding=None,\n    **kwargs,\n)"
+    },
+    {
+      "type": "p",
+      "text": "Context manager for sidebar element"
+    },
+    {
+      "type": "p",
+      "text": "This function wraps sidebar."
+    },
+    {
+      "type": "h2",
+      "text": "Parameters"
+    },
+    {
+      "type": "p",
+      "text": "A valid CSS unit used for the width of the sidebar."
+    },
+    {
+      "type": "p",
+      "text": "Where the sidebar should appear relative to the main content, one of \"left\" or \"right\"."
+    },
+    {
+      "type": "p",
+      "text": "The initial state of the sidebar. If a string, the possible values are: * \"open\": the sidebar starts open * \"closed\": the sidebar starts closed * \"always\": the sidebar is always open and cannot be closed Alternatively, you can provide a dictionary with keys \"desktop\" and \"mobile\" to set different initial states for desktop and mobile. For example, when {\"desktop\": \"open\", \"mobile\": \"closed\"} the sidebar is initialized in the open state on desktop screens or in the closed state on mobile screens."
+    },
+    {
+      "type": "p",
+      "text": "A character string. Required if wanting to reactively read (or update) the collapsible state in a Shiny app."
+    },
+    {
+      "type": "p",
+      "text": "A character title to be used as the sidebar title, which will be wrapped in a <div> element with class sidebar-title. You can also provide a custom Tag for the title element, in which case you’ll likely want to give this element class = \"sidebar-title\"."
+    },
+    {
+      "type": "p",
+      "text": "A background or foreground color."
+    },
+    {
+      "type": "p",
+      "text": "CSS classes for the sidebar container element, in addition to the fixed .sidebar class."
+    },
+    {
+      "type": "p",
+      "text": "A CSS length unit (passed through as_css_unit) defining the maximum height of the horizontal sidebar when viewed on mobile devices. Only applies to always-open sidebars on mobile, where by default the sidebar container is placed below the main content container on mobile devices."
+    },
+    {
+      "type": "p",
+      "text": "A CSS length unit defining the vertical gap (i.e., spacing) between elements provided to *args."
+    },
+    {
+      "type": "p",
+      "text": "Padding within the sidebar itself. This can be a numeric vector (which will be interpreted as pixels) or a character vector with valid CSS lengths. padding may be one to four values. * If a single value, then that value will be used for all four sides. * If two, then the first value will be used for the top and bottom, while the second value will be used for left and right. * If three values, then the first will be used for top, the second will be left and right, and the third will be bottom. * If four, then the values will be interpreted as top, right, bottom, and left respectively."
+    },
+    {
+      "type": "p",
+      "text": "Named attributes are supplied to the sidebar content container."
+    },
+    {
+      "type": "h2",
+      "text": "Examples"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_left\", open=\"desktop\"):\n            \"Left sidebar content\"\n\n        @render.code\n        def state_left():\n            return f\"input.sidebar_left(): {input.sidebar_left()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_right\", position=\"right\", open=\"desktop\"):\n            \"Right sidebar content\"\n\n        @render.code\n        def state_right():\n            return f\"input.sidebar_right(): {input.sidebar_right()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_closed\", open=\"closed\"):\n            \"Closed sidebar content\"\n\n        @render.code\n        def state_closed():\n            return f\"input.sidebar_closed(): {input.sidebar_closed()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_always\", open=\"always\"):\n            \"Always sidebar content\"\n\n        @render.code\n        def state_always():\n            return f\"input.sidebar_always(): {input.sidebar_always()}\"\n\n"
+    }
+  ],
+  "code_examples": [
+    "express.ui.sidebar(\n    position='left',\n    open=None,\n    width=250,\n    id=None,\n    title=None,\n    bg=None,\n    fg=None,\n    class_=None,\n    max_height_mobile=None,\n    gap=None,\n    padding=None,\n    **kwargs,\n)",
+    "express.ui.sidebar(\n    position='left',\n    open=None,\n    width=250,\n    id=None,\n    title=None,\n    bg=None,\n    fg=None,\n    class_=None,\n    max_height_mobile=None,\n    gap=None,\n    padding=None,\n    **kwargs,\n)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom shiny.express import input, render, ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_left\", open=\"desktop\"):\n            \"Left sidebar content\"\n\n        @render.code\n        def state_left():\n            return f\"input.sidebar_left(): {input.sidebar_left()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_right\", position=\"right\", open=\"desktop\"):\n            \"Right sidebar content\"\n\n        @render.code\n        def state_right():\n            return f\"input.sidebar_right(): {input.sidebar_right()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_closed\", open=\"closed\"):\n            \"Closed sidebar content\"\n\n        @render.code\n        def state_closed():\n            return f\"input.sidebar_closed(): {input.sidebar_closed()}\"\n\n\nwith ui.card():\n    with ui.layout_sidebar():\n        with ui.sidebar(id=\"sidebar_always\", open=\"always\"):\n            \"Always sidebar content\"\n\n        @render.code\n        def state_always():\n            return f\"input.sidebar_always(): {input.sidebar_always()}\"\n\n"
+  ],
+  "toc": [
+    {
+      "title": "express.ui.sidebar",
+      "url": "api/express/#shiny.express.ui.sidebar"
+    },
+    {
+      "title": "Parameters",
+      "url": "api/express/#parameters"
+    },
+    {
+      "title": "Examples",
+      "url": "api/express/#examples"
+    },
+    {
+      "title": "Shiny Express API",
+      "url": "api/express/index.html"
+    },
+    {
+      "title": "Input components"
+    },
+    {
+      "title": "express.ui.input_select",
+      "url": "api/express/express.ui.input_select.html"
+    },
+    {
+      "title": "express.ui.input_selectize",
+      "url": "api/express/express.ui.input_selectize.html"
+    },
+    {
+      "title": "express.ui.input_slider",
+      "url": "api/express/express.ui.input_slider.html"
+    },
+    {
+      "title": "express.ui.input_dark_mode",
+      "url": "api/express/express.ui.input_dark_mode.html"
+    },
+    {
+      "title": "express.ui.input_date",
+      "url": "api/express/express.ui.input_date.html"
+    },
+    {
+      "title": "express.ui.input_date_range",
+      "url": "api/express/express.ui.input_date_range.html"
+    },
+    {
+      "title": "express.ui.input_checkbox",
+      "url": "api/express/express.ui.input_checkbox.html"
+    },
+    {
+      "title": "express.ui.input_checkbox_group",
+      "url": "api/express/express.ui.input_checkbox_group.html"
+    },
+    {
+      "title": "express.ui.input_switch",
+      "url": "api/express/express.ui.input_switch.html"
+    },
+    {
+      "title": "express.ui.input_radio_buttons",
+      "url": "api/express/express.ui.input_radio_buttons.html"
+    },
+    {
+      "title": "express.ui.input_numeric",
+      "url": "api/express/express.ui.input_numeric.html"
+    },
+    {
+      "title": "express.ui.input_text",
+      "url": "api/express/express.ui.input_text.html"
+    },
+    {
+      "title": "express.ui.input_text_area",
+      "url": "api/express/express.ui.input_text_area.html"
+    },
+    {
+      "title": "express.ui.input_password",
+      "url": "api/express/express.ui.input_password.html"
+    },
+    {
+      "title": "express.ui.input_action_button",
+      "url": "api/express/express.ui.input_action_button.html"
+    },
+    {
+      "title": "express.ui.input_action_link",
+      "url": "api/express/express.ui.input_action_link.html"
+    },
+    {
+      "title": "express.ui.input_task_button",
+      "url": "api/express/express.ui.input_task_button.html"
+    },
+    {
+      "title": "Output components"
+    },
+    {
+      "title": "express.render.plot",
+      "url": "api/express/express.render.plot.html"
+    },
+    {
+      "title": "express.render.table",
+      "url": "api/express/express.render.table.html"
+    },
+    {
+      "title": "express.render.DataTable",
+      "url": "api/express/express.render.DataTable.html"
+    },
+    {
+      "title": "express.render.data_frame",
+      "url": "api/express/express.render.data_frame.html"
+    },
+    {
+      "title": "express.render.DataGrid",
+      "url": "api/express/express.render.DataGrid.html"
+    },
+    {
+      "title": "express.render.text",
+      "url": "api/express/express.render.text.html"
+    },
+    {
+      "title": "express.render.ui",
+      "url": "api/express/express.render.ui.html"
+    },
+    {
+      "title": "express.render.download",
+      "url": "api/express/express.render.download.html"
+    },
+    {
+      "title": "express.render.image",
+      "url": "api/express/express.render.image.html"
+    },
+    {
+      "title": "express.render.express",
+      "url": "api/express/express.render.express.html"
+    },
+    {
+      "title": "Layouts and other UI tools"
+    },
+    {
+      "title": "express.ui.page_opts",
+      "url": "api/express/express.ui.page_opts.html"
+    },
+    {
+      "title": "express.ui.sidebar",
+      "url": "api/express/express.ui.sidebar.html"
+    },
+    {
+      "title": "express.ui.layout_columns",
+      "url": "api/express/express.ui.layout_columns.html"
+    },
+    {
+      "title": "express.ui.layout_column_wrap",
+      "url": "api/express/express.ui.layout_column_wrap.html"
+    },
+    {
+      "title": "express.ui.card",
+      "url": "api/express/express.ui.card.html"
+    },
+    {
+      "title": "express.ui.card_header",
+      "url": "api/express/express.ui.card_header.html"
+    },
+    {
+      "title": "express.ui.card_footer",
+      "url": "api/express/express.ui.card_footer.html"
+    },
+    {
+      "title": "express.ui.value_box",
+      "url": "api/express/express.ui.value_box.html"
+    },
+    {
+      "title": "express.ui.value_box_theme",
+      "url": "api/express/express.ui.value_box_theme.html"
+    },
+    {
+      "title": "express.ui.popover",
+      "url": "api/express/express.ui.popover.html"
+    },
+    {
+      "title": "express.ui.tooltip",
+      "url": "api/express/express.ui.tooltip.html"
+    },
+    {
+      "title": "express.ui.accordion",
+      "url": "api/express/express.ui.accordion.html"
+    },
+    {
+      "title": "express.ui.accordion_panel",
+      "url": "api/express/express.ui.accordion_panel.html"
+    },
+    {
+      "title": "express.ui.layout_sidebar",
+      "url": "api/express/express.ui.layout_sidebar.html"
+    },
+    {
+      "title": "Navigate multiple panels"
+    },
+    {
+      "title": "express.ui.nav_panel",
+      "url": "api/express/express.ui.nav_panel.html"
+    },
+    {
+      "title": "express.ui.navset_card_underline",
+      "url": "api/express/express.ui.navset_card_underline.html"
+    },
+    {
+      "title": "express.ui.navset_card_tab",
+      "url": "api/express/express.ui.navset_card_tab.html"
+    },
+    {
+      "title": "express.ui.navset_card_pill",
+      "url": "api/express/express.ui.navset_card_pill.html"
+    },
+    {
+      "title": "express.ui.nav_spacer",
+      "url": "api/express/express.ui.nav_spacer.html"
+    },
+    {
+      "title": "express.ui.nav_menu",
+      "url": "api/express/express.ui.nav_menu.html"
+    },
+    {
+      "title": "express.ui.nav_control",
+      "url": "api/express/express.ui.nav_control.html"
+    },
+    {
+      "title": "express.ui.navset_bar",
+      "url": "api/express/express.ui.navset_bar.html"
+    },
+    {
+      "title": "express.ui.navset_tab",
+      "url": "api/express/express.ui.navset_tab.html"
+    },
+    {
+      "title": "express.ui.navset_pill",
+      "url": "api/express/express.ui.navset_pill.html"
+    },
+    {
+      "title": "express.ui.navset_underline",
+      "url": "api/express/express.ui.navset_underline.html"
+    },
+    {
+      "title": "express.ui.navset_pill_list",
+      "url": "api/express/express.ui.navset_pill_list.html"
+    },
+    {
+      "title": "express.ui.navset_hidden",
+      "url": "api/express/express.ui.navset_hidden.html"
+    },
+    {
+      "title": "express.ui.navbar_options",
+      "url": "api/express/express.ui.navbar_options.html"
+    },
+    {
+      "title": "Chat interface"
+    },
+    {
+      "title": "express.ui.Chat",
+      "url": "api/express/express.ui.Chat.html"
+    },
+    {
+      "title": "Streaming markdown"
+    },
+    {
+      "title": "express.ui.MarkdownStream",
+      "url": "api/express/express.ui.MarkdownStream.html"
+    },
+    {
+      "title": "Reactive programming"
+    },
+    {
+      "title": "reactive.calc",
+      "url": "api/express/reactive.calc.html"
+    },
+    {
+      "title": "reactive.effect",
+      "url": "api/express/reactive.effect.html"
+    },
+    {
+      "title": "reactive.value",
+      "url": "api/express/reactive.value.html"
+    },
+    {
+      "title": "reactive.event",
+      "url": "api/express/reactive.event.html"
+    },
+    {
+      "title": "reactive.isolate",
+      "url": "api/express/reactive.isolate.html"
+    },
+    {
+      "title": "reactive.invalidate_later",
+      "url": "api/express/reactive.invalidate_later.html"
+    },
+    {
+      "title": "reactive.extended_task",
+      "url": "api/express/reactive.extended_task.html"
+    },
+    {
+      "title": "reactive.flush",
+      "url": "api/express/reactive.flush.html"
+    },
+    {
+      "title": "reactive.poll",
+      "url": "api/express/reactive.poll.html"
+    },
+    {
+      "title": "reactive.file_reader",
+      "url": "api/express/reactive.file_reader.html"
+    },
+    {
+      "title": "reactive.lock",
+      "url": "api/express/reactive.lock.html"
+    },
+    {
+      "title": "req",
+      "url": "api/express/req.html"
+    },
+    {
+      "title": "Reusable Express code"
+    },
+    {
+      "title": "express.ui.hold",
+      "url": "api/express/express.ui.hold.html"
+    },
+    {
+      "title": "express.expressify",
+      "url": "api/express/express.expressify.html"
+    },
+    {
+      "title": "Update inputs"
+    },
+    {
+      "title": "express.ui.update_select",
+      "url": "api/express/express.ui.update_select.html"
+    },
+    {
+      "title": "express.ui.update_selectize",
+      "url": "api/express/express.ui.update_selectize.html"
+    },
+    {
+      "title": "express.ui.update_slider",
+      "url": "api/express/express.ui.update_slider.html"
+    },
+    {
+      "title": "express.ui.update_dark_mode",
+      "url": "api/express/express.ui.update_dark_mode.html"
+    },
+    {
+      "title": "express.ui.update_date",
+      "url": "api/express/express.ui.update_date.html"
+    },
+    {
+      "title": "express.ui.update_date_range",
+      "url": "api/express/express.ui.update_date_range.html"
+    },
+    {
+      "title": "express.ui.update_checkbox",
+      "url": "api/express/express.ui.update_checkbox.html"
+    },
+    {
+      "title": "express.ui.update_checkbox_group",
+      "url": "api/express/express.ui.update_checkbox_group.html"
+    },
+    {
+      "title": "express.ui.update_switch",
+      "url": "api/express/express.ui.update_switch.html"
+    },
+    {
+      "title": "express.ui.update_radio_buttons",
+      "url": "api/express/express.ui.update_radio_buttons.html"
+    },
+    {
+      "title": "express.ui.update_numeric",
+      "url": "api/express/express.ui.update_numeric.html"
+    },
+    {
+      "title": "express.ui.update_text",
+      "url": "api/express/express.ui.update_text.html"
+    },
+    {
+      "title": "express.ui.update_text_area",
+      "url": "api/express/express.ui.update_text_area.html"
+    },
+    {
+      "title": "express.ui.update_navs",
+      "url": "api/express/express.ui.update_navs.html"
+    },
+    {
+      "title": "express.ui.update_action_button",
+      "url": "api/express/express.ui.update_action_button.html"
+    },
+    {
+      "title": "express.ui.update_action_link",
+      "url": "api/express/express.ui.update_action_link.html"
+    },
+    {
+      "title": "express.ui.update_task_button",
+      "url": "api/express/express.ui.update_task_button.html"
+    },
+    {
+      "title": "Update UI Layouts"
+    },
+    {
+      "title": "express.ui.update_sidebar",
+      "url": "api/express/express.ui.update_sidebar.html"
+    },
+    {
+      "title": "express.ui.update_tooltip",
+      "url": "api/express/express.ui.update_tooltip.html"
+    },
+    {
+      "title": "express.ui.update_popover",
+      "url": "api/express/express.ui.update_popover.html"
+    },
+    {
+      "title": "express.ui.update_accordion",
+      "url": "api/express/express.ui.update_accordion.html"
+    },
+    {
+      "title": "express.ui.update_accordion_panel",
+      "url": "api/express/express.ui.update_accordion_panel.html"
+    },
+    {
+      "title": "express.ui.insert_accordion_panel",
+      "url": "api/express/express.ui.insert_accordion_panel.html"
+    },
+    {
+      "title": "express.ui.remove_accordion_panel",
+      "url": "api/express/express.ui.remove_accordion_panel.html"
+    },
+    {
+      "title": "Display messages"
+    },
+    {
+      "title": "express.ui.help_text",
+      "url": "api/express/express.ui.help_text.html"
+    },
+    {
+      "title": "express.ui.notification_show",
+      "url": "api/express/express.ui.notification_show.html"
+    },
+    {
+      "title": "express.ui.notification_remove",
+      "url": "api/express/express.ui.notification_remove.html"
+    },
+    {
+      "title": "express.ui.modal",
+      "url": "api/express/express.ui.modal.html"
+    },
+    {
+      "title": "express.ui.modal_show",
+      "url": "api/express/express.ui.modal_show.html"
+    },
+    {
+      "title": "express.ui.modal_remove",
+      "url": "api/express/express.ui.modal_remove.html"
+    },
+    {
+      "title": "express.ui.modal_button",
+      "url": "api/express/express.ui.modal_button.html"
+    },
+    {
+      "title": "express.ui.Progress",
+      "url": "api/express/express.ui.Progress.html"
+    },
+    {
+      "title": "Modules"
+    },
+    {
+      "title": "express.module",
+      "url": "api/express/express.module.html"
+    },
+    {
+      "title": "UI panels"
+    },
+    {
+      "title": "express.ui.panel_absolute",
+      "url": "api/express/express.ui.panel_absolute.html"
+    },
+    {
+      "title": "express.ui.panel_fixed",
+      "url": "api/express/express.ui.panel_fixed.html"
+    },
+    {
+      "title": "express.ui.panel_title",
+      "url": "api/express/express.ui.panel_title.html"
+    },
+    {
+      "title": "express.ui.panel_well",
+      "url": "api/express/express.ui.panel_well.html"
+    },
+    {
+      "title": "Uploads & downloads"
+    },
+    {
+      "title": "express.ui.input_file",
+      "url": "api/express/express.ui.input_file.html"
+    },
+    {
+      "title": "express.render.download",
+      "url": "api/express/express.render.download.html"
+    },
+    {
+      "title": "Dynamic UI"
+    },
+    {
+      "title": "express.ui.panel_conditional",
+      "url": "api/express/express.ui.panel_conditional.html"
+    },
+    {
+      "title": "express.ui.insert_ui",
+      "url": "api/express/express.ui.insert_ui.html"
+    },
+    {
+      "title": "express.ui.remove_ui",
+      "url": "api/express/express.ui.remove_ui.html"
+    },
+    {
+      "title": "User Session"
+    },
+    {
+      "title": "session.Session",
+      "url": "api/express/session.Session.html"
+    },
+    {
+      "title": "Client Data"
+    },
+    {
+      "title": "session.ClientData",
+      "url": "api/express/session.ClientData.html"
+    },
+    {
+      "title": "UI as HTML"
+    },
+    {
+      "title": "express.ui.Theme",
+      "url": "api/express/express.ui.Theme.html"
+    },
+    {
+      "title": "express.ui.markdown",
+      "url": "api/express/express.ui.markdown.html"
+    },
+    {
+      "title": "express.ui.include_css",
+      "url": "api/express/express.ui.include_css.html"
+    },
+    {
+      "title": "express.ui.include_js",
+      "url": "api/express/express.ui.include_js.html"
+    },
+    {
+      "title": "express.ui.HTML",
+      "url": "api/express/express.ui.HTML.html"
+    },
+    {
+      "title": "express.ui.tags",
+      "url": "api/express/express.ui.tags.html"
+    },
+    {
+      "title": "express.ui.TagList",
+      "url": "api/express/express.ui.TagList.html"
+    },
+    {
+      "title": "express.ui.busy_indicators.use",
+      "url": "api/express/express.ui.busy_indicators.use.html"
+    },
+    {
+      "title": "express.ui.busy_indicators.options",
+      "url": "api/express/express.ui.busy_indicators.options.html"
+    },
+    {
+      "title": "Application-level settings"
+    },
+    {
+      "title": "express.app_opts",
+      "url": "api/express/express.app_opts.html"
+    },
+    {
+      "title": "Express developer tooling"
+    },
+    {
+      "title": "express.is_express_app",
+      "url": "api/express/express.is_express_app.html"
+    },
+    {
+      "title": "express.wrap_express_app",
+      "url": "api/express/express.wrap_express_app.html"
+    }
+  ]
+}

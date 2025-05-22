@@ -1,0 +1,7 @@
+[
+  "Why is it important to use modules in Shiny for organizing a large code base?",
+  "How can functions in Shiny help improve code quality when building user interfaces?",
+  "Why do input and output IDs need to be unique across the entire Shiny application?",
+  "How can modules in Shiny help prevent naming conflicts and make code easier to manage?",
+  "What is the difference between creating and using modules in Shiny Express versus Shiny Core syntax?"
+]

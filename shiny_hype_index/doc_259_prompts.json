@@ -1,0 +1,7 @@
+[
+  "What parameters can be supplied to the ui.accordion function in Shiny for Python?",
+  "How can the user determine which accordion panels are currently active in the ui.accordion layout?",
+  "What does the parameter 'multiple=True' signify in the ui.accordion function?",
+  "What is the purpose of the 'width' parameter in the ui.accordion function?",
+  "What are some related functions to ui.accordion that a Shiny developer should be aware of?"
+]

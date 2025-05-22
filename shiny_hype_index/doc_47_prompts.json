@@ -1,0 +1,7 @@
+[
+  "How can I deploy Shiny applications to Posit Connect Cloud from GitHub?",
+  "What are the steps to host Shiny applications on shinyapps.io without setting up my own server?",
+  "How can I configure rsconnect-python with a shinyapps.io API token for deployment?",
+  "What are the advantages of using Hugging Face spaces to host Shiny apps?",
+  "What version of the rsconnect-python package is required for deploying Shiny Express applications?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using express.ui.notification_show in a Shiny app?",
+  "What are the parameters that can be passed to express.ui.notification_show function?",
+  "How can a user prevent a notification message from disappearing automatically?",
+  "Can a notification message be replaced by a new one with a unique identifier?",
+  "What are the different color options available for customizing the appearance of a notification message?"
+]

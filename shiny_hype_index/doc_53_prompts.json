@@ -1,0 +1,7 @@
+[
+  "How can I use Matplotlib to create plots in a Shiny Python app?",
+  "What steps do I need to follow to display a Matplotlib figure in my Shiny app?",
+  "How can I collect user interactions like clicks, double clicks, hovers, and brushes in a plot in Shiny?",
+  "What are the different objects that my plotting function should return if I do not use matplotlib.pyplot to plot in Shiny?",
+  "How can I ensure that multiple output_plot() calls sharing the same id value work correctly with brushing interactions in Shiny?"
+]

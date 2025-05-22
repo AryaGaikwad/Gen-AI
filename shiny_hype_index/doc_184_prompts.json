@@ -1,0 +1,7 @@
+[
+  "What does the 'req' function do in Shiny for Python?",
+  "What are some examples of values that would be considered falsy in the context of the 'req' function?",
+  "What happens if any of the arguments provided to the 'req' function are falsy?",
+  "Can the 'req' function throw different types of exceptions based on a parameter?",
+  "What does the 'req' function return if no arguments are provided to it?"
+]

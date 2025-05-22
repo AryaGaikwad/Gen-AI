@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.render.data_frame` decorator in Shiny for Python?",
+  "How can the selected rows be accessed when using the row selection feature in a data frame rendered with Shiny?",
+  "What happens when a cell in a DataTable or DataGrid object with editable=True is edited by an app user in Shiny?",
+  "What are the available methods to inspect and update a data frame renderer in Shiny for Python?",
+  "How does the narwhals compatibility layer in Shiny help manage interactions with different types of data frames like pandas and polars?"
+]

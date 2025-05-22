@@ -1,0 +1,7 @@
+[
+  "What is the purpose of ui.MarkdownStream in Shiny for Python?",
+  "How can errors be handled while streaming content using ui.MarkdownStream?",
+  "What methods are available for interacting with the MarkdownStream UI element?",
+  "How is Markdown content parsed in the Shiny for Python environment?",
+  "What does the on_error parameter in the ui.MarkdownStream constructor control?"
+]

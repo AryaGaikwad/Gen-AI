@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using the render.DataGrid class in Shiny for Python?",
+  "What are the options available for specifying the width and height of the data grid in render.DataGrid?",
+  "How can one customize the message displayed below the grid in render.DataGrid in Shiny for Python?",
+  "What does the selection_mode parameter do in the render.DataGrid class, and what values are supported?",
+  "What is the purpose of the styles parameter in the render.DataGrid class, and how can it be used to customize the appearance of the data frame?"
+]

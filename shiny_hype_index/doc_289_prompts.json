@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using the ui.navset_bar function in Shiny for Python?",
+  "How can one specify the default selected nav item in the navbar using ui.navset_bar?",
+  "What is the purpose of the fillable parameter in the ui.navset_bar function?",
+  "How can one configure the appearance and behavior of the navbar using ui.navset_bar in Shiny for Python?",
+  "Which deprecated arguments were replaced by the navbar_options parameter in the ui.navset_bar function in Shiny for Python?"
+]

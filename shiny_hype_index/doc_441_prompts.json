@@ -1,0 +1,7 @@
+[
+  "What parameters are required when using ui.input_select in Shiny for Python?",
+  "What is the difference between providing a list of choices and providing a dictionary mapping choice values to labels when using ui.input_select?",
+  "How are initially selected values specified in the ui.input_select function in Shiny for Python?",
+  "What is the significance of the 'size' parameter in the ui.input_select function?",
+  "In what format is the server value returned when using ui.input_select with multiple=True in Shiny for Python?"
+]

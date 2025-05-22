@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `get_html_string` method in ui.TagList?",
+  "What method in ui.TagList allows for appending an iterable of children to the existing list?",
+  "How can one insert tag children before a specific index in ui.TagList?",
+  "What does the `save_html` method in ui.TagList require as parameters?",
+  "In ui.TagList, how can one preview the tag list as a complete HTML document?"
+]

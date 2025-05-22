@@ -1,0 +1,7 @@
+[
+  "What parameters are required to change the value of a slider input using express.ui.update_slider in Shiny for Python?",
+  "What is the purpose of the time_format parameter in express.ui.update_slider when dealing with datetime objects?",
+  "How are None values handled in the parameters of express.ui.update_slider function in Shiny for Python?",
+  "How can you clear the set of choices for radio buttons, checkbox groups, and select inputs using update functions in Shiny for Python?",
+  "In Shiny for Python, what is the default behavior if the timezone parameter is not specified when using express.ui.update_slider to update a slider input?"
+]

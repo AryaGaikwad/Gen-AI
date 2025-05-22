@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "title": "Cloud hosting – Shiny for Python",
+    "description": "",
+    "url": "get-started/deploy-cloud.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Deploy",
+        "Cloud hosting"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Cloud hosting"
+    },
+    {
+      "type": "h2",
+      "text": "Posit Connect Cloud"
+    },
+    {
+      "type": "p",
+      "text": "The quickest way to get started is Posit Connect Cloud, our next-generation online publishing platform."
+    },
+    {
+      "type": "p",
+      "text": "You can deploy Shiny applications—and other data frameworks—from GitHub to Connect Cloud in under a minute. All you need is your code and a requirements.txt dependency file."
+    },
+    {
+      "type": "p",
+      "text": "Quickly showcase your work with a public portfolio and leverage powerful features such as secret environment variable management and automatic push-to-publish for seamless continuous deployment. Free and paid plans are available."
+    },
+    {
+      "type": "p",
+      "text": "To get started, sign up for Connect Cloud, review the how-to guide, and join the community."
+    },
+    {
+      "type": "h2",
+      "text": "Shinyapps.io"
+    },
+    {
+      "type": "p",
+      "text": "shinyapps.io also allows you to easily host applications without having to set up your own server, and has a variety of free and paid plans depending on your use case."
+    },
+    {
+      "type": "p",
+      "text": "To use shinyapps.io, follow these steps:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install the rsconnect-python package. pip install rsconnect-python Deploying Shiny Express applications requires version 1.22.0 or later of the rsconnect-python package.",
+        "Sign up for a free shinyapps.io account",
+        "When you log in for the first time, you will be shown a command to run that will configure rsconnect-python with a shinyapps.io API token. The command will look something like: rsconnect add --account <ACCOUNT> --name <NAME> --token <TOKEN> --secret <SECRET>",
+        "Deploy your application by calling rsconnect deploy. rsconnect deploy shiny /path/to/app --name <NAME> --title my-app"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Install the rsconnect-python package."
+    },
+    {
+      "type": "code",
+      "text": "pip install rsconnect-python"
+    },
+    {
+      "type": "p",
+      "text": "Deploying Shiny Express applications requires version 1.22.0 or later of the rsconnect-python package."
+    },
+    {
+      "type": "p",
+      "text": "Sign up for a free shinyapps.io account"
+    },
+    {
+      "type": "p",
+      "text": "When you log in for the first time, you will be shown a command to run that will configure rsconnect-python with a shinyapps.io API token. The command will look something like:"
+    },
+    {
+      "type": "code",
+      "text": "rsconnect add --account <ACCOUNT> --name <NAME> --token <TOKEN> --secret <SECRET>"
+    },
+    {
+      "type": "p",
+      "text": "Deploy your application by calling rsconnect deploy."
+    },
+    {
+      "type": "code",
+      "text": "rsconnect deploy shiny /path/to/app --name <NAME> --title my-app"
+    },
+    {
+      "type": "p",
+      "text": "After following these steps you will be able to manage and share the application on the cloud. Please see the full documentation for more information on how to deploy content to shinyapps.io."
+    },
+    {
+      "type": "h2",
+      "text": "Hugging Face"
+    },
+    {
+      "type": "p",
+      "text": "Hugging Face is an open-source platform that provides state-of-the-art natural language processing (NLP) tools and models. You can host a variety of applications, including Shiny apps, on Hugging Face using Hugging Face spaces which makes it easy to integrate their hosted models into your Shiny app without having to build everything from scratch. Hugging Face has implemented templated spaces for Shiny applications which will populate all the files you need to get started."
+    }
+  ],
+  "code_examples": [
+    "pip install rsconnect-python",
+    "pip install rsconnect-python",
+    "rsconnect add --account <ACCOUNT> --name <NAME> --token <TOKEN> --secret <SECRET>",
+    "rsconnect add --account <ACCOUNT> --name <NAME> --token <TOKEN> --secret <SECRET>",
+    "rsconnect deploy shiny /path/to/app --name <NAME> --title my-app",
+    "rsconnect deploy shiny /path/to/app --name <NAME> --title my-app"
+  ],
+  "toc": [
+    {
+      "title": "Posit Connect Cloud",
+      "url": "get-started/#posit-connect-cloud"
+    },
+    {
+      "title": "Shinyapps.io",
+      "url": "get-started/#shinyapps.io"
+    },
+    {
+      "title": "Hugging Face",
+      "url": "get-started/#hugging-face"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

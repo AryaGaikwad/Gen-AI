@@ -1,0 +1,7 @@
+[
+  "What does the function reactive.invalidate_later do in Shiny for Python?",
+  "What happens when reactive.invalidate_later is called within a reactive context?",
+  "How can you specify the number of seconds to wait before a reactive context is invalidated using reactive.invalidate_later?",
+  "What is the purpose of the note about adding conditional logic to prevent the invalidate_later function from running?",
+  "In what scenarios would you use the session parameter in the reactive.invalidate_later function in Shiny for Python?"
+]

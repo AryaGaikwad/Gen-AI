@@ -1,0 +1,7 @@
+[
+  "What are the basic mechanics behind Shiny apps in Python according to the provided documentation?",
+  "How can one include dynamic plots, tables, and interactive widgets in a Shiny Python application?",
+  "What layout components does Shiny provide to help with arranging multiple inputs and outputs?",
+  "How does Shiny handle reactivity and re-rendering of components based on dependencies changing?",
+  "What is the purpose of the shiny create CLI command and what can it help developers achieve when working with Shiny in Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the express.ui.navset_bar function?",
+  "How can I specify the default selected nav item in a navset_bar?",
+  "What is the purpose of the navbar_options parameter in the express.ui.navset_bar function?",
+  "How can I configure the navbar appearance and behavior using the navbar_options parameter?",
+  "In what scenarios should I use the fillable parameter in the express.ui.navset_bar function?"
+]

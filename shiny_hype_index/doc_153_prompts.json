@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.ui.tooltip` function in Shiny for Python?",
+  "What parameters does the `express.ui.tooltip` function require for displaying additional information on a UI element?",
+  "How does the `express.ui.tooltip` function reactively respond to the visibility of the tooltip?",
+  "What does the `placement` parameter in the `express.ui.tooltip` function determine?",
+  "In what situations would a Shiny developer need to use the `express.ui.tooltip` function with additional Bootstrap options?"
+]

@@ -1,0 +1,332 @@
+{
+  "metadata": {
+    "title": "Structured data – Shiny for Python",
+    "description": "",
+    "url": "docs/genai-structured-data.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🤖 Generative AI",
+        "Structured data"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Structured data"
+    },
+    {
+      "type": "p",
+      "text": "LLMs are quite good at extracting structured data from unstructured text, images, and more. Although not always perfect, they can greatly reduce the manual work needed to extract information from large amounts of text or documents. Here are just a few scenarios where this can be useful:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Form processing: Extract structured field-value pairs from scanned documents, invoices, and forms to reduce manual data entry.",
+        "Automated table extraction: Identify and extract tables from unstructured text and images.",
+        "Sentiment analysis: Extract sentiment scores and associated entities from customer reviews or social media posts to gain insights into public opinion.",
+        "Classification: Classify text into predefined categories, such as spam detection or topic classification.",
+        "Executive summaries: Extract key points and structured data from lengthy reports or articles to create concise summaries for decision-makers."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Intro to .extract_data()"
+    },
+    {
+      "type": "p",
+      "text": "The chatlas package provides a simple way to extract structured data: the .extract_data() method. To use it, you’ll need three things:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Pick a model provider (e.g., ChatOpenAI()).",
+        "Define a data model by subclassing pydantic’s BaseModel class. Here you’ll define the fields and value types you’re expecting in the input.",
+        "Pass the unstructured input and data_model to the .extract_data() method."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Here you’ll define the fields and value types you’re expecting in the input."
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nchat_client = ChatOpenAI()\nchat_client.extract_data(\n  \"My name is Susan and I'm 13 years old\",\n  data_model=Person,\n)"
+    },
+    {
+      "type": "p",
+      "text": ".extract_data() then returns a dictionary matching the fields and types in the data_model:"
+    },
+    {
+      "type": "code",
+      "text": "{'name': 'Susan', 'age': 13}"
+    },
+    {
+      "type": "p",
+      "text": "For more examples and details on how .extract_data() works, see the chatlas documentation."
+    },
+    {
+      "type": "p",
+      "text": "chatlas also supports input other than text, such as images (content_image_file()) and PDF (content_pdf_file())."
+    },
+    {
+      "type": "h2",
+      "text": "Basic app"
+    },
+    {
+      "type": "p",
+      "text": "To go from this basic script to a Shiny app, you’ll at least want a couple things:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Change .extract_data() to await chat_client.extract_data_async(). This helps the Shiny app scale efficiently to multiple concurrent users. You could also wrap this part in a non-blocking task to keep the rest of the app responsive within the same session.",
+        "Decide how the user will provide and/or navigate the unstructured input(s). This could be a simple text input field (as below), a file upload, a chat interface, etc."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "This helps the Shiny app scale efficiently to multiple concurrent users.",
+        "You could also wrap this part in a non-blocking task to keep the rest of the app responsive within the same session."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "This could be a simple text input field (as below), a file upload, a chat interface, etc."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "For now, let’s keep it simple and use a text input field:"
+    },
+    {
+      "type": "code",
+      "text": "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nchat_client = ChatOpenAI()\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nwith ui.card():\n    ui.card_header(\"Enter some input with name and age\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"My name is Susan and I'm 13 years old\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract data\")\n\n    @render.ui\n    @reactive.event(input.submit)\n    async def result():\n        return ui.markdown(f\"Extracted data: `{await data()}`\")\n\n@reactive.calc\nasync def data():\n    return await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=Person,\n    )"
+    },
+    {
+      "type": "h2",
+      "text": "Editable data"
+    },
+    {
+      "type": "p",
+      "text": "Remember that the LLM is not perfect – you may want to manually correct or refine the extracted data. In this scenario, it may be useful to allow the user to edit the extracted data and download it when done. Here’s an example of how to do this in a named entity extraction app."
+    },
+    {
+      "type": "code",
+      "text": "from pydantic import BaseModel, Field\n\nclass NamedEntity(BaseModel):\n    \"\"\"Named entity in the text.\"\"\"\n\n    name: str = Field(description=\"The extracted entity name\")\n\n    type_: str = Field(\n        description=\"The entity type, e.g. 'person', 'location', 'organization'\"\n    )\n\n    context: str = Field(\n        description=\"The context in which the entity appears in the text.\"\n    )\n\nclass NamedEntities(BaseModel):\n    \"\"\"Named entities in the text.\"\"\"\n\n    entities: list[NamedEntity] = Field(description=\"Array of named entities\")\n\n_ = NamedEntities.model_rebuild()"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom chatlas import ChatOpenAI\nfrom faicons import icon_svg\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import NamedEntities\n\nchat_client = ChatOpenAI()\n\nwith ui.card():\n    ui.card_header(\"Named Entity Extraction\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"John works at Google in New York. He met with Sarah, the CEO of Acme Inc., last week in San Francisco.\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract\", icon=icon_svg(\"paper-plane\"))\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Extracted (editable) table\"\n\n        @render.download(filename=\"entities.csv\", label=\"Download CSV\")\n        async def download():\n            d = await data()\n            yield d.to_csv(index=False)\n\n    @render.data_frame\n    async def data_frame():\n        return render.DataGrid(\n            await data(),\n            editable=True,\n            width=\"100%\",\n        )\n\n@reactive.calc\n@reactive.event(input.user_input)\nasync def data():\n    d = await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=NamedEntities,\n    )\n    df = pd.DataFrame(d[\"entities\"])\n    return df.rename(columns={\"type_\": \"type\"})"
+    },
+    {
+      "type": "h2",
+      "text": "Populating inputs"
+    },
+    {
+      "type": "p",
+      "text": "For data extraction that isn’t tabular in nature, you might consider using extracted data to populate input controls that the user can make changes to."
+    },
+    {
+      "type": "p",
+      "text": "Building on Google’s invoice and form data extraction example, here’s an example of how you could use structured data to populate input controls (in addition to an editable table)."
+    },
+    {
+      "type": "code",
+      "text": "from pydantic import BaseModel, Field\n\nclass Item(BaseModel):\n    description: str = Field(description=\"The description of the item\")\n    quantity: float = Field(description=\"The Qty of the item\")\n    gross_worth: float = Field(description=\"The gross worth of the item\")\n\n\nclass Invoice(BaseModel):\n    \"\"\"Extract the invoice number, date and all list items with description, quantity and gross worth and the total gross worth.\"\"\"\n\n    invoice_number: str = Field(description=\"The invoice number e.g. 1234567890\")\n    date: str = Field(description=\"The date of the invoice e.g. 10/09/2012\")\n    items: list[Item] = Field(\n        description=\"The list of items with description, quantity and gross worth\"\n    )\n    total_gross_worth: float = Field(description=\"The total gross worth of the invoice\")\n\n_ = Invoice.model_rebuild()"
+    },
+    {
+      "type": "code",
+      "text": "import chatlas as ctl\nimport dateparser\nimport faicons\nimport pandas as pd\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import Invoice\n\nui.page_opts(\n    title=\"Invoice data extractor\",\n    fillable=True,\n)\n\nwith ui.sidebar():\n    ui.input_text(\n        \"url\",\n        \"Enter URL to PDF invoice\",\n        \"https://storage.googleapis.com/generativeai-downloads/data/pdf_structured_outputs/invoice.pdf\",\n    )\n\n    ui.input_task_button(\n        \"extract\",\n        \"Extract data\",\n        class_=\"btn btn-primary\",\n        icon=faicons.icon_svg(\"person-digging\"),\n    )\n\nchat_client = ctl.ChatGoogle()\n\n@reactive.calc\ndef invoice_data():\n    return chat_client.extract_data(\n        ctl.content_pdf_url(input.url()),\n        data_model=Invoice,\n    )\n\n\nwith ui.layout_column_wrap(height_equal=\"row\"):\n\n    with ui.card():\n        ui.card_header(\"Invoice metadata\")\n\n        @render.express\n        def invoice_metadata():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            d = invoice_data()\n\n            ui.input_text(\n                \"invoice_number\",\n                label=\"Invoice number\",\n                value=d[\"invoice_number\"],\n                width=\"auto\",\n            )\n            ui.input_date(\n                \"date\",\n                label=\"Date\",\n                value=dateparser.parse(d[\"date\"]),\n                width=\"auto\",\n            )\n            ui.input_numeric(\n                \"total_gross_worth\",\n                label=\"Total gross worth\",\n                value=d[\"total_gross_worth\"],\n                width=\"auto\",\n            )\n\n    with ui.card():\n        ui.card_header(\"Invoice items\")\n\n        @render.express(fill=True, fillable=True)\n        def invoice_items():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            @render.data_frame\n            def invoice_items_df():\n                df = pd.DataFrame(invoice_data()[\"items\"])\n                return render.DataGrid(df, editable=True)"
+    }
+  ],
+  "code_examples": [
+    "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nchat_client = ChatOpenAI()\nchat_client.extract_data(\n  \"My name is Susan and I'm 13 years old\",\n  data_model=Person,\n)",
+    "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nchat_client = ChatOpenAI()\nchat_client.extract_data(\n  \"My name is Susan and I'm 13 years old\",\n  data_model=Person,\n)",
+    "{'name': 'Susan', 'age': 13}",
+    "{'name': 'Susan', 'age': 13}",
+    "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nchat_client = ChatOpenAI()\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nwith ui.card():\n    ui.card_header(\"Enter some input with name and age\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"My name is Susan and I'm 13 years old\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract data\")\n\n    @render.ui\n    @reactive.event(input.submit)\n    async def result():\n        return ui.markdown(f\"Extracted data: `{await data()}`\")\n\n@reactive.calc\nasync def data():\n    return await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=Person,\n    )",
+    "from chatlas import ChatOpenAI\nfrom pydantic import BaseModel\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nchat_client = ChatOpenAI()\n\nclass Person(BaseModel):\n    name: str\n    age: int\n\nwith ui.card():\n    ui.card_header(\"Enter some input with name and age\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"My name is Susan and I'm 13 years old\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract data\")\n\n    @render.ui\n    @reactive.event(input.submit)\n    async def result():\n        return ui.markdown(f\"Extracted data: `{await data()}`\")\n\n@reactive.calc\nasync def data():\n    return await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=Person,\n    )",
+    "from pydantic import BaseModel, Field\n\nclass NamedEntity(BaseModel):\n    \"\"\"Named entity in the text.\"\"\"\n\n    name: str = Field(description=\"The extracted entity name\")\n\n    type_: str = Field(\n        description=\"The entity type, e.g. 'person', 'location', 'organization'\"\n    )\n\n    context: str = Field(\n        description=\"The context in which the entity appears in the text.\"\n    )\n\nclass NamedEntities(BaseModel):\n    \"\"\"Named entities in the text.\"\"\"\n\n    entities: list[NamedEntity] = Field(description=\"Array of named entities\")\n\n_ = NamedEntities.model_rebuild()",
+    "from pydantic import BaseModel, Field\n\nclass NamedEntity(BaseModel):\n    \"\"\"Named entity in the text.\"\"\"\n\n    name: str = Field(description=\"The extracted entity name\")\n\n    type_: str = Field(\n        description=\"The entity type, e.g. 'person', 'location', 'organization'\"\n    )\n\n    context: str = Field(\n        description=\"The context in which the entity appears in the text.\"\n    )\n\nclass NamedEntities(BaseModel):\n    \"\"\"Named entities in the text.\"\"\"\n\n    entities: list[NamedEntity] = Field(description=\"Array of named entities\")\n\n_ = NamedEntities.model_rebuild()",
+    "import pandas as pd\nfrom chatlas import ChatOpenAI\nfrom faicons import icon_svg\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import NamedEntities\n\nchat_client = ChatOpenAI()\n\nwith ui.card():\n    ui.card_header(\"Named Entity Extraction\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"John works at Google in New York. He met with Sarah, the CEO of Acme Inc., last week in San Francisco.\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract\", icon=icon_svg(\"paper-plane\"))\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Extracted (editable) table\"\n\n        @render.download(filename=\"entities.csv\", label=\"Download CSV\")\n        async def download():\n            d = await data()\n            yield d.to_csv(index=False)\n\n    @render.data_frame\n    async def data_frame():\n        return render.DataGrid(\n            await data(),\n            editable=True,\n            width=\"100%\",\n        )\n\n@reactive.calc\n@reactive.event(input.user_input)\nasync def data():\n    d = await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=NamedEntities,\n    )\n    df = pd.DataFrame(d[\"entities\"])\n    return df.rename(columns={\"type_\": \"type\"})",
+    "import pandas as pd\nfrom chatlas import ChatOpenAI\nfrom faicons import icon_svg\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import NamedEntities\n\nchat_client = ChatOpenAI()\n\nwith ui.card():\n    ui.card_header(\"Named Entity Extraction\")\n    ui.input_text_area(\n        \"user_input\", None, update_on=\"blur\", width=\"100%\",\n        value=\"John works at Google in New York. He met with Sarah, the CEO of Acme Inc., last week in San Francisco.\",\n    )\n    ui.input_action_button(\"submit\", label=\"Extract\", icon=icon_svg(\"paper-plane\"))\n\nwith ui.card():\n    with ui.card_header(class_=\"d-flex justify-content-between align-items-center\"):\n        \"Extracted (editable) table\"\n\n        @render.download(filename=\"entities.csv\", label=\"Download CSV\")\n        async def download():\n            d = await data()\n            yield d.to_csv(index=False)\n\n    @render.data_frame\n    async def data_frame():\n        return render.DataGrid(\n            await data(),\n            editable=True,\n            width=\"100%\",\n        )\n\n@reactive.calc\n@reactive.event(input.user_input)\nasync def data():\n    d = await chat_client.extract_data_async(\n        input.user_input(),\n        data_model=NamedEntities,\n    )\n    df = pd.DataFrame(d[\"entities\"])\n    return df.rename(columns={\"type_\": \"type\"})",
+    "from pydantic import BaseModel, Field\n\nclass Item(BaseModel):\n    description: str = Field(description=\"The description of the item\")\n    quantity: float = Field(description=\"The Qty of the item\")\n    gross_worth: float = Field(description=\"The gross worth of the item\")\n\n\nclass Invoice(BaseModel):\n    \"\"\"Extract the invoice number, date and all list items with description, quantity and gross worth and the total gross worth.\"\"\"\n\n    invoice_number: str = Field(description=\"The invoice number e.g. 1234567890\")\n    date: str = Field(description=\"The date of the invoice e.g. 10/09/2012\")\n    items: list[Item] = Field(\n        description=\"The list of items with description, quantity and gross worth\"\n    )\n    total_gross_worth: float = Field(description=\"The total gross worth of the invoice\")\n\n_ = Invoice.model_rebuild()",
+    "from pydantic import BaseModel, Field\n\nclass Item(BaseModel):\n    description: str = Field(description=\"The description of the item\")\n    quantity: float = Field(description=\"The Qty of the item\")\n    gross_worth: float = Field(description=\"The gross worth of the item\")\n\n\nclass Invoice(BaseModel):\n    \"\"\"Extract the invoice number, date and all list items with description, quantity and gross worth and the total gross worth.\"\"\"\n\n    invoice_number: str = Field(description=\"The invoice number e.g. 1234567890\")\n    date: str = Field(description=\"The date of the invoice e.g. 10/09/2012\")\n    items: list[Item] = Field(\n        description=\"The list of items with description, quantity and gross worth\"\n    )\n    total_gross_worth: float = Field(description=\"The total gross worth of the invoice\")\n\n_ = Invoice.model_rebuild()",
+    "import chatlas as ctl\nimport dateparser\nimport faicons\nimport pandas as pd\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import Invoice\n\nui.page_opts(\n    title=\"Invoice data extractor\",\n    fillable=True,\n)\n\nwith ui.sidebar():\n    ui.input_text(\n        \"url\",\n        \"Enter URL to PDF invoice\",\n        \"https://storage.googleapis.com/generativeai-downloads/data/pdf_structured_outputs/invoice.pdf\",\n    )\n\n    ui.input_task_button(\n        \"extract\",\n        \"Extract data\",\n        class_=\"btn btn-primary\",\n        icon=faicons.icon_svg(\"person-digging\"),\n    )\n\nchat_client = ctl.ChatGoogle()\n\n@reactive.calc\ndef invoice_data():\n    return chat_client.extract_data(\n        ctl.content_pdf_url(input.url()),\n        data_model=Invoice,\n    )\n\n\nwith ui.layout_column_wrap(height_equal=\"row\"):\n\n    with ui.card():\n        ui.card_header(\"Invoice metadata\")\n\n        @render.express\n        def invoice_metadata():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            d = invoice_data()\n\n            ui.input_text(\n                \"invoice_number\",\n                label=\"Invoice number\",\n                value=d[\"invoice_number\"],\n                width=\"auto\",\n            )\n            ui.input_date(\n                \"date\",\n                label=\"Date\",\n                value=dateparser.parse(d[\"date\"]),\n                width=\"auto\",\n            )\n            ui.input_numeric(\n                \"total_gross_worth\",\n                label=\"Total gross worth\",\n                value=d[\"total_gross_worth\"],\n                width=\"auto\",\n            )\n\n    with ui.card():\n        ui.card_header(\"Invoice items\")\n\n        @render.express(fill=True, fillable=True)\n        def invoice_items():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            @render.data_frame\n            def invoice_items_df():\n                df = pd.DataFrame(invoice_data()[\"items\"])\n                return render.DataGrid(df, editable=True)",
+    "import chatlas as ctl\nimport dateparser\nimport faicons\nimport pandas as pd\n\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\n\nfrom data_model import Invoice\n\nui.page_opts(\n    title=\"Invoice data extractor\",\n    fillable=True,\n)\n\nwith ui.sidebar():\n    ui.input_text(\n        \"url\",\n        \"Enter URL to PDF invoice\",\n        \"https://storage.googleapis.com/generativeai-downloads/data/pdf_structured_outputs/invoice.pdf\",\n    )\n\n    ui.input_task_button(\n        \"extract\",\n        \"Extract data\",\n        class_=\"btn btn-primary\",\n        icon=faicons.icon_svg(\"person-digging\"),\n    )\n\nchat_client = ctl.ChatGoogle()\n\n@reactive.calc\ndef invoice_data():\n    return chat_client.extract_data(\n        ctl.content_pdf_url(input.url()),\n        data_model=Invoice,\n    )\n\n\nwith ui.layout_column_wrap(height_equal=\"row\"):\n\n    with ui.card():\n        ui.card_header(\"Invoice metadata\")\n\n        @render.express\n        def invoice_metadata():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            d = invoice_data()\n\n            ui.input_text(\n                \"invoice_number\",\n                label=\"Invoice number\",\n                value=d[\"invoice_number\"],\n                width=\"auto\",\n            )\n            ui.input_date(\n                \"date\",\n                label=\"Date\",\n                value=dateparser.parse(d[\"date\"]),\n                width=\"auto\",\n            )\n            ui.input_numeric(\n                \"total_gross_worth\",\n                label=\"Total gross worth\",\n                value=d[\"total_gross_worth\"],\n                width=\"auto\",\n            )\n\n    with ui.card():\n        ui.card_header(\"Invoice items\")\n\n        @render.express(fill=True, fillable=True)\n        def invoice_items():\n            if not input.extract():\n                \"Click the button to extract data\"\n                return\n\n            @render.data_frame\n            def invoice_items_df():\n                df = pd.DataFrame(invoice_data()[\"items\"])\n                return render.DataGrid(df, editable=True)"
+  ],
+  "toc": [
+    {
+      "title": "Intro to .extract_data()",
+      "url": "docs/#intro-to-.extract_data"
+    },
+    {
+      "title": "Basic app",
+      "url": "docs/#basic-app"
+    },
+    {
+      "title": "Editable data",
+      "url": "docs/#editable-data"
+    },
+    {
+      "title": "Populating inputs",
+      "url": "docs/#populating-inputs"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

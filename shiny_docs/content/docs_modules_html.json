@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "title": "Shiny Modules – Shiny for Python",
+    "description": "",
+    "url": "docs/modules.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📦 Modules",
+        "Shiny Modules"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Shiny Modules"
+    },
+    {
+      "type": "h2",
+      "text": "Introduction"
+    },
+    {
+      "type": "p",
+      "text": "Shiny’s execution model allows you to write large applications that render quickly for the user. However, as your application grows in complexity, your code base can become difficult to understand or maintain. While it’s easy to write a small application without worrying too much about the quality of your code, as your application grows, you need to think more carefully about how your code is organized. Writing modules in Shiny is the best strategy for organizing a large Shiny code base. With modules, you can break your application into small pieces that can be reasoned about separately and composed to build larger applications. This article explains the basics of why we need modules and how to use them, and the next article explains how to communicate between modules."
+    },
+    {
+      "type": "p",
+      "text": "Note that while Shiny modules are analogous to Python modules, they are not the same. Python modules are a generic way to organize objects in a namespace, while Shiny modules are used to encapsulate reactive components in a namespace."
+    },
+    {
+      "type": "p",
+      "text": "Modules are supported in Shiny Express apps as of version 0.10.0."
+    },
+    {
+      "type": "h2",
+      "text": "Functions in Shiny"
+    },
+    {
+      "type": "p",
+      "text": "One of the most important things you can do to improve your code quality is to extract a piece of logic into a function. Using functions allows you to keep the logic in one place, which makes it easier to understand and harder to make mistakes. Functions also allow you to define local variables within the function’s scope, which helps you avoid naming conflicts with the global environment."
+    },
+    {
+      "type": "p",
+      "text": "While many people are comfortable using functions in their day-to-day programming activities, they often forget to use them when building user interfaces, but functions are just as powerful in this context as they are in any other. To use functions in your Shiny UI, all you have to do is write a function that returns a valid UI element. For example, let’s imagine you had a bunch of sliders which mostly had the same values:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.input_slider(\"n1\", \"N\", 0, 100, 20)\nui.input_slider(\"n2\", \"N\", 0, 100, 20)\nui.input_slider(\"n3\", \"N\", 0, 100, 20)\nui.input_slider(\"n4\", \"N\", 0, 100, 20)\nui.input_slider(\"n5\", \"N\", 0, 100, 20)\nui.input_slider(\"n6\", \"N\", 0, 100, 20)"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n1\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n2\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n3\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n4\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n5\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n6\", \"N\", 0, 100, 20),\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "p",
+      "text": "This code has a lot of repetition which makes it difficult to manage. For example if we wanted to change the maximum value of all of those sliders we would need to make five changes instead of one. Instead of tolerating this repetition, we can create a function which returns an ui.input_slider, and call that function with different ids. You can use this function in combination with list comprehension to further reduce repetition in your code."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Using a function",
+        "Iterating across a list",
+        "Iterating across two lists"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A simple function cleans up your code, but still requires multiple calls to that function."
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nmy_slider(\"n1\")\nmy_slider(\"n2\")\nmy_slider(\"n3\")\nmy_slider(\"n4\")\nmy_slider(\"n5\")"
+    },
+    {
+      "type": "p",
+      "text": "List comprehension allows you to apply a ui-generating function to a list of ids."
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\n[my_slider(x) for x in ids]"
+    },
+    {
+      "type": "p",
+      "text": "For more complicated functions you can use the zip function to turn multiple lists into a list of tuples which allows you to use list comprehension to generate UI elements."
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\n[my_slider(x, y) for x, y in zip(numbers, labels)]"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Using a function",
+        "Iterating across a list",
+        "Iterating across two lists"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A simple function cleans up your code, but still requires multiple calls to that function."
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\napp_ui = ui.page_fluid(\n    my_slider(\"n1\"),\n    my_slider(\"n2\"),\n    my_slider(\"n3\"),\n    my_slider(\"n4\"),\n    my_slider(\"n5\"),\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "p",
+      "text": "List comprehension allows you to apply a ui-generating function to a list of ids."
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x) for x in ids]\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "p",
+      "text": "For more complicated functions you can use the zip function to turn multiple lists into a list of tuples which allows you to use list comprehension to generate UI elements."
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x, y) for x, y in zip(numbers, labels)]\n)\n\napp = App(app_ui, None)"
+    },
+    {
+      "type": "h2",
+      "text": "Why do we need modules?"
+    },
+    {
+      "type": "p",
+      "text": "Using functions in this way is a great way to improve your application code, but it has two main problems. First, while we’re able to use locally scoped variables within the function, each input or output ID needs to be unique across the entire Shiny application. For example, consider this function which returns two UI elements:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import expressify, input, render, module, ui\n\n@expressify\ndef io_row():\n    with ui.layout_columns():\n        ui.input_text(\"text_input\", \"Enter text\")\n\n        @render.text\n        def text_output():\n            return f'You entered \"{input.text_input()}\"'\n\nio_row()"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\ndef io_row():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_input\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_output\")),\n    )\n\napp_ui = ui.page_fluid(\n    io_row(),\n)\n\ndef server(input, output, session):\n    @render.text\n    def text_output():\n        return f'You entered \"{input.text_input()}\"'\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "The io_row() function works fine in this case, but if you try to use it more than once, your app will not render properly. The reason is that Shiny requires all IDs in the UI to be unique, and if we call this function more than once, there will be several elements with the text_input id and several elements with the text_output id. When that happens, Shiny doesn’t know how to connect particular inputs to particular outputs."
+    },
+    {
+      "type": "p",
+      "text": "One possible way to address this is to add a prefix argument to our function and append that to the ids of all the returned elements. (Note that this can be done with Shiny Core applications, but is difficult to do with Shiny Express.)"
+    },
+    {
+      "type": "p",
+      "text": "Modules solve these problems by encapsulating both the UI and server logic in their own namespace. A module namespace can be thought of as a container for a module’s code, and helps to keep the module’s variables, functions, and classes separate from those in other modules. This separation prevents naming conflicts and makes the code easier to understand and manage. A namespace is a unique identifier that Shiny assigns to each instance of a module to keep its input and output IDs separate from the IDs of other instances and from the rest of the Shiny application."
+    },
+    {
+      "type": "h2",
+      "text": "How to use modules"
+    },
+    {
+      "type": "p",
+      "text": "There are two sides to modules: creating them, and using them. Each side can be done with Shiny Express or Shiny Core syntax. If a module is written with Core syntax, it can be used in an Express app, and vice versa. In the examples below, we’ll create and use a module using the same type of syntax, but they can work interchangeably."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "To create a module with Shiny Express, use the @module decorator on a function that takes input, output, and session as parameters. It can also accept additional parameters. In the example below, it takes one extra parameter, named placeholder."
+    },
+    {
+      "type": "p",
+      "text": "The signature of this function, with input, output, and session is the same as a the server function in a Shiny Core app."
+    },
+    {
+      "type": "p",
+      "text": "To use the module, just call the decorated function with a first parameter which is the ID,"
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import module, render, ui\n\n# Define a module function, which takes input, output, and session\n@module\ndef io_row(input, output, session):\n    with ui.layout_columns():\n        with ui.card():\n            ui.input_text(f\"text_input\", \"Enter text\")\n        with ui.card():\n            @render.text\n            def text_out():\n                return f'You entered \"{input.text_input()}\"'\n\n# Call the module function with two different namespace IDs\nio_row(\"first\")\nio_row(\"second\")"
+    },
+    {
+      "type": "p",
+      "text": "One thing you might have noticed is that when we call the decorated function, we just pass a namespace ID string to it – we don’t pass in input, output, and session. This is because the @module decorator wraps the function so that those three parameters are hidden from the caller, and requires an ID to be passed in."
+    },
+    {
+      "type": "p",
+      "text": "For example if your function’s signature looks like this:"
+    },
+    {
+      "type": "code",
+      "text": "@module\ndef my_module(input, output, session):\n    ..."
+    },
+    {
+      "type": "p",
+      "text": "Then after it’s wrapped by the decorator, it looks like this from the outside (but note that id is a positional-only parameter):"
+    },
+    {
+      "type": "code",
+      "text": "def my_module(id):\n    ..."
+    },
+    {
+      "type": "p",
+      "text": "If you want your module to take additional parameters, you can just add them on to the function. In the example below, we’ve add another parameter named placeholder."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import module, render, ui\n\n@module\ndef io_row(input, output, session, placeholder=\"\"):\n    with ui.layout_columns():\n        with ui.card():\n            ui.input_text(f\"text_input\", \"Enter text\", placeholder=placeholder)\n        with ui.card():\n            @render.text\n            def text_out():\n                return f'You entered \"{input.text_input()}\"'\n\n\nextra_ids = [\"row_3\", \"row_4\", \"row_5\"]\n\nio_row(\"row_1\")\n# Call with a different ID and pass in argument for placeholder\nio_row(\"row_2\", placeholder=\"Enter second thing\")\n# We can add more instances programmatically\n[io_row(x) for x in extra_ids]"
+    },
+    {
+      "type": "p",
+      "text": "At their core, modules are just functions and so anything you can do with a function you can also do with a module. Modules can take any argument, and can return any value to the caller. Modules usually include both UI and server elements which work together to encapsulate a part of your application, and the module UI and server work exactly the same way they do in a regular Shiny application."
+    },
+    {
+      "type": "p",
+      "text": "The UI part of the module is a function which returns UI elements, and is decorated with the @module.ui decorator. This decorator sets a default module namespace, so each component created by the function has a prefix implicitly added to its ID."
+    },
+    {
+      "type": "code",
+      "text": "@module.ui\ndef row_ui():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_in\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_out\")),\n    )"
+    },
+    {
+      "type": "p",
+      "text": "The module server function looks just like a Shiny app server function, except it’s decorated with the @module.server decorator."
+    },
+    {
+      "type": "code",
+      "text": "@module.server\ndef row_server(input, output, session):\n    @output\n    @render.text\n    def text_out():\n        return f'You entered \"{input.text_in()}\"'"
+    },
+    {
+      "type": "p",
+      "text": "To use this module in an application, you call the module UI and server functions inside of the application UI and server functions. Every module call includes an id argument which defines the module’s namespace. This id has two requirements. First, it must be unique in a single scope, and can’t be duplicated in a given application or module definition. If you need to generate many instances of a single module, it is often a good idea to store their ids in a list, and use list comprehension to generate the UI and server instances. Second, the UI and server ids must match. This ensures that the UI and server instances exist in the same namespace, and if the ids don’t match, the UI and server modules will not be able to interact."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, module, render, ui\n\n\n@module.ui\ndef row_ui():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_in\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_out\")),\n    )\n\n\n@module.server\ndef row_server(input, output, session):\n    @output\n    @render.text\n    def text_out():\n        return f'You entered \"{input.text_in()}\"'\n\nextra_ids = [\"row_3\", \"row_4\", \"row_5\"]\n\napp_ui = ui.page_fluid(\n    row_ui(\"row_1\"),\n    row_ui(\"row_2\"),\n    [row_ui(x) for x in extra_ids]\n)\n\n\ndef server(input, output, session):\n    row_server(\"row_1\")\n    row_server(\"row_2\")\n    [row_server(x) for x in extra_ids]\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Since modules allow you to tie UI and Server code together in the same namespace, you can include arbitrarily complex interactions within your module. Anything that you can do in a Shiny app can also be done inside of a module, and modules can themselves call other modules. This allows you to break your app up into building blocks of various sizes, compose those blocks to build different applications, and share them with others."
+    },
+    {
+      "type": "h2",
+      "text": "Conclusion"
+    },
+    {
+      "type": "p",
+      "text": "Whenever you find that your Shiny code is repetitive, you should consider whether it’s worth extracting some logic into a function or a module. This article has gone through the basics of modules to explain what they are, why we need them, and how to include them in your application. Once you start using modules, the natural next question is how to communicate between different modules and the rest of the application. To learn more about that see the module communication article."
+    }
+  ],
+  "code_examples": [
+    "from shiny.express import ui\n\nui.input_slider(\"n1\", \"N\", 0, 100, 20)\nui.input_slider(\"n2\", \"N\", 0, 100, 20)\nui.input_slider(\"n3\", \"N\", 0, 100, 20)\nui.input_slider(\"n4\", \"N\", 0, 100, 20)\nui.input_slider(\"n5\", \"N\", 0, 100, 20)\nui.input_slider(\"n6\", \"N\", 0, 100, 20)",
+    "from shiny.express import ui\n\nui.input_slider(\"n1\", \"N\", 0, 100, 20)\nui.input_slider(\"n2\", \"N\", 0, 100, 20)\nui.input_slider(\"n3\", \"N\", 0, 100, 20)\nui.input_slider(\"n4\", \"N\", 0, 100, 20)\nui.input_slider(\"n5\", \"N\", 0, 100, 20)\nui.input_slider(\"n6\", \"N\", 0, 100, 20)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n1\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n2\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n3\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n4\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n5\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n6\", \"N\", 0, 100, 20),\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n1\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n2\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n3\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n4\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n5\", \"N\", 0, 100, 20),\n    ui.input_slider(\"n6\", \"N\", 0, 100, 20),\n)\n\napp = App(app_ui, None)",
+    "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nmy_slider(\"n1\")\nmy_slider(\"n2\")\nmy_slider(\"n3\")\nmy_slider(\"n4\")\nmy_slider(\"n5\")",
+    "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nmy_slider(\"n1\")\nmy_slider(\"n2\")\nmy_slider(\"n3\")\nmy_slider(\"n4\")\nmy_slider(\"n5\")",
+    "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\n[my_slider(x) for x in ids]",
+    "from shiny.express import ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\n[my_slider(x) for x in ids]",
+    "from shiny.express import ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\n[my_slider(x, y) for x, y in zip(numbers, labels)]",
+    "from shiny.express import ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\n[my_slider(x, y) for x, y in zip(numbers, labels)]",
+    "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\napp_ui = ui.page_fluid(\n    my_slider(\"n1\"),\n    my_slider(\"n2\"),\n    my_slider(\"n3\"),\n    my_slider(\"n4\"),\n    my_slider(\"n5\"),\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\napp_ui = ui.page_fluid(\n    my_slider(\"n1\"),\n    my_slider(\"n2\"),\n    my_slider(\"n3\"),\n    my_slider(\"n4\"),\n    my_slider(\"n5\"),\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x) for x in ids]\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\ndef my_slider(id):\n    return ui.input_slider(id, \"N\", 0, 100, 20)\n\nids = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x) for x in ids]\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x, y) for x, y in zip(numbers, labels)]\n)\n\napp = App(app_ui, None)",
+    "from shiny import App, ui\n\ndef my_slider(id, label):\n    return ui.input_slider(id, label + \" Number\", 0, 100, 20)\n\nnumbers = [\"n1\", \"n2\", \"n3\", \"n4\", \"n5\"]\nlabels = [\"First\", \"Second\", \"Third\", \"Fourth\", \"Fifth\"]\n\napp_ui = ui.page_fluid(\n    [my_slider(x, y) for x, y in zip(numbers, labels)]\n)\n\napp = App(app_ui, None)",
+    "from shiny.express import expressify, input, render, module, ui\n\n@expressify\ndef io_row():\n    with ui.layout_columns():\n        ui.input_text(\"text_input\", \"Enter text\")\n\n        @render.text\n        def text_output():\n            return f'You entered \"{input.text_input()}\"'\n\nio_row()",
+    "from shiny.express import expressify, input, render, module, ui\n\n@expressify\ndef io_row():\n    with ui.layout_columns():\n        ui.input_text(\"text_input\", \"Enter text\")\n\n        @render.text\n        def text_output():\n            return f'You entered \"{input.text_input()}\"'\n\nio_row()",
+    "from shiny import App, render, ui\n\ndef io_row():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_input\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_output\")),\n    )\n\napp_ui = ui.page_fluid(\n    io_row(),\n)\n\ndef server(input, output, session):\n    @render.text\n    def text_output():\n        return f'You entered \"{input.text_input()}\"'\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\ndef io_row():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_input\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_output\")),\n    )\n\napp_ui = ui.page_fluid(\n    io_row(),\n)\n\ndef server(input, output, session):\n    @render.text\n    def text_output():\n        return f'You entered \"{input.text_input()}\"'\n\napp = App(app_ui, server)",
+    "from shiny.express import module, render, ui\n\n# Define a module function, which takes input, output, and session\n@module\ndef io_row(input, output, session):\n    with ui.layout_columns():\n        with ui.card():\n            ui.input_text(f\"text_input\", \"Enter text\")\n        with ui.card():\n            @render.text\n            def text_out():\n                return f'You entered \"{input.text_input()}\"'\n\n# Call the module function with two different namespace IDs\nio_row(\"first\")\nio_row(\"second\")",
+    "from shiny.express import module, render, ui\n\n# Define a module function, which takes input, output, and session\n@module\ndef io_row(input, output, session):\n    with ui.layout_columns():\n        with ui.card():\n            ui.input_text(f\"text_input\", \"Enter text\")\n        with ui.card():\n            @render.text\n            def text_out():\n                return f'You entered \"{input.text_input()}\"'\n\n# Call the module function with two different namespace IDs\nio_row(\"first\")\nio_row(\"second\")",
+    "@module\ndef my_module(input, output, session):\n    ...",
+    "@module\ndef my_module(input, output, session):\n    ...",
+    "def my_module(id):\n    ...",
+    "def my_module(id):\n    ...",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny.express import module, render, ui\n\n@module\ndef io_row(input, output, session, placeholder=\"\"):\n    with ui.layout_columns():\n        with ui.card():\n            ui.input_text(f\"text_input\", \"Enter text\", placeholder=placeholder)\n        with ui.card():\n            @render.text\n            def text_out():\n                return f'You entered \"{input.text_input()}\"'\n\n\nextra_ids = [\"row_3\", \"row_4\", \"row_5\"]\n\nio_row(\"row_1\")\n# Call with a different ID and pass in argument for placeholder\nio_row(\"row_2\", placeholder=\"Enter second thing\")\n# We can add more instances programmatically\n[io_row(x) for x in extra_ids]",
+    "@module.ui\ndef row_ui():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_in\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_out\")),\n    )",
+    "@module.ui\ndef row_ui():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_in\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_out\")),\n    )",
+    "@module.server\ndef row_server(input, output, session):\n    @output\n    @render.text\n    def text_out():\n        return f'You entered \"{input.text_in()}\"'",
+    "@module.server\ndef row_server(input, output, session):\n    @output\n    @render.text\n    def text_out():\n        return f'You entered \"{input.text_in()}\"'",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n## file: app.py\nfrom shiny import App, module, render, ui\n\n\n@module.ui\ndef row_ui():\n    return ui.layout_columns(\n        ui.card(ui.input_text(\"text_in\", \"Enter text\")),\n        ui.card(ui.output_text(\"text_out\")),\n    )\n\n\n@module.server\ndef row_server(input, output, session):\n    @output\n    @render.text\n    def text_out():\n        return f'You entered \"{input.text_in()}\"'\n\nextra_ids = [\"row_3\", \"row_4\", \"row_5\"]\n\napp_ui = ui.page_fluid(\n    row_ui(\"row_1\"),\n    row_ui(\"row_2\"),\n    [row_ui(x) for x in extra_ids]\n)\n\n\ndef server(input, output, session):\n    row_server(\"row_1\")\n    row_server(\"row_2\")\n    [row_server(x) for x in extra_ids]\n\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "Introduction",
+      "url": "docs/#introduction"
+    },
+    {
+      "title": "Functions in Shiny",
+      "url": "docs/#functions-in-shiny"
+    },
+    {
+      "title": "Why do we need modules?",
+      "url": "docs/#why-do-we-need-modules"
+    },
+    {
+      "title": "How to use modules",
+      "url": "docs/#how-to-use-modules"
+    },
+    {
+      "title": "Conclusion",
+      "url": "docs/#conclusion"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

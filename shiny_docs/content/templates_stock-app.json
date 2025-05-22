@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Stock price tracker",
+    "description": "Use the stock-app template as a foundation for your next Shiny app.",
+    "url": "templates/stock-app/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Stock price tracker"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stock-app --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template stock-app --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "A basic stock price tracker app. It allows the user to select a stock and a date range, and then displays the stock’s price and volume over time. The value boxes display the stock’s current price and change in price from the previous day. Note that the icon for the stock price change is a green arrow pointing up if the price has increased, and a red arrow pointing down if the price has decreased."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Select input",
+        "Date range input",
+        "Value box",
+        "Plotly",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "cufflinks",
+        "faicons",
+        "pandas",
+        "plotly",
+        "shinywidgets",
+        "yfinance"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template stock-app --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template stock-app --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template stock-app --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template stock-app --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

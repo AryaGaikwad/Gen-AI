@@ -1,0 +1,7 @@
+[
+  "What does the function ui.modal_remove do in Shiny for Python?",
+  "How can a modal dialog box be removed programmatically in Shiny for Python?",
+  "What are the different ways to remove a modal dialog box in Shiny for Python?",
+  "When removing a modal dialog box using ui.modal_remove in Shiny for Python, what happens if the Session instance is not provided?",
+  "In Shiny for Python, how can the user manually remove a modal dialog box if a modal_button is provided or if the modal is created with easy_close=True?"
+]

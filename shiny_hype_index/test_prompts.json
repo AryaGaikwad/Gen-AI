@@ -1,0 +1,7 @@
+[
+  "What are the basics of creating Shiny apps and how do input and output components interact?",
+  "How can I include dynamic plots, tables, and interactive widgets in my Shiny application?",
+  "What layout components does Shiny provide to help with arranging inputs and outputs?",
+  "How does Shiny handle reactivity and minimize re-rendering when dependencies change?",
+  "In what ways can I customize my Shiny app using custom HTML, CSS, and JavaScript?"
+]

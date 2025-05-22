@@ -1,0 +1,7 @@
+[
+  "What method does the session.Session class provide to close the session?",
+  "What is the purpose of the dynamic_route method in the session.Session class?",
+  "How can a function be registered to be called after the client has disconnected in Shiny for Python?",
+  "What is the purpose of the send_custom_message method in the session.Session class?",
+  "How can a client message handler be set using the set_message_handler method in Shiny for Python?"
+]

@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "title": "Shinylive: Shiny + WebAssembly – Shiny for Python",
+    "description": "",
+    "url": "get-started/shinylive.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Deploy",
+        "Shinylive: Shiny + WebAssembly"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Shinylive: Shiny + WebAssembly"
+    },
+    {
+      "type": "p",
+      "text": "Shinylive allows you to run Shiny applications entirely in a web browser, without the need for a separate server running Python."
+    },
+    {
+      "type": "p",
+      "text": "The traditional way of deploying Shiny involves in a separate server and client: the server runs Python and Shiny, and clients connect via the web browser. Each client keeps an open websocket connection as long as they are using the application."
+    },
+    {
+      "type": "p",
+      "text": "When an application is deployed with Shinylive, Python and Shiny run in the web browser: the browser is effectively both the client and server for the application. There is a web server that serves files, but it does not run Python or Shiny—it can be a “dumb” static web server."
+    },
+    {
+      "type": "p",
+      "text": "If you’ve looked at any of the documentation on this web site, or have played with any of the examples at shinylive.io, you have already used Shinylive. The examples on this site (with a handful of exceptions) and the shinylive.io examples all run using Shinylive, meaning that they run in your web browser."
+    },
+    {
+      "type": "p",
+      "text": "This is all possible because of the magic of WebAssembly and Pyodide."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "WebAssembly (wasm) is a binary format for compiled programs that can run in a web browser at near-native speeds.",
+        "Pyodide is a port of Python and many packages, compiled to WebAssembly."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Applications deployed with Shinylive have some advantages and disadvantages compared to a traditional Shiny deployment. The advantages include:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "No installation: No need to install Python or Shiny on a computer.",
+        "Easy sharing: Share applications with just a URL.",
+        "Easy deployment: Applications can be deployed to any static web hosting service.",
+        "Easy scaling: Since applications can be served as static files on a “dumb” web server it is easy to scale to high traffic loads.",
+        "Security: Because the code is not running on a server, it eliminates a class of potential security risks. The code runs in the client web browser’s code sandbox, which a platform that has been battle tested over the years."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Some of the disadvantages of using Shinylive deployments compared to traditional Shiny deployments:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Fewer packages: Not all Python packages are available in Pyodide.",
+        "Large download size: The downloaded payload size may be significantly larger. Downloading Pyodide and Python packages to run a Shiny application requires about 13MB of data. Other packages can significantly increase the amount of data. For example, numpy is 7.5 MB, pandas is 13 MB, and matplotlib is 11.5 MB. However, all of this data will be cached by the browser so that it will load quickly in subsequent runs.",
+        "No secrets: Code and data for the application must be sent to the browser, so it can’t be kept secret from the user.",
+        "Restricted network: For security reasons, the web browser itself imposes restrictions on network communication."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "For certain types of Shiny applications, some of the limitations can be worked around by pre-processing a data set and including it with the application."
+    },
+    {
+      "type": "p",
+      "text": "One important difference between traditional Shiny and Shinylive deployments is that compute power is shifted from the server to the client. In many cases, the client browser will have more compute power than a server, especially since the compute power of the user’s machine is not shared across multiple users. However, in other cases, this can be a roadblock, such as when a powerful server is needed to perform very intensive computations or requires access to a private data store."
+    },
+    {
+      "type": "h2",
+      "text": "Sharing and deploying Shinylive applications"
+    },
+    {
+      "type": "p",
+      "text": "In this document, we’ll use the terms sharing and deploying Shiny applications. When we talk about sharing, we’re referring to a method of encoding the application in a URL so that others can run the application if they simply have the URL. Sharing an application via a URL does not require you to have a server—you can simply use the server at shinylive.io."
+    },
+    {
+      "type": "p",
+      "text": "When we talk about deploying applications, we mean creating a set of files which are to be served up by a web server. This does require you to have a web server. For a traditional Shiny deployment, this means having a server that runs R or Python. For a Shinylive deployment, this only requires a server that can serve static files—it can be a “dumb” web server which does not run Python. For example you could deploy your application to GitHub Pages or Netlify."
+    },
+    {
+      "type": "h3",
+      "text": "Sharing Shinylive applications"
+    },
+    {
+      "type": "p",
+      "text": "The easiest way to share an application is to create it on the Shinylive editor, and then click on the “Create share link” button. This will encode the application in a URL, which you can then share with others."
+    },
+    {
+      "type": "p",
+      "text": "The dialog box that appears will provide two links: one for the application in the Shinylive editor, and one with for the application running standalone."
+    },
+    {
+      "type": "p",
+      "text": "Here is an example of a Shiny application that is encoded in a share URL. This will lead to the application with an editor and Python console:"
+    },
+    {
+      "type": "p",
+      "text": "https://shinylive.io/py/editor/#code=NobwRAdghgtgpmAXGKAHVA6VBPMAa…"
+    },
+    {
+      "type": "p",
+      "text": "If you want to share just the Shiny application, without the editor and console, use the other link, which contains /app/ instead of /editor/:"
+    },
+    {
+      "type": "p",
+      "text": "https://shinylive.io/py/app/#code=NobwRAdghgtgpmAXGKAHVA6VBPMAa…"
+    },
+    {
+      "type": "p",
+      "text": "These URLs have a hash that includes #code=.... The code for the entire application is encoded in that hash. Notably, web browsers do not send the hash to the web server, so the server actually never sees the content of the Shiny application."
+    },
+    {
+      "type": "p",
+      "text": "The sharing dialog shows how long the URL is, in bytes. If you want to share a link on Twitter, the maximum length of a URL is about 4000 bytes, and it will be shortened using their t.co service. If you use bit.ly, the maximum length is about 2000 bytes. These link shorteners redirect the user to the longer URL."
+    },
+    {
+      "type": "h4",
+      "text": "Sharing with gists"
+    },
+    {
+      "type": "p",
+      "text": "Another way of sharing Shinylive applications is by using a GitHub gist. For example, the gist here:"
+    },
+    {
+      "type": "p",
+      "text": "https://gist.github.com/wch/e62218aa28bf26e785fc6cb99efe8efe"
+    },
+    {
+      "type": "p",
+      "text": "Can be run with Shinylive here:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Editor: https://shinylive.io/py/editor/#gist=e62218aa28bf26e785fc6cb99efe8efe",
+        "App: https://shinylive.io/py/app/#gist=e62218aa28bf26e785fc6cb99efe8efe"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Notice that the #gist=... part of the URL simply uses the ID of the gist."
+    },
+    {
+      "type": "p",
+      "text": "To create a gist, you can go to gist.github.com/, or you can use GitHub’s gh command-line tool to create a gist from files on disk. To do that, first install gh, then use gh gist create:"
+    },
+    {
+      "type": "code",
+      "text": "gh gist create --public app.py"
+    },
+    {
+      "type": "p",
+      "text": "Sharing via gists has some important differences from sharing via encoded-app URL. If you use a gist, you can modify the gist, and the sharing URL will stay the same. If you are sharing an encoded-app URL, the URL itself contains the application code, so if you want modify the code, you will have to generate a new URL and share that."
+    },
+    {
+      "type": "p",
+      "text": "Sharing via GitHub gist may not be appropriate for all use cases, because the GitHub API has rate limits: for a given IP address, the GitHub API allows 60 requests per hour. So an end user would only be able to load Shinylive applications 60 times in an hour. And if there are many users behind a single IP address with network address translation, they collectively would have a limit of 60 requests per hour."
+    },
+    {
+      "type": "p",
+      "text": "If you are using GitHub gist for sharing, you can see your remaining requests at https://api.github.com/rate_limit."
+    },
+    {
+      "type": "p",
+      "text": "The GitHub API has a much higher rate limit if the end user is authenticated, but Shinylive currently does not support authenticating with GitHub."
+    },
+    {
+      "type": "h3",
+      "text": "Deploying Shinylive applications"
+    },
+    {
+      "type": "h4",
+      "text": "With Quarto websites"
+    },
+    {
+      "type": "p",
+      "text": "The section below describes how to embed Shinylive applications in a Quarto document – they can be thought of as Shiny applets in that mode. As of November 2023, the pre-release version of Quarto can work in a different mode: it can generate dashboards where the entire page is a single Shiny application. See this repository for an example and more information about how they work and how to deploy them. This page will be updated soon with more information about this mode."
+    },
+    {
+      "type": "p",
+      "text": "The easiest way to deploy Shinylive applications is using the quarto-shinylive extension. This extension allows you to embed Shiny apps into a quarto html document, and deploy those applications anywhere that can host quarto websites. Once you have the extension installed, you can insert shinylive-python code blocks into the document."
+    },
+    {
+      "type": "code",
+      "text": "```{shinylive-python}\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)\n```"
+    },
+    {
+      "type": "h4",
+      "text": "Without Quarto"
+    },
+    {
+      "type": "p",
+      "text": "If you’re not using Quarto, you’ll need to export and deploy your application yourself. This involves:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Exporting the application: Create a directory of files that includes the Shinylive distribution and the application code.",
+        "Deploying: Upload that directory to a static web host."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "There are many ways to deploy to a static web server. For example, you could deploy to Netlify or GitHub Pages, or use Posit Connect, as described later in this page."
+    },
+    {
+      "type": "p",
+      "text": "First, install the shinylive package:"
+    },
+    {
+      "type": "code",
+      "text": "pip install shinylive"
+    },
+    {
+      "type": "p",
+      "text": "Next, create a directory with a Shiny application. We’ll use the shiny create command to create a basic application in a directory called myapp/."
+    },
+    {
+      "type": "code",
+      "text": "shiny create --dir myapp"
+    },
+    {
+      "type": "p",
+      "text": "Pick a Shiny app template to create in the myapp directory. Next, create the distribution with shinylive:"
+    },
+    {
+      "type": "code",
+      "text": "shinylive export myapp site"
+    },
+    {
+      "type": "p",
+      "text": "The resulting site directory will contain the following files (among others that are not shown for brevity):"
+    },
+    {
+      "type": "code",
+      "text": "site\n├── app.json          # The application's files serialized to JSON\n├── index.html        # A web page for the application\n├── edit\n│   └── index.html    # A web page for an editor view of the application\n├── shinylive-sw.js   # Shinylive service worker\n└── shinylive         # Shinylive content\n    └── pyodide       # Pyodide files"
+    },
+    {
+      "type": "p",
+      "text": "This directory can now be deployed to a static web hosting service."
+    },
+    {
+      "type": "p",
+      "text": "You can preview the application by serving the files in the site directory:"
+    },
+    {
+      "type": "code",
+      "text": "python3 -m http.server --directory site 8008"
+    },
+    {
+      "type": "p",
+      "text": "This will serve the files in the site directory on port 8008. Then point your browser at http://localhost:8008/. You can also see the application with an online editor by pointing your browser at http://localhost:8008/edit/. (Note that any changes to the files there are ephemeral—they won’t be saved to disk.)"
+    },
+    {
+      "type": "p",
+      "text": "To run a Shinylive application, the files must be served with a web server; simply pointing your browser to the files on disk will not work. This is because security restrictions in web browsers require some assets to be retrieved from a web server instead of from disk."
+    },
+    {
+      "type": "p",
+      "text": "If you have multiple applications, you may want to export them in subdirectories of the site, so that they can all share the same Shinylive assets. You can do this with the --subdir option:"
+    },
+    {
+      "type": "code",
+      "text": "shinylive export myapp1 site --subdir app1\nshinylive export myapp2 site --subdir app2"
+    },
+    {
+      "type": "p",
+      "text": "The site/shinylive/pyodide/ directory will contain a Pyodide distribution containing just the Python packages needed to run the exported application(s). There are some cases where you may want to include other packages. For example, if you want users who visit the edit/ URL to be able to load more packages. In order to include extra packages, you have two options:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Add a requirements.txt file to an application which lists the extra packages.",
+        "Run shinylive export myapp site --full-shinylive. This will cause it to include all of the Python packages from the Shinylive distribution."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The Shinylive distribution is under rapid development, and the files in the distribution will change. The shinylive export command automatically downloads and caches a a copy of the Shinylive distribution on your computer. To make sure you are up to date, run:"
+    },
+    {
+      "type": "code",
+      "text": "pip install shinylive --upgrade\nshinylive assets remove   # Remove old cached shinylive files"
+    },
+    {
+      "type": "p",
+      "text": "Then the next time you run shinylive export, it will download the latest version."
+    },
+    {
+      "type": "h4",
+      "text": "Deploying to Posit Connect"
+    },
+    {
+      "type": "p",
+      "text": "After creating the directory with the application and Shinylive bundle, you can deploy it to many different of static web hosting services. Posit Connect is one of those options, and allows you to control over who can access the application."
+    },
+    {
+      "type": "p",
+      "text": "If you would like to deploy to a Posit Connect server, install and configure the rsconnect-python package as described in the Deploy page. Then you can deploy the application as a static website:"
+    },
+    {
+      "type": "code",
+      "text": "rsconnect deploy html site"
+    },
+    {
+      "type": "h2",
+      "text": "Python packages"
+    },
+    {
+      "type": "p",
+      "text": "The Shinylive distribution is built on Pyodide, and contains a number of additional packages on top of the standard Pyodide distribution."
+    },
+    {
+      "type": "p",
+      "text": "It is also possible to use other Python packages, provided that they are packaged as wheels, and contain no compiled code. Additionally, they must not use features that aren’t available in Pyodide. For example, if a package has code that uses urllib.request, it won’t work in Pyodide."
+    },
+    {
+      "type": "h3",
+      "text": "Installed packages"
+    },
+    {
+      "type": "p",
+      "text": "The Shinylive distribution includes packages from Pyodide 0.27.3, as well as some additional Shiny-related packages. See this page for a list of packages included in Pyodide."
+    },
+    {
+      "type": "p",
+      "text": "Shinylive includes the following packages. Most are part of the Pyodide distribution, and a few of them are added by Shinylive."
+    },
+    {
+      "type": "h3",
+      "text": "Testing whether a package is available"
+    },
+    {
+      "type": "p",
+      "text": "The Shinylive distribution includes many packages, but you may want to use one that is not included."
+    },
+    {
+      "type": "p",
+      "text": "It is possible to install packages using Pyodide’s micropip package. To do that, simply visit the Shinylive examples page and run the following in the Python console:"
+    },
+    {
+      "type": "code",
+      "text": "import micropip\nawait micropip.install(\"mypackage\")\nimport mypackage"
+    },
+    {
+      "type": "p",
+      "text": "If that works without errors, then your package is usable in a Shinylive application. (There are some exceptions, where a package will load but not be fully usable in Pyodide.)"
+    },
+    {
+      "type": "p",
+      "text": "The micropip.install command will install the package from PyPI by default. However, you can provide a URL that points directly to your package, like https://example.com/mypackage-1.0-py3-none-any.whl."
+    },
+    {
+      "type": "h3",
+      "text": "Requiring extra packages with requirements.txt"
+    },
+    {
+      "type": "p",
+      "text": "To use extra packages as part of your application, you can add a requirements.txt file to your application, as demonstrated in the extra packages example. The format of the requirements.txt file is similar to a “normal” requirements.txt file. For example, it could look like this:"
+    },
+    {
+      "type": "code",
+      "text": "isodate\nattrs==21.4.0"
+    },
+    {
+      "type": "p",
+      "text": "Each time someone runs your Shiny application, their web browser will fetch those packages from PyPI. It will then install the packages to a virtual file system (VFS); when the user closes the page or navigates away from it, the VFS is discarded. If the user goes back and runs the application again, those files can be fetched from the browser cache instead of from PyPI."
+    }
+  ],
+  "code_examples": [
+    "gh gist create --public app.py",
+    "gh gist create --public app.py",
+    "```{shinylive-python}\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)\n```",
+    "```{shinylive-python}\n#| standalone: true\n\nfrom shiny import *\n\napp_ui = ui.page_fluid(\n    ui.input_slider(\"n\", \"N\", 0, 100, 40),\n    ui.output_text_verbatim(\"txt\"),\n)\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def txt():\n        return f\"The value of n*2 is {input.n() * 2}\"\n\napp = App(app_ui, server)\n```",
+    "pip install shinylive",
+    "pip install shinylive",
+    "shiny create --dir myapp",
+    "shiny create --dir myapp",
+    "shinylive export myapp site",
+    "shinylive export myapp site",
+    "site\n├── app.json          # The application's files serialized to JSON\n├── index.html        # A web page for the application\n├── edit\n│   └── index.html    # A web page for an editor view of the application\n├── shinylive-sw.js   # Shinylive service worker\n└── shinylive         # Shinylive content\n    └── pyodide       # Pyodide files",
+    "site\n├── app.json          # The application's files serialized to JSON\n├── index.html        # A web page for the application\n├── edit\n│   └── index.html    # A web page for an editor view of the application\n├── shinylive-sw.js   # Shinylive service worker\n└── shinylive         # Shinylive content\n    └── pyodide       # Pyodide files",
+    "python3 -m http.server --directory site 8008",
+    "python3 -m http.server --directory site 8008",
+    "shinylive export myapp1 site --subdir app1\nshinylive export myapp2 site --subdir app2",
+    "shinylive export myapp1 site --subdir app1\nshinylive export myapp2 site --subdir app2",
+    "pip install shinylive --upgrade\nshinylive assets remove   # Remove old cached shinylive files",
+    "pip install shinylive --upgrade\nshinylive assets remove   # Remove old cached shinylive files",
+    "rsconnect deploy html site",
+    "rsconnect deploy html site",
+    "import micropip\nawait micropip.install(\"mypackage\")\nimport mypackage",
+    "import micropip\nawait micropip.install(\"mypackage\")\nimport mypackage",
+    "isodate\nattrs==21.4.0",
+    "isodate\nattrs==21.4.0"
+  ],
+  "toc": [
+    {
+      "title": "Sharing and deploying Shinylive applications",
+      "url": "get-started/#sharing-and-deploying-shinylive-applications"
+    },
+    {
+      "title": "Sharing Shinylive applications",
+      "url": "get-started/#sharing-shinylive-applications"
+    },
+    {
+      "title": "Deploying Shinylive applications",
+      "url": "get-started/#deploying-shinylive-applications"
+    },
+    {
+      "title": "Python packages",
+      "url": "get-started/#python-packages"
+    },
+    {
+      "title": "Installed packages",
+      "url": "get-started/#installed-packages"
+    },
+    {
+      "title": "Testing whether a package is available",
+      "url": "get-started/#testing-whether-a-package-is-available"
+    },
+    {
+      "title": "Requiring extra packages with requirements.txt",
+      "url": "get-started/#requiring-extra-packages-with-requirements.txt"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

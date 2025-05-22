@@ -1,0 +1,7 @@
+[
+  "What is the purpose of ui.output_code in Shiny for Python?",
+  "What visual difference does ui.output_code have compared to output_text in Shiny for Python?",
+  "What parameter does ui.output_code require for creating an output container for code in Shiny for Python?",
+  "If the output for ui.output_code is empty, what will be displayed as a placeholder in Shiny for Python?",
+  "How is ui.output_code related to output_text_verbatim in Shiny for Python?"
+]

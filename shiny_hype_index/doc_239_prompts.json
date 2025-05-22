@@ -1,0 +1,7 @@
+[
+  "What does the `express.app_opts` function in Shiny for Python do?",
+  "What are the parameters that can be set using the `express.app_opts` function in Shiny for Python?",
+  "How can static files be served by the app using the `express.app_opts` function in Shiny for Python?",
+  "What is the default mount point for the `www` subdirectory when using the `express.app_opts` function in Shiny for Python?",
+  "How can debug mode be enabled using the `express.app_opts` function in Shiny for Python?"
+]

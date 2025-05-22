@@ -1,0 +1,7 @@
+[
+  "What are some of the LLM providers supported by chatlas for building a chatbot with Shiny for Python?",
+  "How can I run models locally for free using the Ollama template without sharing data with a cloud provider?",
+  "What are the key requirements for streaming responses from an LLM in a chatbot interface using Shiny?",
+  "How can I customize the layout of the chat interface in my Shiny app, such as filling the page, using a sidebar, or implementing a card layout?",
+  "What are the recommended ways to handle error messages and debugging in a chatbot built with Shiny for Python?"
+]

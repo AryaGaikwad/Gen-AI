@@ -1,0 +1,7 @@
+[
+  "What does the `reactive.event` function in Shiny for Python allow you to do?",
+  "What is the purpose of using `@reactive.event()` in Shiny apps?",
+  "How does the `reactive.event` function handle reactive dependencies in Shiny for Python?",
+  "What are the parameters that can be passed to the `reactive.event` function in Shiny for Python?",
+  "In what order should the `@reactive.event` decorator be applied in relation to other reactivity decorators in Shiny for Python?"
+]

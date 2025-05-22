@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when constructing a slider widget using ui.input_slider in Shiny for Python?",
+  "What is the purpose of the 'timezone' parameter in the ui.input_slider function?",
+  "How can one specify custom animation settings for the slider widget created using ui.input_slider?",
+  "What is the default time format used for datetime objects in the slider widget created with ui.input_slider?",
+  "When constructing a range slider using ui.input_slider, what does the 'drag_range' parameter control?"
+]

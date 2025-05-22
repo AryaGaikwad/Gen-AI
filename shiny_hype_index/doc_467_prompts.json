@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be specified when creating a sidebar layout in Shiny for Python?",
+  "How can a Shiny developer specify whether the main content area in a sidebar layout should be wrapped in a fillable container?",
+  "What does the parameter 'padding' represent when creating a sidebar layout in Shiny for Python?",
+  "Is it possible to specify a background or foreground color for a sidebar layout in Shiny for Python?",
+  "What is the purpose of the 'height' parameter when using the ui.layout_sidebar function in Shiny for Python?"
+]

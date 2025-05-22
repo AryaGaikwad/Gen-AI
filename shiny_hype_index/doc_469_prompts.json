@@ -1,0 +1,7 @@
+[
+  "What are the different options for specifying the desired width of each card in the grid using ui.layout_column_wrap?",
+  "What is the purpose of the fixed_width parameter in ui.layout_column_wrap and how does it affect the layout of columns?",
+  "How does the heights_equal parameter in ui.layout_column_wrap control the height of cards within the grid?",
+  "What is the role of the fillable parameter in ui.layout_column_wrap and how does it impact the layout behavior?",
+  "Can you explain the significance of the min_height and max_height parameters in a filling layout using ui.layout_column_wrap?"
+]

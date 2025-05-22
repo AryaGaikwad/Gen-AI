@@ -1,0 +1,7 @@
+[
+  "What is the purpose of `ui.markdown` in Shiny for Python?",
+  "What are the parameters required for the `ui.markdown` function?",
+  "What does the `render_func` parameter do in the `ui.markdown` function?",
+  "What is the default behavior of the `ui.markdown` function when it comes to markdown conversion?",
+  "How can I customize the markdown rendering process using the `ui.markdown` function in Shiny for Python?"
+]

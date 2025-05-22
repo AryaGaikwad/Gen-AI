@@ -1,0 +1,7 @@
+[
+  "What are the benefits of using the data_frame renderer over the render.table renderer in Shiny for Python?",
+  "How can I specify CSS classes for styling the resulting table when using the render.table function in Shiny for Python?",
+  "What types of objects can be returned by a function decorated with render.table in Shiny for Python?",
+  "How can I hide index labels when rendering a table using the render.table function in Shiny for Python?",
+  "What is the recommended naming convention for the function decorated with render.table in Shiny for Python?"
+]

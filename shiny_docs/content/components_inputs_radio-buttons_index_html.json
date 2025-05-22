@@ -1,0 +1,258 @@
+{
+  "metadata": {
+    "title": "Radio Buttons – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/radio-buttons/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "Radio Buttons"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Radio Buttons"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\n        \"radio\",\n        \"Radio buttons\",\n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},\n    ),\n    ui.output_ui(\"value\"),\n    {\"class\": \"vh-100 d-flex align-items-center px-4\"},\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_radio_buttons(  \n    \"radio\",  \n    \"Radio buttons\",  \n    {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n)  \n\n@render.ui\ndef value():\n    return input.radio()"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(  \n        \"radio\",  \n        \"Radio buttons\",  \n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n    ),  \n    ui.output_ui(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_radio_buttons ui.input_radio_buttons(id, label, choices, *, selected=None, inline=False, width=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_radio_buttons ui.input_radio_buttons(id, label, choices, *, selected=None, inline=False, width=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "Use a set of radio buttons to select an item from a list."
+    },
+    {
+      "type": "p",
+      "text": "To add radio buttons to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_radio_buttons() to the UI of your app to create a set of radio buttons. Where you call this function will determine where the radio buttons will appear within the app’s layout.",
+        "Specify the id and label parameters of ui.input_radio_buttons() to define the identifier and label of the set of radio buttons.",
+        "Specify the value and label that accompanies each radio button using the choices parameter. choices can be either a list or a dictionary. If choices is a list, the list elements become the radio button values and labels. If choices is a dictionary, ui.input_radio_buttons() uses the dictionary keys as the button values and the dictionary values as the button labels."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_radio_buttons() to the UI of your app to create a set of radio buttons. Where you call this function will determine where the radio buttons will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_radio_buttons() to define the identifier and label of the set of radio buttons."
+    },
+    {
+      "type": "p",
+      "text": "Specify the value and label that accompanies each radio button using the choices parameter. choices can be either a list or a dictionary. If choices is a list, the list elements become the radio button values and labels. If choices is a dictionary, ui.input_radio_buttons() uses the dictionary keys as the button values and the dictionary values as the button labels."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of a set of radio buttons:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<radio_buttons_id>() to access the value of a radio button set (e.g., input.radio()). The server value of a set of radio buttons is a string containing the selected value."
+      ]
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\n        \"radio\",\n        \"Radio buttons\",\n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},\n    ),\n    ui.output_ui(\"value\"),\n    {\"class\": \"vh-100 d-flex align-items-center px-4\"},\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(\n        \"radio\",\n        \"Radio buttons\",\n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},\n    ),\n    ui.output_ui(\"value\"),\n    {\"class\": \"vh-100 d-flex align-items-center px-4\"},\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_radio_buttons(  \n    \"radio\",  \n    \"Radio buttons\",  \n    {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n)  \n\n@render.ui\ndef value():\n    return input.radio()",
+    "from shiny.express import input, render, ui\n\nui.input_radio_buttons(  \n    \"radio\",  \n    \"Radio buttons\",  \n    {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n)  \n\n@render.ui\ndef value():\n    return input.radio()",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(  \n        \"radio\",  \n        \"Radio buttons\",  \n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n    ),  \n    ui.output_ui(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_radio_buttons(  \n        \"radio\",  \n        \"Radio buttons\",  \n        {\"1\": \"Option 1\", \"2\": \"Option 2\", \"3\": \"Option 3\"},  \n    ),  \n    ui.output_ui(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.ui\n    def value():\n        return input.radio()\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

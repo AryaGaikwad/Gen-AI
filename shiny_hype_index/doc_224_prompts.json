@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a file upload control using express.ui.input_file in Shiny for Python?",
+  "What information is contained in the dictionary returned by express.ui.input_file for each file upload?",
+  "How can the accept parameter be used to specify the type of files that the user can upload using express.ui.input_file?",
+  "What is the purpose of the capture parameter in the express.ui.input_file function?",
+  "In what situations can the datapath key in the dictionary returned by express.ui.input_file be useful?"
+]

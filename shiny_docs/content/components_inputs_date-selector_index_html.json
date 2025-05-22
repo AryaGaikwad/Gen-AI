@@ -1,0 +1,257 @@
+{
+  "metadata": {
+    "title": "Date Selector – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/date-selector/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "Date Selector"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Date Selector"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 380\n\n## file: app.py\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"\").add_class(\"pt-5 mx-auto text-center\"),\n    ui.output_text(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_date(\"date\", \"Date\")  \n\n@render.text\ndef value():\n    return input.date()"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"Date\"),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_date ui.input_date(id, label, *, value=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', width=None, autoclose=True, datesdisabled=None, daysofweekdisabled=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_date ui.input_date(id, label, *, value=None, min=None, max=None, format='yyyy-mm-dd', startview='month', weekstart=0, language='en', width=None, autoclose=True, datesdisabled=None, daysofweekdisabled=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A date selector allows you to select a date from a calendar."
+    },
+    {
+      "type": "p",
+      "text": "To add a date selector to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_date() to the UI of your app to create a date selector. Where you call this function will determine where the date selector will appear within the app’s layout.",
+        "Specify the id and label parameters of ui.input_date() to define the identifier and label of the date selector. ui.input_date() also includes various optional parameters, including min and max, which set the minimum and maximum allowed dates."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_date() to the UI of your app to create a date selector. Where you call this function will determine where the date selector will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_date() to define the identifier and label of the date selector. ui.input_date() also includes various optional parameters, including min and max, which set the minimum and maximum allowed dates."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of a date selector:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<date_id>() to access the value of a daterange selector (e.g., input.date()). The server value of a date selector is a date object."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "See also: Date Range Selector"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 380\n\n## file: app.py\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"\").add_class(\"pt-5 mx-auto text-center\"),\n    ui.output_text(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 380\n\n## file: app.py\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"\").add_class(\"pt-5 mx-auto text-center\"),\n    ui.output_text(\"value\"),\n    {\"class\": \"vh-100 justify-content-center align-items-center px-5\"},\n).add_class(\"my-auto text-center\")\n\ndef server(input, output, session):\n    @output\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_date(\"date\", \"Date\")  \n\n@render.text\ndef value():\n    return input.date()",
+    "from shiny.express import input, render, ui\n\nui.input_date(\"date\", \"Date\")  \n\n@render.text\ndef value():\n    return input.date()",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"Date\"),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_date(\"date\", \"Date\"),  \n    ui.output_text(\"value\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def value():\n        return input.date()\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

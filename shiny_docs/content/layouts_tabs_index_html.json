@@ -1,0 +1,504 @@
+{
+  "metadata": {
+    "title": "Tabs – Shiny for Python",
+    "description": "Tabs and navigation allow you to create Shiny apps with multiple pages.",
+    "url": "layouts/tabs/index.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Tabs"
+    },
+    {
+      "type": "p",
+      "text": "Tabs and navigation allow you to create Shiny apps with multiple pages."
+    },
+    {
+      "type": "p",
+      "text": "Tabs and navigation allow you to create apps that have multiple pages."
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.accordion ui.accordion(*args, id=None, open=None, multiple=True, class_=None, width=None, height=None, **kwargs)",
+        "ui.accordion_panel ui.accordion_panel(title, *args, value=MISSING, icon=None, **kwargs)",
+        "ui.navset_card_tab ui.navset_card_tab(*args, id=None, selected=None, title=None, sidebar=None, header=None, footer=None)",
+        "ui.navset_card_pill ui.navset_card_pill(*args, id=None, selected=None, title=None, sidebar=None, header=None, footer=None, placement='above')",
+        "ui.navset_pill ui.navset_pill(*args, id=None, selected=None, header=None, footer=None)",
+        "ui.navset_pill_list ui.navset_pill_list(*args, id=None, selected=None, header=None, footer=None, well=True, widths=(4, 8))",
+        "ui.navset_tab ui.navset_tab(*args, id=None, selected=None, header=None, footer=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.accordion ui.accordion(*args, id=None, open=None, multiple=True, class_=None, width=None, height=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.accordion_panel ui.accordion_panel(title, *args, value=MISSING, icon=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.navset_card_tab ui.navset_card_tab(*args, id=None, selected=None, title=None, sidebar=None, header=None, footer=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.navset_card_pill ui.navset_card_pill(*args, id=None, selected=None, title=None, sidebar=None, header=None, footer=None, placement='above')"
+    },
+    {
+      "type": "p",
+      "text": "ui.navset_pill ui.navset_pill(*args, id=None, selected=None, header=None, footer=None)"
+    },
+    {
+      "type": "p",
+      "text": "ui.navset_pill_list ui.navset_pill_list(*args, id=None, selected=None, header=None, footer=None, well=True, widths=(4, 8))"
+    },
+    {
+      "type": "p",
+      "text": "ui.navset_tab ui.navset_tab(*args, id=None, selected=None, header=None, footer=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Tabset with pill navigation"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 190\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to create an app with a tabset with pill navigation layout:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.navset_pill() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_pill() creates a pillset.",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_pill() to set the items displayed in the navset.",
+        "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active.",
+        "Optional: Pass a string to the id argument of ui.navset_pill(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.navset_pill() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_pill() creates a pillset."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_pill() to set the items displayed in the navset."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.navset_pill(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Tabset with pill list navigation"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.navset_pill_list(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to create an app with a pill list navigation layout. A pill list is a vertical pillset navigation."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.navset_pill_list() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_pill() creates a pill list.",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_pill_list() to set the items displayed in the pillset.",
+        "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active.",
+        "Optional: Pass a string to the id argument of ui.navset_pill_list(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.navset_pill_list() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_pill() creates a pill list."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_pill_list() to set the items displayed in the pillset."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.navset_pill_list(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Tabset with tab navigation"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to create an app with a tab navigation layout:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.navset_tab() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_tab() creates a tabset.",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_tab() to set the items displayed in the tabset.",
+        "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active.",
+        "Optional: Pass a string to the id argument of ui.navset_tab(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.navset_tab() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_tab() creates a tabset."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_tab() to set the items displayed in the tabset."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.navset_tab(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Card with a tabbed tabset"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_tab(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a card with a tabbed tabset to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.navset_card_tab() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_card_tab() creates a tabset inside a card.",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_card_tab() to set the items displayed in the tabset inside the card.",
+        "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active.",
+        "Optional: Pass a string to the id argument of ui.navset_card_tab(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.navset_card_tab() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_card_tab() creates a tabset inside a card."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_card_tab() to set the items displayed in the tabset inside the card."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.navset_card_tab(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Card with a pill tabset"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a card with a pill tabset to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.navset_card_pill() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_card_pill() creates a pillset inside a card.",
+        "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_card_pill() to set the items displayed in the pillset inside the card.",
+        "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active.",
+        "Optional: Pass a string to the id argument of ui.navset_card_pill(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.navset_card_pill() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.navset_card_pill() creates a pillset inside a card."
+    },
+    {
+      "type": "p",
+      "text": "Pass nav items (e.g., ui.nav_panel() and ui.nav_menu()) to ui.navset_card_pill() to set the items displayed in the pillset inside the card."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the nav items to control each item’s title, appearance, and associated content. For example, set the title argument of ui.nav_panel() to control the displayed title of the nav item. Pass UI elements as additional arguments to ui.nav_panel(). These elements will be displayed when the tab is active."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.navset_card_pill(). This will create an input value that holds the title of the currently selected nav item. For example, id = \"tab\" would create a reactive value accessible as input.tab()."
+    },
+    {
+      "type": "h2",
+      "text": "Vertically collapsing accordion panels"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 350\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.accordion(id=\"acc\", open=\"Section A\"):  \n    with ui.accordion_panel(\"Section A\"):  \n        \"Section A content\"\n\n    with ui.accordion_panel(\"Section B\"):  \n        \"Section B content\"\n\n    with ui.accordion_panel(\"Section C\"):  \n        \"Section C content\"\n\n    with ui.accordion_panel(\"Section D\"):  \n        \"Section D content\"\n\n    with ui.accordion_panel(\"Section E\"):  \n        \"Section E content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add vertically collapsing accordion panels to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.accordion() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.accordion() creates a vertically collapsing accordion.",
+        "Pass accordion panel items to ui.accordion() using calls to ui.accordion_panel(). Each call to ui.accordion_panel() creates one accordion panel.",
+        "Pass arguments to the accordion panels to control each panel’s title, appearance, and associated content. The *args argument of ui.accordion_panel() controls the contents of the accordion panel.",
+        "Optional: Pass a string to the id argument of ui.accordian(). This will create an input value that represents the currently active accordion panels. For example, id = \"panel\" would create a reactive value accessible as input.panel()."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.accordion() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.accordion() creates a vertically collapsing accordion."
+    },
+    {
+      "type": "p",
+      "text": "Pass accordion panel items to ui.accordion() using calls to ui.accordion_panel(). Each call to ui.accordion_panel() creates one accordion panel."
+    },
+    {
+      "type": "p",
+      "text": "Pass arguments to the accordion panels to control each panel’s title, appearance, and associated content. The *args argument of ui.accordion_panel() controls the contents of the accordion panel."
+    },
+    {
+      "type": "p",
+      "text": "Optional: Pass a string to the id argument of ui.accordian(). This will create an input value that represents the currently active accordion panels. For example, id = \"panel\" would create a reactive value accessible as input.panel()."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 190\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 190\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.navset_pill_list(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny.express import ui\n\nwith ui.navset_pill_list(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_pill_list(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny.express import ui\n\nwith ui.navset_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.navset_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_tab(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_tab(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_tab(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 250\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.navset_card_pill(id=\"tab\"):  \n    with ui.nav_panel(\"A\"):\n        \"Panel A content\"\n\n    with ui.nav_panel(\"B\"):\n        \"Panel B content\"\n\n    with ui.nav_panel(\"C\"):\n        \"Panel C content\"\n\n    with ui.nav_menu(\"Other links\"):\n        with ui.nav_panel(\"D\"):\n            \"Page D content\"\n\n        \"----\"\n        \"Description:\"\n        with ui.nav_control():\n            ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.navset_card_pill(  \n        ui.nav_panel(\"A\", \"Panel A content\"),\n        ui.nav_panel(\"B\", \"Panel B content\"),\n        ui.nav_panel(\"C\", \"Panel C content\"),\n        ui.nav_menu(\n            \"Other links\",\n            ui.nav_panel(\"D\", \"Panel D content\"),\n            \"----\",\n            \"Description:\",\n            ui.nav_control(\n                ui.a(\"Shiny\", href=\"https://shiny.posit.co\", target=\"_blank\")\n            ),\n        ),\n        id=\"tab\",\n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 350\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 350\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.accordion(id=\"acc\", open=\"Section A\"):  \n    with ui.accordion_panel(\"Section A\"):  \n        \"Section A content\"\n\n    with ui.accordion_panel(\"Section B\"):  \n        \"Section B content\"\n\n    with ui.accordion_panel(\"Section C\"):  \n        \"Section C content\"\n\n    with ui.accordion_panel(\"Section D\"):  \n        \"Section D content\"\n\n    with ui.accordion_panel(\"Section E\"):  \n        \"Section E content\"",
+    "from shiny.express import ui\n\nwith ui.accordion(id=\"acc\", open=\"Section A\"):  \n    with ui.accordion_panel(\"Section A\"):  \n        \"Section A content\"\n\n    with ui.accordion_panel(\"Section B\"):  \n        \"Section B content\"\n\n    with ui.accordion_panel(\"Section C\"):  \n        \"Section C content\"\n\n    with ui.accordion_panel(\"Section D\"):  \n        \"Section D content\"\n\n    with ui.accordion_panel(\"Section E\"):  \n        \"Section E content\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fluid(\n    ui.accordion(  \n        ui.accordion_panel(\"Section A\", \"Section A content\"),  \n        ui.accordion_panel(\"Section B\", \"Section B content\"),  \n        ui.accordion_panel(\"Section C\", \"Section C content\"),  \n        ui.accordion_panel(\"Section D\", \"Section D content\"),  \n        ui.accordion_panel(\"Section E\", \"Section E content\"),  \n        id=\"acc\",  \n        open=\"Section A\",  \n    ),  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "LAYOUTS",
+      "url": "layouts/index.html"
+    },
+    {
+      "title": "Navbars"
+    },
+    {
+      "title": "Navbar at Top",
+      "url": "layouts/navbars/index.html#navbar-at-top"
+    },
+    {
+      "title": "Navbar at Bottom",
+      "url": "layouts/navbars/index.html#navbar-at-bottom"
+    },
+    {
+      "title": "Sidebars"
+    },
+    {
+      "title": "Sidebar on Left",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-left"
+    },
+    {
+      "title": "Sidebar on Right",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-right"
+    },
+    {
+      "title": "Sidebar Within a Card",
+      "url": "layouts/sidebars/index.html#sidebar-within-a-card"
+    },
+    {
+      "title": "Collapsed Sidebar",
+      "url": "layouts/sidebars/index.html#collapsed-sidebar"
+    },
+    {
+      "title": "Tabs"
+    },
+    {
+      "title": "Tabset with Pill Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-navigation"
+    },
+    {
+      "title": "Tabset with Pill List Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-list-navigation"
+    },
+    {
+      "title": "Tabset with Tab Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-tab-navigation"
+    },
+    {
+      "title": "Card with a Tabbed Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-tabbed-tabset"
+    },
+    {
+      "title": "Card with a Pill Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-pill-tabset"
+    },
+    {
+      "title": "Vertically Collapsing Accordions",
+      "url": "layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+    },
+    {
+      "title": "Panels & Cards"
+    },
+    {
+      "title": "Floating Panel",
+      "url": "layouts/panels-cards/index.html#floating-panel"
+    },
+    {
+      "title": "Content Divided by Cards",
+      "url": "layouts/panels-cards/index.html#content-divided-by-cards"
+    },
+    {
+      "title": "Arrange Elements"
+    },
+    {
+      "title": "Grid Layouts",
+      "url": "layouts/arrange/index.html#grid-layouts"
+    },
+    {
+      "title": "Column Nesting",
+      "url": "layouts/arrange/index.html#column-nesting"
+    },
+    {
+      "title": "Controlling for Page Size",
+      "url": "layouts/arrange/index.html#controlling-for-page-width-and-height"
+    }
+  ]
+}

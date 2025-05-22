@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – NBA player career comparisons",
+    "description": "Use the nba-dashboard template as a foundation for your next Shiny app.",
+    "url": "templates/nba-dashboard/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "NBA player career comparisons"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template nba-dashboard --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template nba-dashboard --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "Search for NBA players and compare their career statistics. The app uses the nba_api package to fetch player statistics and the plotly package to create interactive plots. Note that in addition to searching for players by name, you can also click on the rug plot to select players. This provides a useful way to query player(s) based on a specific statistic, then compare their overall career statistics."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Select input",
+        "Slider input",
+        "Plotly"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "pandas",
+        "numpy",
+        "nba_api",
+        "plotly",
+        "shinywidgets",
+        "scipy"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template nba-dashboard --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template nba-dashboard --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template nba-dashboard --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template nba-dashboard --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

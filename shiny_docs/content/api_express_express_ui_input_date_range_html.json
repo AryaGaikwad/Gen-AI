@@ -1,0 +1,749 @@
+{
+  "metadata": {
+    "title": "express.ui.input_date_range – Shiny for Python",
+    "description": "",
+    "url": "api/express/express.ui.input_date_range.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Input components",
+        "express.ui.input_date_range"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "express.ui.input_date_range"
+    },
+    {
+      "type": "code",
+      "text": "express.ui.input_date_range(\n    id,\n    label,\n    *,\n    start=None,\n    end=None,\n    min=None,\n    max=None,\n    format='yyyy-mm-dd',\n    startview='month',\n    weekstart=0,\n    language='en',\n    separator=' to ',\n    width=None,\n    autoclose=True,\n)"
+    },
+    {
+      "type": "p",
+      "text": "Creates a pair of text inputs which, when clicked on, bring up calendars that the user can click on to select dates."
+    },
+    {
+      "type": "h2",
+      "text": "Parameters"
+    },
+    {
+      "type": "p",
+      "text": "An input id."
+    },
+    {
+      "type": "p",
+      "text": "An input label."
+    },
+    {
+      "type": "p",
+      "text": "The initial start date. Either a date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone."
+    },
+    {
+      "type": "p",
+      "text": "The initial end date. Either a date object, or a string in yyyy-mm-dd format. If None (the default), will use the current date in the client’s time zone."
+    },
+    {
+      "type": "p",
+      "text": "The minimum allowed date. Either a date object, or a string in yyyy-mm-dd format."
+    },
+    {
+      "type": "p",
+      "text": "The maximum allowed date. Either a date object, or a string in yyyy-mm-dd format."
+    },
+    {
+      "type": "p",
+      "text": "The format of the date to display in the browser."
+    },
+    {
+      "type": "p",
+      "text": "The date range shown when the input object is first clicked. Can be “month” (the default), “year”, or “decade”."
+    },
+    {
+      "type": "p",
+      "text": "Which day is the start of the week. Should be an integer from 0 (Sunday) to 6 (Saturday)."
+    },
+    {
+      "type": "p",
+      "text": "The language used for month and day names. Default is “en”. Other valid values include “ar”, “az”, “bg”, “bs”, “ca”, “cs”, “cy”, “da”, “de”, “el”, “en-AU”, “en-GB”, “eo”, “es”, “et”, “eu”, “fa”, “fi”, “fo”, “fr-CH”, “fr”, “gl”, “he”, “hr”, “hu”, “hy”, “id”, “is”, “it-CH”, “it”, “ja”, “ka”, “kh”, “kk”, “ko”, “kr”, “lt”, “lv”, “me”, “mk”, “mn”, “ms”, “nb”, “nl-BE”, “nl”, “no”, “pl”, “pt-BR”, “pt”, “ro”, “rs-latin”, “rs”, “ru”, “sk”, “sl”, “sq”, “sr-latin”, “sr”, “sv”, “sw”, “th”, “tr”, “uk”, “vi”, “zh-CN”, and “zh-TW”."
+    },
+    {
+      "type": "p",
+      "text": "String to display between the start and end input boxes."
+    },
+    {
+      "type": "p",
+      "text": "The CSS width, e.g. ‘400px’, or ‘100%’"
+    },
+    {
+      "type": "p",
+      "text": "Whether or not to close the datepicker immediately when a date is selected."
+    },
+    {
+      "type": "h2",
+      "text": "Returns"
+    },
+    {
+      "type": "p",
+      "text": "A UI element."
+    },
+    {
+      "type": "h2",
+      "text": "Note"
+    },
+    {
+      "type": "p",
+      "text": "The date format string specifies how the date will be displayed in the browser. It allows the following values:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "yy: Year without century (12)",
+        "yyyy: Year with century (2012)",
+        "mm: Month number, with leading zero (01-12)",
+        "m: Month number, without leading zero (1-12)",
+        "M: Abbreviated month name",
+        "MM: Full month name",
+        "dd: Day of month with leading zero",
+        "d: Day of month without leading zero",
+        "D: Abbreviated weekday name",
+        "DD: Full weekday name"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Notes"
+    },
+    {
+      "type": "p",
+      "text": "A tuple of date objects."
+    },
+    {
+      "type": "h2",
+      "text": "See Also"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "update_date_range",
+        "input_date"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Examples"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom datetime import date\n\nfrom shiny.express import ui\n\n# Default start and end is the current date in the client's time zone\nui.input_date_range(\"daterange1\", \"Date range:\")\n# Set start and end dates\nui.input_date_range(\n    \"daterange2\", \"Set start and end date:\", start=\"2001-01-01\", end=\"2010-12-31\"\n)\n# Start and end are always specified in yyyy-mm-dd, even if the display\n# format is different\nui.input_date_range(\n    \"daterange3\",\n    \"Min, max, start, and end dates are set with custom format and separator:\",\n    start=\"2001-01-01\",\n    end=\"2010-12-31\",\n    min=\"2001-01-01\",\n    max=\"2012-12-21\",\n    format=\"mm/dd/yy\",\n    separator=\" - \",\n)\n# Pass in Date objects\nui.input_date_range(\n    \"daterange4\",\n    \"Default start and end use date objects:\",\n    start=date(2001, 1, 1),\n    end=date(2010, 12, 31),\n)\n# Use different language and different first day of week\nui.input_date_range(\n    \"daterange5\",\n    \"Language is German and we starts on Monday:\",\n    language=\"de\",\n    weekstart=1,\n)\n# Start with decade view instead of default month view\nui.input_date_range(\n    \"daterange6\", \"Start Date picker in Decade view:\", startview=\"decade\"\n)\n# Set width of the daterange field\nui.input_date_range(\"daterange7\", \"Set width of text input:\", width=\"600px\")\n# Set autoclose to false\nui.input_date_range(\"daterange8\", \"Auto close is disabled:\", autoclose=False)\n\n"
+    }
+  ],
+  "code_examples": [
+    "express.ui.input_date_range(\n    id,\n    label,\n    *,\n    start=None,\n    end=None,\n    min=None,\n    max=None,\n    format='yyyy-mm-dd',\n    startview='month',\n    weekstart=0,\n    language='en',\n    separator=' to ',\n    width=None,\n    autoclose=True,\n)",
+    "express.ui.input_date_range(\n    id,\n    label,\n    *,\n    start=None,\n    end=None,\n    min=None,\n    max=None,\n    format='yyyy-mm-dd',\n    startview='month',\n    weekstart=0,\n    language='en',\n    separator=' to ',\n    width=None,\n    autoclose=True,\n)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\n\n## file: app.py\nfrom datetime import date\n\nfrom shiny.express import ui\n\n# Default start and end is the current date in the client's time zone\nui.input_date_range(\"daterange1\", \"Date range:\")\n# Set start and end dates\nui.input_date_range(\n    \"daterange2\", \"Set start and end date:\", start=\"2001-01-01\", end=\"2010-12-31\"\n)\n# Start and end are always specified in yyyy-mm-dd, even if the display\n# format is different\nui.input_date_range(\n    \"daterange3\",\n    \"Min, max, start, and end dates are set with custom format and separator:\",\n    start=\"2001-01-01\",\n    end=\"2010-12-31\",\n    min=\"2001-01-01\",\n    max=\"2012-12-21\",\n    format=\"mm/dd/yy\",\n    separator=\" - \",\n)\n# Pass in Date objects\nui.input_date_range(\n    \"daterange4\",\n    \"Default start and end use date objects:\",\n    start=date(2001, 1, 1),\n    end=date(2010, 12, 31),\n)\n# Use different language and different first day of week\nui.input_date_range(\n    \"daterange5\",\n    \"Language is German and we starts on Monday:\",\n    language=\"de\",\n    weekstart=1,\n)\n# Start with decade view instead of default month view\nui.input_date_range(\n    \"daterange6\", \"Start Date picker in Decade view:\", startview=\"decade\"\n)\n# Set width of the daterange field\nui.input_date_range(\"daterange7\", \"Set width of text input:\", width=\"600px\")\n# Set autoclose to false\nui.input_date_range(\"daterange8\", \"Auto close is disabled:\", autoclose=False)\n\n"
+  ],
+  "toc": [
+    {
+      "title": "express.ui.input_date_range",
+      "url": "api/express/#shiny.express.ui.input_date_range"
+    },
+    {
+      "title": "Parameters",
+      "url": "api/express/#parameters"
+    },
+    {
+      "title": "Returns",
+      "url": "api/express/#returns"
+    },
+    {
+      "title": "Note",
+      "url": "api/express/#note"
+    },
+    {
+      "title": "Notes",
+      "url": "api/express/#notes"
+    },
+    {
+      "title": "See Also",
+      "url": "api/express/#see-also"
+    },
+    {
+      "title": "Examples",
+      "url": "api/express/#examples"
+    },
+    {
+      "title": "Shiny Express API",
+      "url": "api/express/index.html"
+    },
+    {
+      "title": "Input components"
+    },
+    {
+      "title": "express.ui.input_select",
+      "url": "api/express/express.ui.input_select.html"
+    },
+    {
+      "title": "express.ui.input_selectize",
+      "url": "api/express/express.ui.input_selectize.html"
+    },
+    {
+      "title": "express.ui.input_slider",
+      "url": "api/express/express.ui.input_slider.html"
+    },
+    {
+      "title": "express.ui.input_dark_mode",
+      "url": "api/express/express.ui.input_dark_mode.html"
+    },
+    {
+      "title": "express.ui.input_date",
+      "url": "api/express/express.ui.input_date.html"
+    },
+    {
+      "title": "express.ui.input_date_range",
+      "url": "api/express/express.ui.input_date_range.html"
+    },
+    {
+      "title": "express.ui.input_checkbox",
+      "url": "api/express/express.ui.input_checkbox.html"
+    },
+    {
+      "title": "express.ui.input_checkbox_group",
+      "url": "api/express/express.ui.input_checkbox_group.html"
+    },
+    {
+      "title": "express.ui.input_switch",
+      "url": "api/express/express.ui.input_switch.html"
+    },
+    {
+      "title": "express.ui.input_radio_buttons",
+      "url": "api/express/express.ui.input_radio_buttons.html"
+    },
+    {
+      "title": "express.ui.input_numeric",
+      "url": "api/express/express.ui.input_numeric.html"
+    },
+    {
+      "title": "express.ui.input_text",
+      "url": "api/express/express.ui.input_text.html"
+    },
+    {
+      "title": "express.ui.input_text_area",
+      "url": "api/express/express.ui.input_text_area.html"
+    },
+    {
+      "title": "express.ui.input_password",
+      "url": "api/express/express.ui.input_password.html"
+    },
+    {
+      "title": "express.ui.input_action_button",
+      "url": "api/express/express.ui.input_action_button.html"
+    },
+    {
+      "title": "express.ui.input_action_link",
+      "url": "api/express/express.ui.input_action_link.html"
+    },
+    {
+      "title": "express.ui.input_task_button",
+      "url": "api/express/express.ui.input_task_button.html"
+    },
+    {
+      "title": "Output components"
+    },
+    {
+      "title": "express.render.plot",
+      "url": "api/express/express.render.plot.html"
+    },
+    {
+      "title": "express.render.table",
+      "url": "api/express/express.render.table.html"
+    },
+    {
+      "title": "express.render.DataTable",
+      "url": "api/express/express.render.DataTable.html"
+    },
+    {
+      "title": "express.render.data_frame",
+      "url": "api/express/express.render.data_frame.html"
+    },
+    {
+      "title": "express.render.DataGrid",
+      "url": "api/express/express.render.DataGrid.html"
+    },
+    {
+      "title": "express.render.text",
+      "url": "api/express/express.render.text.html"
+    },
+    {
+      "title": "express.render.ui",
+      "url": "api/express/express.render.ui.html"
+    },
+    {
+      "title": "express.render.download",
+      "url": "api/express/express.render.download.html"
+    },
+    {
+      "title": "express.render.image",
+      "url": "api/express/express.render.image.html"
+    },
+    {
+      "title": "express.render.express",
+      "url": "api/express/express.render.express.html"
+    },
+    {
+      "title": "Layouts and other UI tools"
+    },
+    {
+      "title": "express.ui.page_opts",
+      "url": "api/express/express.ui.page_opts.html"
+    },
+    {
+      "title": "express.ui.sidebar",
+      "url": "api/express/express.ui.sidebar.html"
+    },
+    {
+      "title": "express.ui.layout_columns",
+      "url": "api/express/express.ui.layout_columns.html"
+    },
+    {
+      "title": "express.ui.layout_column_wrap",
+      "url": "api/express/express.ui.layout_column_wrap.html"
+    },
+    {
+      "title": "express.ui.card",
+      "url": "api/express/express.ui.card.html"
+    },
+    {
+      "title": "express.ui.card_header",
+      "url": "api/express/express.ui.card_header.html"
+    },
+    {
+      "title": "express.ui.card_footer",
+      "url": "api/express/express.ui.card_footer.html"
+    },
+    {
+      "title": "express.ui.value_box",
+      "url": "api/express/express.ui.value_box.html"
+    },
+    {
+      "title": "express.ui.value_box_theme",
+      "url": "api/express/express.ui.value_box_theme.html"
+    },
+    {
+      "title": "express.ui.popover",
+      "url": "api/express/express.ui.popover.html"
+    },
+    {
+      "title": "express.ui.tooltip",
+      "url": "api/express/express.ui.tooltip.html"
+    },
+    {
+      "title": "express.ui.accordion",
+      "url": "api/express/express.ui.accordion.html"
+    },
+    {
+      "title": "express.ui.accordion_panel",
+      "url": "api/express/express.ui.accordion_panel.html"
+    },
+    {
+      "title": "express.ui.layout_sidebar",
+      "url": "api/express/express.ui.layout_sidebar.html"
+    },
+    {
+      "title": "Navigate multiple panels"
+    },
+    {
+      "title": "express.ui.nav_panel",
+      "url": "api/express/express.ui.nav_panel.html"
+    },
+    {
+      "title": "express.ui.navset_card_underline",
+      "url": "api/express/express.ui.navset_card_underline.html"
+    },
+    {
+      "title": "express.ui.navset_card_tab",
+      "url": "api/express/express.ui.navset_card_tab.html"
+    },
+    {
+      "title": "express.ui.navset_card_pill",
+      "url": "api/express/express.ui.navset_card_pill.html"
+    },
+    {
+      "title": "express.ui.nav_spacer",
+      "url": "api/express/express.ui.nav_spacer.html"
+    },
+    {
+      "title": "express.ui.nav_menu",
+      "url": "api/express/express.ui.nav_menu.html"
+    },
+    {
+      "title": "express.ui.nav_control",
+      "url": "api/express/express.ui.nav_control.html"
+    },
+    {
+      "title": "express.ui.navset_bar",
+      "url": "api/express/express.ui.navset_bar.html"
+    },
+    {
+      "title": "express.ui.navset_tab",
+      "url": "api/express/express.ui.navset_tab.html"
+    },
+    {
+      "title": "express.ui.navset_pill",
+      "url": "api/express/express.ui.navset_pill.html"
+    },
+    {
+      "title": "express.ui.navset_underline",
+      "url": "api/express/express.ui.navset_underline.html"
+    },
+    {
+      "title": "express.ui.navset_pill_list",
+      "url": "api/express/express.ui.navset_pill_list.html"
+    },
+    {
+      "title": "express.ui.navset_hidden",
+      "url": "api/express/express.ui.navset_hidden.html"
+    },
+    {
+      "title": "express.ui.navbar_options",
+      "url": "api/express/express.ui.navbar_options.html"
+    },
+    {
+      "title": "Chat interface"
+    },
+    {
+      "title": "express.ui.Chat",
+      "url": "api/express/express.ui.Chat.html"
+    },
+    {
+      "title": "Streaming markdown"
+    },
+    {
+      "title": "express.ui.MarkdownStream",
+      "url": "api/express/express.ui.MarkdownStream.html"
+    },
+    {
+      "title": "Reactive programming"
+    },
+    {
+      "title": "reactive.calc",
+      "url": "api/express/reactive.calc.html"
+    },
+    {
+      "title": "reactive.effect",
+      "url": "api/express/reactive.effect.html"
+    },
+    {
+      "title": "reactive.value",
+      "url": "api/express/reactive.value.html"
+    },
+    {
+      "title": "reactive.event",
+      "url": "api/express/reactive.event.html"
+    },
+    {
+      "title": "reactive.isolate",
+      "url": "api/express/reactive.isolate.html"
+    },
+    {
+      "title": "reactive.invalidate_later",
+      "url": "api/express/reactive.invalidate_later.html"
+    },
+    {
+      "title": "reactive.extended_task",
+      "url": "api/express/reactive.extended_task.html"
+    },
+    {
+      "title": "reactive.flush",
+      "url": "api/express/reactive.flush.html"
+    },
+    {
+      "title": "reactive.poll",
+      "url": "api/express/reactive.poll.html"
+    },
+    {
+      "title": "reactive.file_reader",
+      "url": "api/express/reactive.file_reader.html"
+    },
+    {
+      "title": "reactive.lock",
+      "url": "api/express/reactive.lock.html"
+    },
+    {
+      "title": "req",
+      "url": "api/express/req.html"
+    },
+    {
+      "title": "Reusable Express code"
+    },
+    {
+      "title": "express.ui.hold",
+      "url": "api/express/express.ui.hold.html"
+    },
+    {
+      "title": "express.expressify",
+      "url": "api/express/express.expressify.html"
+    },
+    {
+      "title": "Update inputs"
+    },
+    {
+      "title": "express.ui.update_select",
+      "url": "api/express/express.ui.update_select.html"
+    },
+    {
+      "title": "express.ui.update_selectize",
+      "url": "api/express/express.ui.update_selectize.html"
+    },
+    {
+      "title": "express.ui.update_slider",
+      "url": "api/express/express.ui.update_slider.html"
+    },
+    {
+      "title": "express.ui.update_dark_mode",
+      "url": "api/express/express.ui.update_dark_mode.html"
+    },
+    {
+      "title": "express.ui.update_date",
+      "url": "api/express/express.ui.update_date.html"
+    },
+    {
+      "title": "express.ui.update_date_range",
+      "url": "api/express/express.ui.update_date_range.html"
+    },
+    {
+      "title": "express.ui.update_checkbox",
+      "url": "api/express/express.ui.update_checkbox.html"
+    },
+    {
+      "title": "express.ui.update_checkbox_group",
+      "url": "api/express/express.ui.update_checkbox_group.html"
+    },
+    {
+      "title": "express.ui.update_switch",
+      "url": "api/express/express.ui.update_switch.html"
+    },
+    {
+      "title": "express.ui.update_radio_buttons",
+      "url": "api/express/express.ui.update_radio_buttons.html"
+    },
+    {
+      "title": "express.ui.update_numeric",
+      "url": "api/express/express.ui.update_numeric.html"
+    },
+    {
+      "title": "express.ui.update_text",
+      "url": "api/express/express.ui.update_text.html"
+    },
+    {
+      "title": "express.ui.update_text_area",
+      "url": "api/express/express.ui.update_text_area.html"
+    },
+    {
+      "title": "express.ui.update_navs",
+      "url": "api/express/express.ui.update_navs.html"
+    },
+    {
+      "title": "express.ui.update_action_button",
+      "url": "api/express/express.ui.update_action_button.html"
+    },
+    {
+      "title": "express.ui.update_action_link",
+      "url": "api/express/express.ui.update_action_link.html"
+    },
+    {
+      "title": "express.ui.update_task_button",
+      "url": "api/express/express.ui.update_task_button.html"
+    },
+    {
+      "title": "Update UI Layouts"
+    },
+    {
+      "title": "express.ui.update_sidebar",
+      "url": "api/express/express.ui.update_sidebar.html"
+    },
+    {
+      "title": "express.ui.update_tooltip",
+      "url": "api/express/express.ui.update_tooltip.html"
+    },
+    {
+      "title": "express.ui.update_popover",
+      "url": "api/express/express.ui.update_popover.html"
+    },
+    {
+      "title": "express.ui.update_accordion",
+      "url": "api/express/express.ui.update_accordion.html"
+    },
+    {
+      "title": "express.ui.update_accordion_panel",
+      "url": "api/express/express.ui.update_accordion_panel.html"
+    },
+    {
+      "title": "express.ui.insert_accordion_panel",
+      "url": "api/express/express.ui.insert_accordion_panel.html"
+    },
+    {
+      "title": "express.ui.remove_accordion_panel",
+      "url": "api/express/express.ui.remove_accordion_panel.html"
+    },
+    {
+      "title": "Display messages"
+    },
+    {
+      "title": "express.ui.help_text",
+      "url": "api/express/express.ui.help_text.html"
+    },
+    {
+      "title": "express.ui.notification_show",
+      "url": "api/express/express.ui.notification_show.html"
+    },
+    {
+      "title": "express.ui.notification_remove",
+      "url": "api/express/express.ui.notification_remove.html"
+    },
+    {
+      "title": "express.ui.modal",
+      "url": "api/express/express.ui.modal.html"
+    },
+    {
+      "title": "express.ui.modal_show",
+      "url": "api/express/express.ui.modal_show.html"
+    },
+    {
+      "title": "express.ui.modal_remove",
+      "url": "api/express/express.ui.modal_remove.html"
+    },
+    {
+      "title": "express.ui.modal_button",
+      "url": "api/express/express.ui.modal_button.html"
+    },
+    {
+      "title": "express.ui.Progress",
+      "url": "api/express/express.ui.Progress.html"
+    },
+    {
+      "title": "Modules"
+    },
+    {
+      "title": "express.module",
+      "url": "api/express/express.module.html"
+    },
+    {
+      "title": "UI panels"
+    },
+    {
+      "title": "express.ui.panel_absolute",
+      "url": "api/express/express.ui.panel_absolute.html"
+    },
+    {
+      "title": "express.ui.panel_fixed",
+      "url": "api/express/express.ui.panel_fixed.html"
+    },
+    {
+      "title": "express.ui.panel_title",
+      "url": "api/express/express.ui.panel_title.html"
+    },
+    {
+      "title": "express.ui.panel_well",
+      "url": "api/express/express.ui.panel_well.html"
+    },
+    {
+      "title": "Uploads & downloads"
+    },
+    {
+      "title": "express.ui.input_file",
+      "url": "api/express/express.ui.input_file.html"
+    },
+    {
+      "title": "express.render.download",
+      "url": "api/express/express.render.download.html"
+    },
+    {
+      "title": "Dynamic UI"
+    },
+    {
+      "title": "express.ui.panel_conditional",
+      "url": "api/express/express.ui.panel_conditional.html"
+    },
+    {
+      "title": "express.ui.insert_ui",
+      "url": "api/express/express.ui.insert_ui.html"
+    },
+    {
+      "title": "express.ui.remove_ui",
+      "url": "api/express/express.ui.remove_ui.html"
+    },
+    {
+      "title": "User Session"
+    },
+    {
+      "title": "session.Session",
+      "url": "api/express/session.Session.html"
+    },
+    {
+      "title": "Client Data"
+    },
+    {
+      "title": "session.ClientData",
+      "url": "api/express/session.ClientData.html"
+    },
+    {
+      "title": "UI as HTML"
+    },
+    {
+      "title": "express.ui.Theme",
+      "url": "api/express/express.ui.Theme.html"
+    },
+    {
+      "title": "express.ui.markdown",
+      "url": "api/express/express.ui.markdown.html"
+    },
+    {
+      "title": "express.ui.include_css",
+      "url": "api/express/express.ui.include_css.html"
+    },
+    {
+      "title": "express.ui.include_js",
+      "url": "api/express/express.ui.include_js.html"
+    },
+    {
+      "title": "express.ui.HTML",
+      "url": "api/express/express.ui.HTML.html"
+    },
+    {
+      "title": "express.ui.tags",
+      "url": "api/express/express.ui.tags.html"
+    },
+    {
+      "title": "express.ui.TagList",
+      "url": "api/express/express.ui.TagList.html"
+    },
+    {
+      "title": "express.ui.busy_indicators.use",
+      "url": "api/express/express.ui.busy_indicators.use.html"
+    },
+    {
+      "title": "express.ui.busy_indicators.options",
+      "url": "api/express/express.ui.busy_indicators.options.html"
+    },
+    {
+      "title": "Application-level settings"
+    },
+    {
+      "title": "express.app_opts",
+      "url": "api/express/express.app_opts.html"
+    },
+    {
+      "title": "Express developer tooling"
+    },
+    {
+      "title": "express.is_express_app",
+      "url": "api/express/express.is_express_app.html"
+    },
+    {
+      "title": "express.wrap_express_app",
+      "url": "api/express/express.wrap_express_app.html"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[
+  "What are the main forms of reactive functions and dependencies covered in the Shiny documentation?",
+  "How does @reactive.calc differ from @render.* functions in Shiny?",
+  "What is the purpose of @reactive.effect in Shiny, and how does it handle side effects?",
+  "How can reactive values in Shiny be used to maintain state in an application?",
+  "Why should developers using Shiny be careful when using mutable objects as reactive values?"
+]

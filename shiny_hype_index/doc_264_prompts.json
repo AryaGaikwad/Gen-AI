@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a select list using ui.input_selectize in Shiny for Python?",
+  "How can I specify whether selection of multiple items is allowed in the select list created using ui.input_selectize?",
+  "What is the difference in server value returned when multiple items are selected versus when only a single item is selected using ui.input_selectize?",
+  "How can I control the width of the select list created with ui.input_selectize in Shiny for Python?",
+  "What additional functionality can be added to the select list created with ui.input_selectize by using the clear_button and remove_button selectize plugins?"
+]

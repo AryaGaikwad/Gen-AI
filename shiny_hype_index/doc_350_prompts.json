@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the ui.remove_accordion_panel function in Shiny for Python?",
+  "What parameters does the ui.remove_accordion_panel function require for removing an accordion panel?",
+  "What are the references provided for understanding the functionality of ui.remove_accordion_panel?",
+  "How can I remove a specific accordion panel using the ui.remove_accordion_panel function?",
+  "In what scenarios should the default Shiny session object be used when calling ui.remove_accordion_panel?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required for the ui.update_checkbox_group function in Shiny for Python?",
+  "How can the set of choices be cleared for the update_checkbox_group function?",
+  "What does the parameter 'inline' represent in the ui.update_checkbox_group function?",
+  "How are messages handled in the input updater functions in Shiny for Python?",
+  "What happens if any arguments with None values are passed to the ui.update_checkbox_group function in Shiny for Python?"
+]

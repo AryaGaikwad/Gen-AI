@@ -1,0 +1,7 @@
+[
+  "What are the different options for specifying the widths of columns in a column-based grid layout using express.ui.layout_columns?",
+  "What are the options for specifying the heights of rows in a column-based grid layout using express.ui.layout_columns?",
+  "How can a developer control the growth and shrinking behavior of a layout to fit a fillable container using express.ui.layout_columns?",
+  "What are the parameters that can be customized to style the layout container in a column-based grid layout using express.ui.layout_columns?",
+  "What does the express.ui.layout_columns function return, and how is it related to the layout of elements in a grid?"
+]

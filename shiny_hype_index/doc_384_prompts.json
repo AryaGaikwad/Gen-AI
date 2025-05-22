@@ -1,0 +1,7 @@
+[
+  "What does the function \"req\" do in Shiny for Python?",
+  "What types of values are considered \"falsy\" in the context of the \"req\" function?",
+  "When does the \"req\" function throw a SilentException or SilentCancelOutputException?",
+  "What parameters can be passed to the \"req\" function in Shiny for Python?",
+  "In the context of the \"req\" function, when will it return None?"
+]

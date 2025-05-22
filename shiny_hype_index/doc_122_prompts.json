@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a checkbox using express.ui.input_checkbox in Shiny for Python?",
+  "What does the initial value parameter represent when creating a checkbox with express.ui.input_checkbox?",
+  "What type of value does express.ui.input_checkbox return when checked or unchecked?",
+  "Which other input components are similar to input_checkbox according to the 'See Also' section in the documentation?",
+  "Can the width of the checkbox be customized when using express.ui.input_checkbox in Shiny for Python?"
+]

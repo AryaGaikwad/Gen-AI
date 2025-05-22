@@ -1,0 +1,7 @@
+[
+  "What are the differences in syntax between Shiny for R and Shiny for Python in terms of connecting outputs to UI elements?",
+  "How does the usage of decorators in Shiny for Python differ from the top-level rendering functions used in Shiny for R?",
+  "What is the recommended method for installing Shiny in Python, and why is using a virtual environment strongly recommended?",
+  "How do you retrieve reactive values and expressions in Python compared to R in the context of Shiny applications?",
+  "What are the main differences in mutability between R and Python objects, and how can using .copy() in Python help avoid bugs in Shiny applications?"
+]

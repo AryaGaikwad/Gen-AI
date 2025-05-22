@@ -1,0 +1,7 @@
+[
+  "What options can be specified for the data grid using express.render.DataGrid in Shiny for Python?",
+  "What parameters are required when using express.render.DataGrid in Shiny for Python?",
+  "How can the width and height of the data grid be customized in express.render.DataGrid for Shiny Python?",
+  "What are the differences between DataGrid and DataTable in Shiny for Python?",
+  "What does the deprecated row_selection_mode parameter in express.render.DataGrid for Shiny Python refer to?"
+]

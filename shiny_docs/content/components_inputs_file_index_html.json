@@ -1,0 +1,305 @@
+{
+  "metadata": {
+    "title": "File Input – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/file/index.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Inputs",
+        "File Input"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "File Input"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),\n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_file(\"f\", \"Pick a file, any file\")  \n\"Input file data:\"\n\n@render.text\ndef txt():\n    return input.f()  "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),  \n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()  \n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_file ui.input_file(id, label, *, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)",
+        "express.ui.input_file express.ui.input_file(id, label, *, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_file ui.input_file(id, label, *, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)"
+    },
+    {
+      "type": "p",
+      "text": "express.ui.input_file express.ui.input_file(id, label, *, multiple=False, accept=None, width=None, button_label='Browse...', placeholder='No file selected', capture=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A file input allows you to upload one or more files."
+    },
+    {
+      "type": "p",
+      "text": "To add a file input to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_file() to the UI of your app to create a file upload component. Where you call this function will determine where the date selector will appear within the app’s layout.",
+        "Specify the id and label parameters of ui.input_date() to define the identifier and label of the file upload. ui.input_file() also includes various optional parameters to control what kinds of files can be uploaded."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_file() to the UI of your app to create a file upload component. Where you call this function will determine where the date selector will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Specify the id and label parameters of ui.input_date() to define the identifier and label of the file upload. ui.input_file() also includes various optional parameters to control what kinds of files can be uploaded."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. The file input returns a list containing a dictionary of 4 keys:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<file_id>() to access the value of the file input (e.g., input.file()). The server value of of the file input is a list containing a dictionary."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Here is an example of what the file input returns:"
+    },
+    {
+      "type": "code",
+      "text": "[{'name': 'my_file.csv', 'size': 525600, 'type': 'text/csv', 'datapath': '/tmp/fileupload-8khw0q6n/tmpeobuc_pj/0.csv'}]"
+    },
+    {
+      "type": "p",
+      "text": "You will typically want to load the uploaded in your application, to access the path of the uploaded file, you will first need to get the dictionary from the list, and get the value from the 'datapath' key. For example, input.<file_id>()[0]['datapath']."
+    },
+    {
+      "type": "h3",
+      "text": "Read a CSV file into pandas"
+    },
+    {
+      "type": "p",
+      "text": "You can limit the data type to only CSV files that can be read into pandas."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nimport pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom shiny.types import FileInfo\n\nui.input_file(\"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False)\nui.input_checkbox_group(\n    \"stats\",\n    \"Summary Stats\",\n    choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n)\n\n@reactive.calc\ndef parsed_file():\n    file = input.input_file()\n    if file is None:\n        return pd.DataFrame()\n    return pd.read_csv(file[0][\"datapath\"])\n\n@render.data_frame\ndef summary():\n    df = parsed_file()\n\n    if df.empty:\n        return pd.DataFrame()\n\n    # Get the row count, column count, and column names of the DataFrame\n    row_count = df.shape[0]\n    column_count = df.shape[1]\n    names = df.columns.tolist()\n    column_names = \", \".join(str(name) for name in names)\n\n    # Create a new DataFrame to display the information\n    info_df = pd.DataFrame({\n        \"Row Count\": [row_count],\n        \"Column Count\": [column_count],\n        \"Column Names\": [column_names],\n    })\n\n    # input.stats() is a list of strings; subset the columns based on the selected\n    # checkboxes\n    return info_df.loc[:, input.stats()]"
+    },
+    {
+      "type": "code",
+      "text": "import pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),\n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\nfrom shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),\n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()\n\napp = App(app_ui, server)",
+    "from shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_file(\"f\", \"Pick a file, any file\")  \n\"Input file data:\"\n\n@render.text\ndef txt():\n    return input.f()  ",
+    "from shiny import reactive\nfrom shiny.express import input, render, ui\n\nui.input_file(\"f\", \"Pick a file, any file\")  \n\"Input file data:\"\n\n@render.text\ndef txt():\n    return input.f()  ",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),  \n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()  \n\napp = App(app_ui, server)",
+    "from shiny import App, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\"f\", \"Pick a file, any file\"),  \n    \"Input file data:\",\n    ui.output_text(\"txt\"),\n)\n\ndef server(input, output, session):\n    @render.text\n    def txt():\n        return input.f()  \n\napp = App(app_ui, server)",
+    "[{'name': 'my_file.csv', 'size': 525600, 'type': 'text/csv', 'datapath': '/tmp/fileupload-8khw0q6n/tmpeobuc_pj/0.csv'}]",
+    "[{'name': 'my_file.csv', 'size': 525600, 'type': 'text/csv', 'datapath': '/tmp/fileupload-8khw0q6n/tmpeobuc_pj/0.csv'}]",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nimport pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nimport pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)",
+    "import pandas as pd\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom shiny.types import FileInfo\n\nui.input_file(\"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False)\nui.input_checkbox_group(\n    \"stats\",\n    \"Summary Stats\",\n    choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n)\n\n@reactive.calc\ndef parsed_file():\n    file = input.input_file()\n    if file is None:\n        return pd.DataFrame()\n    return pd.read_csv(file[0][\"datapath\"])\n\n@render.data_frame\ndef summary():\n    df = parsed_file()\n\n    if df.empty:\n        return pd.DataFrame()\n\n    # Get the row count, column count, and column names of the DataFrame\n    row_count = df.shape[0]\n    column_count = df.shape[1]\n    names = df.columns.tolist()\n    column_names = \", \".join(str(name) for name in names)\n\n    # Create a new DataFrame to display the information\n    info_df = pd.DataFrame({\n        \"Row Count\": [row_count],\n        \"Column Count\": [column_count],\n        \"Column Names\": [column_names],\n    })\n\n    # input.stats() is a list of strings; subset the columns based on the selected\n    # checkboxes\n    return info_df.loc[:, input.stats()]",
+    "import pandas as pd\nfrom shiny import reactive\nfrom shiny.express import input, render, ui\nfrom shiny.types import FileInfo\n\nui.input_file(\"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False)\nui.input_checkbox_group(\n    \"stats\",\n    \"Summary Stats\",\n    choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n)\n\n@reactive.calc\ndef parsed_file():\n    file = input.input_file()\n    if file is None:\n        return pd.DataFrame()\n    return pd.read_csv(file[0][\"datapath\"])\n\n@render.data_frame\ndef summary():\n    df = parsed_file()\n\n    if df.empty:\n        return pd.DataFrame()\n\n    # Get the row count, column count, and column names of the DataFrame\n    row_count = df.shape[0]\n    column_count = df.shape[1]\n    names = df.columns.tolist()\n    column_names = \", \".join(str(name) for name in names)\n\n    # Create a new DataFrame to display the information\n    info_df = pd.DataFrame({\n        \"Row Count\": [row_count],\n        \"Column Count\": [column_count],\n        \"Column Names\": [column_names],\n    })\n\n    # input.stats() is a list of strings; subset the columns based on the selected\n    # checkboxes\n    return info_df.loc[:, input.stats()]",
+    "import pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)",
+    "import pandas as pd\nfrom shiny import App, reactive, render, ui\n\napp_ui = ui.page_fluid(\n    ui.input_file(\n        \"input_file\", \"Choose CSV File\", accept=[\".csv\"], multiple=False\n    ),\n    ui.input_checkbox_group(\n        \"stats\",\n        \"Summary Stats\",\n        choices=[\"Row Count\", \"Column Count\", \"Column Names\"],\n        selected=[\"Row Count\", \"Column Count\", \"Column Names\"],\n    ),\n    ui.output_data_frame(\"summary\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def parsed_file():\n        file = input.input_file()\n        if file is None:\n            return pd.DataFrame()\n        return pd.read_csv(file[0][\"datapath\"])\n\n    @render.data_frame\n    def summary():\n        df = parsed_file()\n\n        if df.empty:\n            return pd.DataFrame()\n\n        # Get the row count, column count, and column names of the DataFrame\n        row_count = df.shape[0]\n        column_count = df.shape[1]\n        names = df.columns.tolist()\n        column_names = \", \".join(str(name) for name in names)\n\n        # Create a new DataFrame to display the information\n        info_df = pd.DataFrame({\n            \"Row Count\": [row_count],\n            \"Column Count\": [column_count],\n            \"Column Names\": [column_names],\n        })\n\n        # input.stats() is a list of strings; subset the columns based on the selected\n        # checkboxes\n        return info_df.loc[:, input.stats()]\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

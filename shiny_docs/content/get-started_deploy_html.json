@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "title": "Hosting and deployment – Shiny for Python",
+    "description": "When it’s time to put your Shiny app on the web, you can choose to deploy on your own servers or on our hosting service.",
+    "url": "get-started/deploy.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "Deploy",
+        "Overview"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Hosting and deployment"
+    },
+    {
+      "type": "p",
+      "text": "When it’s time to put your Shiny app on the web, you can choose to deploy on your own servers or on our hosting service."
+    },
+    {
+      "type": "h2",
+      "text": "Cloud hosting"
+    },
+    {
+      "type": "p",
+      "text": "The easiest deployment option to get started with is cloud hosting. Since you don’t need to run your own server, you can have your Shiny app up and running in minutes!"
+    },
+    {
+      "type": "p",
+      "text": "Shiny cloud hosting may not be right for you if your app must run within your datacenter or virtual private cloud; please see the next option if that’s the case."
+    },
+    {
+      "type": "p",
+      "text": "Learn more"
+    },
+    {
+      "type": "h2",
+      "text": "Self-hosted deployments"
+    },
+    {
+      "type": "p",
+      "text": "If you prefer to run your own server, or you must run your apps inside your network or virtual private cloud, then a self-hosted (or on-premises) deployment may be right for you. Posit offers both open source (Shiny Server) and commercial/enterprise (Posit Connect) options for Shiny app hosting."
+    },
+    {
+      "type": "p",
+      "text": "Learn more"
+    },
+    {
+      "type": "h2",
+      "text": "Static hosting"
+    },
+    {
+      "type": "p",
+      "text": "Some Shiny apps can be converted into completely static web pages (HTML, CSS, and JavaScript), with no need for Python to be running on the server. This is made possible by running the Shiny app’s Python logic entirely inside of the browser, using the magic of WebAssembly. We call this mode ShinyLive, and it has great benefits for making hosting cheaper, simpler, and practically infinitely scalable."
+    },
+    {
+      "type": "p",
+      "text": "Learn more"
+    },
+    {
+      "type": "h2",
+      "text": "More resources"
+    },
+    {
+      "type": "p",
+      "text": "See a comparison of Posit’s hosting and deployment options for Shiny. If you have any questions about which product is the right fit for you, please email sales@posit.co."
+    }
+  ],
+  "code_examples": [],
+  "toc": [
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/#cloud-hosting"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/#self-hosted-deployments"
+    },
+    {
+      "title": "Static hosting",
+      "url": "get-started/#static-hosting"
+    },
+    {
+      "title": "More resources",
+      "url": "get-started/#more-resources"
+    },
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

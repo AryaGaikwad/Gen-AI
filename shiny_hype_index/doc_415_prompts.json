@@ -1,0 +1,7 @@
+[
+  "How can I arrange elements into rows and columns that responsively adapt to various screen sizes using Shiny for Python?",
+  "What are the core functions provided by Shiny for arranging elements into rows and columns?",
+  "When should I use ui.layout_columns() versus ui.layout_column_wrap() for creating layouts in Shiny?",
+  "How does ui.layout_columns() handle the arrangement of elements when given different numbers of items?",
+  "What are the differences between the fluid, fixed, and fillable grid systems in Shiny, and when should each be used?"
+]

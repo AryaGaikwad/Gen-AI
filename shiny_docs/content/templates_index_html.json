@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Shiny Templates",
+    "description": "",
+    "url": "templates/index.html"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Shiny Templates"
+    },
+    {
+      "type": "h5",
+      "text": "A collection of useful apps built from a combination components, layouts, and reactivity. Compared to the gallery, templates provide a more minimal yet useful starting point for your next app."
+    },
+    {
+      "type": "h2",
+      "text": "Basic Apps"
+    },
+    {
+      "type": "p",
+      "text": "Basic starting points highlighting common layouts and components."
+    },
+    {
+      "type": "h2",
+      "text": "Generative AI"
+    },
+    {
+      "type": "p",
+      "text": "Go from a basic Gen AI chatbot to something more sophisticated."
+    },
+    {
+      "type": "h2",
+      "text": "Dashboards"
+    },
+    {
+      "type": "p",
+      "text": "At their core, dashboards are a combination of sidebar layout with cards and value boxes."
+    },
+    {
+      "type": "h2",
+      "text": "Streaming Updates"
+    },
+    {
+      "type": "p",
+      "text": "Reactive file reading and polling provide an easy and useful way to “stream” updates to files, folders, databases, and more."
+    },
+    {
+      "type": "h2",
+      "text": "Data Entry"
+    },
+    {
+      "type": "p",
+      "text": "Validate and record user input to a questionnaire."
+    }
+  ],
+  "code_examples": [],
+  "toc": []
+}

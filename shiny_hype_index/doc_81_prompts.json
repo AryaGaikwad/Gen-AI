@@ -1,0 +1,7 @@
+[
+  "What function should be used to create a div to display an image in a Shiny Python app?",
+  "How can an image be made to grow or shrink to fill its container as the app is resized in Shiny Python?",
+  "What keys are required in the dictionary returned by the function defined in the app's server function to display an image in Shiny Python?",
+  "How can an image be deleted from the server after it has been rendered in Shiny Python?",
+  "In Shiny Python, how can an image be used as an input widget to collect user interactions like clicks, double clicks, hovers, and brushes?"
+]

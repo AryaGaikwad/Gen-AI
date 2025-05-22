@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Restaurant tips dashboard",
+    "description": "Use the dashboard-tips template as a foundation for your next Shiny app.",
+    "url": "templates/dashboard-tips/"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Restaurant tips dashboard"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard-tips --mode express --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard-tips --mode core --github posit-dev/py-shiny-templates"
+    },
+    {
+      "type": "p",
+      "text": "An intermediate dashboard with input filters, value boxes, a plot, and table. This particular dashboard visualizes the tips dataset. In terms of the implementation, this dashboard is similar to the basic dashboard template, but adds output-specific input controls to card components. Those controls are made available via a popover by clicking on the icon in the top-right corner of the card. Another notable difference is the use of plotly for interactive plots."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Slider input",
+        "Checkbox group input",
+        "Action button",
+        "Popover",
+        "Value box",
+        "Plotly output",
+        "Data grid output"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Layouts:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Sidebar",
+        "Grid layout",
+        "Cards"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "faicons",
+        "pandas",
+        "plotly",
+        "shinywidgets"
+      ]
+    }
+  ],
+  "code_examples": [
+    "shiny create --template dashboard-tips --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard-tips --mode express --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard-tips --mode core --github posit-dev/py-shiny-templates",
+    "shiny create --template dashboard-tips --mode core --github posit-dev/py-shiny-templates"
+  ],
+  "toc": []
+}

@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "title": "Dark Mode Switch – Shiny for Python",
+    "description": "",
+    "url": "components/inputs/dark-mode/index.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Dark Mode Switch"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(ui.input_dark_mode()).add_class(\"h-100 w-100 align-content-center text-center\")\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import input, render, ui\n\nui.input_dark_mode() "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_dark_mode() \n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_dark_mode ui.input_dark_mode(id=None, mode=None, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.input_dark_mode ui.input_dark_mode(id=None, mode=None, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Details"
+    },
+    {
+      "type": "p",
+      "text": "A dark mode switch input toggles the app between dark and light modes."
+    },
+    {
+      "type": "p",
+      "text": "To add a dark mode switch to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.input_dark_mode() to the UI of your app to create a dark mode switch. Where you call this function will determine where the dark mode switch will appear within the app’s layout.",
+        "Optionally, specify the id parameter of ui.input_dark_mode() to define the identifier of the switch. When id is specified, you can use it to access the current color mode.",
+        "By default, the user’s system settings for the preferred color scheme will be used for the initial mode of the app. To force the initial mode, set the mode parameter to \"light\" or \"dark\"."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.input_dark_mode() to the UI of your app to create a dark mode switch. Where you call this function will determine where the dark mode switch will appear within the app’s layout."
+    },
+    {
+      "type": "p",
+      "text": "Optionally, specify the id parameter of ui.input_dark_mode() to define the identifier of the switch. When id is specified, you can use it to access the current color mode."
+    },
+    {
+      "type": "p",
+      "text": "By default, the user’s system settings for the preferred color scheme will be used for the initial mode of the app. To force the initial mode, set the mode parameter to \"light\" or \"dark\"."
+    },
+    {
+      "type": "p",
+      "text": "The value of an input component is accessible as a reactive value within the server() function. To access the value of a dark mode switch:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Use input.<dark_mode_switch_id>() (e.g., input.mode()) to access the value of the dark mode switch. The server value of a dark mode switch is a string: either \"light\" or \"dark\"."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Variations"
+    },
+    {
+      "type": "h3",
+      "text": "Dark mode switch in a navbar"
+    },
+    {
+      "type": "p",
+      "text": "To add a dark mode switch to a navbar, use ui.page_navbar() to create a page with a navbar, and ui.nav_spacer() to push the dark mode switch to the right. Place the ui.input_dark_mode() element within a ui.nav_control() element, to add the control to the navbar without creating a corresponding panel."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(title=\"Dark mode switch in navbar\", fillable=True, id=\"page\")\n\nui.nav_spacer()  \nwith ui.nav_control():  \n    ui.input_dark_mode()  "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(ui.input_dark_mode()).add_class(\"h-100 w-100 align-content-center text-center\")\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 200\n\n## file: app.py\nfrom shiny import ui, render, App\n\napp_ui = ui.page_fluid(ui.input_dark_mode()).add_class(\"h-100 w-100 align-content-center text-center\")\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "from shiny.express import input, render, ui\n\nui.input_dark_mode() ",
+    "from shiny.express import input, render, ui\n\nui.input_dark_mode() ",
+    "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_dark_mode() \n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "from shiny import ui, render, App\n\napp_ui = ui.page_fluid(\n    ui.input_dark_mode() \n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| viewerHeight: 300\n\nfrom shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "from shiny.express import ui\n\nui.page_opts(title=\"Dark mode switch in navbar\", fillable=True, id=\"page\")\n\nui.nav_spacer()  \nwith ui.nav_control():  \n    ui.input_dark_mode()  ",
+    "from shiny.express import ui\n\nui.page_opts(title=\"Dark mode switch in navbar\", fillable=True, id=\"page\")\n\nui.nav_spacer()  \nwith ui.nav_control():  \n    ui.input_dark_mode()  ",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_navbar(\n    ui.nav_spacer(), \n    ui.nav_control(ui.input_dark_mode()), \n    title=\"Dark mode switch in navbar\"\n)\n\ndef server(input, output, session):\n    pass\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "COMPONENTS",
+      "url": "components/"
+    },
+    {
+      "title": "Inputs"
+    },
+    {
+      "title": "Action Button",
+      "url": "components/inputs/action-button/index.html"
+    },
+    {
+      "title": "Action Link",
+      "url": "components/inputs/action-link/index.html"
+    },
+    {
+      "title": "Checkbox",
+      "url": "components/inputs/checkbox/index.html"
+    },
+    {
+      "title": "Checkbox Group",
+      "url": "components/inputs/checkbox-group/index.html"
+    },
+    {
+      "title": "Date Range Selector",
+      "url": "components/inputs/date-range-selector/index.html"
+    },
+    {
+      "title": "Date Selector",
+      "url": "components/inputs/date-selector/index.html"
+    },
+    {
+      "title": "File Input",
+      "url": "components/inputs/file/index.html"
+    },
+    {
+      "title": "Numeric Input",
+      "url": "components/inputs/numeric-input/index.html"
+    },
+    {
+      "title": "Password Field",
+      "url": "components/inputs/password-field/index.html"
+    },
+    {
+      "title": "Radio Buttons",
+      "url": "components/inputs/radio-buttons/index.html"
+    },
+    {
+      "title": "Select (Single)",
+      "url": "components/inputs/select-single/index.html"
+    },
+    {
+      "title": "Select (Multiple)",
+      "url": "components/inputs/select-multiple/index.html"
+    },
+    {
+      "title": "Selectize (Single)",
+      "url": "components/inputs/selectize-single/index.html"
+    },
+    {
+      "title": "Selectize (Multiple)",
+      "url": "components/inputs/selectize-multiple/index.html"
+    },
+    {
+      "title": "Slider",
+      "url": "components/inputs/slider/index.html"
+    },
+    {
+      "title": "Slider Range",
+      "url": "components/inputs/slider-range/index.html"
+    },
+    {
+      "title": "Switch",
+      "url": "components/inputs/switch/index.html"
+    },
+    {
+      "title": "Text Area",
+      "url": "components/inputs/text-area/index.html"
+    },
+    {
+      "title": "Text Box",
+      "url": "components/inputs/text-box/index.html"
+    },
+    {
+      "title": "Outputs"
+    },
+    {
+      "title": "Data Grid",
+      "url": "components/outputs/data-grid/index.html"
+    },
+    {
+      "title": "Data Table",
+      "url": "components/outputs/data-table/index.html"
+    },
+    {
+      "title": "Image",
+      "url": "components/outputs/image/index.html"
+    },
+    {
+      "title": "Map (ipyleaflet)",
+      "url": "components/outputs/map-ipyleaflet/index.html"
+    },
+    {
+      "title": "Plot (Matplotlib)",
+      "url": "components/outputs/plot-matplotlib/index.html"
+    },
+    {
+      "title": "Plot (Plotly)",
+      "url": "components/outputs/plot-plotly/index.html"
+    },
+    {
+      "title": "Plot (Seaborn)",
+      "url": "components/outputs/plot-seaborn/index.html"
+    },
+    {
+      "title": "Text",
+      "url": "components/outputs/text/index.html"
+    },
+    {
+      "title": "UI",
+      "url": "components/outputs/ui/index.html"
+    },
+    {
+      "title": "Value Box",
+      "url": "components/outputs/value-box/index.html"
+    },
+    {
+      "title": "Verbatim Text",
+      "url": "components/outputs/verbatim-text/index.html"
+    },
+    {
+      "title": "Display Messages"
+    },
+    {
+      "title": "Chat",
+      "url": "components/display-messages/chat/index.html"
+    },
+    {
+      "title": "Modal",
+      "url": "components/display-messages/modal/index.html"
+    },
+    {
+      "title": "Notifications",
+      "url": "components/display-messages/notifications/index.html"
+    },
+    {
+      "title": "Progress Bar",
+      "url": "components/display-messages/progress-bar/index.html"
+    },
+    {
+      "title": "Tooltips",
+      "url": "components/display-messages/tooltips/index.html"
+    }
+  ]
+}

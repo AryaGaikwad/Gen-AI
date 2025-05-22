@@ -1,0 +1,7 @@
+[
+  "What is the purpose of reactive.isolate in Shiny for Python?",
+  "How does using isolate() differ from reading a reactive value in a Shiny application?",
+  "In what scenario would using with isolate() be particularly useful in Shiny for Python?",
+  "How does with isolate() help in debugging reactive calculations in Shiny for Python?",
+  "What does the context manager returned by reactive.isolate() allow developers to do in a Shiny application?"
+]

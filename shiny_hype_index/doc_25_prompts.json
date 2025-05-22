@@ -1,0 +1,7 @@
+[
+  "What are the major differences between Shiny Express and Shiny Core?",
+  "How does the organization of UI and server code differ between Shiny Express and Shiny Core?",
+  "What are the advantages of using Shiny Core in terms of placing outputs explicitly?",
+  "How does the syntax for UI containers differ between Shiny Express and Shiny Core?",
+  "What advantages does Shiny Express offer in terms of writing UI components within container components?"
+]

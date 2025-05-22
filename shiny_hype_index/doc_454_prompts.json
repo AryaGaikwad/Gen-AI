@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using ui.output_text_verbatim in Shiny for Python?",
+  "What is the difference between ui.output_text_verbatim and output_text in terms of appearance?",
+  "What parameters are required when using ui.output_text_verbatim in Shiny for Python?",
+  "What should be displayed if the output of ui.output_text_verbatim is empty or None?",
+  "Which other functions are related to ui.output_text_verbatim that a Shiny developer should know about?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the available preset options for creating a custom Shiny theme using ui.Theme?",
+  "How can I speed up app loading in Shiny by pre-compiling the theme CSS and saving it to a file?",
+  "What method should I use to add custom default values to a Shiny theme using the Theme class?",
+  "How can I create a custom Shiny theme based on a _brand.yml file that describes my brand's color and typography?",
+  "Which package is required for compiling custom themes in Shiny and how can I install it?"
+]

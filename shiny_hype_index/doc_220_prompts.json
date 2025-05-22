@@ -1,0 +1,7 @@
+[
+  "What does the express.ui.panel_absolute function do in Shiny for Python?",
+  "How does absolute positioning work in HTML according to the documentation?",
+  "What are the parameters that can be specified when using express.ui.panel_absolute?",
+  "What is the significance of specifying exactly two out of the top, bottom, and height parameters for predictable results?",
+  "In what situations should you specify 0 for top, left, right, and bottom parameters when using panel_absolute in Shiny for Python?"
+]

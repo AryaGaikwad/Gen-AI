@@ -1,0 +1,599 @@
+{
+  "metadata": {
+    "title": "Jupyter Widgets – Shiny for Python",
+    "description": "",
+    "url": "docs/jupyter-widgets.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "🎨 User interfaces",
+        "Jupyter Widgets"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Jupyter Widgets"
+    },
+    {
+      "type": "p",
+      "text": "Shiny fully supports ipywidgets (aka Jupyter Widgets) via the shinywidgets package. Many notable Python packages build on ipywidgets to provide highly interactive widgets in Jupyter notebooks, including:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Plots, like altair, bokeh, and plotly.",
+        "Maps, like pydeck and ipyleaflet.",
+        "Tables, ipydatagrid and ipysheet.",
+        "3D visualizations, like ipyvolume and pythreejs.",
+        "Media streaming, like ipywebrtc.",
+        "Other awesome widgets"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In this article, we’ll learn how to leverage ipywidgets in Shiny, including how to render them, efficiently update them, and respond to user input."
+    },
+    {
+      "type": "p",
+      "text": "Although the term “Jupyter Widgets” is often used to refer to ipywidgets, it’s important to note that not all Jupyter Widgets are ipywidgets. For example, packages like folium and ipyvizzu aren’t compatible with ipywidgets, but do provide a _repr_html_ method for getting the HTML representation. It may be possible to display these widgets using Shiny’s @render.ui decorator."
+    },
+    {
+      "type": "h2",
+      "text": "Installation"
+    },
+    {
+      "type": "p",
+      "text": "To use ipywidgets in Shiny, start by installing shinywidgets:"
+    },
+    {
+      "type": "code",
+      "text": "pip install shinywidgets"
+    },
+    {
+      "type": "p",
+      "text": "Then, install the ipywidgets that you’d like to use. For this article, we’ll need the following:"
+    },
+    {
+      "type": "code",
+      "text": "pip install altair bokeh plotly ipyleaflet pydeck==0.8.0"
+    },
+    {
+      "type": "h2",
+      "text": "Get started"
+    },
+    {
+      "type": "p",
+      "text": "To render an ipywidget you first define a reactive function that returns the widget and then decorate it with @render_widget. Some popular widgets like altair have specially-designed decorators for better ergonomics and we recommend using them if they exist."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Altair",
+        "Bokeh",
+        "Plotly",
+        "Pydeck",
+        "Other"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_altair\n\nui.input_selectize(\"var\", \"Select variable\", choices=[\"bill_length_mm\", \"body_mass_g\"])\n\n\n@render_altair\ndef hist():\n    import altair as alt\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return (\n        alt.Chart(df)\n        .mark_bar()\n        .encode(x=alt.X(f\"{input.var()}:Q\", bin=True), y=\"count()\")\n    )\n## file: requirements.txt\naltair\nanywidget\npalmerpenguins"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_bokeh\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_bokeh\ndef hist():\n    from bokeh.plotting import figure\n    from palmerpenguins import load_penguins\n\n    p = figure(x_axis_label=input.var(), y_axis_label=\"count\")\n    bins = load_penguins()[input.var()].value_counts().sort_index()\n    p.quad(\n        top=bins.values,\n        bottom=0,\n        left=bins.index - 0.5,\n        right=bins.index + 0.5,\n    )\n    return p\n## file: requirements.txt\nbokeh\njupyter_bokeh\nxyzservices"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return px.histogram(df, x=input.var())\n\n## file: requirements.txt\npalmerpenguins\nplotly"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nimport pydeck as pdk\nimport shiny.express\nfrom shinywidgets import render_pydeck\n\n@render_pydeck\ndef map():\n    UK_ACCIDENTS_DATA = \"https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv\"\n\n    layer = pdk.Layer(\n        \"HexagonLayer\",  # `type` positional argument is here\n        UK_ACCIDENTS_DATA,\n        get_position=[\"lng\", \"lat\"],\n        auto_highlight=True,\n        elevation_scale=50,\n        pickable=True,\n        elevation_range=[0, 3000],\n        extruded=True,\n        coverage=1,\n    )\n\n    # Set the viewport location\n    view_state = pdk.ViewState(\n        longitude=-1.415,\n        latitude=52.2323,\n        zoom=6,\n        min_zoom=5,\n        max_zoom=15,\n        pitch=40.5,\n        bearing=-27.36,\n    )\n\n    # Combined all of it and render a viewport\n    return pdk.Deck(layers=[layer], initial_view_state=view_state)\n## file: requirements.txt\npydeck==0.8.0"
+    },
+    {
+      "type": "p",
+      "text": "Many other awesome Python packages provide widgets that are compatible with Shiny. In general, you can render them by applying the @render_widget decorator."
+    },
+    {
+      "type": "code",
+      "text": "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ..."
+    },
+    {
+      "type": "h2",
+      "text": "Widget object"
+    },
+    {
+      "type": "p",
+      "text": "In order to create rich user experiences like linked brushing, editable tables, and smooth transitions, it’s useful to know how to efficiently update and respond to user input. In either case, we’ll need access to the Python object underlying the rendered widget. This object is available as a property, named widget, on the render function. From this widget object, you can then access its attributes and methods. As we’ll see later, special widget attributes known as traits, can be used to efficiently update and respond to user input."
+    },
+    {
+      "type": "p",
+      "text": "If you’re not sure what traits are available, you can use the widget.traits() method to list them."
+    },
+    {
+      "type": "p",
+      "text": "This widget object is always a subclass of ipywidgets.Widget and may be different from the object returned by the render function. For example, the hist function below returns Figure, but the widget property is a FigureWidget (a subclass of ipywidgets.Widget). In many cases, this is useful since ipywidgets.Widget provides a standard way to efficiently update and respond to user input that shinywidgets knows how to handle. If you need the actual return value of the render function, you can access it via the value property."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\nfrom shiny.express import render\nfrom shinywidgets import render_plotly\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    return px.histogram(px.data.tips(), x=\"tip\")\n\n@render.code\ndef info():\n    return str([type(hist.widget), type(hist.value)])\n## file: requirements.txt\npandas\nplotly"
+    },
+    {
+      "type": "p",
+      "text": "The “main” API for notable packages like altair, bokeh, plotly, and pydeck don’t subclass ipywidgets.Widget (so that they can be used outside of a notebook). Shinywidgets is aware of this and automatically coerces to the relevant subclass (e.g, plotly’s Figure -> FigureWidget)."
+    },
+    {
+      "type": "p",
+      "text": "As long as you’re using the dedicated decorators for these packages (e.g., @render_altair), the widget property’s type will know about the coercion (i.e., you’ll get proper autocomplete and type checking on the widget property)."
+    },
+    {
+      "type": "h2",
+      "text": "Efficient updates"
+    },
+    {
+      "type": "p",
+      "text": "If you’ve used ipywidgets before, you may know that widgets have traits that can be updated after the widget is created. It’s often much more performant to update a widget’s traits instead of re-creating it from from scratch, and so you should update a widget’s traits when performance is critical."
+    },
+    {
+      "type": "p",
+      "text": "For example, in a notebook, you may have written a code cell like this to first display a map:"
+    },
+    {
+      "type": "code",
+      "text": "import ipyleaflet as ipyl\nmap = ipyl.Map()"
+    },
+    {
+      "type": "p",
+      "text": "Then, in a later cell, you may have updated the map’s center trait to change the map’s location:"
+    },
+    {
+      "type": "code",
+      "text": "map.center = (51, 0)"
+    },
+    {
+      "type": "p",
+      "text": "With shinywidgets, we can do the same thing reactively in Shiny by updating the widget property of the render function. For example, the following code creates a map, then updates the map’s center whenever the dropdown changes."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\nfrom shiny import reactive\nfrom shiny.express import input, ui\nfrom shinywidgets import render_widget\nimport ipyleaflet as ipyl\n\ncity_centers = {\n    \"London\": (51.5074, 0.1278),\n    \"Paris\": (48.8566, 2.3522),\n    \"New York\": (40.7128, -74.0060)\n}\n\nui.input_select(\"center\", \"Center\", choices=list(city_centers.keys()))\n\n@render_widget\ndef map():\n    return ipyl.Map(zoom=4)\n\n@reactive.effect\ndef _():\n    map.widget.center = city_centers[input.center()]\n## file: requirements.txt\nipyleaflet"
+    },
+    {
+      "type": "p",
+      "text": "If the app above had used @render_widget instead of @reactive.effect to perform the update, then the map would be re-rendered from stratch every time input.center changes, which causes the map to flicker (instead of a smooth transition to the new location)."
+    },
+    {
+      "type": "h2",
+      "text": "Respond to user input"
+    },
+    {
+      "type": "p",
+      "text": "There are two different ways to respond to user input:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Reactive traits",
+        "Widget event callbacks"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "It’s usually easiest to use reactive traits but you may need to use event callbacks if the event information isn’t available as a trait."
+    },
+    {
+      "type": "h3",
+      "text": "Reactive traits"
+    },
+    {
+      "type": "p",
+      "text": "If you’ve used ipywidgets before, you may know that widgets have traits that can be accessed and observed. For example, in a notebook, you may have written a code cell like this to display a map:"
+    },
+    {
+      "type": "code",
+      "text": "import ipyleaflet as ipyl\nmap = ipyl.Map()"
+    },
+    {
+      "type": "p",
+      "text": "Then, in a later cell, you may have read the map’s center trait to get the current map’s location:"
+    },
+    {
+      "type": "code",
+      "text": "map.center"
+    },
+    {
+      "type": "p",
+      "text": "With shinywidgets, we can do the same thing reactively in Shiny by using the reactive_read() function to read the trait in a reactive context. For example, the following example creates a map, then displays/updates the map’s current center whenever the map is panned."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 460\nimport ipyleaflet as ipyl\nfrom shiny.express import render\nfrom shinywidgets import reactive_read, render_widget\n\n\"Click and drag to pan the map\"\n\n@render_widget\ndef map():\n    return ipyl.Map(zoom=2)\n\n@render.text\ndef center():\n    cntr = reactive_read(map.widget, 'center')\n    return f\"Current center: {cntr}\"\n## file: requirements.txt\nipyleaflet"
+    },
+    {
+      "type": "p",
+      "text": "Under the hood, reactive_read() uses ipywidgets’ observe() method to observe changes to the relevant trait. So, any observable trait can be used with reactive_read()."
+    },
+    {
+      "type": "p",
+      "text": "Some widgets have attributes that contain observable traits. One practical example of this is the selections attribute of altair’s JupyterChart class, which has an observable point trait."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 460\nimport altair as alt\nfrom shiny.express import render\nfrom shinywidgets import reactive_read, render_altair\nfrom vega_datasets import data\n\n\"Click the legend to update the selection\"\n\n@render.code\ndef selection():\n    pt = reactive_read(jchart.widget.selections, \"point\")\n    return str(pt)\n\n@render_altair\ndef jchart():\n    brush = alt.selection_point(name=\"point\", encodings=[\"color\"], bind=\"legend\")\n    return (\n        alt.Chart(data.cars())\n        .mark_point()\n        .encode(\n            x=\"Horsepower:Q\",\n            y=\"Miles_per_Gallon:Q\",\n            color=alt.condition(brush, \"Origin:N\", alt.value(\"grey\")),\n        )\n        .add_params(brush)\n    )\n\n\n## file: requirements.txt\naltair\nanywidget\nvega_datasets"
+    },
+    {
+      "type": "h3",
+      "text": "Widget event callbacks"
+    },
+    {
+      "type": "p",
+      "text": "Sometimes, you may want to capture user interaction that isn’t available through a widget trait. For example, ipyleaflet.CircleMarker has an .on_click() method that allows you to execute a callback when a marker is clicked. In this case, you’ll want to define a callback that updates some reactive.value everytime its triggered to capture the relevant information. That way, the callback information can be used to cause invalidation of other outputs (or trigger reactive side-effects):"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 450\nimport ipyleaflet as ipyl\nfrom shiny.express import render\nfrom shiny import reactive\nfrom shinywidgets import render_widget\n\n# Stores the number of clicks\nn_clicks = reactive.value(0)\n\n# A click callback that updates the reactive value\ndef on_click(**kwargs):\n    n_clicks.set(n_clicks() + 1)\n\n# Create the map, add the CircleMarker, and register the map with Shiny\n@render_widget\ndef map():\n    cm = ipyl.CircleMarker(location=(55, 360))\n    cm.on_click(on_click)\n    m = ipyl.Map(center=(53, 354), zoom=5)\n    m.add_layer(cm)\n    return m\n\n@render.text\ndef nClicks():\n    return f\"Number of clicks: {n_clicks.get()}\"\n## file: requirements.txt\nipyleaflet"
+    },
+    {
+      "type": "p",
+      "text": "In the example above, we created a CircleMarker object, then added it to a Map object. Both of these objects subclass ipywidgets.Widget, so they both have traits that can be updated and read reactively."
+    },
+    {
+      "type": "h2",
+      "text": "Layout & styling"
+    },
+    {
+      "type": "p",
+      "text": "Layout and styling of ipywidgets can get a bit convoluted, partially due to potentially 3 levels of customization:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The ipywidgets API.",
+        "The widget implementation’s API (e.g., altair’s Chart, plotly’s Figure, etc).",
+        "Shiny’s UI layer."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Generally speaking, it’s preferable to use the widget’s layout API if it is available since the API is designed specifically for the widget. For example, if you want to set the size and theme of a plotly figure, can use its update_layout method:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 285\n\nimport plotly.express as px\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"theme\", \"Choose a theme\",\n    choices=[\"plotly\", \"plotly_white\", \"plotly_dark\"]\n)\n\n@render_plotly\ndef plot():\n    p = px.histogram(px.data.tips(), x=\"tip\")\n    p.update_layout(template=input.theme(), height=200)\n    return p\n## file: requirements.txt\npandas\nplotly"
+    },
+    {
+      "type": "h3",
+      "text": "Arranging widgets"
+    },
+    {
+      "type": "p",
+      "text": "The best way to include widgets in your application is to wrap them in one of Shiny’s UI components. In addition to being quite expressive and flexible, these components make it easy to implement filling and responsive layouts. For example, the following code arranges two widgets side-by-side, and fills the available space:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nimport plotly.express as px\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.page_opts(title = \"Filling layout\", fillable = True)\n\nwith ui.layout_columns():\n  @render_plotly\n  def plot1():\n      return px.histogram(px.data.tips(), y=\"tip\")\n\n  @render_plotly\n  def plot2():\n      return px.histogram(px.data.tips(), y=\"total_bill\")\n## file: requirements.txt\npandas\nplotly"
+    },
+    {
+      "type": "p",
+      "text": "For more layout inspiration, check out the Layout Gallery."
+    },
+    {
+      "type": "h2",
+      "text": "Shinylive"
+    },
+    {
+      "type": "p",
+      "text": "Examples on this page are powered by shinylive, a tool for running Shiny apps in the browser (via pyodide). Generally speaking, apps that use shinywidgets should work in shinylive as long as the widget and app code is supported by pyodide. The shinywidgets package itself comes pre-installed in shinylive, but you’ll need to include any other dependencies in the requirements.txt file."
+    },
+    {
+      "type": "h2",
+      "text": "Examples"
+    },
+    {
+      "type": "p",
+      "text": "For more shinywidgets examples, see the examples/ directory in the shinywidgets repo. The outputs example is a particularly useful example to see an overview of available widgets."
+    },
+    {
+      "type": "h2",
+      "text": "Troubleshooting"
+    },
+    {
+      "type": "p",
+      "text": "If after installing shinywidgets, you have trouble rendering widgets, first try running this “hello world” ipywidgets example. If that doesn’t work, it could be that you have an unsupported version of a dependency like ipywidgets or shiny."
+    },
+    {
+      "type": "p",
+      "text": "If you can run the “hello world” example, but other widgets don’t work, first check that the extension is properly configured with jupyter nbextension list. If the extension is properly configured, and still isn’t working, here are some possible reasons why:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The widget requires initialization code to work in a notebook environment."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "In this case, shinywidgets probably won’t work without providing the equivalent setup information to Shiny. A known case of this is bokeh, shinywidgets’ @render_bokeh decorator handles through inclusion of additional HTML dependencies."
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Not all widgets are compatible with ipywidgets!"
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Some web-based widgets in Python aren’t compatible with the ipywidgets framework, but do provide a repr_html method for getting the HTML representation (e.g., folium). It may be possible to display these widgets using Shiny’s @render.ui decorator, but be aware that, you may not be able to do things mentioned in this article with these widgets."
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The widget itself is broken."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "If you think this is the case, try running the code in a notebook to see if it works there. If it doesn’t work in a notebook, then it’s likely a problem with the widget itself (and the issue should be reported to the widget’s maintainers)."
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "The widget is otherwise misconfigured (or your offline)."
+      ]
+    },
+    {
+      "type": "ul",
+      "items": [
+        "shinywidgets tries its best to load widget dependencies from local files, but if it fails to do so, it will try to load them from a CDN. If you’re offline, then the CDN won’t work, and the widget will fail to load. If you’re online, and the widget still fails to load, then please let us know by opening an issue."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "For developers"
+    },
+    {
+      "type": "p",
+      "text": "If you’d like to create your own ipywidget that works with shinywidgets, we highly recommend using the anywidget framework to develop that ipywidget. However, if only care about Shiny integration, and not Jupyter, then you may want to consider using a custom Shiny binding instead of shinywidgets. If you happen to already have an ipywidget implementation, and want to use/add a dedicated decorator for it, see how it’s done here."
+    }
+  ],
+  "code_examples": [
+    "pip install shinywidgets",
+    "pip install shinywidgets",
+    "pip install altair bokeh plotly ipyleaflet pydeck==0.8.0",
+    "pip install altair bokeh plotly ipyleaflet pydeck==0.8.0",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_altair\n\nui.input_selectize(\"var\", \"Select variable\", choices=[\"bill_length_mm\", \"body_mass_g\"])\n\n\n@render_altair\ndef hist():\n    import altair as alt\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return (\n        alt.Chart(df)\n        .mark_bar()\n        .encode(x=alt.X(f\"{input.var()}:Q\", bin=True), y=\"count()\")\n    )\n## file: requirements.txt\naltair\nanywidget\npalmerpenguins",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_bokeh\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_bokeh\ndef hist():\n    from bokeh.plotting import figure\n    from palmerpenguins import load_penguins\n\n    p = figure(x_axis_label=input.var(), y_axis_label=\"count\")\n    bins = load_penguins()[input.var()].value_counts().sort_index()\n    p.quad(\n        top=bins.values,\n        bottom=0,\n        left=bins.index - 0.5,\n        right=bins.index + 0.5,\n    )\n    return p\n## file: requirements.txt\nbokeh\njupyter_bokeh\nxyzservices",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"var\", \"Select variable\",\n    choices=[\"bill_length_mm\", \"body_mass_g\"]\n)\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    from palmerpenguins import load_penguins\n    df = load_penguins()\n    return px.histogram(df, x=input.var())\n\n## file: requirements.txt\npalmerpenguins\nplotly",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 485\n\nimport pydeck as pdk\nimport shiny.express\nfrom shinywidgets import render_pydeck\n\n@render_pydeck\ndef map():\n    UK_ACCIDENTS_DATA = \"https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv\"\n\n    layer = pdk.Layer(\n        \"HexagonLayer\",  # `type` positional argument is here\n        UK_ACCIDENTS_DATA,\n        get_position=[\"lng\", \"lat\"],\n        auto_highlight=True,\n        elevation_scale=50,\n        pickable=True,\n        elevation_range=[0, 3000],\n        extruded=True,\n        coverage=1,\n    )\n\n    # Set the viewport location\n    view_state = pdk.ViewState(\n        longitude=-1.415,\n        latitude=52.2323,\n        zoom=6,\n        min_zoom=5,\n        max_zoom=15,\n        pitch=40.5,\n        bearing=-27.36,\n    )\n\n    # Combined all of it and render a viewport\n    return pdk.Deck(layers=[layer], initial_view_state=view_state)\n## file: requirements.txt\npydeck==0.8.0",
+    "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ...",
+    "import shiny.express\nfrom shinywidgets import render_widget\n\n@render_widget\ndef widget():\n    # Widget code goes here\n    ...",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\nfrom shiny.express import render\nfrom shinywidgets import render_plotly\n\n@render_plotly\ndef hist():\n    import plotly.express as px\n    return px.histogram(px.data.tips(), x=\"tip\")\n\n@render.code\ndef info():\n    return str([type(hist.widget), type(hist.value)])\n## file: requirements.txt\npandas\nplotly",
+    "import ipyleaflet as ipyl\nmap = ipyl.Map()",
+    "import ipyleaflet as ipyl\nmap = ipyl.Map()",
+    "map.center = (51, 0)",
+    "map.center = (51, 0)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 400\nfrom shiny import reactive\nfrom shiny.express import input, ui\nfrom shinywidgets import render_widget\nimport ipyleaflet as ipyl\n\ncity_centers = {\n    \"London\": (51.5074, 0.1278),\n    \"Paris\": (48.8566, 2.3522),\n    \"New York\": (40.7128, -74.0060)\n}\n\nui.input_select(\"center\", \"Center\", choices=list(city_centers.keys()))\n\n@render_widget\ndef map():\n    return ipyl.Map(zoom=4)\n\n@reactive.effect\ndef _():\n    map.widget.center = city_centers[input.center()]\n## file: requirements.txt\nipyleaflet",
+    "import ipyleaflet as ipyl\nmap = ipyl.Map()",
+    "import ipyleaflet as ipyl\nmap = ipyl.Map()",
+    "map.center",
+    "map.center",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 460\nimport ipyleaflet as ipyl\nfrom shiny.express import render\nfrom shinywidgets import reactive_read, render_widget\n\n\"Click and drag to pan the map\"\n\n@render_widget\ndef map():\n    return ipyl.Map(zoom=2)\n\n@render.text\ndef center():\n    cntr = reactive_read(map.widget, 'center')\n    return f\"Current center: {cntr}\"\n## file: requirements.txt\nipyleaflet",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 460\nimport altair as alt\nfrom shiny.express import render\nfrom shinywidgets import reactive_read, render_altair\nfrom vega_datasets import data\n\n\"Click the legend to update the selection\"\n\n@render.code\ndef selection():\n    pt = reactive_read(jchart.widget.selections, \"point\")\n    return str(pt)\n\n@render_altair\ndef jchart():\n    brush = alt.selection_point(name=\"point\", encodings=[\"color\"], bind=\"legend\")\n    return (\n        alt.Chart(data.cars())\n        .mark_point()\n        .encode(\n            x=\"Horsepower:Q\",\n            y=\"Miles_per_Gallon:Q\",\n            color=alt.condition(brush, \"Origin:N\", alt.value(\"grey\")),\n        )\n        .add_params(brush)\n    )\n\n\n## file: requirements.txt\naltair\nanywidget\nvega_datasets",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 450\nimport ipyleaflet as ipyl\nfrom shiny.express import render\nfrom shiny import reactive\nfrom shinywidgets import render_widget\n\n# Stores the number of clicks\nn_clicks = reactive.value(0)\n\n# A click callback that updates the reactive value\ndef on_click(**kwargs):\n    n_clicks.set(n_clicks() + 1)\n\n# Create the map, add the CircleMarker, and register the map with Shiny\n@render_widget\ndef map():\n    cm = ipyl.CircleMarker(location=(55, 360))\n    cm.on_click(on_click)\n    m = ipyl.Map(center=(53, 354), zoom=5)\n    m.add_layer(cm)\n    return m\n\n@render.text\ndef nClicks():\n    return f\"Number of clicks: {n_clicks.get()}\"\n## file: requirements.txt\nipyleaflet",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 285\n\nimport plotly.express as px\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.input_selectize(\n    \"theme\", \"Choose a theme\",\n    choices=[\"plotly\", \"plotly_white\", \"plotly_dark\"]\n)\n\n@render_plotly\ndef plot():\n    p = px.histogram(px.data.tips(), x=\"tip\")\n    p.update_layout(template=input.theme(), height=200)\n    return p\n## file: requirements.txt\npandas\nplotly",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 250\n\nimport plotly.express as px\nfrom shiny.express import input, ui\nfrom shinywidgets import render_plotly\n\nui.page_opts(title = \"Filling layout\", fillable = True)\n\nwith ui.layout_columns():\n  @render_plotly\n  def plot1():\n      return px.histogram(px.data.tips(), y=\"tip\")\n\n  @render_plotly\n  def plot2():\n      return px.histogram(px.data.tips(), y=\"total_bill\")\n## file: requirements.txt\npandas\nplotly"
+  ],
+  "toc": [
+    {
+      "title": "Installation",
+      "url": "docs/#installation"
+    },
+    {
+      "title": "Get started",
+      "url": "docs/#get-started"
+    },
+    {
+      "title": "Widget object",
+      "url": "docs/#widget-object"
+    },
+    {
+      "title": "Efficient updates",
+      "url": "docs/#efficient-updates"
+    },
+    {
+      "title": "Respond to user input",
+      "url": "docs/#user-input"
+    },
+    {
+      "title": "Reactive traits",
+      "url": "docs/#reactive-read"
+    },
+    {
+      "title": "Widget event callbacks",
+      "url": "docs/#event-callbacks"
+    },
+    {
+      "title": "Layout & styling",
+      "url": "docs/#layout-styling"
+    },
+    {
+      "title": "Arranging widgets",
+      "url": "docs/#arranging-widgets"
+    },
+    {
+      "title": "Shinylive",
+      "url": "docs/#shinylive"
+    },
+    {
+      "title": "Examples",
+      "url": "docs/#examples"
+    },
+    {
+      "title": "Troubleshooting",
+      "url": "docs/#troubleshooting"
+    },
+    {
+      "title": "For developers",
+      "url": "docs/#for-developers"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

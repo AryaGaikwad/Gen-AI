@@ -1,0 +1,7 @@
+[
+  "What parameters does ui.update_date_range require to change the start and end values of a date range input on the client?",
+  "How are None values handled in the ui.update_date_range function?",
+  "What is the purpose of the Session instance parameter in the ui.update_date_range function?",
+  "How can the set of choices for radio buttons, checkbox group, and select inputs be cleared using this documentation?",
+  "When are the messages sent by the input updater functions collected and sent to the client in Shiny for Python?"
+]

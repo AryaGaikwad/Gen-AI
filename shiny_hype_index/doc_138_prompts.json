@@ -1,0 +1,7 @@
+[
+  "What is the default behavior of express.render.text in Shiny Express applications?",
+  "In what scenario should express.render.text be paired with output_text in Shiny Core applications?",
+  "What is the purpose of the 'inline' parameter in express.render.text?",
+  "What type of value does the express.render.text decorator expect the decorated function to return?",
+  "How should the name of the decorated function or @output(id=...) be related to the output_text container's id when using express.render.text?"
+]

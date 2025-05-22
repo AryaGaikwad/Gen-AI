@@ -1,0 +1,7 @@
+[
+  "What is a reactive calculation in Shiny for Python?",
+  "How does marking a function as a reactive calculation impact its behavior?",
+  "What parameters are required for marking a function as a reactive calculation in Shiny for Python?",
+  "Why are reactive calculations advised not to produce side effects in Shiny for Python?",
+  "How are reactive calculations related to reactive expressions in Shiny for R?"
+]

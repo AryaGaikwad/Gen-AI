@@ -1,0 +1,7 @@
+[
+  "What does the ui.panel_absolute function in Shiny for Python do?",
+  "What are the parameters that can be specified when using the ui.panel_absolute function?",
+  "How are the position and size parameters handled when using ui.panel_absolute?",
+  "What is the significance of setting the fixed parameter to True in the ui.panel_absolute function?",
+  "How can one ensure that the panel fills the page or parent container when using ui.panel_absolute?"
+]

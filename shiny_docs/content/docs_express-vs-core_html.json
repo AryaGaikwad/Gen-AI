@@ -1,0 +1,471 @@
+{
+  "metadata": {
+    "title": "Express vs. Core – Shiny for Python",
+    "description": "",
+    "url": "docs/express-vs-core.html"
+  },
+  "content": [
+    {
+      "type": "ol",
+      "items": [
+        "📝 Syntax modes",
+        "Express vs. Core"
+      ]
+    },
+    {
+      "type": "h1",
+      "text": "Express vs. Core"
+    },
+    {
+      "type": "p",
+      "text": "Shiny is one framework with two different syntax options: Shiny Express and Shiny Core. Up until now, these docs have focused on Shiny Express. In this section, we’ll dig into the differences between the two, and why you might choose one or the other."
+    },
+    {
+      "type": "p",
+      "text": "Don’t worry, though. There is an enormous amount of overlap between the two, and the vast majority of apps will be well served by either Shiny Express or Shiny Core."
+    },
+    {
+      "type": "p",
+      "text": "And if you do decide to switch, the process is relatively straightforward—especially in the direction of Express to Core, as the latter supports a superset of the former’s capabilities. We go into more detail on this in the transitioning article."
+    },
+    {
+      "type": "h2",
+      "text": "Background"
+    },
+    {
+      "type": "p",
+      "text": "Shiny for Python was unveiled in 2022 with a single syntax option, which we now call Shiny Core. It drew inspiration from the Shiny framework for R, which has been around for over a decade and is used by hundreds of thousands of data scientists around the world. Our goal was to make Shiny Core feel Pythonic, as opposed to a literal port of Shiny for R, but carry over the same core principles and tradeoffs."
+    },
+    {
+      "type": "p",
+      "text": "In January 2024, we introduced Shiny Express as a second syntax option. Express is built on top of Core, and is designed to be extremely easy to write, while preserving most of the power and flexibility of Shiny."
+    },
+    {
+      "type": "h2",
+      "text": "Differences between Express and Core"
+    },
+    {
+      "type": "p",
+      "text": "The major differences between Shiny Express and Core are the following:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Slightly different import statements",
+        "Different organization of UI and server code",
+        "Implicit vs. explicit placement of outputs",
+        "Different syntax for UI containers"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Let’s examine each of these in more detail."
+    },
+    {
+      "type": "h3",
+      "text": "Import statements"
+    },
+    {
+      "type": "p",
+      "text": "A Shiny Core app file usually contains an import statement like:"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, reactive, render, ui"
+    },
+    {
+      "type": "p",
+      "text": "In Shiny Express, you’ll instead see:"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import reactive\nfrom shiny.express import input, render, ui"
+    },
+    {
+      "type": "p",
+      "text": "Note that both import ui and render, but from different places. While Express’s shiny.express.ui has almost all of the same UI functions as Core’s shiny.ui, their function signatures often differ slightly, to reflect Express’s different usage patterns. And the render functions—well actually, they are identical right now, but we’re planning to add some Express-specific features to the shiny.express.render versions in the near future."
+    },
+    {
+      "type": "p",
+      "text": "Meanwhile, the reactive module is unchanged between Core and Express, as the two modes share the same reactive foundations."
+    },
+    {
+      "type": "p",
+      "text": "Finally, notice that Express also imports input from shiny.express. This isn’t needed in Core, because the input object is passed into the server function as an argument. Since Express has no server function, we made it an attribute of shiny.express."
+    },
+    {
+      "type": "h3",
+      "text": "Organization of UI and server code"
+    },
+    {
+      "type": "p",
+      "text": "Every Shiny Core app file has a UI section, and a server section; the two are separate and distinct."
+    },
+    {
+      "type": "p",
+      "text": "The UI section consists of a single (potentially very long and deeply nested) expression, stored as a variable named app_ui by convention. The object this produces is actually simply HTML, which is sent to the browser when it first loads the app."
+    },
+    {
+      "type": "p",
+      "text": "The server section is a function, named server by convention, that always takes the arguments input, output, and session. This function contains render functions and reactive functions, which are used to update the UI in response to user input."
+    },
+    {
+      "type": "p",
+      "text": "You can think of the UI section as a template, with ui.output_xx() calls as placeholders for outputs, and the server section as the instructions for how to populate those outputs."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Core\nfrom shiny import App, reactive, render, ui\nfrom datetime import datetime\n\napp_ui = ui.page_fixed(\n    ui.h1(\"Title\"),\n    ui.output_code(\"greeting\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def time():\n        reactive.invalidate_later(1)\n        return datetime.now()\n\n    @render.code\n    def greeting():\n        return f\"Hello, world!\\nIt's currently {time()}.\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "In Shiny Express, there isn’t this hard distinction between UI and server."
+    },
+    {
+      "type": "p",
+      "text": "Instead, everything coexists as top-level code in the app file: input components, layout directives, outputs (including their rendering logic), and reactive functions."
+    },
+    {
+      "type": "p",
+      "text": "Also, you aren’t forced to combine your UI into a single complex object. You can use multiple UI objects, and they will be combined together by the framework."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny import reactive\nfrom shiny.express import render, ui \nfrom datetime import datetime\n\nui.h1(\"Title\")\n\n@reactive.calc\ndef time():\n    reactive.invalidate_later(1)\n    return datetime.now()\n\n@render.code\ndef greeting():\n    return f\"Hello, world!\\nIt's currently {time()}.\""
+    },
+    {
+      "type": "p",
+      "text": "Again, notice how greeting in this app does not have a corresponding call to output_code(\"greeting\"). This is because in Shiny Express, render functions implicitly add an output to the page as a side effect so you don’t need the output function."
+    },
+    {
+      "type": "h5",
+      "text": "Core advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Because the UI structure is kept separate from the server, it is easier to read, reorder, and restructure. This advantage grows as app UIs grow larger.",
+        "Explicit server function declaration gives us a natural place to put code that should only execute at startup (top level) versus for each session (server function body). In contrast, in Express, all of the code in the app file is executed for each session."
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Express advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "It’s nice for beginners not to have to learn about the difference between UI and server.",
+        "Avoids having to write code in two different places for a single output, and having to make the IDs match up.",
+        "No need to write nested function declarations (i.e. functions inside the server function), which can be surprising to Python programmers."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Implicit vs. explicit placement of outputs"
+    },
+    {
+      "type": "p",
+      "text": "For an output to appear in a Shiny app of any type, the framework needs to know two things: where it should go in the UI, and how it should be rendered."
+    },
+    {
+      "type": "p",
+      "text": "In Shiny Core, this is done in two separate steps. In the UI, you create a placeholder for the output, using a function like ui.output_plot(\"plot1\"). Then, in the server, you create a rendering function, using a decorator like @render.plot, and name the function the same as the placeholder, like def plot1():."
+    },
+    {
+      "type": "p",
+      "text": "In Shiny Express, this is done in a single step. You create a rendering function, using a decorator like @render.plot, and name the function however you like (as long as it’s unique). The framework automatically creates a placeholder in the UI where the function is defined."
+    },
+    {
+      "type": "h5",
+      "text": "Core advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Moving an output from one place in the UI to another is as simple as moving the corresponding placeholder function.",
+        "The ui.output_xx() functions currently have some additional arguments that allow you to customize the output’s behavior, like enabling plot brushing (with ui.output_plot(\"plot1\", brush=True)). This is not as natural in Express, though workarounds do exist—see the next article."
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Express advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "No need to carefully match the names of placeholders and rendering functions."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Different syntax for UI containers"
+    },
+    {
+      "type": "p",
+      "text": "Broadly speaking, there are two kinds of UI components in Shiny: container components, which, as the name suggests, can contain other components, and non-container components, which cannot. (You can also think of the UI as a tree data structure: container components have children, while non-container components are leaf nodes in the tree.)"
+    },
+    {
+      "type": "p",
+      "text": "Here are some examples of container components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.sidebar()",
+        "ui.card()",
+        "ui.layout_columns()",
+        "ui.div()"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Here are some examples of non-container components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.input_text()",
+        "ui.output_plot()"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In Shiny Core, to put a component inside of a container, you nest the function calls, like ui.sidebar(ui.input_text())."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Core\nfrom shiny import ui, render, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_text(\"txt_in\", \"Type something here:\"),\n        open=\"always\",\n    ),\n    ui.card(\n        ui.output_code(\"result\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.code\n    def result():\n        return f\"You entered '{input.txt_in()}'.\"\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "By contrast, in Shiny Express, container components like ui.sidebar() are context managers, and used via with statements. Their child components go within the with block."
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_text(\"txt_in\", \"Type something here:\")\n\nwith ui.card():\n    @render.code\n    def result():\n        return f\"You entered '{input.txt_in()}'.\""
+    },
+    {
+      "type": "h5",
+      "text": "Core advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Passing children as arguments is beautifully simple and robust from a programming perspective.",
+        "Containers and non-containers behave very similarly (in fact, non-containers act no different than containers with no children).",
+        "All of the Core UI components are simple value-returning functions, without side effects. This makes them easy to compose, reuse, refactor, inspect, and test."
+      ]
+    },
+    {
+      "type": "h5",
+      "text": "Express advantages"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "The with block syntax is more forgiving to write, as you don’t need to separate elements with commas. (Every Shiny Core app author has probably seen the “Perhaps you forgot a comma?” error message many times.)",
+        "You can put arbitrary Python code inside with blocks, including loops, conditionals, import statements, function definitions, reactive functions, and output rendering functions. (In Core, you are limited to Python expressions that generate UI.)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "In unusual situations, you might want to create HTML content that doesn’t use context managers. HTML tag functions, like div() and span() can actually be used as context managers or as regular functions, so the following are equivalent:"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny.express import ui\n\nwith ui.div():\n    with ui.pre(style=\"background-color: #eff;\"):\n        \"Hello!\"\n\nui.div(\n    ui.pre(\n        \"Hello!\",\n        style=\"background-color: #eff;\",\n    ),\n)"
+    },
+    {
+      "type": "p",
+      "text": "More complex component functions, such as ui.sidebar() and ui.card(), can only be used as context managers in Shiny Express."
+    }
+  ],
+  "code_examples": [
+    "from shiny import App, reactive, render, ui",
+    "from shiny import App, reactive, render, ui",
+    "from shiny import reactive\nfrom shiny.express import input, render, ui",
+    "from shiny import reactive\nfrom shiny.express import input, render, ui",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Core\nfrom shiny import App, reactive, render, ui\nfrom datetime import datetime\n\napp_ui = ui.page_fixed(\n    ui.h1(\"Title\"),\n    ui.output_code(\"greeting\"),\n)\n\ndef server(input, output, session):\n    @reactive.calc\n    def time():\n        reactive.invalidate_later(1)\n        return datetime.now()\n\n    @render.code\n    def greeting():\n        return f\"Hello, world!\\nIt's currently {time()}.\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny import reactive\nfrom shiny.express import render, ui \nfrom datetime import datetime\n\nui.h1(\"Title\")\n\n@reactive.calc\ndef time():\n    reactive.invalidate_later(1)\n    return datetime.now()\n\n@render.code\ndef greeting():\n    return f\"Hello, world!\\nIt's currently {time()}.\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Core\nfrom shiny import ui, render, App\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\n        ui.input_text(\"txt_in\", \"Type something here:\"),\n        open=\"always\",\n    ),\n    ui.card(\n        ui.output_code(\"result\"),\n    )\n)\n\ndef server(input, output, session):\n    @render.code\n    def result():\n        return f\"You entered '{input.txt_in()}'.\"\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny.express import input, render, ui\n\nwith ui.sidebar():\n    ui.input_text(\"txt_in\", \"Type something here:\")\n\nwith ui.card():\n    @render.code\n    def result():\n        return f\"You entered '{input.txt_in()}'.\"",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n# Express\nfrom shiny.express import ui\n\nwith ui.div():\n    with ui.pre(style=\"background-color: #eff;\"):\n        \"Hello!\"\n\nui.div(\n    ui.pre(\n        \"Hello!\",\n        style=\"background-color: #eff;\",\n    ),\n)"
+  ],
+  "toc": [
+    {
+      "title": "Background",
+      "url": "docs/#background"
+    },
+    {
+      "title": "Differences between Express and Core",
+      "url": "docs/#differences-between-express-and-core"
+    },
+    {
+      "title": "Import statements",
+      "url": "docs/#import-statements"
+    },
+    {
+      "title": "Organization of UI and server code",
+      "url": "docs/#organization-of-ui-and-server-code"
+    },
+    {
+      "title": "Implicit vs. explicit placement of outputs",
+      "url": "docs/#implicit-vs.-explicit-placement-of-outputs"
+    },
+    {
+      "title": "Different syntax for UI containers",
+      "url": "docs/#different-syntax-for-ui-containers"
+    },
+    {
+      "title": "📌 Essentials"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/overview.html"
+    },
+    {
+      "title": "User interfaces",
+      "url": "docs/user-interfaces.html"
+    },
+    {
+      "title": "🤖 Generative AI"
+    },
+    {
+      "title": "Get inspired",
+      "url": "docs/genai-inspiration.html"
+    },
+    {
+      "title": "Chatbots",
+      "url": "docs/genai-chatbots.html"
+    },
+    {
+      "title": "Streaming",
+      "url": "docs/genai-stream.html"
+    },
+    {
+      "title": "Tool calling",
+      "url": "docs/genai-tools.html"
+    },
+    {
+      "title": "Structured data",
+      "url": "docs/genai-structured-data.html"
+    },
+    {
+      "title": "RAG",
+      "url": "docs/genai-rag.html"
+    },
+    {
+      "title": "🎨 User interfaces"
+    },
+    {
+      "title": "Overview",
+      "url": "docs/ui-overview.html"
+    },
+    {
+      "title": "Jupyter Widgets",
+      "url": "docs/jupyter-widgets.html"
+    },
+    {
+      "title": "Dynamic UI",
+      "url": "docs/ui-dynamic.html"
+    },
+    {
+      "title": "UI as HTML",
+      "url": "docs/ui-html.html"
+    },
+    {
+      "title": "Customizing UI",
+      "url": "docs/ui-customize.html"
+    },
+    {
+      "title": "⚡ Reactivity"
+    },
+    {
+      "title": "Foundations",
+      "url": "docs/reactive-foundations.html"
+    },
+    {
+      "title": "Patterns",
+      "url": "docs/reactive-patterns.html"
+    },
+    {
+      "title": "Mutable objects",
+      "url": "docs/reactive-mutable.html"
+    },
+    {
+      "title": "📝 Syntax modes"
+    },
+    {
+      "title": "Express vs. Core",
+      "url": "docs/express-vs-core.html"
+    },
+    {
+      "title": "Choosing a syntax",
+      "url": "docs/express-or-core.html"
+    },
+    {
+      "title": "Express in depth",
+      "url": "docs/express-in-depth.html"
+    },
+    {
+      "title": "Transition to Core",
+      "url": "docs/express-to-core.html"
+    },
+    {
+      "title": "📦 Modules"
+    },
+    {
+      "title": "Shiny Modules",
+      "url": "docs/modules.html"
+    },
+    {
+      "title": "Module Communication",
+      "url": "docs/module-communication.html"
+    },
+    {
+      "title": "🧪 Testing"
+    },
+    {
+      "title": "Unit testing",
+      "url": "docs/unit-testing.html"
+    },
+    {
+      "title": "End-to-End Testing Your App",
+      "url": "docs/end-to-end-testing.html"
+    },
+    {
+      "title": "🏗️ Extending"
+    },
+    {
+      "title": "Custom JavaScript component",
+      "url": "docs/custom-component-one-off.html"
+    },
+    {
+      "title": "Custom components package",
+      "url": "docs/custom-components-pkg.html"
+    },
+    {
+      "title": "📊 Comparisons"
+    },
+    {
+      "title": "Streamlit",
+      "url": "docs/comp-streamlit.html"
+    },
+    {
+      "title": "Shiny for R",
+      "url": "docs/comp-r-shiny.html"
+    },
+    {
+      "title": "🧩 Miscellaneous"
+    },
+    {
+      "title": "Non-blocking operations",
+      "url": "docs/nonblocking.html"
+    },
+    {
+      "title": "Routing",
+      "url": "docs/routing.html"
+    }
+  ]
+}

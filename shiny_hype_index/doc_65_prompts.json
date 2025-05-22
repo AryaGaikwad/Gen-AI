@@ -1,0 +1,7 @@
+[
+  "What parameters can be set when using the ui.input_date function to create a date selector?",
+  "How can a date selector be added to a Shiny Python app's UI using the ui.input_date function?",
+  "What does the value of a date selector represent within the server function?",
+  "How can the value of a date selector be accessed in a Shiny Python app?",
+  "What are the optional parameters that can be included in the ui.input_date function when creating a date selector in a Shiny Python app?"
+]

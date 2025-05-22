@@ -1,0 +1,65 @@
+{
+  "metadata": {
+    "title": "Shiny for Python – Workout Plan Generator",
+    "description": "Use the workout-plan template as a foundation for your next Shiny app.",
+    "url": "templates/workout-plan/index.html"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Back to Templates"
+    },
+    {
+      "type": "h1",
+      "text": "Workout Plan Generator"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template workout-plan --mode express --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template workout-plan --mode core --github posit-dev/py-shiny-templates/gen-ai"
+    },
+    {
+      "type": "p",
+      "text": "Generate a workout plan based on your fitness goals, experience level, available equipment, etc. This app demonstrates a useful pattern of collecting user input via input controls, then using those values to fill in a prompt template which is sent to the LLM for response generation."
+    },
+    {
+      "type": "p",
+      "text": "Components:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Chat",
+        "Selectize input",
+        "Slider input",
+        "Action button",
+        "Download button"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Packages:"
+    },
+    {
+      "type": "p",
+      "text": "chatlas faicons"
+    }
+  ],
+  "code_examples": [
+    "shiny create --template workout-plan --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template workout-plan --mode express --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template workout-plan --mode core --github posit-dev/py-shiny-templates/gen-ai",
+    "shiny create --template workout-plan --mode core --github posit-dev/py-shiny-templates/gen-ai"
+  ],
+  "toc": []
+}

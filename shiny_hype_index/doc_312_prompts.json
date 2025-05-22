@@ -1,0 +1,7 @@
+[
+  "What does using ui.HTML in Shiny for Python prevent from happening when rendering a string inside an HTML tag?",
+  "How can a Shiny developer mark a string as raw HTML to prevent it from being escaped in Python?",
+  "What is the purpose of using ui.HTML in Shiny for Python?",
+  "In what scenarios would a Shiny developer want to use custom UI elements in their Python application?",
+  "How does the ui.HTML function differ from other methods of rendering strings in HTML tags in Shiny for Python?"
+]
