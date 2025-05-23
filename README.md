@@ -3,6 +3,7 @@
 
 HyPE is a novel information retrieval system designed to improve query relevance for documentation-based questions. Instead of matching queries directly to document text, HyPE generates and indexes **hypothetical questions** that each document could answer. This transforms the retrieval task into a **question-to-question matching** problem, enhancing semantic understanding and user experience.
 
+Original Paper link: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5139335
 ---
 
 ## 🧠 Key Concept
@@ -55,6 +56,8 @@ Query Embedding → Question Matching → Document Retrieval → Answer Generati
 - Uses **IndexFlatL2** for exact Euclidean distance
 - Fast, accurate, and memory-efficient
 - One-time build at indexing phase; real-time matching during queries
+ 
+More about FAISS: https://faiss.ai/index.html
 
 ### 5. Configuration
 
