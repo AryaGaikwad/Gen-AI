@@ -1,9 +1,10 @@
 
 # HyPE: Hypothetical Prompt Embeddings for Shiny Documentation
 
-HyPE is a novel information retrieval system designed to improve query relevance for documentation-based questions. Instead of matching queries directly to document text, HyPE generates and indexes **hypothetical questions** that each document could answer. This transforms the retrieval task into a **question-to-question matching** problem, enhancing semantic understanding and user experience.
+HyPE is a novel information retrieval system designed to improve query relevance for documentation-based questions. Instead of matching queries directly to document text, HyPE generates and indexes **hypothetical questions** that each document could answer. This transforms the retrieval task into a **question-to-question matching** problem, enhancing semantic understanding and user experience. 
 
 Original Paper link: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5139335
+
 ---
 
 ## 🧠 Key Concept
@@ -97,20 +98,3 @@ More about FAISS: https://faiss.ai/index.html
 
 ---
 
-## 📁 Example Folder Structure
-
-```
-data/
-  ├── documents/
-  │   ├── doc1.json
-  │   └── ...
-  ├── questions/
-  │   ├── doc1_questions.json
-  ├── embeddings/
-  │   ├── doc1.npy
-  └── faiss_index/
-      └── index_flatl2.faiss
-
-config/
-  └── settings.json
-```
