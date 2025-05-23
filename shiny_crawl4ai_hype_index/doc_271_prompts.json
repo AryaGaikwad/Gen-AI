@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.ui.modal_remove` function in Shiny for Python?",
+  "What parameter does the `express.ui.modal_remove` function accept, and what is its default value?",
+  "How can a modal dialog box be removed manually by the user in Shiny for Python?",
+  "What is the relationship between `express.ui.modal_remove` and `express.ui.modal_show` functions in Shiny for Python?",
+  "In the provided example code snippet, how is the `ui.modal_remove()` function being used after running a model in Shiny for Python?"
+]

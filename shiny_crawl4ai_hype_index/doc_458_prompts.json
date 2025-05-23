@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using modules in a Shiny application?",
+  "How can you create a module with Shiny Express syntax?",
+  "What problems can arise when using functions to encapsulate logic in a Shiny application?",
+  "How does the `@module.ui` decorator simplify the creation of UI elements in a Shiny module?",
+  "In what way do modules help in organizing and managing a large Shiny code base?"
+]

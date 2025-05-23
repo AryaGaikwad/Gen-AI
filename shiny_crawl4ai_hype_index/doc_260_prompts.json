@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when creating a textarea input control using `express.ui.input_text_area` in Shiny for Python?",
+  "What is the purpose of the `value` parameter in the `express.ui.input_text_area` function in Shiny for Python?",
+  "How can the resizing behavior of a textarea input control be customized using the `resize` parameter in Shiny for Python?",
+  "What is the default behavior for updating the input value in `express.ui.input_text_area` in Shiny for Python?",
+  "What is the significance of the `autoresize` parameter in the `express.ui.input_text_area` function of Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of a tooltip in a Shiny app and how can it be added to a UI component?",
+  "How can the message of a tooltip be updated in Shiny using the provided functions?",
+  "What are some best practices for making tooltip triggers accessible to users in a Shiny app?",
+  "How can a tooltip trigger be created using an icon, and what considerations should be made for accessibility?",
+  "In Shiny, what is the alternative to using tooltips for displaying information to the user, and how do they differ from tooltips?"
+]

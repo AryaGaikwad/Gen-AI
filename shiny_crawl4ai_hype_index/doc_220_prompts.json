@@ -1,0 +1,7 @@
+[
+  "What are the different components that can be used as input components in Shiny for Python?",
+  "How can the row selection feature be utilized in Shiny for Python when working with a data frame?",
+  "What is the purpose of the `@render.data_frame` decorator in Shiny for Python?",
+  "How can users edit cells in a table displayed using the `@render.data_frame` function in Shiny for Python?",
+  "How does the `narwhals` compatibility layer help in managing data frame interactions in Shiny for Python?"
+]

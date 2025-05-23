@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_date` function in Shiny for Python?",
+  "How can I change the value of a date input on the client using Shiny for Python?",
+  "What is the purpose of the `session` parameter in the `express.ui.update_date` function?",
+  "How can I clear the set of choices for radio buttons, checkbox groups, and select inputs in Shiny for Python?",
+  "How can I update a date input with a specific label, value, minimum, and maximum values in Shiny for Python?"
+]

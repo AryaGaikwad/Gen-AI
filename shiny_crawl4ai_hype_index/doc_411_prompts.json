@@ -1,0 +1,7 @@
+[
+  "What is the function of an action link in Shiny for Python?",
+  "How can I add an action link to my Shiny app using the `ui.input_action_link()` function?",
+  "How can I access the value of an action link in the `server()` function?",
+  "What are the available parameters for the Action Link in Shiny Core and Shiny Express?",
+  "What steps should be followed to define the identifier and label for an action link in a Shiny app?"
+]

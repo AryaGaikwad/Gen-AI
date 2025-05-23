@@ -1,0 +1,7 @@
+[
+  "What are the different parameters that can be set when creating a slider widget using `express.ui.input_slider`?",
+  "What is the purpose of the `animate` parameter in the `express.ui.input_slider` function?",
+  "When using the `express.ui.input_slider` function, what does the `drag_range` parameter control?",
+  "How can one customize the displayed time format when using the `express.ui.input_slider` function for date or datetime objects?",
+  "What is the expected return type when calling the `express.ui.input_slider` function to create a slider widget?"
+]

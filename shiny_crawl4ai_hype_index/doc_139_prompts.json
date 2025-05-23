@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.modal_button` function in Shiny for Python?",
+  "What does the `ui.modal_button` function in Shiny for Python return?",
+  "How is the `ui.modal_button` typically used in conjunction with the `footer` of a modal in Shiny for Python?",
+  "What are some of the attributes that can be applied to the button created by the `ui.modal_button` function in Shiny for Python?",
+  "In a Shiny for Python application, how can the `ui.modal_button` function be used to create a button that closes a modal dialog?"
+]

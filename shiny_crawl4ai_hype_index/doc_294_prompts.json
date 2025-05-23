@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.remove_ui` function accept?",
+  "What does the `multiple` parameter in the `express.ui.remove_ui` function determine?",
+  "How can you specify the UI element(s) to be removed using the `selector` parameter in the `express.ui.remove_ui` function?",
+  "What is the default behavior of the `immediate` parameter in the `express.ui.remove_ui` function?",
+  "How can you ensure that the UI object should be immediately removed using the `express.ui.remove_ui` function?"
+]

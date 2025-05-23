@@ -1,0 +1,7 @@
+[
+  "What are the differences between the fluid, fixed, and fillable grid systems in Shiny for Python?",
+  "How can I create a grid layout using `ui.layout_columns()` and `ui.layout_column_wrap()` in Shiny for Python?",
+  "When should I use `ui.layout_columns()` versus `ui.layout_column_wrap()` for arranging elements in a grid layout?",
+  "How can I control the column widths in a grid layout using `ui.layout_columns()` in Shiny for Python?",
+  "What is the purpose of using `ui.page_fillable()` in building web pages with Shiny for Python?"
+]

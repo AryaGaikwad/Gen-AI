@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to update the contents or title of a popover in Shiny for Python using the `express.ui.update_popover` function?",
+  "How can I open or close a popover in Shiny for Python using the `express.ui.update_popover` function?",
+  "What is the default object type to be used for the `session` parameter in the `express.ui.update_popover` function in Shiny for Python?",
+  "Can you provide an example code snippet that demonstrates how to update a popover to show or hide in Shiny for Python using the `express.ui.update_popover` function?",
+  "In Shiny for Python, where can I find related functions or components to the `express.ui.update_popover` function that I can use in my application?"
+]

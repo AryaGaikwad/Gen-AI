@@ -1,0 +1,7 @@
+[
+  "How can I create a new Shiny application using the Shiny CLI?",
+  "What is the recommended file name for a Shiny application to be run with the `shiny run` command?",
+  "How can I run and develop Shiny apps in Positron or Visual Studio Code with the Shiny extension?",
+  "What optional flags can be included when running a Shiny app from the command line using the `shiny run` command?",
+  "Where can I find starter templates for common use cases when creating a Shiny application?"
+]

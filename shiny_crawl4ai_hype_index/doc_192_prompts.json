@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.update_action_button` function in Shiny for Python?",
+  "What happens if the `disabled` parameter in `ui.update_action_button` is set to `True`?",
+  "How can one change the label and icon of an action button using the `ui.update_action_button` function in Shiny for Python?",
+  "In Shiny for Python, how is the session handled in the `ui.update_action_button` function?",
+  "What is the purpose of the note section in the documentation for `ui.update_action_button` in Shiny for Python?"
+]

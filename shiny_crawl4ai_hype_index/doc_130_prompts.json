@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for the `ui.insert_accordion_panel` function in Shiny for Python?",
+  "What is the purpose of the `position` parameter in the `ui.insert_accordion_panel` function?",
+  "How can I add a new accordion panel next to a specific existing panel in Shiny for Python?",
+  "What is the default value for the `session` parameter in the `ui.insert_accordion_panel` function?",
+  "Where can I find examples of using the `ui.insert_accordion_panel` function in Shiny for Python?"
+]

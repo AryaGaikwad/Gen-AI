@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be set using the `express.ui.page_opts` function in Shiny for Python?",
+  "How does `page_auto` determine which page function to use in Shiny for Python based on the page options and top-level items in the app?",
+  "What is the purpose of the `lang` parameter in the `express.ui.page_opts` function in Shiny for Python?",
+  "How does the `theme` parameter work in the `express.ui.page_opts` function in Shiny for Python?",
+  "In Shiny for Python, how does the `fillable` parameter affect the selection of the page function when there are no top-level nav panels or sidebars?"
+]

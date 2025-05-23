@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.text` function in Shiny for Python?",
+  "What is the default behavior of `render.text` in Shiny Express applications?",
+  "How can you control the display of the result when using `render.text` with Shiny Express applications?",
+  "What is the expected return type of a function decorated with `render.text`?",
+  "How should the name of the decorated function or `@output(id=...)` match when using `render.text` with Shiny Core applications?"
+]

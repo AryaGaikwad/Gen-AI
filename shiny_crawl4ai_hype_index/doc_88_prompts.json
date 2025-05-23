@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `output_transformer` decorator in Shiny for Python?",
+  "What parameters can be passed to the `output_transformer` decorator in Shiny for Python?",
+  "How does the transform function in `output_transformer` determine the output type in Shiny for Python?",
+  "What are the Notes regarding defining the renderer decorator overloads in Shiny for Python?",
+  "How can developers create their own output transformer methods in Shiny for Python using the `output_transformer` decorator?"
+]

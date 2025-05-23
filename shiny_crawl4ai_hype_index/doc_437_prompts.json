@@ -1,0 +1,7 @@
+[
+  "What are the steps to display a Matplotlib figure in a Shiny app according to this documentation?",
+  "How can a plot be used as an input widget in Shiny using Matplotlib?",
+  "What are the different arguments that can be set to True in `ui.output_plot()` to collect user interactions in a Shiny app?",
+  "How can multiple `output_image()`/`output_plot()` calls share the same id value in a Shiny app?",
+  "What are the functions `ui.output_plot` and `@render.plot` used for in Shiny for Python according to this documentation?"
+]

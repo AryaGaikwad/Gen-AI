@@ -1,0 +1,7 @@
+[
+  "What are some scenarios where LLMs can be useful for extracting structured data?",
+  "How can the `.extract_data()` method be used in the Shiny for Python environment?",
+  "What are the three things needed to use the `.extract_data()` method?",
+  "How can a Shiny app be scaled efficiently to handle multiple concurrent users when using `.extract_data()`?",
+  "In the context of named entity extraction, why is it important to allow users to edit the extracted data manually?"
+]

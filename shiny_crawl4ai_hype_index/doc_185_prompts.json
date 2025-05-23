@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the `ui.sidebar` function in Shiny for Python?",
+  "How can the initial state of the sidebar be controlled in Shiny for Python using the `ui.sidebar` function?",
+  "What is the purpose of the `position` parameter in the `ui.sidebar` function in Shiny for Python?",
+  "How can a custom title be added to a sidebar in Shiny for Python using the `ui.sidebar` function?",
+  "What is the return type of the `ui.sidebar` function in Shiny for Python?"
+]

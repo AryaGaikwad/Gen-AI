@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using `ui.input_selectize` function in Shiny for Python?",
+  "What is the purpose of the `selected` parameter in the `ui.input_selectize` function?",
+  "How can you enable the selection of multiple items in a select list created using `ui.input_selectize`?",
+  "What is the server value returned when using `ui.input_selectize` with `multiple=False`?",
+  "What options can be passed to the `ui.input_selectize` function to customize the selectize input?"
+]

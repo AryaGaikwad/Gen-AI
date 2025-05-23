@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `@expressify` decorator in Shiny Express when writing UI generating functions?",
+  "How does Shiny Express handle the execution of code in interactive mode versus script mode?",
+  "How can one collect UI code into a variable in Shiny Express?",
+  "What is the solution provided in Shiny Express for reactively rendering UI in response to user input or server events?",
+  "In Shiny Express, how can one prevent a TypeError caused by attempting to display an object that is not a valid UI object?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `express.ui.navset_card_tab` function in Shiny for Python?",
+  "What is the purpose of providing the `id` parameter in the `express.ui.navset_card_tab` function?",
+  "How can you choose a default selected navigation item in the `express.ui.navset_card_tab` function?",
+  "What is the role of the `sidebar` parameter in the `express.ui.navset_card_tab` function?",
+  "In Shiny for Python, how can you display UI elements above and below the selected content using the `express.ui.navset_card_tab` function?"
+]

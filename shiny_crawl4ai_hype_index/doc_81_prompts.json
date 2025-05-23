@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `render.plot` function in Shiny for Python?",
+  "What is the purpose of the `alt` parameter in the `render.plot` function in Shiny for Python?",
+  "How can the width and height of a plot be determined in the `render.plot` function in Shiny for Python?",
+  "What should the name of the decorated function match in relation to the `output_plot` container in Shiny for Python?",
+  "Which types of objects can be returned by a function decorated with `render.plot` in Shiny for Python?"
+]

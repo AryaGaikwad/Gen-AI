@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.panel_fixed` function in Shiny for Python?",
+  "What is the difference between `ui.panel_fixed` and `ui.panel_absolute` in Shiny for Python?",
+  "How can you create a panel of absolutely positioned content that does not scroll with the rest of the page in Shiny for Python?",
+  "What UI elements can be included inside the panel created by the `ui.panel_fixed` function in Shiny for Python?",
+  "Which other function is `ui.panel_fixed` related to according to the documentation in Shiny for Python?"
+]

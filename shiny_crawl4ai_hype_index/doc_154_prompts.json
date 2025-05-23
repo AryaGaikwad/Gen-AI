@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.navset_tab` function in Shiny for Python?",
+  "What is the purpose of the `id` parameter in the `ui.navset_tab` function?",
+  "How can a specific default nav item be selected in the `ui.navset_tab` function?",
+  "What UI components can be displayed above and below the selected content in the `ui.navset_tab` function?",
+  "Which other components are related to the `ui.navset_tab` function according to the \"See Also\" section in the documentation?"
+]

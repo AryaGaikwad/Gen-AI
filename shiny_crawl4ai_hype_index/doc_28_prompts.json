@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `@reactive.calc` decorator in Shiny for Python?",
+  "How can side effects be implemented in Shiny for Python using the `@reactive.effect` decorator?",
+  "In Shiny for Python, how can reactive values be used to maintain state in an application?",
+  "What are the main forms of reactive functions and dependencies covered in the Shiny for Python documentation?",
+  "How can a reactive value in Shiny for Python prevent an infinite loop when both getting and setting its value?"
+]

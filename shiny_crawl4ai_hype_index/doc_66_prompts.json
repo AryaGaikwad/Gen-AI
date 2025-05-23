@@ -1,0 +1,7 @@
+[
+  "What function is described in the documentation passage as \"Run any pending invalidations (i.e., flush the reactive environment)\"?",
+  "What is the warning associated with the `reactive.flush` function?",
+  "When is it recommended to call the `reactive.flush` function in a Shiny app?",
+  "What types of tasks is the `reactive.flush` function useful for in Shiny development?",
+  "Where can a user find more information about the `reactive.flush` function in the Shiny documentation?"
+]

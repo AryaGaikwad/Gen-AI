@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `pytest.create_app_fixture` function in Shiny for Python?",
+  "How can one specify the path to the Shiny app file when using the `create_app_fixture()` function?",
+  "What is the default scope of the fixture created by `pytest.create_app_fixture` and how can it be modified?",
+  "In what scenario can the `local_app` test fixture be used instead of `create_app_fixture()`?",
+  "How can one run tests for multiple Shiny app paths using the `create_app_fixture` function in Shiny for Python?"
+]

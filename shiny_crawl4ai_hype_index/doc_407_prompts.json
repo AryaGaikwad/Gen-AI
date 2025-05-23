@@ -1,0 +1,7 @@
+[
+  "What steps should be followed to add an action button to an app using Shiny for Python?",
+  "How can I access the value of an action button within the server function in Shiny for Python?",
+  "What is the purpose of the `ui.input_action_button()` function in Shiny for Python?",
+  "Where can I find a showcase of all possible parameters for the Action Button in Shiny for Python?",
+  "How can I increment the value of an action button each time a user presses it in Shiny for Python?"
+]

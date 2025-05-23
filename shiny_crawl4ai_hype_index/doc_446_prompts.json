@@ -1,0 +1,7 @@
+[
+  "What is the recommended way to develop a custom input component package for Shiny using React and Typescript?",
+  "How can I create a color picker component using React and Typescript and package it as a Python package for deployment?",
+  "What is the purpose of the `fancy_color_picker.py` file in the project structure of a custom components package in Shiny for Python?",
+  "How can I set up an output binding for a color display component in Shiny using Python code?",
+  "What steps are involved in the development workflow for creating and testing a custom input component package in Shiny for Python?"
+]

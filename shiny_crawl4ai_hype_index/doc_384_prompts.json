@@ -1,0 +1,7 @@
+[
+  "What are the different attributes of the `playwright.controller.OutputUi` class in Shiny for Python?",
+  "What methods are available in the `playwright.controller.OutputUi` class for asserting different conditions on the output?",
+  "How can I assert that the output in Shiny for Python has a specific container tag using the `playwright.controller.OutputUi` class?",
+  "What is the purpose of the `expect_empty` method in the `playwright.controller.OutputUi` class in Shiny for Python?",
+  "Where can I find the `playwright.controller.OutputUi` class documentation for Shiny for Python, including its attributes and methods?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `playwright.expect.expect_to_have_class` method in Shiny for Python?",
+  "What are the required parameters for the `playwright.expect.expect_to_have_class` method in Shiny for Python?",
+  "How does the `playwright.expect.expect_to_have_class` method in Shiny for Python handle checking for individual class values within the elements' class attribute?",
+  "What is the default value for the `timeout` parameter in the `playwright.expect.expect_to_have_class` method in Shiny for Python?",
+  "What other method is related to `playwright.expect.expect_to_have_class` in Shiny for Python according to the documentation?"
+]

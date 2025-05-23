@@ -1,0 +1,7 @@
+[
+  "What are the two main approaches to testing Shiny apps mentioned in the documentation?",
+  "How can you make your Shiny app testable according to the documentation?",
+  "What is the purpose of using pytest in unit testing Shiny apps?",
+  "How does pytest expect test functions to be named in order to run them successfully?",
+  "Why is unit testing considered simpler to write and maintain compared to end-to-end testing in Shiny apps, according to the documentation?"
+]

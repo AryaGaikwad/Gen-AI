@@ -1,0 +1,7 @@
+[
+  "What parameters does the function `express.ui.update_selectize` accept?",
+  "What is the purpose of the `server` parameter in the `express.ui.update_selectize` function?",
+  "How can you clear the set of choices for a selectize input using `express.ui.update_selectize`?",
+  "What is the relationship between the `update_radio_buttons`, `update_checkbox_group`, and `update_select` functions in Shiny Python?",
+  "How can you change the settings of an input object on the client using Shiny Python's `express.ui.update_selectize` function?"
+]

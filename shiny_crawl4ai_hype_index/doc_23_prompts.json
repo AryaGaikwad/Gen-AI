@@ -1,0 +1,7 @@
+[
+  "What different content types are supported by the `MarkdownStream()` component in Shiny for Python?",
+  "How can I display interactive content using the `MarkdownStream()` component?",
+  "What is the purpose of the `content` parameter in the `stream.ui()` method for the `MarkdownStream()` component?",
+  "How can I handle errors during response generation when using the `MarkdownStream()` component?",
+  "What are the benefits of using a non-blocking stream when working with the `MarkdownStream()` component in Shiny for Python?"
+]

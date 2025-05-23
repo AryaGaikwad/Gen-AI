@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using `reactive.isolate()` in a Shiny Python application?",
+  "How can `reactive.isolate()` be useful in debugging Shiny Python applications?",
+  "What does `reactive.isolate()` return in terms of a context manager?",
+  "What other function is related to `reactive.isolate()` according to the documentation?",
+  "In what scenario would you use `reactive.isolate()` in conjunction with an input element like `input.slider` in a Shiny Python application?"
+]

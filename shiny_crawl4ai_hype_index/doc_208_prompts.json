@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `ui.update_switch` function in Shiny for Python?",
+  "What is the purpose of the `session` parameter in the `ui.update_switch` function?",
+  "How can one clear the set of choices for `update_radio_buttons` in Shiny for Python?",
+  "What happens if an argument with a `None` value is passed to the `ui.update_switch` function in Shiny?",
+  "How does the syntax of the input updater functions in Shiny for Python compare to the functions that created the inputs in the first place?"
+]

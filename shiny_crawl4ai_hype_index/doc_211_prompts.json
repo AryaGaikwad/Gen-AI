@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.value_box` function in Shiny for Python?",
+  "What is the purpose of the `showcase` parameter in the `ui.value_box` function?",
+  "How can you control the layout of the showcase area in a `ui.value_box` element?",
+  "What does the `full_screen` parameter do in the `ui.value_box` function?",
+  "How can you customize the appearance of a value box using the `theme` parameter in Shiny for Python?"
+]

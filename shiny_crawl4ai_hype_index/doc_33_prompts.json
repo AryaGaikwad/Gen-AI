@@ -1,0 +1,7 @@
+[
+  "What is the most general and powerful mechanism for updating the UI based on user input or server-side state in Shiny for Python?",
+  "How can I conditionally hide UI elements on the client side in Shiny for Python?",
+  "In Shiny for Python, how can I update input elements from the server without regenerating them entirely?",
+  "What is the difference between Dynamic UI, updating inputs, and conditional UI in Shiny for Python?",
+  "When should updating inputs be preferred over using Dynamic UI in Shiny for Python?"
+]

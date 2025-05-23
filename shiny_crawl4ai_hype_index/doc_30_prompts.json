@@ -1,0 +1,7 @@
+[
+  "What are some examples of Python operations that create copies to avoid mutating reactive values in place?",
+  "How can using immutable objects help solve mutability issues in Shiny applications?",
+  "What is the difference between the \"copy on assignment\" and \"copy on update\" techniques for handling mutable objects?",
+  "In the context of Shiny applications, why can mutability in Python objects be considered dangerous?",
+  "How can the lack of reactive invalidation be addressed in Shiny applications when mutating objects stored in `reactive.value`?"
+]

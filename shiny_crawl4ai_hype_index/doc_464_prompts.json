@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using `@reactive.calc` in Shiny for Python?",
+  "How can one perform side effects in response to changes in reactive dependencies using Shiny for Python?",
+  "What is the main difference between a `reactive.value` and an `input` value in Shiny for Python?",
+  "How can one track the history of slider values visited by a user in Shiny for Python?",
+  "Why should caution be taken when using mutable objects as reactive values in Shiny for Python?"
+]

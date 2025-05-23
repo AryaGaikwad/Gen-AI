@@ -1,0 +1,7 @@
+[
+  "What method in Shiny for Python can be used to set or reset filters for columns in a table or grid component?",
+  "What is the purpose of the `set_sort` method in the `playwright.controller.OutputDataFrame` class?",
+  "How can one expect the number of selected rows in a data frame using Shiny for Python?",
+  "What does the `expect_cell_class` method in the `playwright.controller.OutputDataFrame` class expect?",
+  "Which attribute in the `playwright.controller.OutputDataFrame` class represents the Playwright `Locator` for the body of the data frame table?"
+]

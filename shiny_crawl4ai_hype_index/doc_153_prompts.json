@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be passed to the `ui.navset_pill_list` function in Shiny for Python?",
+  "How can you create a default selection for a specific navigation item in `ui.navset_pill_list`?",
+  "What is the purpose of the `well` parameter in the `ui.navset_pill_list` function?",
+  "Which UI elements can be displayed above and below the selected content in `ui.navset_pill_list`?",
+  "In the provided example code for `ui.navset_pill_list`, what is the purpose of the `selected` function defined in the server section?"
+]

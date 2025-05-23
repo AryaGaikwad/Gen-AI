@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_radio_buttons` function?",
+  "How can the set of choices be cleared for the `update_radio_buttons` function?",
+  "What is the purpose of the `inline` parameter in the `express.ui.update_radio_buttons` function?",
+  "How is the session parameter handled in the `express.ui.update_radio_buttons` function?",
+  "What happens if arguments with `None` values are passed to the `express.ui.update_radio_buttons` function?"
+]

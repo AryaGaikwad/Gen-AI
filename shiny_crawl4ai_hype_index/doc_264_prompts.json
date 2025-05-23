@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.ui.insert_ui` function in Shiny for Python?",
+  "What are the available options for the `where` parameter in the `express.ui.insert_ui` function?",
+  "How can you insert raw HTML using the `express.ui.insert_ui` function in Shiny for Python?",
+  "When should you use the `immediate` parameter in the `express.ui.insert_ui` function?",
+  "How can you dynamically add arbitrary UI into your Shiny app using the `express.ui.insert_ui` function?"
+]

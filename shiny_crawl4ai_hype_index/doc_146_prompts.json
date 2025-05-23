@@ -1,0 +1,7 @@
+[
+  "What parameters can be configured using the `ui.navbar_options()` function in Shiny for Python?",
+  "How can I adjust the appearance and behavior of the navbar when using a Bootswatch preset theme with Bootstrap 5 in Shiny for Python?",
+  "How can I set the background color of the navbar using the `ui.navbar_options()` function in Shiny for Python?",
+  "What is the purpose of the `theme` parameter in the `ui.navbar_options()` function in Shiny for Python?",
+  "How can I add an underline effect to the navbar in Shiny for Python using the `ui.navbar_options()` function?"
+]

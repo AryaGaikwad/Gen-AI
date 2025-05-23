@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be passed to the `ui.notification_show` function in Shiny for Python?",
+  "What does the `duration` parameter in the `ui.notification_show` function do?",
+  "How can you customize the color of a notification in Shiny for Python using the `type` parameter?",
+  "Does the `ui.notification_show` function return anything?",
+  "How can you remove a specific notification using the `ui.notification_remove` function in Shiny for Python?"
+]

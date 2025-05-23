@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.render.text` function in Shiny for Python?",
+  "How can the `inline` parameter be used in the `express.render.text` function?",
+  "In what type of applications does `express.render.text` default to displaying text as normal text on the web page?",
+  "What is the recommended usage of `express.render.text` when paired with `output_text` in Shiny Core applications?",
+  "What other functions are related to `express.render.text` as mentioned in the \"See Also\" section of the documentation?"
+]

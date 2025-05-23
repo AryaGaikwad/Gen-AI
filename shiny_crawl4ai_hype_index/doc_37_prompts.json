@@ -1,0 +1,7 @@
+[
+  "What are the three types of UI components provided by Shiny for Python?",
+  "How can I efficiently update an input control in Shiny using the `ui.update_*()` function?",
+  "What are the requirements for output components in Shiny for Python?",
+  "How can I arrange two sliders in a row using layout components in Shiny for Python?",
+  "What types of display messages can be created in Shiny for Python, and how are they managed differently?"
+]

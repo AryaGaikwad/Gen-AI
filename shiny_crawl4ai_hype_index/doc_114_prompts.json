@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for including a JavaScript file using `ui.include_js` in Shiny for Python?",
+  "How can I ensure that the JavaScript file included using `ui.include_js` is linked via a `link` tag and allows the browser to cache the file?",
+  "What attributes can be passed to `ui.include_js` which are then passed on to `~shiny.ui.tags.script`?",
+  "When using `ui.include_js`, in which part of the document is the `script` tag placed by default?",
+  "How can I place the `script` tag in the `head` of the document instead of the `body` when using `ui.include_js`?"
+]

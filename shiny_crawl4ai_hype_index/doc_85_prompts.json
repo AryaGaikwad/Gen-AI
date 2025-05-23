@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `req` function in Shiny for Python?",
+  "What types of values are considered \"falsy\" in the context of the `req` function?",
+  "What does the `cancel_output` parameter in the `req` function do?",
+  "What does the `req` function return if no arguments are provided?",
+  "How can the `req` function be used in a Shiny for Python application to handle errors?"
+]

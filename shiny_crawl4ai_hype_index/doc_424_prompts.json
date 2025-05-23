@@ -1,0 +1,7 @@
+[
+  "What function should I use to create a select list that allows users to select multiple items at once in my Shiny Python app?",
+  "How can I access the value of a select list in the server function of my Shiny Python app?",
+  "What is the purpose of setting the 'multiple' parameter to 'True' when creating a select list in Shiny Python?",
+  "How can I group choices into categories when creating a select list in Shiny Python?",
+  "Where can I find a live showcase of all possible parameters for the Select component in Shiny Core and Shiny Express in Shiny Python?"
+]

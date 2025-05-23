@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.input_task_button` function in Shiny for Python?",
+  "What is the purpose of the `auto_reset` parameter in the `ui.input_task_button` function in Shiny for Python?",
+  "How can a task button in Shiny for Python be kept in its busy state even after reactive processing is completed?",
+  "In Shiny for Python, what is the significance of calling `update_task_button(id, state = \"busy\")` for a specific task button?",
+  "What is the default value for the `type` parameter in the `ui.input_task_button` function in Shiny for Python?"
+]

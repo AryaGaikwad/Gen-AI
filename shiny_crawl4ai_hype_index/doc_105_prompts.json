@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.chat_ui` function in Shiny for Python accept?",
+  "What is the purpose of the `id` parameter in the `ui.chat_ui` function in Shiny for Python?",
+  "How can you specify a sequence of messages to display in the chat using the `ui.chat_ui` function in Shiny for Python?",
+  "What is the default placeholder text for the chat input in the `ui.chat_ui` function in Shiny for Python?",
+  "How can you customize the icon for assistant chat messages in the `ui.chat_ui` function in Shiny for Python?"
+]

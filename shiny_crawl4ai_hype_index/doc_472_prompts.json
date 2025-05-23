@@ -1,0 +1,7 @@
+[
+  "What are the different mechanisms provided by Shiny for programmatically updating the UI based on server-side state?",
+  "How does the `ui.panel_conditional()` function in Shiny enable conditional UI elements based on JavaScript conditions?",
+  "What is the most general and powerful mechanism for dynamically generating UI elements in Shiny?",
+  "When should a user prefer updating inputs over using dynamic UI in Shiny development?",
+  "How can a Shiny developer change input choices without regenerating the entire input element?"
+]

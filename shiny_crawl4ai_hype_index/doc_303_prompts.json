@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_action_button` function accept?",
+  "What is the purpose of the `update_action_button` function in Shiny for Python?",
+  "How can one disable an action button using the `update_action_button` function?",
+  "In what scenario would using `update_radio_buttons`, `update_checkbox_group`, or `update_select` with empty choices or selected values be useful?",
+  "How can one change the label and icon of an action button on the client side in Shiny for Python?"
+]

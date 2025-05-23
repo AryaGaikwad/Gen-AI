@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a set of radio buttons using the `ui.input_radio_buttons` function?",
+  "What is the purpose of the `choices` parameter in the `ui.input_radio_buttons` function?",
+  "How can you specify the initial selected value for the radio buttons created with the `ui.input_radio_buttons` function?",
+  "What is the significance of the `inline` parameter in the `ui.input_radio_buttons` function?",
+  "In what format should the `choices` parameter be provided: as a list or as a dictionary mapping choice values to labels when using the `ui.input_radio_buttons` function?"
+]

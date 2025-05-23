@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.update_selectize` function in Shiny for Python?",
+  "What is the purpose of setting the `server` parameter to `True` in the `ui.update_selectize` function?",
+  "How can you clear the set of choices for a selectize input using the `ui.update_selectize` function?",
+  "What is the significance of the `session` parameter in the `ui.update_selectize` function?",
+  "How does the syntax of the input updater functions in Shiny for Python relate to the creation functions of the inputs?"
+]

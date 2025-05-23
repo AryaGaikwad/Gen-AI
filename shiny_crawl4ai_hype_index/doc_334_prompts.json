@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.DataGrid` class in Shiny for Python?",
+  "What parameters can be specified when creating a `DataGrid` object using the `render.DataGrid` class?",
+  "How can you customize the message displayed below the grid when not all rows are being shown in a `DataGrid` output?",
+  "What does the `editable` parameter in the `render.DataGrid` class control?",
+  "What method can be used to convert a `DataGrid` object to a payload dictionary in Shiny for Python?"
+]

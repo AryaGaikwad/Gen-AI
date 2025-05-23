@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.page_output` function in Shiny for Python accept?",
+  "What type of object does the `ui.page_output` function return in Shiny for Python?",
+  "What is the purpose of the `ui.page_output` function in Shiny for Python?",
+  "How can you create a page container with the entire body as a UI output in Shiny for Python using the `ui.page_output` function?",
+  "In Shiny for Python, what is the significance of the `id` parameter in the `ui.page_output` function?"
+]

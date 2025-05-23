@@ -1,0 +1,7 @@
+[
+  "What is a reactive calculation in Shiny for Python and how is it marked within a function?",
+  "What is the purpose of the session parameter in the reactive.calc function?",
+  "How are invalidations handled in reactive calculations in Shiny for Python?",
+  "Can reactive calculations in Shiny for Python produce side effects, and if not, what alternative is suggested?",
+  "What are some of the analogous concepts to reactive calculations in Shiny for R mentioned in the documentation?"
+]

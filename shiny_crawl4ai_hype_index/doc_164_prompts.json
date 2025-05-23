@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `ui.output_markdown_stream` function in Shiny for Python?",
+  "How can I create a UI element for a MarkdownStream using Shiny for Python?",
+  "What is the default content type for the `ui.output_markdown_stream` function in Shiny for Python?",
+  "How can I control the auto-scroll behavior of a UI element created with `ui.output_markdown_stream` in Shiny for Python?",
+  "What is the purpose of the `id` parameter in the `ui.output_markdown_stream` function in Shiny for Python?"
+]

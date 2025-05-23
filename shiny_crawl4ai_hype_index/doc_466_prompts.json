@@ -1,0 +1,7 @@
+[
+  "What web server framework is Shiny built on top of?",
+  "How can Shiny applications be put alongside each other and other Starlette applications?",
+  "What is an example of adding routes in a Shiny application?",
+  "How can the combined apps be run in a Shiny application?",
+  "What is the deployment tool recommended for running a Shiny application as discussed in the documentation?"
+]

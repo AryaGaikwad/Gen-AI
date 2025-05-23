@@ -1,0 +1,7 @@
+[
+  "What function should I use to create a password field in a Shiny app and what parameters does it accept?",
+  "How can I access the value of a password field within the server function in Shiny?",
+  "Where can I find a live showcase of all possible parameters for the Password Field in Shiny Core and Shiny Express?",
+  "What are the different types of input components available for Shiny Python, specifically under the Inputs section?",
+  "How can I add a password field to my Shiny Python app and specify its identifier, label, and initial value?"
+]

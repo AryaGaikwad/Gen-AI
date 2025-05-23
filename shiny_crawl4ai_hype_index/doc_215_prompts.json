@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.expressify` function in Shiny for Python?",
+  "What parameters can be passed to the `express.expressify` function in Shiny for Python?",
+  "What does the `express.expressify` function return in Shiny for Python?",
+  "How does using the `express.expressify` decorator change the behavior of a function in Shiny for Python?",
+  "In Shiny for Python, how can you ensure that the docstring of a function is not captured and displayed in the UI when using the `express.expressify` decorator?"
+]

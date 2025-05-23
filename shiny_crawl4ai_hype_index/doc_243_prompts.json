@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for including a JavaScript file using `express.ui.include_js` in Shiny for Python?",
+  "What parameters does the `express.ui.include_js` function in Shiny for Python require?",
+  "How can you ensure that the JavaScript file included using `express.ui.include_js` is placed in the `<head>` section of the document?",
+  "What is the purpose of the `method='inline'` parameter in the `express.ui.include_js` function?",
+  "In what scenarios would you use the `method='link_files'` option when including a JavaScript file with `express.ui.include_js` in Shiny for Python?"
+]

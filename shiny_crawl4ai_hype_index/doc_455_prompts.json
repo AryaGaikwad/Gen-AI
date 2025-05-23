@@ -1,0 +1,7 @@
+[
+  "What are some limitations of Large Language Models (LLMs) that can be addressed by equipping them with the ability to call tools?",
+  "How can I customize the display of tool results in Shiny using a subclass of the `ContentToolResult` class?",
+  "What is the purpose of the `update_slider()` function in the context of tool calling in Shiny?",
+  "How can reactivity be combined with tool calling in Shiny to enable the LLM to interact with the app effectively?",
+  "Why is it important to include type hints and a docstring in a function that is registered as a tool in Shiny?"
+]

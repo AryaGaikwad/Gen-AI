@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.navset_card_pill` function in Shiny for Python?",
+  "What does the `id` parameter do in the `ui.navset_card_pill` function?",
+  "What is the purpose of the `selected` parameter in the `ui.navset_card_pill` function?",
+  "What UI components can be included in the `header` and `footer` parameters of the `ui.navset_card_pill` function?",
+  "Which other functions are related to `ui.navset_card_pill` according to the \"See Also\" section in the documentation?"
+]

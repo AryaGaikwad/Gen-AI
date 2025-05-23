@@ -1,0 +1,7 @@
+[
+  "What are the main differences in syntax between building a Shiny app in R versus Python?",
+  "How can I create a virtual environment for a Shiny Python project?",
+  "What are the differences in naming conventions for reactive expressions and observers between Shiny for R and Shiny for Python?",
+  "How do I connect server computations to UI components in Shiny for Python?",
+  "In Shiny for Python, how can I retrieve values from reactive objects, and what are the differences compared to R?"
+]

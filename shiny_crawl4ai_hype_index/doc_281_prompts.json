@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to `express.ui.navset_card_underline` and what do they do?",
+  "What is the purpose of the `placement` parameter in the `express.ui.navset_card_underline` function?",
+  "How can you choose a default selected nav item in the `express.ui.navset_card_underline` function?",
+  "What is the role of the `sidebar` parameter in the `express.ui.navset_card_underline` function?",
+  "How can you create a set of nav items as a tabset inside a card container using `express.ui.navset_card_underline`?"
+]

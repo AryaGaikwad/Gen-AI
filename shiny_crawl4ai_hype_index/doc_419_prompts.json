@@ -1,0 +1,7 @@
+[
+  "What are the steps to create a selectize list that allows selecting a single item in Shiny for Python?",
+  "How can I access the selected value of a selectize list in the server function of a Shiny app?",
+  "What is the purpose of the `multiple` parameter in the `ui.input_selectize()` function in Shiny for Python?",
+  "How can I group choices into categories in a selectize list using Shiny for Python?",
+  "What is the difference between select inputs and selectize inputs in Shiny for Python?"
+]

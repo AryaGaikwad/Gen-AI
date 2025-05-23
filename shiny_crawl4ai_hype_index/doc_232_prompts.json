@@ -1,0 +1,7 @@
+[
+  "What methods are available in the `express.ui.Theme` class for creating custom Shiny themes?",
+  "How can you compile a custom Shiny theme to CSS using the `express.ui.Theme` class?",
+  "What is the purpose of the `.add_defaults()` method in the `express.ui.Theme` class?",
+  "How can you create a custom Shiny theme based on brand guidelines using the `express.ui.Theme` class?",
+  "What are the available presets that can be used as a base for creating a custom Shiny theme with the `express.ui.Theme` class?"
+]

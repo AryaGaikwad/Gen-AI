@@ -1,0 +1,7 @@
+[
+  "What parameters are required when adding a popover to a UI element using `ui.popover` in Shiny for Python?",
+  "How can a popover be closed in Shiny for Python?",
+  "What are some best practices for ensuring the accessibility of popover triggers in Shiny for Python?",
+  "How can an icon be used as a trigger for a popover in Shiny for Python?",
+  "What additional options can be specified when adding a popover using `ui.popover` in Shiny for Python?"
+]

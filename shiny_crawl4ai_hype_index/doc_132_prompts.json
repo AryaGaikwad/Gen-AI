@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided when creating a textarea input control using `ui.input_text_area` in Shiny for Python?",
+  "What is the default behavior for the `autocomplete` parameter in `ui.input_text_area`?",
+  "How can the height of a textarea input be automatically adjusted to fit the input text in Shiny for Python?",
+  "What is the purpose of the `update_on` parameter in the `ui.input_text_area` function?",
+  "In the given example code for `ui.input_text_area`, what is the purpose of the `autoresize=True` argument in one of the function calls?"
+]

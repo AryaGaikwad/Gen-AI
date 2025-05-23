@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to add a tooltip to a UI element in Shiny for Python?",
+  "How does the `ui.tooltip` function handle cases where the trigger element yields multiple HTML elements?",
+  "What is the importance of using an accessible element as the trigger for a tooltip in Shiny for Python?",
+  "Can you provide an example of adding a tooltip to a button and a card header in Shiny for Python?",
+  "Where can I find more information about Bootstrap tooltips documentation in Shiny for Python?"
+]

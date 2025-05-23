@@ -1,0 +1,7 @@
+[
+  "What parameters can be supplied to the `ui.card_header` function in Shiny for Python?",
+  "What method is used by default for the returned Tag object in the `ui.card_header` function?",
+  "What is the purpose of the `ui.card_header` component in Shiny for Python?",
+  "How can you create a card component with a header, body, and footer using the `ui.card_header` function in Shiny for Python?",
+  "What other components are related to `ui.card_header` that can be used in conjunction to create a complete card structure in Shiny for Python?"
+]

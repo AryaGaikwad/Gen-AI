@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.input_select` function accept?",
+  "What is the purpose of the `choices` parameter in the `express.ui.input_select` function?",
+  "How is the server value handled in the `express.ui.input_select` function when `multiple=True`?",
+  "What is the difference between using `selectize` and not using `selectize` in the `express.ui.input_select` function?",
+  "How can one edit the `express.ui.input_select` page for Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the available parameters for the `ui.insert_ui` function in Shiny for Python?",
+  "What is the purpose of the `insert_ui` function in Shiny for Python?",
+  "How can raw HTML be inserted using the `ui.insert_ui` function in Shiny for Python?",
+  "What is the difference between using `ui.insert_ui` and `render.ui` in Shiny for Python?",
+  "How can multiple UI elements be inserted in one call using the `ui.insert_ui` function in Shiny for Python?"
+]

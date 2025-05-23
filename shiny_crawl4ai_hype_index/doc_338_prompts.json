@@ -1,0 +1,7 @@
+[
+  "What methods are available in the `session.ClientData` class for retrieving information from the browser?",
+  "What happens if a method from the `session.ClientData` class is called outside of a reactive context?",
+  "How can I retrieve the accent color of an output using the `session.ClientData` class?",
+  "What does the `session.ClientData` class provide access to?",
+  "How can I reactively read the height of an output using the `session.ClientData` class?"
+]

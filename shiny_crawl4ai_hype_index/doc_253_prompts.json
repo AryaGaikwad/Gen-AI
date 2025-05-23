@@ -1,0 +1,7 @@
+[
+  "What are the available parameters for the `express.ui.input_numeric` function in Shiny for Python?",
+  "What is the purpose of the `update_on` parameter in the `express.ui.input_numeric` function in Shiny for Python?",
+  "How can you specify the minimum and maximum allowed values for the input in the `express.ui.input_numeric` function in Shiny for Python?",
+  "In Shiny for Python, what is the return type of the `express.ui.input_numeric` function?",
+  "What is the significance of the `update_on` parameter having options `\"change\"` and `\"blur\"` in the `express.ui.input_numeric` function in Shiny for Python?"
+]

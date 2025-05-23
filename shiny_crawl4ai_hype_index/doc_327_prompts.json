@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `reactive.flush` function in Shiny for Python?",
+  "How can one run any pending invalidations in the reactive environment using `reactive.flush`?",
+  "Is there a warning associated with using the `reactive.flush` function in a Shiny app?",
+  "When should a developer consider calling the `reactive.flush` function in a Shiny application?",
+  "What are some alternative functions in Shiny for Python that are related to `reactive.flush`?"
+]

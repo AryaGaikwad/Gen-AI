@@ -98,3 +98,8 @@ More about FAISS: https://faiss.ai/index.html
 
 ---
 
+## 🧭 Optional: Crawling and Retrieval via `crawl4ai`
+
+As an optional approach, this project also includes a fully automated documentation crawler built on top of the `crawl4ai` framework. This crawler launches parallel headless browser sessions to visit pages starting from the Shiny for Python documentation's overview. It extracts content as structured markdown while respecting a maximum recursion depth. Internal links are followed dynamically, and content from visited pages is saved into a single JSON file. The crawler is designed to handle memory adaptively and avoids redundant or external URLs to ensure efficient and focused crawling.
+
+Once the documentation is collected, the `Shiny_crawl4ai_HyPE.ipynb` notebook can be used to load the markdown content and embed it using a language model. The embedded content is indexed into a vector database, enabling retrieval-augmented generation (RAG). This allows the system to answer user queries by retrieving the most relevant documentation chunks and combining them with a generative model for accurate and contextual responses. This method serves as a lightweight, extensible alternative to manually curated data pipelines.

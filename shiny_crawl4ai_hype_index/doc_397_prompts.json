@@ -1,0 +1,7 @@
+[
+  "What are the attributes of the `run.ShinyAppProc` class in Shiny for Python?",
+  "What methods are available in the `run.ShinyAppProc` class for interacting with a Shiny app process?",
+  "How can I close the connection and terminate the process associated with a running Shiny app using Shiny for Python?",
+  "What is the purpose of the `wait_until_ready` method in the `run.ShinyAppProc` class and what parameters does it take?",
+  "What exceptions can be raised by the `wait_until_ready` method in Shiny for Python if the app does not become ready within the specified timeout?"
+]

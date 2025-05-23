@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for appending messages to a Shiny Chat interface?",
+  "How can I transform assistant responses before displaying them in the chat using Shiny for Python?",
+  "In Shiny for Python, how can I define a function to be invoked when a user submits a message in a Chat interface?",
+  "What is the purpose of the `update_user_input` method in a Shiny Chat interface and what parameters does it accept?",
+  "How can I read the user's message reactively in a Shiny Chat interface and optionally apply a transformation to it?"
+]

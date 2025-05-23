@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `session.require_active_session` function in Shiny for Python?",
+  "What is the behavior of the `session.ClientData.output_hidden` method in Shiny for Python?",
+  "How can a user access the accent color of an output using the `session.ClientData` class in Shiny for Python?",
+  "What is the significance of the `session.Session.on_flushed` function in Shiny for Python?",
+  "How can a Shiny developer register a function to be called after the client has disconnected in Shiny for Python?"
+]

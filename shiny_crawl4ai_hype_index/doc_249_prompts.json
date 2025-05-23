@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `express.ui.input_file` function in Shiny for Python?",
+  "What does the `multiple` parameter do in the `express.ui.input_file` function in Shiny for Python?",
+  "How can one specify the file types that the user can upload using the `express.ui.input_file` function in Shiny for Python?",
+  "What information is included in the server value returned by the `express.ui.input_file` function in Shiny for Python?",
+  "How can the CSS width of the file upload control be customized using the `express.ui.input_file` function in Shiny for Python?"
+]

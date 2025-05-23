@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be passed to the `ui.page_auto` function in Shiny for Python?",
+  "How does `ui.page_auto` determine which page function to use if there are no top-level nav panels or sidebars?",
+  "What is the purpose of the `theme` parameter in the `ui.page_auto` function?",
+  "How does the `fillable` parameter impact the behavior of the `ui.page_auto` function in Shiny for Python?",
+  "What happens if the `page_fn` parameter is specified in the `ui.page_auto` function call?"
+]

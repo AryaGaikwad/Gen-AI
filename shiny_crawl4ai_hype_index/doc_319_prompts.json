@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_text` function?",
+  "What does the `express.ui.update_text` function do?",
+  "How can we clear the set of choices for radio buttons, checkbox groups, and select inputs using this function?",
+  "How can we update the label of an input with the `express.ui.update_text` function?",
+  "How can we update the value of an input with the `express.ui.update_text` function?"
+]

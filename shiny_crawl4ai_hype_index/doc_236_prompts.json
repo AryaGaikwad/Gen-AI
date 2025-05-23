@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.busy_indicators.use` function and their default values?",
+  "What visual cues do busy indicators provide to users in a Shiny app?",
+  "How can you disable busy indication in a Shiny app using the `express.ui.busy_indicators.use` function?",
+  "When are the pulsing banner and spinners shown in a Shiny app based on the parameters of the `express.ui.busy_indicators.use` function?",
+  "What function can be used for customizing busy indicators in a Shiny app?"
+]

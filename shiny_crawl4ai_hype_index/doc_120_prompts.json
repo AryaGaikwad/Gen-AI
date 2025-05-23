@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a file upload control using `ui.input_file` in Shiny for Python?",
+  "What is the purpose of the `multiple` parameter in the `ui.input_file` function in Shiny for Python?",
+  "How can the `accept` parameter be utilized in the `ui.input_file` function in Shiny for Python?",
+  "What information does the `Notes` section provide about the server value returned by the `ui.input_file` function in Shiny for Python?",
+  "How can the `capture` parameter be used in the `ui.input_file` function in Shiny for Python when dealing with mobile devices?"
+]

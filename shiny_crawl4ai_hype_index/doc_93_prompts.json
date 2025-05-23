@@ -1,0 +1,7 @@
+[
+  "What are the methods available for the `ui.TagList` class?",
+  "How can I append new tag children to a `ui.TagList` object?",
+  "What is the purpose of the `get_dependencies` method in the `ui.TagList` class?",
+  "How can I save a `ui.TagList` object to an HTML file?",
+  "What is the difference between the `insert` and `extend` methods in the `ui.TagList` class?"
+]

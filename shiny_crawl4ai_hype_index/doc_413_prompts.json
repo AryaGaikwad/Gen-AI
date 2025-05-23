@@ -1,0 +1,7 @@
+[
+  "What function should I use to add a date range selector to my Shiny app?",
+  "How can I access the value of a date range selector within the server function?",
+  "Where can I find a live showcase of all possible parameters for the Date Range Selector in Shiny Core?",
+  "What optional parameters can be specified when defining a date range selector using ui.input_date_range()?",
+  "Where can I find details about the Date Range Selector component in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the benefits of using a virtual environment when building Shiny applications with Python?",
+  "How can I upgrade the Shiny packages using `pip` if they are already installed?",
+  "What are the steps to create a virtual environment named 'shiny' using `conda` and install the Shiny package with the latest Python version?",
+  "How can I install the development versions of `shiny` and `htmltools` using `pip`?",
+  "What are the recommended type checking settings for a smooth experience with types in Shiny when using Visual Studio Code?"
+]

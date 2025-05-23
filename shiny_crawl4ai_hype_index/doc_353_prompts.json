@@ -1,0 +1,7 @@
+[
+  "What are the available methods for asserting expectations on the input date range element in Shiny for Python?",
+  "What attributes can be accessed for the InputDateRange controller in Shiny for Python?",
+  "How can I assert the expected autoclose value of the input element in the InputDateRange controller using Shiny for Python?",
+  "What is the purpose of the `set` method in the InputDateRange controller of Shiny for Python?",
+  "How can I expect the label of the input element to have a specific text in the InputDateRange controller of Shiny for Python?"
+]

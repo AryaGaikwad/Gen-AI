@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to `ui.busy_indicators.use` function to customize the busy indicators in a Shiny Python application?",
+  "What is the purpose of enabling busy indicators in a Shiny Python app using the `ui.busy_indicators.use` function?",
+  "How can a Shiny Python developer disable the pulsing banner at the top of the page when the app is busy?",
+  "In a Shiny Python application, how does setting both `spinners` and `pulse` to `False` affect the display of busy indicators?",
+  "What is the equivalent function to `shiny.ui.busy_indicators.options(fade_opacity=1)` when setting the `fade` parameter to `False` in `ui.busy_indicators.use` function in Shiny for Python?"
+]

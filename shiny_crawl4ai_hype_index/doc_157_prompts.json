@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.output_code` function in Shiny for Python accept?",
+  "What does the `ui.output_code` function in Shiny for Python return?",
+  "How is the `ui.output_code` function different from the `output_text_verbatim` function in Shiny for Python?",
+  "In Shiny for Python, what is the purpose of setting the `placeholder` parameter to `True` in the `ui.output_code` function?",
+  "What are some other functions related to text output in the Shiny for Python documentation that are mentioned in the \"See Also\" section of the `ui.output_code` function?"
+]

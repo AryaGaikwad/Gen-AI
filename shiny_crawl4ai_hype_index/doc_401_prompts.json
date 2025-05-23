@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.MarkdownStream` component in Shiny for Python?",
+  "How can errors that occur while streaming with `ui.MarkdownStream` be handled?",
+  "What is the note regarding the parsing of Markdown in `ui.MarkdownStream`?",
+  "How can you clear the content of a `ui.MarkdownStream` element?",
+  "What are the available methods for interacting with the `ui.MarkdownStream` component in Shiny for Python?"
+]

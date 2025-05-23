@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for including a CSS file using `ui.include_css` in Shiny for Python?",
+  "How can I ensure optimal performance and prevent Flash of Unstyled Content when using `ui.include_css` in Shiny for Python?",
+  "What is the return type when `method=\"inline\"` is used in `ui.include_css` in Shiny for Python?",
+  "What are the specific parameters that can be passed to the `ui.include_css` function in Shiny for Python?",
+  "How can I include CSS files located in subdirectories of the app directory using `ui.include_css` in Shiny for Python?"
+]

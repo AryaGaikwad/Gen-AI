@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating a download button using `ui.download_button` in Shiny for Python?",
+  "What does the `icon` parameter represent in the `ui.download_button` function of Shiny for Python?",
+  "Can the `width` parameter be omitted when creating a download button using `ui.download_button` in Shiny for Python?",
+  "What type of UI element does the `ui.download_button` function return in Shiny for Python?",
+  "Which other functions are mentioned in the \"See Also\" section of the `ui.download_button` documentation in Shiny for Python?"
+]

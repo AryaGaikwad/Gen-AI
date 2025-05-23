@@ -1,0 +1,7 @@
+[
+  "What steps are involved in displaying a Matplotlib figure in a Shiny app according to this documentation?",
+  "How can a plot in Shiny be used as an input widget for collecting user interactions like clicks, double clicks, hovers, and brushes?",
+  "What variations of interactive plots can be achieved using the `click`, `dblclick`, `hover`, and `brush` arguments of `ui.output_plot()` in Shiny?",
+  "How can one use a plot created with Matplotlib in Shiny to collect information about user interactions like clicks and hovers?",
+  "What specific functions and decorators are mentioned in the documentation for creating interactive plots in Shiny using Matplotlib?"
+]

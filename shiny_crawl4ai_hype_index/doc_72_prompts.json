@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `reactive.value` function in Shiny for Python?",
+  "What are the parameters that can be passed to the `reactive.value` function?",
+  "How can you check if a reactive value is set or not in Shiny for Python?",
+  "What is the difference between freezing a reactive value and unsetting it in Shiny for Python?",
+  "How can you read the value of a reactive value in Shiny for Python using the `get` method?"
+]

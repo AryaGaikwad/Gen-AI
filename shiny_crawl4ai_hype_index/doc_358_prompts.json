@@ -1,0 +1,7 @@
+[
+  "What are the available attributes of the playwright.controller.InputPassword class in Shiny for Python?",
+  "What methods are available in the playwright.controller.InputPassword class for setting expectations in Shiny for Python?",
+  "How can I expect the label of an input password to have a specific text in Shiny for Python?",
+  "What is the purpose of the expect_placeholder method in the playwright.controller.InputPassword class in Shiny for Python?",
+  "How can I set the text value of an input password using the set method in Shiny for Python?"
+]

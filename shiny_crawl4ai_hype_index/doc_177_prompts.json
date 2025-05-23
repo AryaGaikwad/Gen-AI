@@ -1,0 +1,7 @@
+[
+  "What parameters can be defined when creating a panel of absolutely positioned content using `ui.panel_absolute`?",
+  "What is the purpose of setting the `draggable` parameter to `True` when creating a panel with `ui.panel_absolute`?",
+  "How can you specify the position and size of a panel created with `ui.panel_absolute` for predictable results?",
+  "What is the difference between setting the `fixed` parameter to `True` and `False` when creating a panel using `ui.panel_absolute`?",
+  "What are the different UI elements that can be included inside a panel created with `ui.panel_absolute`?"
+]

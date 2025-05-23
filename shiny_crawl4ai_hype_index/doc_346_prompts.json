@@ -1,0 +1,7 @@
+[
+  "What methods are available in the playwright.controller.Chat class for interacting with chat messages?",
+  "What are the attributes of the playwright.controller.Chat class that can be used to locate elements within the chat?",
+  "How can I expect the last message in a chat using the playwright.controller.Chat class?",
+  "What is the purpose of the send_user_input method in the playwright.controller.Chat class?",
+  "Where can I find the Shiny Express API documentation for further reference?"
+]

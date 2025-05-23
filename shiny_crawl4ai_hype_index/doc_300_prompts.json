@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for the `express.ui.update_accordion_panel` function?",
+  "What is the purpose of dynamically updating accordion panel contents in a Shiny app?",
+  "How can you provide a new title for the panel in the `express.ui.update_accordion_panel` function?",
+  "What is the reference provided for Bootstrap Accordion in the `express.ui.update_accordion_panel` documentation?",
+  "In the provided example, how is the `express.ui.update_accordion_panel` function used to update the accordion panel contents dynamically in a Shiny app?"
+]

@@ -1,0 +1,7 @@
+[
+  "What Python packages build on ipywidgets to provide interactive widgets in Jupyter notebooks, and what types of widgets do they offer?",
+  "How can I efficiently update Jupyter widgets in Shiny without recreating them from scratch?",
+  "What are the two different ways to respond to user input in Shiny Jupyter widgets, and when would you use each approach?",
+  "How can I access the Python object underlying a rendered widget in Shiny Jupyter widgets, and what special attributes can I use for efficient updates and user input responses?",
+  "What should I do if I encounter issues while rendering widgets in Shiny using shinywidgets, and what are some possible reasons for these issues?"
+]

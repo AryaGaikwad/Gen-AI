@@ -1,0 +1,7 @@
+[
+  "What parameters does the `Progress` class in Shiny for Python accept for initialization?",
+  "What methods are available in the `Progress` class to interact with the progress bar?",
+  "How can you increment the progress bar in Shiny for Python using the `Progress` class?",
+  "In Shiny for Python, how can you close the progress bar created using the `Progress` class?",
+  "Can you provide an example of using the `Progress` class in Shiny for Python to show a progress bar while running a block of code?"
+]

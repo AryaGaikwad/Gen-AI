@@ -1,0 +1,7 @@
+[
+  "What does the `@reactive.event` decorator do in Shiny for Python?",
+  "What are the parameters that can be passed to the `reactive.event` function in Shiny for Python?",
+  "How does the `ignore_none` parameter affect the behavior of the `reactive.event` function in Shiny for Python?",
+  "When should the `@reactive.event` decorator be applied in relation to other reactivity decorators in Shiny for Python?",
+  "Can you provide an example of using `@reactive.event` to restrict the execution of functions in a Shiny for Python application?"
+]

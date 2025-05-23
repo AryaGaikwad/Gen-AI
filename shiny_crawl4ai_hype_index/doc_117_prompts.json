@@ -1,0 +1,7 @@
+[
+  "What parameters are required for creating a group of checkboxes using the `ui.input_checkbox_group` function in Shiny for Python?",
+  "What does the `inline` parameter do in the `ui.input_checkbox_group` function in Shiny for Python?",
+  "What type of value does the `ui.input_checkbox_group` function in Shiny for Python return?",
+  "What is the purpose of the `selected` parameter in the `ui.input_checkbox_group` function in Shiny for Python?",
+  "Which function in Shiny for Python is related to updating a checkbox group similar to the `ui.update_checkbox_group` function?"
+]

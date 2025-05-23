@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when initializing a progress bar using `ui.Progress`?",
+  "What methods are available for controlling the progress bar in Shiny for Python?",
+  "How can you update the progress bar in Shiny for Python by setting a specific value?",
+  "How can you increment the progress bar in Shiny for Python by a specific amount?",
+  "What is the purpose of the `close` method in the `ui.Progress` class in Shiny for Python?"
+]

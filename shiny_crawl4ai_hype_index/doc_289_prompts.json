@@ -1,0 +1,7 @@
+[
+  "What are the parameters available for the `express.ui.panel_absolute` function and what do they represent?",
+  "How does the `draggable` parameter affect the behavior of the `express.ui.panel_absolute` function?",
+  "What is the purpose of setting the `fixed` parameter to `True` in the `express.ui.panel_absolute` function?",
+  "In what way should the `top`, `left`, `right`, and `bottom` parameters be specified for predictable results in the `express.ui.panel_absolute` function?",
+  "How can you create a basic absolute panel using the `express.ui.panel_absolute` function in a Python Shiny application?"
+]

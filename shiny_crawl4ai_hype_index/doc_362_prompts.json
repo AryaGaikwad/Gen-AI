@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `expect_auto_reset` method in the `playwright.controller.InputTaskButton` class?",
+  "What parameters does the `click` method in the `playwright.controller.InputTaskButton` class accept?",
+  "How can one expect the state of the input task button using the `expect_state` method in the `playwright.controller.InputTaskButton` class?",
+  "What is the functionality of the `expect_label_busy` method in the `playwright.controller.InputTaskButton` class?",
+  "What attributes are available in the `playwright.controller.InputTaskButton` class according to the Shiny for Python documentation?"
+]

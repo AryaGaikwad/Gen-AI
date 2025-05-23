@@ -1,0 +1,7 @@
+[
+  "What are the three main components needed to implement a custom Tabulator element in a Shiny app?",
+  "How can you ensure that the JavaScript code for a custom component only runs if the Shiny object exists?",
+  "What is the purpose of the `render_tabulator()` decorator in Shiny Python?",
+  "How does the `transform` method in the `render_tabulator` class handle non-DataFrame input values?",
+  "In the provided example app code, how is the number of rows to display in the Tabulator table controlled by the user?"
+]

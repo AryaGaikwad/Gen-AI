@@ -1,0 +1,7 @@
+[
+  "What are the available methods for the playwright.controller.NavsetCardPill class in Shiny for Python?",
+  "What is the purpose of the expect_nav_values method in the playwright.controller.NavsetCardPill class in Shiny for Python?",
+  "How can I check if a sidebar exists within a navset using the expect_sidebar method in Shiny for Python?",
+  "What parameters can be specified when using the expect_placement method in the playwright.controller.NavsetCardPill class in Shiny for Python?",
+  "What does the get_loc_active_content method do in the playwright.controller.NavsetCardPill class in Shiny for Python?"
+]

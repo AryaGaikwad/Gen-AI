@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.input_date_range` function in Shiny for Python?",
+  "What is the purpose of the `separator` parameter in the `ui.input_date_range` function?",
+  "How can the language for month and day names be customized in the `ui.input_date_range` function?",
+  "What does the `autoclose` parameter do in the `ui.input_date_range` function?",
+  "What is the default behavior for the `start` and `end` parameters in the `ui.input_date_range` function if they are not specified?"
+]

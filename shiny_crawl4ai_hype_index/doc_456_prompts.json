@@ -1,0 +1,7 @@
+[
+  "What are the different content types supported by the `MarkdownStream()` component in Shiny for Python?",
+  "How can I display starting content in a `MarkdownStream()` UI element in Shiny for Python?",
+  "How can I append content to an existing stream in the `MarkdownStream()` component in Shiny for Python?",
+  "In Shiny for Python, how can I handle errors during response generation when using the `MarkdownStream()` component?",
+  "What are some debugging techniques recommended in the Shiny for Python documentation for troubleshooting response generation from an LLM in a `MarkdownStream()` component?"
+]

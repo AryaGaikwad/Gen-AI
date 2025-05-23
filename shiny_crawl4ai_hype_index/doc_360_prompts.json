@@ -1,0 +1,7 @@
+[
+  "What are the available methods for interacting with an input select component in Shiny for Python?",
+  "How can I expect the choice groups of an input select component to be an exact match using Shiny for Python?",
+  "What parameters are required when using the `expect_choices` method for an input select in Shiny for Python?",
+  "How can I set the selected option(s) of an input select component in Shiny for Python?",
+  "What is the purpose of the `expect_label` method in the playwright.controller.InputSelect class of Shiny for Python?"
+]

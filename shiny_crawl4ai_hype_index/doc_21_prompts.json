@@ -1,0 +1,7 @@
+[
+  "What are some scenarios where LLMs can be useful in extracting structured data?",
+  "How can one extract structured data using the `.extract_data()` method in the Shiny for Python framework?",
+  "In what scenarios might a Shiny app developer consider using the `editable data` feature for extracted data?",
+  "How can one populate input controls with extracted data in a Shiny app using the structured data from non-tabular extraction?",
+  "What are the steps involved in going from a basic script to a Shiny app for structured data extraction using Shiny for Python?"
+]

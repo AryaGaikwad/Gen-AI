@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `shinyswatch` package in customizing the look of a Shiny app?",
+  "How can custom CSS be added to a Shiny app beyond what is available in `shinyswatch`?",
+  "What is the advantage of using utility classes in customizing a Shiny app's UI?",
+  "How can local files like fonts and CSS be served to a Shiny app for customization?",
+  "What is the difference in syntax for serving local files in Shiny Express compared to Shiny Core apps?"
+]

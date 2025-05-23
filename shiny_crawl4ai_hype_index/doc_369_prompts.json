@@ -1,0 +1,7 @@
+[
+  "What methods are available in the playwright.controller.NavsetCardTab class for interacting with nav panels in a Shiny Python application?",
+  "What is the purpose of the expect_nav_values method in the playwright.controller.NavsetCardTab class in Shiny for Python?",
+  "How can one assert the existence of a sidebar within a navset using the playwright.controller.NavsetCardTab class in Shiny for Python?",
+  "What attributes can be accessed in the playwright.controller.NavsetCardTab class to interact with UI elements in a Shiny Python application?",
+  "In Shiny for Python, how can one set the state of a control to open or closed using the playwright.controller.NavsetCardTab class?"
+]

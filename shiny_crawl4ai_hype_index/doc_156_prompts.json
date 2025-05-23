@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the `ui.navset_underline` function in Shiny for Python?",
+  "What is the purpose of the `id` parameter in the `ui.navset_underline` function in Shiny for Python?",
+  "How can a default selected item be specified in the `ui.navset_underline` function in Shiny for Python?",
+  "What are the UI components that can be displayed above and below the selected content in the `ui.navset_underline` function in Shiny for Python?",
+  "Which other navigation-related components are mentioned in the \"See Also\" section of the `ui.navset_underline` documentation in Shiny for Python?"
+]

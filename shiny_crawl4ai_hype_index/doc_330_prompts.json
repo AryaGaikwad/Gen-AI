@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `reactive.file_reader` function in Shiny for Python?",
+  "What are the parameters that can be passed to the `reactive.file_reader` function in Shiny for Python?",
+  "How does the `interval_secs` parameter affect the behavior of the `reactive.file_reader` function in Shiny for Python?",
+  "Can the `filepath` parameter in the `reactive.file_reader` function accept a function as input in Shiny for Python?",
+  "How does the `priority` parameter impact the execution order of effects in the `reactive.file_reader` function in Shiny for Python?"
+]

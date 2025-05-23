@@ -1,0 +1,7 @@
+[
+  "What parameters are required by the `express.is_express_app` function to detect whether a file is a Shiny express app?",
+  "What does the `express.is_express_app` function return if the file is not a Shiny express app?",
+  "Where can I find more information about `express.app_opts` and `express.wrap_express_app` functions in the Shiny for Python documentation?",
+  "How can I determine if an app file is a Shiny express app using the provided function in the documentation?",
+  "What is the significance of the `app_dir` parameter in the `express.is_express_app` function?"
+]

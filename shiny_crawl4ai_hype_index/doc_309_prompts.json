@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_navs` function in Shiny for Python?",
+  "How does the `express.ui.update_navs` function handle the `selected` parameter in Shiny for Python?",
+  "What is the purpose of the `session` parameter in the `express.ui.update_navs` function in Shiny for Python?",
+  "How does Shiny for Python handle inputs with `None` values in the `express.ui.update_navs` function?",
+  "In Shiny for Python, how can the set of choices be cleared for `update_radio_buttons`, `update_checkbox_group`, and `update_select` functions?"
+]

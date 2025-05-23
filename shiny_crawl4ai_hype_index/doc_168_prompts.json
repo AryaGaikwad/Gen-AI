@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.page_bootstrap` function in Shiny for Python?",
+  "What is the purpose of the `title` parameter in the `ui.page_bootstrap` function in Shiny for Python?",
+  "How can a custom theme be applied to a Shiny app using the `ui.page_bootstrap` function in Shiny for Python?",
+  "What does the `lang` parameter represent in the `ui.page_bootstrap` function in Shiny for Python?",
+  "Which UI elements can be included as arguments in the `ui.page_bootstrap` function in Shiny for Python?"
+]

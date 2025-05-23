@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.update_slider` function in Shiny for Python?",
+  "What is the purpose of the `ui.update_slider` function in Shiny for Python?",
+  "How can the time zone for displayed times be specified when using the `ui.update_slider` function?",
+  "What is the difference between `ui.input_slider` and `ui.update_slider` functions in Shiny for Python?",
+  "How can the value, minimum, and maximum settings of a slider input be updated on the client side using Shiny for Python?"
+]

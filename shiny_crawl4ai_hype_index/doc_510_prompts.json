@@ -1,0 +1,7 @@
+[
+  "What are the main ways to deploy Shiny apps to Posit Connect?",
+  "How can I set up Posit Connect to automatically deploy content from git?",
+  "What are the requirements for deploying Shiny for Python apps on Shiny Server?",
+  "What is the process for configuring Python on Shiny Server?",
+  "Why is it important to ensure sticky sessions are supported in the deployment configuration for Shiny apps, according to the documentation?"
+]

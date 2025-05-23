@@ -1,0 +1,7 @@
+[
+  "What are some utilities provided by Shiny to make reactive programming easier in certain situations?",
+  "How can I ignore changes in certain reactive dependencies in Shiny?",
+  "How can I require input before executing a reactive function in Shiny?",
+  "How can I invalidate a reactive function on a schedule in Shiny?",
+  "How can I periodically check for changes to a reactive dependency in Shiny?"
+]

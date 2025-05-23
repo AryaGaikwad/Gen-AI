@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.data_frame` decorator in Shiny for Python?",
+  "How can you access selected rows when using the row selection feature in a data frame rendered with Shiny?",
+  "What are the available methods to inspect and update a data frame renderer in Shiny for Python?",
+  "How can you update the value of a cell in a data frame rendered with Shiny for Python?",
+  "What is the purpose of the `narwhals` compatibility layer in Shiny for Python and what limitations does it have?"
+]

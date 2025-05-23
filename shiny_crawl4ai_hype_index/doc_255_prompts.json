@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating an input password control in Shiny for Python?",
+  "What are the possible options for the `update_on` parameter in the `express.ui.input_password` function?",
+  "What does the `Returns` section of the `express.ui.input_password` documentation indicate?",
+  "In Shiny for Python, how can one delay the input update until the input loses focus or Enter is pressed when using the `express.ui.input_password` function?",
+  "What is the default value for the `update_on` parameter in the `express.ui.input_password` function if not explicitly provided?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to `ui.navset_bar` function in Shiny for Python?",
+  "What is the purpose of the `navbar_options` parameter in the `ui.navset_bar` function?",
+  "How can you specify the default selected navigation item in the `ui.navset_bar` function?",
+  "What is the difference between using `fluid=True` and `fluid=False` in the `ui.navset_bar` function?",
+  "How can you create a collapsible menu for the navbar in Shiny for Python using the `ui.navset_bar` function?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `express.module` function in Shiny for Python?",
+  "What are the required parameters for the function that defines a Shiny module using `express.module`?",
+  "How does the code inside the `express.module` function differ from the code inside the `shiny.module.ui()` and `shiny.module.server()` functions?",
+  "Can you provide an example of how to use the `express.module` function to create a Shiny module in Python?",
+  "What are some other related functions or modules that are mentioned in the \"See Also\" section of the `express.module` documentation?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using the `ui.update_date_range` function in Shiny for Python?",
+  "What is the purpose of the `ui.update_date_range` function in Shiny for Python?",
+  "How can the start and end values of a date range input be changed using the `ui.update_date_range` function in Shiny for Python?",
+  "What is the significance of providing a `Session` instance as an argument in the `ui.update_date_range` function in Shiny for Python?",
+  "How does the `ui.update_date_range` function handle arguments with `None` values in Shiny for Python?"
+]

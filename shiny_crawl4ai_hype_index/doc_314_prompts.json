@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be provided to the `express.ui.update_slider` function in Shiny for Python?",
+  "What does the `express.ui.update_slider` function do in Shiny for Python?",
+  "How can the time format be specified when using the `express.ui.update_slider` function in Shiny for Python?",
+  "How does the `express.ui.update_slider` function handle arguments with `None` values in Shiny for Python?",
+  "In Shiny for Python, how can the set of choices be cleared for `update_radio_buttons`, `update_checkbox_group`, and `update_select` inputs?"
+]

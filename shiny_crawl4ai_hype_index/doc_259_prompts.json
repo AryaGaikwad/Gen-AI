@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create an input control for entry of text values in Shiny for Python?",
+  "What is the default behavior for the `autocomplete` parameter when creating an input text control in Shiny for Python?",
+  "What are the different options available for the `update_on` parameter when creating an input text control in Shiny for Python?",
+  "What is the purpose of the `spellcheck` parameter when creating an input text control in Shiny for Python?",
+  "What does the `update_on` parameter control when creating an input text control in Shiny for Python?"
+]

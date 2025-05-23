@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_tooltip` function in Shiny for Python?",
+  "How can I open or close a tooltip using the `express.ui.update_tooltip` function in Shiny for Python?",
+  "Can you provide an example of updating a tooltip content and showing it using Shiny for Python?",
+  "How can I match an existing tooltip ID when using the `express.ui.update_tooltip` function in Shiny for Python?",
+  "What is the default object that should be used for the `session` parameter in the `express.ui.update_tooltip` function in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.output_text_verbatim` function accept?",
+  "What is the purpose of `ui.output_text_verbatim` compared to `ui.output_text`?",
+  "How can one create a fixed-width container for text using Shiny for Python?",
+  "What type of UI element does the `ui.output_text_verbatim` function return?",
+  "In what scenarios would one use the `placeholder` parameter of the `ui.output_text_verbatim` function?"
+]

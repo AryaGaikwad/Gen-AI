@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `expect_nav_titles` method in `playwright.controller.NavsetPill` in Shiny for Python?",
+  "What are the attributes associated with the `playwright.controller.NavsetPill` in Shiny for Python?",
+  "How can one set the state of the control to open or closed in `playwright.controller.NavsetPill` in Shiny for Python?",
+  "What is the function of the `get_loc_active_content` method in `playwright.controller.NavsetPill` in Shiny for Python?",
+  "In Shiny for Python, what is the significance of the `loc_container` attribute in the `playwright.controller.NavsetPill` class?"
+]

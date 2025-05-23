@@ -1,0 +1,7 @@
+[
+  "What convenience does Shiny provide for creating HTML UI components?",
+  "How can you add HTML attributes like `class` and `style` when working with HTML tag objects in Shiny?",
+  "What is the purpose of the `head_content()` function in Shiny for Python?",
+  "How does `HTMLDependency()` help in including CSS, JavaScript, and other files in Shiny UI components?",
+  "In Shiny, what is the significance of using a `TagList` for creating collections of HTML tags?"
+]

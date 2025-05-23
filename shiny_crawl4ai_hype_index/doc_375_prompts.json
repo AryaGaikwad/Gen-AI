@@ -1,0 +1,7 @@
+[
+  "What are the different methods available in the playwright.controller.OutputPlot class for asserting image properties?",
+  "How can I assert that the output has the expected container tag in Shiny for Python using playwright.controller.OutputPlot?",
+  "What are the attributes of the playwright.controller.OutputPlot class in Shiny for Python and their descriptions?",
+  "What does the expect_inline method in playwright.controller.OutputPlot class do in Shiny for Python?",
+  "How can I assert the expected height of an image using the expect_img_height method in the playwright.controller.OutputPlot class in Shiny for Python?"
+]

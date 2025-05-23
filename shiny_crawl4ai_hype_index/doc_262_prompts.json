@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a switch using `express.ui.input_switch` in Shiny for Python?",
+  "What is the purpose of the `value` parameter in the `express.ui.input_switch` function in Shiny for Python?",
+  "What does the `Notes` section of the `express.ui.input_switch` documentation in Shiny for Python explain about the server value?",
+  "Which other UI components are listed under the `See Also` section of the `express.ui.input_switch` documentation in Shiny for Python?",
+  "Can you provide an example of how to use the `ui.input_switch` function in a Python script using Shiny for Python?"
+]

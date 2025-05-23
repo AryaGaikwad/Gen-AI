@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the `ui.update_radio_buttons` function in Shiny for Python?",
+  "What is the purpose of the `ui.update_radio_buttons` function in Shiny for Python?",
+  "How can the set of choices for radio buttons be cleared using the `ui.update_radio_buttons` function in Shiny for Python?",
+  "What does the `inline` parameter do in the `ui.update_radio_buttons` function in Shiny for Python?",
+  "How can you change the selected item for radio buttons using the `ui.update_radio_buttons` function in Shiny for Python?"
+]

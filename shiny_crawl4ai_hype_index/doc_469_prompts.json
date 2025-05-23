@@ -1,0 +1,7 @@
+[
+  "What are some common HTML tags that can be used in Shiny for Python UI components?",
+  "How can I add or remove HTML attributes like class and style using Tag objects in Shiny for Python?",
+  "What is the purpose of the head_content() function in Shiny for Python and how can it be used to manipulate the <head> content of an HTML document?",
+  "In Shiny for Python, how can HTML dependencies be managed and why is it important to include them properly?",
+  "How can I create a collection of HTML tags in Shiny for Python using TagList and what additional attributes and methods does it offer?"
+]

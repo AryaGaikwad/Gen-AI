@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using modules in a Shiny application according to this documentation passage?",
+  "How can modules help in organizing a large code base in Shiny applications?",
+  "What is the difference between Python modules and Shiny modules as mentioned in the documentation?",
+  "How can list comprehension be used to reduce repetition in Shiny code when creating UI elements?",
+  "What are the benefits of encapsulating both the UI and server logic of a Shiny application in modules?"
+]

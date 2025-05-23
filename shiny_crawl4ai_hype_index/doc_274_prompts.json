@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.navset_pill_list` function accept?",
+  "How can you choose a default nav item to be selected in a `navset_pill_list` using Shiny for Python?",
+  "What is the purpose of the `well` parameter in the `express.ui.navset_pill_list` function?",
+  "In what scenarios would you use the `header` and `footer` parameters in the `navset_pill_list` function?",
+  "How can you set the column widths for the navigation list and tabset content areas in a `navset_pill_list` using Shiny for Python?"
+]

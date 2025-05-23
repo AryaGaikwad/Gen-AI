@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.update_numeric` function in Shiny for Python accept?",
+  "What is the purpose of the `ui.update_numeric` function in Shiny for Python?",
+  "How does the `ui.update_numeric` function handle arguments with `None` values?",
+  "In Shiny for Python, how can you clear the set of choices for radio buttons, checkbox groups, and select inputs using the `ui.update_numeric` function?",
+  "Can you provide an example of using the `ui.update_numeric` function in a Shiny for Python application?"
+]

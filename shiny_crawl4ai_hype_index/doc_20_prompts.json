@@ -1,0 +1,7 @@
+[
+  "What are some limitations of Large Language Models (LLMs) that can be addressed by equipping them with the ability to call tools?",
+  "How does the sidebot template work in allowing users to explore data using natural language?",
+  "What are the steps involved in customizing the display of tool results in Shiny for Python?",
+  "How can reactivity be combined with tool calling to enable the LLM to interact with the app effectively?",
+  "Why is it important for a function to include type hints and a docstring when equipping the LLM with the ability to call tools?"
+]

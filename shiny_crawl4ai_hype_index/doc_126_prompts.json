@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to construct a slider widget using the `ui.input_slider` function in Shiny for Python?",
+  "What is the purpose of the `sep` parameter in the `ui.input_slider` function in Shiny for Python?",
+  "How can you control whether tick marks are shown on a slider widget created using the `ui.input_slider` function in Shiny for Python?",
+  "What is the default time format used for displaying date and datetime values in a slider widget created with the `ui.input_slider` function in Shiny for Python?",
+  "In Shiny for Python, what is the significance of the `drag_range` parameter in the `ui.input_slider` function when creating a range slider?"
+]

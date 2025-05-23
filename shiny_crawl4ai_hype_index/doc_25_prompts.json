@@ -1,0 +1,7 @@
+[
+  "What are the different sections included in the Shiny for Python documentation and what topics do they cover?",
+  "How does Shiny handle non-blocking operations in Python apps and why is it important?",
+  "What is the difference between regular async functions and using `ExtendedTask` in Shiny for achieving true non-blocking behavior?",
+  "How can you cancel a running task in Shiny using the `ExtendedTask` class?",
+  "What is the recommended strategy for running CPU-bound tasks or synchronous I/O operations in Shiny to avoid blocking the main thread?"
+]

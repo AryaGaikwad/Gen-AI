@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a checkbox using the `ui.input_checkbox` function in Shiny for Python?",
+  "What is the initial value set for the checkbox created using the `ui.input_checkbox` function in Shiny for Python?",
+  "How can the CSS width of the checkbox created with `ui.input_checkbox` function be specified in Shiny for Python?",
+  "What is the server value for the checkbox created with the `ui.input_checkbox` function in Shiny for Python?",
+  "Which other input components are recommended to be used in conjunction with `ui.input_checkbox` according to the documentation in Shiny for Python?"
+]

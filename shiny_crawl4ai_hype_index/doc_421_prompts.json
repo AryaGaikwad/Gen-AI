@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.input_radio_buttons` function in Shiny for Python require to create a set of radio buttons?",
+  "How can I access the value of a set of radio buttons in the `server()` function in Shiny for Python?",
+  "What is the purpose of the `choices` parameter in the `ui.input_radio_buttons` function in Shiny for Python?",
+  "Where can I find a live kitchen sink showcasing all possible parameters for the Radio Buttons in Shiny Core and Shiny Express in Shiny for Python?",
+  "How can I add radio buttons to my app using the `ui.input_radio_buttons` function in Shiny for Python?"
+]

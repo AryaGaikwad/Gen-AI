@@ -1,0 +1,7 @@
+[
+  "What parameters can be customized using the `express.ui.busy_indicators.options` function?",
+  "What is the purpose of the `spinner_delay` parameter in the `express.ui.busy_indicators.options` function?",
+  "How can the appearance of busy indicators be customized in a Shiny Python application?",
+  "How does the `pulse_background` parameter in the `express.ui.busy_indicators.options` function work?",
+  "In what scenarios would customizing the fade opacity of busy indicators be useful in a Shiny Python application?"
+]

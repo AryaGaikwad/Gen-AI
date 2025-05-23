@@ -1,0 +1,7 @@
+[
+  "What are the advantages of using Shiny Core over Shiny Express in terms of maintainability for large or long-lived apps?",
+  "How does Shiny Core's feature set compare to Shiny Express, particularly in relation to Shiny Modules and dynamic UI?",
+  "For users more concerned about maturity and stability, why would they consider using Shiny Core over Shiny Express?",
+  "In what ways is Shiny Core more familiar to R users compared to Shiny Express?",
+  "Why might a developer choose Shiny Core over Shiny Express when building a large or long-lived app, considering the separation of UI and server code?"
+]

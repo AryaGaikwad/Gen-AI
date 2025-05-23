@@ -1,0 +1,7 @@
+[
+  "What are the three general approaches to addressing the issue of LLMs not having necessary information to answer user questions?",
+  "How does the Tool calling approach differ from the Retrieval-Augmented Generation (RAG) approach in providing necessary information to LLMs?",
+  "What is the core concept of Retrieval-Augmented Generation (RAG) when applied to finding documents similar to a user query?",
+  "Which numerical technique is mentioned in the documentation as being important for computing similarity in the context of Retrieval-Augmented Generation (RAG)?",
+  "How can a developer scale up the basic example of implementing RAG using Shiny and `chatlas` for their specific use case?"
+]

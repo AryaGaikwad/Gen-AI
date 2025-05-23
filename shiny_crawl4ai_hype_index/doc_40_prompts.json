@@ -1,0 +1,7 @@
+[
+  "How can Shiny for Python be installed using `pip` or `conda`?",
+  "What are the benefits of using virtual environments when building Shiny applications?",
+  "How can a new Shiny app directory be created and a virtual environment be set up using `uv`?",
+  "What is the recommended extension to use with Visual Studio Code for Shiny development?",
+  "How can type checking be configured for a smoother experience with types in Shiny using Visual Studio Code?"
+]

@@ -1,0 +1,7 @@
+[
+  "What package can be used to easily change the look of a Shiny app with predefined themes?",
+  "How can I add custom CSS to my Shiny app beyond what is available in shinyswatch?",
+  "What is the advantage of using utility classes in Shiny for customizing the app's appearance?",
+  "How can I serve local files like fonts and CSS to my Shiny app for customization?",
+  "What mechanism does the HTMLDependency class provide in Shiny for distributing custom styles and files?"
+]

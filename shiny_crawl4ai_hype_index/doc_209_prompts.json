@@ -1,0 +1,7 @@
+[
+  "What parameters can be set using the `express.app_opts` function in Shiny for Python?",
+  "What is the purpose of the `static_assets` parameter in the `express.app_opts` function in Shiny for Python?",
+  "How can you enable debug mode using the `express.app_opts` function in Shiny for Python?",
+  "What is the default value for the `debug` parameter in the `express.app_opts` function in Shiny for Python?",
+  "Where can one find more information about `express.ui.busy_indicators.options` in Shiny for Python?"
+]

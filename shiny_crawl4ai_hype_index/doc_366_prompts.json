@@ -1,0 +1,7 @@
+[
+  "What are the different methods available in the playwright.controller.InputText class for setting expectations on input elements?",
+  "What is the purpose of the expect_width method in the playwright.controller.InputText class and what parameters does it take?",
+  "How can I expect the label of an input element to have a specific text using the playwright.controller.InputText class?",
+  "What attributes can be accessed in the playwright.controller.InputText class and what are their descriptions?",
+  "Where can I find the documentation for Shiny Express and Shiny Core within the Shiny for Python documentation?"
+]

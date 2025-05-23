@@ -1,0 +1,7 @@
+[
+  "What are the parameters that can be specified when using the `express.ui.layout_column_wrap` function?",
+  "How does the `fixed_width` parameter affect the layout behavior in `express.ui.layout_column_wrap`?",
+  "What is the purpose of the `heights_equal` parameter in the `express.ui.layout_column_wrap` function?",
+  "How can power users customize the width of each card in the layout using the `width` parameter in `express.ui.layout_column_wrap`?",
+  "What is the significance of the `fillable` parameter in the `express.ui.layout_column_wrap` function?"
+]

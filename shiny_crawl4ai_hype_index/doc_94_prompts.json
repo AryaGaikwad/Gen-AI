@@ -1,0 +1,7 @@
+[
+  "What are the available methods provided by the `ui.Theme` class for customizing a Shiny theme?",
+  "What is the purpose of the `add_mixins` method in the `ui.Theme` class when customizing a Shiny theme?",
+  "How can you compile a custom Shiny theme to CSS using the `ui.Theme` class in Python?",
+  "What is the significance of the `from_brand` method in the `ui.Theme` class when creating a custom Shiny theme based on brand guidelines?",
+  "What is the role of the `add_defaults` method in the `ui.Theme` class when adding custom default values to a Shiny theme?"
+]

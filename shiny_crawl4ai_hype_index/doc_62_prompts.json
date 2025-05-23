@@ -1,0 +1,7 @@
+[
+  "What is the purpose of marking a function as a reactive calculation in Shiny for Python?",
+  "What is the role of the `session` parameter in the `reactive.calc` function?",
+  "How are reactive calculations different from reactive expressions in Shiny for R?",
+  "When should you use `effect` instead of a reactive calculation to produce side effects?",
+  "What are some of the functions that can be used in conjunction with `reactive.calc` to handle reactive programming in Shiny for Python?"
+]

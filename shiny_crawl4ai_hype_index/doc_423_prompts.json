@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.input_select()` function in Shiny for Python accept?",
+  "How can I create a select list with grouped choices using `ui.input_select()`?",
+  "What is the default behavior of the `multiple` parameter in `ui.input_select()`?",
+  "How can I access the selected value from a select list in the `server()` function?",
+  "What is the purpose of the `choices` parameter in `ui.input_select()` and how can it be specified?"
+]

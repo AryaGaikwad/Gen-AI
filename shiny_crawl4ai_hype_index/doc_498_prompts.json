@@ -1,0 +1,7 @@
+[
+  "How can I create a floating panel in my Shiny Python app using the `ui.panel_absolute()` function?",
+  "What steps should I follow to add a background image to a Shiny Python app using CSS?",
+  "What is the purpose of using `ui.card()` in a Shiny Python app, and how can I use it to group related UI elements together?",
+  "How can I control the appearance and functionality of a card in a Shiny Python app by passing additional arguments to `ui.card()`?",
+  "What is the equivalent of `ui.panel_absolute()` with `fixed=True` in a Shiny Python app, and how does it affect the scrolling behavior of the panel?"
+]

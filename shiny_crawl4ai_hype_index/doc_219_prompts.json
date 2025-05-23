@@ -1,0 +1,7 @@
+[
+  "What options can be specified for a DataGrid in Shiny for Python, such as width, height, summary message, filters, and editable cells?",
+  "What is the purpose of the 'selection_mode' parameter in the DataGrid class in Shiny for Python?",
+  "How can you apply custom styles to specific cells within a DataGrid in Shiny for Python?",
+  "What is the significance of the 'to_payload' method in the DataGrid class in Shiny for Python?",
+  "In Shiny for Python, how can you use the DataGrid to display a spreadsheet-like view of a DataFrame and specify CSS styling for the grid?"
+]

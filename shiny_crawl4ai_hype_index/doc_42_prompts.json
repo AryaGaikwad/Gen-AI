@@ -1,0 +1,7 @@
+[
+  "What are some advantages of deploying Shiny applications with Shinylive compared to traditional deployments?",
+  "How can I share a Shiny application via a URL with the Shinylive editor?",
+  "How can I test whether a specific Python package is available in the Shinylive distribution?",
+  "What is the purpose of using a `requirements.txt` file in a Shinylive application?",
+  "How can I deploy a Shinylive application without using Quarto?"
+]

@@ -1,0 +1,7 @@
+[
+  "What Python packages build on ipywidgets to provide interactive widgets in Jupyter notebooks according to the Shiny documentation?",
+  "How can you efficiently update a widget's traits in Shiny using shinywidgets?",
+  "What method can be used to list the available traits of a widget in Shiny?",
+  "How can you respond to user input using reactive traits in Shiny with shinywidgets?",
+  "What is the recommended approach for arranging widgets in a Shiny application according to the documentation?"
+]

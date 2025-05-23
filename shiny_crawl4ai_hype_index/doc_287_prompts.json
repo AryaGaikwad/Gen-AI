@@ -1,0 +1,7 @@
+[
+  "What are the different types of color options available for a notification in Shiny for Python's `express.ui.notification_show` function?",
+  "What is the purpose of the `action` parameter in the `express.ui.notification_show` function in Shiny for Python?",
+  "How can you control the duration for which a notification message is displayed in Shiny for Python using `express.ui.notification_show`?",
+  "In Shiny for Python, how can you display a close button in a notification message using the `express.ui.notification_show` function?",
+  "What is the significance of the `id` parameter in the `express.ui.notification_show` function in Shiny for Python?"
+]

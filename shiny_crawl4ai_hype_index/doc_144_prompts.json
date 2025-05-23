@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.nav_panel` function accept and what are their purposes?",
+  "What are some related functions to `ui.nav_panel` that can be used in conjunction with it?",
+  "How can the `value` parameter in `ui.nav_panel` be utilized?",
+  "In what scenarios would one use the `icon` parameter in the `ui.nav_panel` function?",
+  "Can you provide an example of how to use the `ui.nav_panel` function within a Shiny Python application?"
+]

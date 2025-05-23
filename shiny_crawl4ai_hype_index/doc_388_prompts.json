@@ -1,0 +1,7 @@
+[
+  "What are the available methods for asserting the state of the sidebar on desktop in Shiny for Python?",
+  "How can I assert the expected background color of a sidebar in Shiny for Python using the `playwright.controller.Sidebar` class?",
+  "In Shiny for Python, what attribute provides the Playwright `Locator` for the content of the sidebar?",
+  "How can I set the sidebar to be open or closed in Shiny for Python using the `playwright.controller.Sidebar` class?",
+  "What is the purpose of the `expect_gap` method in the `playwright.controller.Sidebar` class of Shiny for Python?"
+]

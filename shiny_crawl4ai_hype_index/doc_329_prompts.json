@@ -1,0 +1,7 @@
+[
+  "What is the purpose of using the `reactive.extended_task` decorator in Shiny for Python?",
+  "How does the `extended_task` async computation differ from normal async render functions in Shiny?",
+  "What parameters can the function decorated with `reactive.extended_task` take?",
+  "What does the `ExtendedTask` object returned by the `reactive.extended_task` decorator allow developers to do?",
+  "How can a developer access reactive sources if needed by the computation decorated with `reactive.extended_task`?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.transformer.resolve_value_fn` function in Shiny for Python?",
+  "How does the `resolve_value_fn` function handle asynchronous value functions?",
+  "What are the parameters required for the `resolve_value_fn` function?",
+  "What does the `resolve_value_fn` function return?",
+  "How can the `resolve_value_fn` function help in reducing boilerplate code in Shiny applications?"
+]

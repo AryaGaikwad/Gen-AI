@@ -1,0 +1,7 @@
+[
+  "What are the methods that must be implemented by subclasses of the Renderer class?",
+  "How can Express mode help in skipping the addition of a ui.output_* function to the UI?",
+  "What does the render method of the Renderer class do?",
+  "How can a custom output renderer be created using the Renderer class?",
+  "What is the purpose of the transform method in the Renderer class?"
+]

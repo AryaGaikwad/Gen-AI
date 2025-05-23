@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.help_text` function in Shiny for Python?",
+  "What parameters can be passed to the `ui.help_text` function in Shiny for Python?",
+  "What class does text passed to `ui.help_text` receive in Shiny for Python?",
+  "How can a user add additional explanation or context to the user interface using `ui.help_text` in Shiny for Python?",
+  "What UI element does the `ui.help_text` function return in Shiny for Python?"
+]

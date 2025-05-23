@@ -1,0 +1,7 @@
+[
+  "What are the available input components provided by Shiny for Python?",
+  "How can I add a file input component to my Shiny app in Python?",
+  "How can I access the value of a file input component in the server function in Shiny for Python?",
+  "How can I read a CSV file into pandas using the file input component in Shiny for Python?",
+  "What optional parameters are available for the ui.input_file() function in Shiny for Python?"
+]

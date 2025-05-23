@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.render.table` function in Shiny for Python?",
+  "What does the `express.render.table` function do in Shiny for Python?",
+  "How can I use the `express.render.table` function to render a pandas `DataFrame` as an HTML table with a specific appearance in Shiny for Python?",
+  "What is the purpose of the `highlight_min` and `highlight_max` functions in the example provided for the `express.render.table` function in Shiny for Python?",
+  "How can I display a legend in the UI based on the input provided in the `express.render.table` function in Shiny for Python?"
+]

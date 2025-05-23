@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `ui.update_navs` function in Shiny for Python?",
+  "What does the `session` parameter in the `ui.update_navs` function represent?",
+  "How can you change the value of a navs container on the client using the `ui.update_navs` function?",
+  "In which section of the documentation can you find examples of using the `ui.update_navs` function?",
+  "What is the significance of providing a `selected` value in the `ui.update_navs` function for a navs container in Shiny for Python?"
+]

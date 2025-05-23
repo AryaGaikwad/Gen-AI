@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `req` function in Shiny for Python?",
+  "What kind of exception does the `req` function throw for falsy values?",
+  "What are the parameters that can be provided to the `req` function?",
+  "What does the `req` function return if no arguments are provided?",
+  "How can the `req` function be used in a practical example within a Shiny for Python application?"
+]

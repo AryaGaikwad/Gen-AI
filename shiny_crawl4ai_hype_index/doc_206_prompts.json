@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.update_task_button` function in Shiny for Python?",
+  "What are the possible values for the `state` parameter in the `ui.update_task_button` function?",
+  "How can you manually change the state of a task button using the `ui.update_task_button` function?",
+  "What is the significance of the `session` parameter in the `ui.update_task_button` function?",
+  "Where can I find more information about updating action links and sidebars in Shiny for Python?"
+]

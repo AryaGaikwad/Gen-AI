@@ -1,0 +1,7 @@
+[
+  "What are the differences in syntax between R and Python versions of Shiny for connecting outputs to UI components?",
+  "How can one get values from a `reactiveValues` object in Shiny for Python?",
+  "What are the main differences in mutability between R and Python when working with Shiny applications?",
+  "What are the differences in naming and syntax when it comes to `reactive()` and `observe()` functions in Shiny for R and Python?",
+  "How can a Shiny developer get started with building PyShiny apps using the Shiny Express in Python?"
+]

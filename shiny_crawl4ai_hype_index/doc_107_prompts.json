@@ -1,0 +1,7 @@
+[
+  "What parameters are required to create a download link using the `ui.download_link` function in Shiny for Python?",
+  "What is the purpose of the `icon` parameter in the `ui.download_link` function?",
+  "How can additional attributes be specified for the download link button created with the `ui.download_link` function?",
+  "What type of object does the `ui.download_link` function return?",
+  "Which other functions are listed under the \"See Also\" section of the `ui.download_link` documentation in Shiny for Python?"
+]

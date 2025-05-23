@@ -1,0 +1,7 @@
+[
+  "What are the methods available in the `session.Session` interface for Shiny for Python?",
+  "What does the `dynamic_route` method in the `session.Session` interface do in Shiny for Python?",
+  "How can you register a function to be called after the client has disconnected in Shiny for Python?",
+  "How can you send a custom message to the client in Shiny for Python?",
+  "What is the purpose of the `set_message_handler` method in the `session.Session` interface of Shiny for Python?"
+]

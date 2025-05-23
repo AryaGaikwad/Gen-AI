@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.input_date` function in Shiny for Python?",
+  "What is the purpose of the `autoclose` parameter in the `ui.input_date` function in Shiny for Python?",
+  "How can you specify the format of the date displayed in the browser when using the `ui.input_date` function in Shiny for Python?",
+  "What are the valid values for the `startview` parameter in the `ui.input_date` function in Shiny for Python?",
+  "How can you disable specific dates or days of the week when using the `ui.input_date` function in Shiny for Python?"
+]

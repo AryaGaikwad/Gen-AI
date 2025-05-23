@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.modal` function in Shiny for Python?",
+  "How can a modal dialog be shown using the `ui.modal` function in Shiny for Python?",
+  "What are the different sizes available for the modal dialogue box in Shiny for Python?",
+  "In Shiny for Python, how can a modal dialog be dismissed by clicking outside the dialog box or pressing the Escape key?",
+  "What is the purpose of the `footer` parameter in the `ui.modal` function in Shiny for Python?"
+]

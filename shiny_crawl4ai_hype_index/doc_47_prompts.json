@@ -1,0 +1,7 @@
+[
+  "What are the parameters required to create a Shiny app instance in Python?",
+  "How can I register a callback function to be executed when the Shiny app is shutting down?",
+  "What method can be used to communicate with Pyodide in a Shiny Python app?",
+  "How can I stop a Shiny app and close all its sessions?",
+  "What are the available methods for rendering outputs in a Shiny Python app?"
+]

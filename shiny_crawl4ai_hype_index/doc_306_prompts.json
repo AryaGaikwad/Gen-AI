@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_checkbox_group` function?",
+  "How can you clear the set of choices for a checkbox group using `express.ui.update_checkbox_group`?",
+  "What is the purpose of the `inline` parameter in the `express.ui.update_checkbox_group` function?",
+  "How does the `express.ui.update_checkbox_group` function handle arguments with `None` values?",
+  "Can you provide an example usage of the `express.ui.update_checkbox_group` function in a Python script?"
+]

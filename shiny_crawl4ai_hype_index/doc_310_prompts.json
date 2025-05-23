@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_date_range` function accept?",
+  "What does the `express.ui.update_date_range` function do?",
+  "How can one change the start and end values of a date range input using `express.ui.update_date_range`?",
+  "What is the purpose of the `session` parameter in the `express.ui.update_date_range` function?",
+  "How can one clear the selected item in `update_radio_buttons`, `update_checkbox_group`, and `update_select` using this documentation?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `session.get_current_session()` function in Shiny for Python?",
+  "What does the `session.require_active_session(session)` function do in Shiny for Python?",
+  "How can you use the `session.ClientData` class to access client-side information in Shiny for Python?",
+  "What is the significance of the `session.Session.send_custom_message(type, message)` function in Shiny for Python?",
+  "How can you register a function to be called before the next reactive flush in Shiny for Python using `session.Session.on_flush(fn, once=True)`?"
+]

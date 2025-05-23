@@ -1,0 +1,7 @@
+[
+  "What are the four main patterns to be aware of when building Shiny modules according to the documentation?",
+  "How can non-reactive arguments be used to communicate with modules in Shiny for Python?",
+  "In Shiny for Python, how can multiple UI elements be passed to modules for layout purposes?",
+  "How can reactive objects be passed to modules in Shiny for Python and utilized within the module's code?",
+  "What is the advantage of passing callbacks to modules in Shiny for Python compared to passing reactive values directly?"
+]

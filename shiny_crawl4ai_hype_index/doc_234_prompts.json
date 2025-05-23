@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `express.ui.accordion` function in Shiny for Python?",
+  "How can you specify which accordion panels should be open by default when using the `express.ui.accordion` function?",
+  "In Shiny for Python, what is the purpose of the `multiple` parameter in the `express.ui.accordion` function?",
+  "What is the significance of the `id` parameter in the `express.ui.accordion` function and how is it used in server logic?",
+  "What are the additional CSS classes that can be included on the accordion div when using the `express.ui.accordion` function in Shiny for Python?"
+]

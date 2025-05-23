@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_text_area` function take?",
+  "What does the `express.ui.update_text_area` function do?",
+  "How can you clear the set of choices for radio buttons, checkbox groups, and select inputs using `express.ui.update_text_area`?",
+  "What is the relationship between `input_text` and `update_text` functions in Shiny for Python?",
+  "How can you update the value of a text input on the client side using `express.ui.update_text_area` in Shiny for Python?"
+]

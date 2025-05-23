@@ -1,0 +1,7 @@
+[
+  "What are the possible values for the `position` parameter in the `express.ui.sidebar` function?",
+  "What is the purpose of the `id` parameter in the `express.ui.sidebar` function?",
+  "How can you set different initial states for the sidebar on desktop and mobile screens using the `open` parameter in the `express.ui.sidebar` function?",
+  "What is the use of the `padding` parameter in the `express.ui.sidebar` function?",
+  "How can you define the maximum height of the horizontal sidebar for mobile devices in the `express.ui.sidebar` function?"
+]

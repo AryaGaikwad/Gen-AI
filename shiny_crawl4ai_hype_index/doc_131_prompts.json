@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for creating an input control for text values using `ui.input_text` in Shiny for Python?",
+  "What is the purpose of the `spellcheck` parameter in the `ui.input_text` function in Shiny for Python?",
+  "How can you specify the CSS width for an input control created with `ui.input_text` in Shiny for Python?",
+  "What does the `update_on` parameter do in the `ui.input_text` function in Shiny for Python?",
+  "In Shiny for Python, what is the default value for the server value when using the `ui.input_text` function without providing a specific value?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_checkbox` function take in Shiny for Python?",
+  "What does the `express.ui.update_checkbox` function do in Shiny for Python?",
+  "How are arguments with `None` values handled in the `express.ui.update_checkbox` function in Shiny for Python?",
+  "Can the set of choices be cleared for `update_checkbox_group` in Shiny for Python, and if so, how?",
+  "How is the value of a checkbox input changed on the client using the `express.ui.update_checkbox` function in Shiny for Python?"
+]

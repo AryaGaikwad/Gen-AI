@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_select` function accept?",
+  "What does the `session` parameter do in the `express.ui.update_select` function?",
+  "How can you clear the set of choices in the `update_select` function?",
+  "What is the purpose of the `update_radio_buttons` function in comparison to the `update_select` function?",
+  "How can you change the label and choices of a select input using the `update_select` function in a Shiny Python application?"
+]

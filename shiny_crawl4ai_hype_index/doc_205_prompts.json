@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.update_select` function in Shiny for Python accept?",
+  "What is the purpose of the `selected` parameter in the `ui.update_select` function?",
+  "How can you clear the set of choices for a select input using the `ui.update_select` function?",
+  "How does the syntax of the input updater functions in Shiny for Python compare to the functions that create the inputs?",
+  "In the provided example code snippet, how is the `ui.update_select` function used to update a select input based on the selected values from a checkbox group?"
+]

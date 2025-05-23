@@ -1,0 +1,7 @@
+[
+  "What are the parameters available for the `express.ui.layout_columns` function?",
+  "How can the column widths be specified in the `express.ui.layout_columns` function?",
+  "What is the purpose of the `fill` parameter in the `express.ui.layout_columns` function?",
+  "How can different row heights be set in the `express.ui.layout_columns` function?",
+  "What are some examples of using the `ui.layout_columns()` function in a Shiny Python application?"
+]

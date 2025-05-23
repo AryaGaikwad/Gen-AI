@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `express.ui.input_task_button` function?",
+  "What is the purpose of the `auto_reset` parameter in the `express.ui.input_task_button` function?",
+  "How can you prevent the `express.ui.input_task_button` from automatically resetting after a task completes?",
+  "What is the significance of calling `update_task_button(id, state = \"busy\")` in advanced use cases of the `express.ui.input_task_button`?",
+  "How can you add additional states besides \"ready\" and \"busy\" to the `express.ui.input_task_button` using the `args` parameter?"
+]

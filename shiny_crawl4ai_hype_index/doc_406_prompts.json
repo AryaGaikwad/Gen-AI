@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.output_data_frame` function in Shiny for Python require?",
+  "What type of UI element does the `ui.output_data_frame` function return in Shiny for Python?",
+  "What is the purpose of the `ui.output_data_frame` function in Shiny for Python?",
+  "What other Shiny function is related to `ui.output_data_frame` according to the documentation?",
+  "How can one create an output container for an interactive table or grid in Shiny for Python using `ui.output_data_frame`?"
+]

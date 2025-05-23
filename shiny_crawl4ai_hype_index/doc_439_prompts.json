@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.output_text_verbatim` function in Shiny for Python?",
+  "How can one create reactive verbatim text using Shiny for Python?",
+  "In Shiny for Python, how can you ensure that `ui.output_verbatim_text()` displays an empty shaded rectangle as a placeholder even when the string to display is empty?",
+  "What are the variations of verbatim text available in Shiny for Python?",
+  "How can you display a character string as monospaced code in a shaded rectangle using Shiny for Python?"
+]

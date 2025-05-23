@@ -1,0 +1,7 @@
+[
+  "What are the methods available for asserting attributes like `data-date-autoclose` and `data-date-dates-disabled` in the playwright.controller.InputDate class in Shiny for Python?",
+  "How can I expect the label of an input element to have a specific text in the playwright.controller.InputDate class in Shiny for Python?",
+  "What parameters are required for the method `expect_datesdisabled` in the playwright.controller.InputDate class in Shiny for Python?",
+  "How can I set the text value of an input element using the `set` method in the playwright.controller.InputDate class in Shiny for Python?",
+  "What is the purpose of the `loc_container` attribute in the playwright.controller.InputDate class in Shiny for Python?"
+]

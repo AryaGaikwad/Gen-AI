@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `@render.download` decorator in Shiny for Python?",
+  "What are the possible parameters that can be passed to the `@render.download` decorator in Shiny for Python?",
+  "How can a function decorated with `@render.download` handle file downloads in Shiny for Python?",
+  "What are the possible return types of a function decorated with `@render.download` in Shiny for Python?",
+  "How can filenames be dynamically generated for downloads using the `@render.download` decorator in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What method in Shiny for Python can be used to mark a string as raw HTML to prevent it from being escaped when rendered inside an HTML tag?",
+  "What are some examples of using the `ui.HTML` method in Shiny for Python to work with raw HTML strings?",
+  "Which API endpoint should a developer refer to for creating custom UI themes in Shiny for Python?",
+  "How can a developer create a tag list in Shiny for Python using the available methods?",
+  "Where can a Shiny for Python user go to report an issue or edit the documentation page for the `ui.HTML` method?"
+]

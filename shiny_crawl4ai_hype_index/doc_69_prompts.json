@@ -1,0 +1,7 @@
+[
+  "What is the purpose of `reactive.lock` in Shiny for Python?",
+  "How can `reactive.lock` ensure safe manipulation of the reactive graph in Shiny for Python?",
+  "Which function should be used whenever manipulating the reactive graph to ensure safety in Shiny for Python?",
+  "How does `reactive.lock` interact with `flush` and different tasks within a Shiny session in Python?",
+  "What is the relationship between `reactive.lock`, `reactive.file_reader`, and `req` in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required for creating a set of radio buttons using the `express.ui.input_radio_buttons` function in Shiny for Python?",
+  "What does the `selected` parameter represent in the `express.ui.input_radio_buttons` function in Shiny for Python?",
+  "Can the `choices` parameter in the `express.ui.input_radio_buttons` function accept both a list of choices and a dictionary in Shiny for Python?",
+  "What does the `inline` parameter do in the `express.ui.input_radio_buttons` function in Shiny for Python?",
+  "What type of value does the `express.ui.input_radio_buttons` function return in Shiny for Python?"
+]

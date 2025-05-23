@@ -1,0 +1,7 @@
+[
+  "What are the two main approaches to testing Shiny apps mentioned in the documentation?",
+  "How can unit tests help developers separate the app's \"business\" logic from reactive logic?",
+  "What is the purpose of the `pytest` framework in the context of unit testing Shiny apps?",
+  "How can developers structure their test files for functions like `filter_penguins` to work with `pytest`?",
+  "Why is it mentioned that unit testing is important to ensure the app's \"business\" logic is working as expected in the documentation?"
+]

@@ -1,0 +1,7 @@
+[
+  "What steps are involved in creating a custom Tabulator element for a Shiny app?",
+  "How can I register a custom output binding in Shiny using Python?",
+  "What is the purpose of the `renderValue()` method in the TabulatorOutputBinding class?",
+  "How can I use the `output_tabulator()` function to render a table in my Shiny app?",
+  "Why is it important to check if the value returned by the render function is a pandas DataFrame in the `transform` method of a render decorator?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the available methods in the playwright.controller.NavsetPillList class and what do they do?",
+  "How can I expect the control in playwright.controller.NavsetPillList to have specific nav titles?",
+  "What attributes can be accessed in the playwright.controller.NavsetPillList class and what do they represent?",
+  "How can I set the state of the control in playwright.controller.NavsetPillList to open or closed?",
+  "What is the purpose of the expect_well method in the playwright.controller.NavsetPillList class?"
+]

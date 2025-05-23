@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.layout_column_wrap` function in Shiny for Python?",
+  "How does the `heights_equal` parameter in the `ui.layout_column_wrap` function affect the layout of UI elements?",
+  "What is the purpose of the `fillable` parameter in the `ui.layout_column_wrap` function?",
+  "How can you specify the width of each card in a `ui.layout_column_wrap` layout?",
+  "In what scenarios would you use the `fixed_width` parameter in the `ui.layout_column_wrap` function in Shiny for Python?"
+]

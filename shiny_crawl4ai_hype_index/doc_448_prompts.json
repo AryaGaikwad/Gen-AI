@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `@expressify` decorator in Shiny Express and when should it be used?",
+  "How can you collect UI code into a variable in Shiny Express when you want to save it for later use or display it multiple times?",
+  "How does Shiny Express handle reactivity in generating UI, and what is the solution provided for reactively rendering UI elements?",
+  "Why might using `sys.displayhook` be necessary in Shiny Express, and how does it relate to the execution mode of Python code in the framework?",
+  "What is the significance of shared objects in Shiny Express and how can they be utilized for better performance in app initialization?"
+]

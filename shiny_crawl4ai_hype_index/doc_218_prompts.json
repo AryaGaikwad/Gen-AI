@@ -1,0 +1,7 @@
+[
+  "What options can be specified for the `express.render.DataTable` class in Shiny for Python?",
+  "What is the purpose of the `row_selection_mode` parameter in the `express.render.DataTable` class?",
+  "How can CSS styles be applied to the data frame displayed using `express.render.DataTable` in Shiny for Python?",
+  "What is the difference between `DataGrid` and `DataTable` classes in Shiny for Python?",
+  "How can the `to_payload` method of the `express.render.DataTable` class be used in Shiny for Python?"
+]

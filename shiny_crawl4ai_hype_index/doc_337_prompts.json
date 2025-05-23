@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `reactive.poll` function in Shiny for Python?",
+  "What is the significance of the `poll_func` parameter in the `reactive.poll` function?",
+  "How does the `interval_secs` parameter affect the behavior of the `reactive.poll` function?",
+  "What is the role of the `equals` parameter in the `reactive.poll` function?",
+  "How can a developer ensure that a polling object in Shiny for Python always returns up-to-date data?"
+]

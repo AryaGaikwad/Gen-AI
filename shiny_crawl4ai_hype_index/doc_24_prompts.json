@@ -1,0 +1,7 @@
+[
+  "How can I pass non-reactive arguments to a module in Shiny for Python?",
+  "How can I pass multiple UI elements to a module in Shiny for Python?",
+  "How can I pass reactive objects to modules and use them inside the module code in Shiny for Python?",
+  "How can I pass callbacks to modules in Shiny for Python to change application state?",
+  "How can I return reactive objects from modules in Shiny for Python to use them in the larger application?"
+]

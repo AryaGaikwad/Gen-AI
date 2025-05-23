@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.update_accordion` function in Shiny for Python?",
+  "What parameters does the `ui.update_accordion` function require?",
+  "How can you specify the state of individual accordion panels using the `show` parameter in `ui.update_accordion`?",
+  "What is the default value for the `session` parameter in the `ui.update_accordion` function?",
+  "Where can you find more information about Bootstrap Accordion as a reference when using `ui.update_accordion` in Shiny for Python?"
+]

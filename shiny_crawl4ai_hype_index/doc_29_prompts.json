@@ -1,0 +1,7 @@
+[
+  "What are the two ways provided by Shiny to ignore changes in reactive dependencies?",
+  "How can I make a reactive function wait for a specific input before executing?",
+  "How can I repeatedly invalidate a reactive function on a schedule for tasks like updating a clock?",
+  "What is the purpose of the `@reactive.poll()` decorator and when should it be used?",
+  "How can I use `@reactive.file_reader()` to handle file changes in a Shiny app?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be provided to the `express.ui.navset_bar` function?",
+  "What is the purpose of the `fillable` parameter in the `express.ui.navset_bar` function?",
+  "How can you configure the appearance and behavior of the navbar in `express.ui.navset_bar`?",
+  "What is the `navbar_options` parameter used for in the `express.ui.navset_bar` function?",
+  "In the example provided for `express.ui.navset_bar`, how are different panels defined and displayed within the navset bar?"
+]

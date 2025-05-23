@@ -1,0 +1,7 @@
+[
+  "What are the main syntax differences between Express and Core apps in Shiny for Python?",
+  "How can I identify if an app is an Express app based on the import statements in Shiny for Python?",
+  "In Shiny for Python, how is nesting UI components like `ui.layout_columns()` handled differently in Core compared to Express?",
+  "In the context of Terminal UI components, how are they treated in Express apps in Shiny for Python?",
+  "When translating an Express app to Core in Shiny for Python, what are the recommended steps to follow according to the documentation?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the parameters for the `express.ui.update_switch` function in Shiny for Python?",
+  "What is the purpose of the `session` parameter in the `express.ui.update_switch` function?",
+  "How does the `update_switch` function in Shiny for Python handle arguments with `None` values?",
+  "In Shiny for Python, how can the set of choices be cleared for `update_radio_buttons` and `update_checkbox_group` functions?",
+  "What is the syntax similarity mentioned between the `input_numeric` and `update_numeric` functions in Shiny for Python?"
+]

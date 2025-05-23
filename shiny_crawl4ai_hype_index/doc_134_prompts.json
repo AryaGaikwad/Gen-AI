@@ -1,0 +1,7 @@
+[
+  "What parameters can be specified when using `ui.layout_columns` to create grid layouts in Shiny for Python?",
+  "What does the `col_widths` parameter do in the `ui.layout_columns` function?",
+  "How can you control the heights of rows in a layout created using `ui.layout_columns` in Shiny for Python?",
+  "What does the `fillable` parameter in `ui.layout_columns` determine in Shiny for Python?",
+  "Where can you find examples of using the `ui.layout_columns` function in Shiny for Python?"
+]

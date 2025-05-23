@@ -1,0 +1,7 @@
+[
+  "What are the attributes of the `playwright.controller.InputCheckbox` class in Shiny for Python?",
+  "What methods are available in the `playwright.controller.InputCheckbox` class for testing input checkboxes in Shiny for Python?",
+  "How can I expect the input checkbox to be checked using the `playwright.controller.InputCheckbox` class in Shiny for Python?",
+  "What is the purpose of the `expect_label` method in the `playwright.controller.InputCheckbox` class in Shiny for Python?",
+  "In Shiny for Python, how can I set the value of an input checkbox using the `playwright.controller.InputCheckbox` class?"
+]

@@ -1,0 +1,7 @@
+[
+  "What methods are available in the playwright.controller.NavsetBar class for testing in Shiny for Python?",
+  "How can I check if the navset bar in Shiny for Python has a specific background color using the expect_bg method?",
+  "What parameters does the expect_position method in playwright.controller.NavsetBar accept in Shiny for Python?",
+  "How can I verify the presence of a sidebar within the navset using the expect_sidebar method in Shiny for Python?",
+  "In Shiny for Python, how can I set the state of a control to open or closed using the set method in playwright.controller.NavsetBar?"
+]

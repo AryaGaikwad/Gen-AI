@@ -1,0 +1,7 @@
+[
+  "What are the methods available in the playwright.controller.OutputTable class for asserting table attributes?",
+  "What is the purpose of the expect_ncol method in the playwright.controller.OutputTable class?",
+  "How can I assert that a specific cell in a table has an expected text using the expect_cell method?",
+  "What are the attributes of the playwright.controller.OutputTable class and their descriptions?",
+  "Where can I find the documentation for Shiny Express in the Shiny for Python library?"
+]

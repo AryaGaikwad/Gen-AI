@@ -1,0 +1,7 @@
+[
+  "What are the key differences between Shiny and Streamlit in terms of reactive execution and application scalability?",
+  "How can Shiny help in extending an application without the need for extensive rewriting, unlike Streamlit?",
+  "What is the recommended approach in Shiny for organizing code to benefit from its execution model?",
+  "How does Streamlit handle application state and why can it be challenging to extend Streamlit applications?",
+  "What are the privacy and security concerns associated with using Streamlit, and how does it compare to Shiny in this aspect?"
+]

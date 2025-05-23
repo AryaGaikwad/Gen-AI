@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating a slider using `ui.input_slider()` in Shiny for Python?",
+  "How can I access the value of a slider in the `server()` function in Shiny for Python?",
+  "What is the purpose of using `ui.input_slider()` in Shiny for Python?",
+  "Where can I find a live showcase of all possible parameters for the slider in Shiny Core for Python?",
+  "How can I add a slider to my Shiny app layout in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters are required when creating an input control for numeric values using `ui.input_numeric` in Shiny for Python?",
+  "What are the optional parameters that can be specified when using `ui.input_numeric` in Shiny for Python?",
+  "What is the purpose of the `update_on` parameter in the `ui.input_numeric` function of Shiny for Python?",
+  "In Shiny for Python, what type of value does the `ui.input_numeric` function return?",
+  "How can one define the CSS width for the input control created by `ui.input_numeric` in Shiny for Python?"
+]

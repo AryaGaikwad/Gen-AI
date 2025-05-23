@@ -1,0 +1,7 @@
+[
+  "What methods are available for interacting with value boxes in a Shiny Python application according to the Shiny Testing API documentation?",
+  "What are the different controllers available for interacting with UI inputs in a Shiny Python application based on the Shiny Testing API reference?",
+  "How can one interact with chat interfaces in a Shiny Python application as outlined in the Shiny Testing API documentation?",
+  "What is the purpose of the `expect_to_change` method in the Playwright Expect section of the Shiny Testing API reference?",
+  "Which method can be used to start a local Shiny app in the background according to the Run section of the Shiny Testing API documentation?"
+]

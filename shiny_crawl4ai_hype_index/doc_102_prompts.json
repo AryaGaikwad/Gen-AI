@@ -1,0 +1,7 @@
+[
+  "What does the `ui.css.as_css_unit` function in Shiny for Python do?",
+  "What are the parameters accepted by the `ui.css.as_css_unit` function in Shiny for Python?",
+  "What does the `ui.css.as_css_unit` function return if the value is `None`?",
+  "Can you provide an example of using the `as_css_unit` function with a value of `0` in Shiny for Python?",
+  "How can I convert a value into a CSS unit using the `ui.css.as_css_unit` function in Shiny for Python?"
+]

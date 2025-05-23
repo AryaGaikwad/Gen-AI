@@ -1,0 +1,7 @@
+[
+  "How can I create a sidebar within a card in my Shiny app using Shiny for Python?",
+  "How can I add a left-side sidebar to my Shiny app using Shiny for Python?",
+  "What steps do I need to follow to add a right-side sidebar to my Shiny app with Shiny for Python?",
+  "What is the purpose of the `open` parameter in `ui.sidebar()` when creating a collapsed sidebar in Shiny for Python?",
+  "How can I define the contents of the main content area when using `ui.layout_sidebar()` in Shiny for Python?"
+]

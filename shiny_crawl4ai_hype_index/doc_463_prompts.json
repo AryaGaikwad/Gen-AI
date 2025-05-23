@@ -1,0 +1,7 @@
+[
+  "What are some common Python operations that create copies of mutable objects to prevent in-place mutation?",
+  "How can using immutable objects help address the issues caused by mutable objects in Shiny applications?",
+  "In the context of Shiny applications, why are mutable objects considered dangerous?",
+  "How can the \"Copy on update\" technique help prevent unexpected behavior in Shiny applications related to mutable objects?",
+  "What are some specific examples provided in the documentation to demonstrate the problems caused by mutable objects in Shiny applications?"
+]

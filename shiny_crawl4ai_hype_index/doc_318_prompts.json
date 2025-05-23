@@ -1,0 +1,7 @@
+[
+  "What are the possible states that a task button can be changed to using the `express.ui.update_task_button` function?",
+  "What is the purpose of the `express.ui.update_task_button` function in Shiny for Python?",
+  "How can you manually change the state of a task button using the `express.ui.update_task_button` function?",
+  "What is the significance of providing a `Session` instance as a parameter in the `express.ui.update_task_button` function?",
+  "Which other functions in Shiny for Python can be used to update the state of a button similar to `express.ui.update_task_button`?"
+]

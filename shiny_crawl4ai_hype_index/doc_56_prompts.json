@@ -1,0 +1,7 @@
+[
+  "What are the different methods available in the `htmltools.Tag` class for manipulating tags?",
+  "How can I add a class value to the HTML class attribute of a tag using the `htmltools.Tag` class?",
+  "In what situations would whitespace be added around tags when using the `htmltools.Tag` class?",
+  "How can I preview a complete HTML document using the `htmltools.TagList` class?",
+  "What is the purpose of the `htmltools.MetadataNode` class in the Shiny for Python documentation?"
+]

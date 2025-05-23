@@ -1,0 +1,7 @@
+[
+  "What are common issues that I may encounter when developing Shiny applications according to this documentation?",
+  "How can I troubleshoot and fix the issue of missing output in a Shiny application as explained in this documentation?",
+  "What is the purpose of setting `sanitize_errors=False` in the `App` constructor of a Shiny core app as mentioned in the documentation?",
+  "How can I use the Positron and VS Code debugger to debug Python code in a Shiny application based on this documentation?",
+  "What are the recommended manual debugging methods that can be used in a Shiny application according to this documentation?"
+]

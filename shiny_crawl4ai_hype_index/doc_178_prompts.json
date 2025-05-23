@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.panel_title` function in Shiny for Python accept?",
+  "What side effect does the `ui.panel_title` function have when called in a Shiny Python application?",
+  "How can you explicitly specify a page title using the `ui.panel_title` function in Shiny for Python?",
+  "What does the `ui.panel_title` function return in Shiny for Python?",
+  "In a Shiny Python application, how can you create a title for the application using the `ui.panel_title` function?"
+]

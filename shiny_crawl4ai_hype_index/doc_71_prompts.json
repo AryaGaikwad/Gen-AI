@@ -1,0 +1,7 @@
+[
+  "What does calling `reactive.invalidate_later` from within a reactive context do in Shiny for Python?",
+  "What is the purpose of the `delay` parameter in the `reactive.invalidate_later` function?",
+  "How can the cycle of re-execution triggered by `invalidate_later` be stopped in Shiny for Python?",
+  "Can you provide an example of using `reactive.invalidate_later` in a Shiny for Python application?",
+  "What are some other functions related to reactive programming that are mentioned in the documentation for Shiny for Python?"
+]

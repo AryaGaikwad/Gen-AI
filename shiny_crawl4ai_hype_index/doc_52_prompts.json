@@ -1,0 +1,7 @@
+[
+  "What parameters are required to define an HTML dependency using the `HTMLDependency` class in Shiny for Python?",
+  "What methods are available for the `HTMLDependency` class in Shiny for Python and what do they do?",
+  "How can you copy the dependency's files to a specific path using the `HTMLDependency` class in Shiny for Python?",
+  "What is the purpose of the `css` function in Shiny for Python's `htmltools` module and how is it used?",
+  "How can you specify the version and source of a library when defining an HTML dependency in Shiny for Python?"
+]

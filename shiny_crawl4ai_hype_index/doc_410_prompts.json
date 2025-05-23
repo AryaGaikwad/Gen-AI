@@ -1,0 +1,7 @@
+[
+  "What are the steps to add a checkbox to a Shiny app using the `ui.input_checkbox()` function?",
+  "How can I access the value of a checkbox in the `server()` function of a Shiny app?",
+  "What are the available input components related to checkboxes in Shiny for Python?",
+  "Where can I find a live kitchen sink showcasing all possible parameters for checkboxes in Shiny Core and Shiny Express?",
+  "How can I specify the initial value of a checkbox in Shiny for Python using the `ui.input_checkbox()` function?"
+]

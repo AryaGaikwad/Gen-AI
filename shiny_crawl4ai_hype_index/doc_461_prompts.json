@@ -1,0 +1,7 @@
+[
+  "What are some common scenarios in a Shiny app where non-blocking operations are necessary?",
+  "How does Shiny handle asynchronous programming using the `async`/`await` keywords?",
+  "Why does async code in Shiny not result in improved responsiveness for applications?",
+  "How can developers achieve true non-blocking behavior in Shiny applications using `ExtendedTask`?",
+  "What are some features of `ExtendedTask` in Shiny and how can developers utilize them effectively?"
+]

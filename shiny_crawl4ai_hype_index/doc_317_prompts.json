@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.update_sidebar` function accept?",
+  "What is the purpose of the `show` parameter in the `express.ui.update_sidebar` function?",
+  "How can you toggle the visibility of a sidebar using the `express.ui.update_sidebar` function?",
+  "What are the possible values for the `show` parameter in the `express.ui.update_sidebar` function?",
+  "Which other function is mentioned in the documentation that is similar to `express.ui.update_sidebar` for updating UI elements?"
+]

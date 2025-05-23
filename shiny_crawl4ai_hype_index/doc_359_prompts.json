@@ -1,0 +1,7 @@
+[
+  "What methods are available in the playwright.controller.InputSelectize class and what do they do?",
+  "What attributes can be accessed in the playwright.controller.InputSelectize class and what are their descriptions?",
+  "How can one expect the choice groups of an input select to be an exact match using playwright.controller.InputSelectize?",
+  "What parameters are required for the expect_label method in the playwright.controller.InputSelectize class?",
+  "How can one set the selected option(s) of an input selectize using the set method in the playwright.controller.InputSelectize class?"
+]

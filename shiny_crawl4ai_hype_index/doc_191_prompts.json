@@ -1,0 +1,7 @@
+[
+  "What are the different types of UI panels available in Shiny for Python?",
+  "What are the different UI inputs that can be used in Shiny for Python applications?",
+  "How can I update the dark mode in a Shiny for Python application using the ui.update_dark_mode function?",
+  "What are the options available for rendering outputs in Shiny for Python using the ui.output functions?",
+  "What developer-facing tools are provided in Shiny for Python for creating custom output renderers?"
+]

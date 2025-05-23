@@ -1,0 +1,7 @@
+[
+  "What are the different parameters that can be passed to the `ui.update_date` function in Shiny for Python?",
+  "What does the `ui.update_date` function do in Shiny for Python?",
+  "How can the `ui.update_date` function be used to change the value of a date input on the client side?",
+  "What is the significance of providing a `Session` instance as a parameter in the `ui.update_date` function?",
+  "In what scenarios would using `None` values in the arguments of the `ui.update_date` function be useful or necessary in Shiny for Python?"
+]

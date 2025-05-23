@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.notification_remove` function in Shiny for Python take?",
+  "What is the purpose of the `express.ui.notification_remove` function in Shiny for Python?",
+  "How can a notification be removed programmatically in Shiny for Python?",
+  "In Shiny for Python, how is the session inferred if not provided when removing a notification?",
+  "What is the return value of the `express.ui.notification_remove` function in Shiny for Python?"
+]

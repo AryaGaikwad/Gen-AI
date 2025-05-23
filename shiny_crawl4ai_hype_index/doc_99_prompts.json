@@ -1,0 +1,7 @@
+[
+  "What are the optional parameters for the `ui.card` function in Shiny for Python?",
+  "How can you create a header within a card using the `ui.card_header` function in Shiny for Python?",
+  "What does the `full_screen` parameter do in the `ui.card` function in Shiny for Python?",
+  "How can you observe the full screen state of a card named \"my_card\" in Shiny for Python?",
+  "What is the purpose of the `fill` parameter in the `ui.card` function in Shiny for Python?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `ui.fill.as_fillable_container` function in Shiny for Python?",
+  "How can you use the `ui.fill.as_fillable_container` function to modify the behavior of UI components?",
+  "What are the parameters expected by the `ui.fill.as_fillable_container` function in Shiny for Python?",
+  "What does the `ui.fill.as_fillable_container` function return when called in Shiny for Python?",
+  "How can you combine `as_fill_item` and `as_fillable_container` functions to control the fill behavior of UI components in Shiny for Python?"
+]

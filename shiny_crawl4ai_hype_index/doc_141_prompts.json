@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.modal_show` function take?",
+  "What is the purpose of the `ui.modal_show` function in Shiny for Python?",
+  "How can you display a modal dialog using the `ui.modal_show` function?",
+  "What is the significance of the `modal` parameter in the `ui.modal_show` function?",
+  "How can you infer the session for displaying the modal if it is not explicitly provided in the `ui.modal_show` function?"
+]

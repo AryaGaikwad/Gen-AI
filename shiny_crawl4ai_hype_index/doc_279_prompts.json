@@ -1,0 +1,7 @@
+[
+  "What parameters can be configured using `ui.navbar_options()` in Shiny for Python?",
+  "What does the `theme` parameter in `ui.navbar_options()` control in Shiny for Python?",
+  "How can you customize the background color of the navbar using `ui.navbar_options()` in Shiny for Python?",
+  "In Shiny for Python, how can you add an underline effect to the navbar using `ui.navbar_options()`?",
+  "How can you configure the navbar to automatically collapse elements into an expandable menu on mobile devices in Shiny for Python?"
+]

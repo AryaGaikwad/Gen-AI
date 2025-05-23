@@ -1,0 +1,7 @@
+[
+  "What parameters does the `ui.input_select` function in Shiny for Python require when creating a select list?",
+  "What is the purpose of the `choices` parameter in the `ui.input_select` function in Shiny for Python?",
+  "In Shiny for Python, what does the server value represent when `multiple=False` in the `ui.input_select` function?",
+  "How can you specify the CSS width for the select input created using the `ui.input_select` function in Shiny for Python?",
+  "When using the `ui.input_select` function in Shiny for Python, how can you determine the selected items if `multiple=True`?"
+]

@@ -1,0 +1,7 @@
+[
+  "What are the different layout components provided by Shiny for Python, and how can they be used to arrange inputs and outputs?",
+  "How can I create a basic Shiny app that displays a slider's value as formatted text using the shiny.express module?",
+  "What are some examples of user interface (UI) components available in Shiny for Python, and how can I use them to create inputs and outputs in my app?",
+  "How does Shiny for Python handle reactivity, and how does it ensure minimal re-rendering of components when dependencies change?",
+  "What are the advantages of using Shiny for Python in terms of building sophisticated and performant apps, especially as they grow in size?"
+]

@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.page_navbar` function in Shiny for Python?",
+  "What is the purpose of the `navbar_options` parameter in the `ui.page_navbar` function?",
+  "How can you set the default selected item in a navbar created using the `ui.page_navbar` function?",
+  "What is the difference between the `fluid` and `fixed` layouts in the `ui.page_navbar` function?",
+  "What are the deprecated arguments in the `ui.page_navbar` function and what should be used instead?"
+]

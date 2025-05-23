@@ -1,0 +1,7 @@
+[
+  "What are the three general approaches to address the problem of Large Language Models (LLMs) not having the necessary information to answer a user's question?",
+  "How can Tool calling benefit the LLM when trying to retrieve necessary information?",
+  "What is Retrieval-Augmented Generation (RAG) and why is it considered the most demanding option to implement and maintain?",
+  "What are the core concepts of RAG and what is the main idea behind its implementation using Shiny and `chatlas`?",
+  "How can a user scale up the basic RAG example to better match their specific use case in terms of document storage and retrieval efficiency?"
+]

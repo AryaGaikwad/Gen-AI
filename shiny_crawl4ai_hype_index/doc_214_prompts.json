@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `ui.update_text_area` function in Shiny for Python?",
+  "What is the purpose of the `label` parameter in the `ui.update_text_area` function?",
+  "How is the `value` parameter used in the `ui.update_text_area` function in Shiny for Python?",
+  "In Shiny for Python, how can you clear the choices for radio buttons, checkbox groups, and select inputs using `ui.update_text_area`?",
+  "How does the `ui.update_text_area` function in Shiny for Python handle arguments with `None` values?"
+]

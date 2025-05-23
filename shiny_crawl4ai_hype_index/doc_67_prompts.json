@@ -1,0 +1,7 @@
+[
+  "What parameters can be passed to the `reactive.file_reader` function in Shiny for Python?",
+  "What is the purpose of the `reactive.file_reader` decorator in Shiny for Python?",
+  "How does the `file_reader` function in Shiny for Python handle file changes?",
+  "Can the `file_reader` function in Shiny for Python monitor directories of files or just single files?",
+  "How can a user ensure the file path provided to the `file_reader` function in Shiny for Python exists?"
+]

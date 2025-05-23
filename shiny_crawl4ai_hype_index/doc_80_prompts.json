@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the `render.image` function in Shiny for Python?",
+  "What parameter does the `render.image` function accept and what does it do?",
+  "What is the return type of the `render.image` function in Shiny for Python?",
+  "How should the name of the decorated function match in relation to the `output_image` container in Shiny for Python?",
+  "Which other functions or containers are related to the `render.image` function in Shiny for Python according to the documentation?"
+]

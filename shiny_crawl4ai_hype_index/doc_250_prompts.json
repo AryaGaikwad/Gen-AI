@@ -1,0 +1,7 @@
+[
+  "What are the parameters required for creating an input date component in Shiny for Python?",
+  "How can you specify the format of the date to be displayed in the browser when using the `express.ui.input_date` function?",
+  "In Shiny for Python, what does the `autoclose` parameter do when creating an input date component?",
+  "Can you provide an example of how to disable specific dates when using the `express.ui.input_date` function in Shiny for Python?",
+  "What are the different language options available for month and day names when using the `express.ui.input_date` function in Shiny for Python?"
+]

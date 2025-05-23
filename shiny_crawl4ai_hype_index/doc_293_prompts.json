@@ -1,0 +1,7 @@
+[
+  "What parameters does the `express.ui.panel_title` function accept?",
+  "What is the purpose of the `window_title` parameter in the `express.ui.panel_title` function?",
+  "What kind of return value can be expected from the `express.ui.panel_title` function?",
+  "What is the side effect of calling the `express.ui.panel_title` function?",
+  "How can the `express.ui.panel_title` function be used in a Python script with Shiny?"
+]
