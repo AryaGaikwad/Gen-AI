@@ -1,7 +1,7 @@
 [
-  "What are the three general approaches to addressing the problem of large language models not having the necessary information to answer a user's question?",
-  "What is the core concept of Retrieval-Augmented Generation (RAG) in the context of providing additional context to a large language model?",
-  "What are the two main factors that determine similarity when implementing RAG for a user query?",
-  "Which embedding model is used in the basic example for implementing RAG, and why is it chosen?",
-  "How can a user scale up the basic RAG example to better match their use case, in terms of embedding model, similarity metric, and document storage/retrieval efficiency?"
+  "How can I add a left-side sidebar to my Shiny app using the provided functions ui.layout_sidebar() and ui.sidebar()?",
+  "How can I add a right-side sidebar to my Shiny app using the provided functions ui.layout_sidebar() and ui.sidebar()?",
+  "How can I create a sidebar within a card for my Shiny app following the instructions provided in the documentation?",
+  "What are the different options available for the open parameter in ui.sidebar() to control the initial state of the sidebar in a Shiny app?",
+  "What steps should I follow to create a collapsed sidebar in my Shiny app using the open parameter in ui.sidebar()?"
 ]

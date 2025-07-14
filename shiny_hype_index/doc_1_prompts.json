@@ -1,7 +1,7 @@
 [
-  "How does Shiny for Python handle state management and execution path determination for apps?",
-  "What is the advantage of using Shiny's reactive execution engine in minimizing rerendering of applications?",
-  "Which modern Python web stack components does Shiny leverage to build robust web applications?",
-  "What specific UI components can be utilized in Shiny to enhance the user experience?",
-  "How can one quickly get started with Shiny for Python and build their first app?"
+  "What are the benefits of using Shiny for Python in terms of reactive data handling and AI applications?",
+  "How does Shiny for Python streamline the process of developing dashboards and querying data with natural language?",
+  "What components can be used in Shiny for Python to enhance the user interface of applications?",
+  "How does Shiny for Python leverage existing Python packages like pandas and plotly for creating interactive data experiences?",
+  "In what ways does Shiny for Python simplify app development by automatically determining the best execution path at runtime?"
 ]

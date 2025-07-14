@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "name": "mcp_examples.md",
+    "path": "mcp_examples.md",
+    "type": "file",
+    "size": 3840,
+    "sha": "100f7baf5e5fc10023f7446d51662891b09dda2a",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/mcp_examples.md",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/mcp_examples.md",
+    "description": "This document provides example prompts and responses for using the PYRSM MCP server with GitHub Copilot Chat in VS Code.",
+    "title": "PYRSM MCP Server Examples"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "PYRSM MCP Server Examples"
+    },
+    {
+      "type": "p",
+      "text": "This document provides example prompts and responses for using the PYRSM MCP server with GitHub Copilot Chat in VS Code."
+    },
+    {
+      "type": "h2",
+      "text": "Dataset Management Examples"
+    },
+    {
+      "type": "h3",
+      "text": "Example 1: Listing Available Datasets"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Which datasets are available?"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will use the `get_available_datasets` tool to list all available datasets in the PYRSM package, showing their names, dimensions, and short descriptions."
+    },
+    {
+      "type": "h3",
+      "text": "Example 2: Loading a Specific Dataset"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Load the demand_uk dataset"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will use the `load_dataset` tool to load the demand_uk dataset and provide information about it, including its shape, first few rows, and column names."
+    },
+    {
+      "type": "h2",
+      "text": "Data Analysis Examples"
+    },
+    {
+      "type": "h3",
+      "text": "Example 3: Analyzing Data with a Question"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Is the demand column larger than 1750?"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will use the `analyze_data` tool to generate and run code that checks if values in the \"demand\" column are greater than 1750, providing both numerical results and a visualization."
+    },
+    {
+      "type": "h3",
+      "text": "Example 4: Correlation Analysis"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "What's the correlation between price and demand?"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will analyze the correlation between the specified columns, generating code that computes correlation coefficients and creates visualization of the relationship."
+    },
+    {
+      "type": "h2",
+      "text": "Statistical Testing Examples"
+    },
+    {
+      "type": "h3",
+      "text": "Example 5: Generating Sample Data"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Generate a sample dataset with 100 observations, a mean of 75, and a standard deviation of 10."
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will use the `generate_sample_data` tool to create a dataset with the specified parameters and report summary statistics."
+    },
+    {
+      "type": "h3",
+      "text": "Example 6: Performing a Simple Hypothesis Test"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Perform a single mean test on a dataset to determine if the mean is greater than 70."
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will use the `single_mean_test` tool with the alternative hypothesis set to \"greater\" and a comparison value of 70, then display the results including the test statistic, p-value, and confidence interval."
+    },
+    {
+      "type": "h3",
+      "text": "Example 7: Interpreting Results"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "I have a single mean test with t-value 2.34, p-value 0.021, and confidence interval [72.1, 78.3]. What does this mean?"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will explain the statistical significance, what the confidence interval represents, and whether the null hypothesis can be rejected."
+    },
+    {
+      "type": "h2",
+      "text": "Jupyter Notebook Integration Examples"
+    },
+    {
+      "type": "h3",
+      "text": "Example 8: Listing Datasets in a Jupyter Notebook"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Which datasets are available? I want to use one in my notebook."
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will detect that this is a Jupyter notebook context and will generate Python code to list available datasets, then insert the code into a notebook cell for execution."
+    },
+    {
+      "type": "h3",
+      "text": "Example 9: Loading a Dataset in a Notebook"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Load the demand_uk dataset into my notebook"
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will generate Python code to load the dataset using pyrsm's load_data function, insert it into a notebook cell, and run it to show the dataset information."
+    },
+    {
+      "type": "h3",
+      "text": "Example 10: Analyzing Data in a Notebook"
+    },
+    {
+      "type": "p",
+      "text": "**Prompt:**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "I'm using the demand_uk dataset. Is demand larger than 1750? Please create a visualization."
+    },
+    {
+      "type": "p",
+      "text": "**Expected Interaction:** Copilot Chat will generate Python code that analyzes the demand column, checks values against the threshold, and creates a histogram with appropriate annotations. This code will be inserted into a notebook cell and executed."
+    },
+    {
+      "type": "p",
+      "text": "---"
+    },
+    {
+      "type": "p",
+      "text": "**Note:** These examples assume the MCP server is properly configured and running in VS Code. The actual behavior may vary depending on the version of GitHub Copilot Chat and how it interacts with MCP tools."
+    }
+  ],
+  "code_examples": [
+    "Which datasets are available?",
+    "Load the demand_uk dataset",
+    "Is the demand column larger than 1750?",
+    "What's the correlation between price and demand?",
+    "Generate a sample dataset with 100 observations, a mean of 75, and a standard deviation of 10.",
+    "Perform a single mean test on a dataset to determine if the mean is greater than 70.",
+    "I have a single mean test with t-value 2.34, p-value 0.021, and confidence interval [72.1, 78.3]. What does this mean?",
+    "Which datasets are available? I want to use one in my notebook.",
+    "Load the demand_uk dataset into my notebook",
+    "I'm using the demand_uk dataset. Is demand larger than 1750? Please create a visualization."
+  ],
+  "raw_content": "# PYRSM MCP Server Examples\n\nThis document provides example prompts and responses for using the PYRSM MCP server with GitHub Copilot Chat in VS Code.\n\n## Dataset Management Examples\n\n### Example 1: Listing Available Datasets\n\n**Prompt:**\n```\nWhich datasets are available?\n```\n\n**Expected Interaction:**\nCopilot Chat will use the `get_available_datasets` tool to list all available datasets in the PYRSM package, showing their names, dimensions, and short descriptions.\n\n### Example 2: Loading a Specific Dataset\n\n**Prompt:**\n```\nLoad the demand_uk dataset\n```\n\n**Expected Interaction:**\nCopilot Chat will use the `load_dataset` tool to load the demand_uk dataset and provide information about it, including its shape, first few rows, and column names.\n\n## Data Analysis Examples\n\n### Example 3: Analyzing Data with a Question\n\n**Prompt:**\n```\nIs the demand column larger than 1750?\n```\n\n**Expected Interaction:**\nCopilot Chat will use the `analyze_data` tool to generate and run code that checks if values in the \"demand\" column are greater than 1750, providing both numerical results and a visualization.\n\n### Example 4: Correlation Analysis\n\n**Prompt:**\n```\nWhat's the correlation between price and demand?\n```\n\n**Expected Interaction:**\nCopilot Chat will analyze the correlation between the specified columns, generating code that computes correlation coefficients and creates visualization of the relationship.\n\n## Statistical Testing Examples\n\n### Example 5: Generating Sample Data\n\n**Prompt:**\n```\nGenerate a sample dataset with 100 observations, a mean of 75, and a standard deviation of 10.\n```\n\n**Expected Interaction:**\nCopilot Chat will use the `generate_sample_data` tool to create a dataset with the specified parameters and report summary statistics.\n\n### Example 6: Performing a Simple Hypothesis Test\n\n**Prompt:**\n```\nPerform a single mean test on a dataset to determine if the mean is greater than 70.\n```\n\n**Expected Interaction:**\nCopilot Chat will use the `single_mean_test` tool with the alternative hypothesis set to \"greater\" and a comparison value of 70, then display the results including the test statistic, p-value, and confidence interval.\n\n### Example 7: Interpreting Results\n\n**Prompt:**\n```\nI have a single mean test with t-value 2.34, p-value 0.021, and confidence interval [72.1, 78.3]. What does this mean?\n```\n\n**Expected Interaction:**\nCopilot Chat will explain the statistical significance, what the confidence interval represents, and whether the null hypothesis can be rejected.\n\n## Jupyter Notebook Integration Examples\n\n### Example 8: Listing Datasets in a Jupyter Notebook\n\n**Prompt:**\n```\nWhich datasets are available? I want to use one in my notebook.\n```\n\n**Expected Interaction:**\nCopilot Chat will detect that this is a Jupyter notebook context and will generate Python code to list available datasets, then insert the code into a notebook cell for execution.\n\n### Example 9: Loading a Dataset in a Notebook\n\n**Prompt:**\n```\nLoad the demand_uk dataset into my notebook\n```\n\n**Expected Interaction:**\nCopilot Chat will generate Python code to load the dataset using pyrsm's load_data function, insert it into a notebook cell, and run it to show the dataset information.\n\n### Example 10: Analyzing Data in a Notebook\n\n**Prompt:**\n```\nI'm using the demand_uk dataset. Is demand larger than 1750? Please create a visualization.\n```\n\n**Expected Interaction:**\nCopilot Chat will generate Python code that analyzes the demand column, checks values against the threshold, and creates a histogram with appropriate annotations. This code will be inserted into a notebook cell and executed.\n\n---\n\n**Note:** These examples assume the MCP server is properly configured and running in VS Code. The actual behavior may vary depending on the version of GitHub Copilot Chat and how it interacts with MCP tools."
+}

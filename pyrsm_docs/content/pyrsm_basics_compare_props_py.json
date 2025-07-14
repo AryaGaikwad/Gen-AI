@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "name": "compare_props.py",
+    "path": "pyrsm/basics/compare_props.py",
+    "type": "file",
+    "size": 7293,
+    "sha": "e623b770ef3663a325d108d0a2fb7c8a859e2546",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/compare_props.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/pyrsm/basics/compare_props.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "from cmath import sqrt"
+    },
+    {
+      "type": "import",
+      "text": "from typing import Union"
+    },
+    {
+      "type": "import",
+      "text": "import numpy as np"
+    },
+    {
+      "type": "import",
+      "text": "import pandas as pd"
+    },
+    {
+      "type": "import",
+      "text": "import polars as pl"
+    },
+    {
+      "type": "import",
+      "text": "import seaborn as sns"
+    },
+    {
+      "type": "import",
+      "text": "from scipy import stats"
+    },
+    {
+      "type": "import",
+      "text": "from statsmodels.stats import multitest"
+    },
+    {
+      "type": "import",
+      "text": "from statsmodels.stats.proportion import proportions_ztest"
+    },
+    {
+      "type": "import",
+      "text": "import pyrsm.basics.utils as bu"
+    },
+    {
+      "type": "import",
+      "text": "import pyrsm.radiant.utils as ru"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.model.model import sig_stars"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.utils import check_dataframe, ifelse"
+    },
+    {
+      "type": "class",
+      "name": "compare_props",
+      "text": "class compare_props:"
+    },
+    {
+      "type": "docstring",
+      "text": "Compare proportions across levels of a categorical variable in a Pandas\n    or Polars dataframe. See the notebook linked below for a worked example,\n    including the web UI:\n\n    https://github.com/vnijs/pyrsm/blob/main/examples/basics-compare-means.ipynb"
+    },
+    {
+      "type": "function",
+      "name": "wald_ci",
+      "text": "def wald_ci(n1, p1, n2, p2, z):"
+    },
+    {
+      "type": "function",
+      "name": "summary",
+      "text": "def summary(self, extra=False, dec: int = 3) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "plot",
+      "text": "def plot(self, plots: str = \"bar\") -> None:"
+    }
+  ],
+  "code_examples": [
+    "from cmath import sqrt\nfrom typing import Union\n\nimport numpy as np\nimport pandas as pd\nimport polars as pl\nimport seaborn as sns\nfrom scipy import stats\nfrom statsmodels.stats import multitest\nfrom statsmodels.stats.proportion import proportions_ztest\n\nimport pyrsm.basics.utils as bu\nimport pyrsm.radiant.utils as ru\nfrom pyrsm.model.model import sig_stars\nfrom pyrsm.utils import check_dataframe, ifelse\n\n\nclass compare_props:\n    \"\"\"\n    Compare proportions across levels of a categorical variable in a Pandas\n    or Polars dataframe. See the notebook linked below for a worked example,\n    including the web UI:\n\n    https://github.com/vnijs/pyrsm/blob/main/examples/basics-compare-means.ipynb\n    \"\"\"\n\n    def __init__(\n        self,\n        data: pd.DataFrame | pl.DataFrame | dict[str, pd.DataFrame | pl.DataFrame],\n        var1: str,\n        var2: str,\n        lev: str,\n        comb: list[tuple[str, str]] = [],\n        alt_hyp: str = \"two-sided\",\n        conf: float = 0.95,\n        adjust: str = None,\n    ) -> None:\n        if isinstance(data, dict):\n            self.name = list(data.keys())[0]\n            self.data = data[self.name]\n        else:\n            self.data = data\n            self.name = \"Not provided\"\n\n        self.data = check_dataframe(self.data)\n        self.var1 = var1\n        self.var2 = var2\n        self.lev = lev\n        # self.comb = comb\n        self.alt_hyp = alt_hyp\n        self.conf = conf\n        self.alpha = 1 - self.conf\n        self.adjust = adjust\n\n        self.data[self.var1] = self.data[self.var1].astype(\"category\")\n        self.levels = list(self.data[self.var1].cat.categories)\n\n        if len(comb) == 0:\n            self.comb = ru.iterms(self.levels)\n        else:\n            self.comb = ifelse(isinstance(comb, str), [comb], comb)\n\n        descriptive_stats = []\n        for lev in self.levels:\n            subset = self.data.loc[\n                (self.data[self.var2] == self.lev) & (self.data[self.var1] == lev),\n                self.var2,\n            ]\n            ns = len(subset)\n            n_missing = subset.isna().sum()\n            n = len(self.data.loc[(self.data[self.var1] == lev), self.var2]) - n_missing\n            p = ns / n\n            sd = sqrt(p * (1 - p)).real\n            se = (sd / sqrt(n)).real\n            z_score = stats.norm.ppf(1 - self.alpha / 2)\n            me = (z_score * sd / sqrt(n)).real\n            descriptive_stats.append([lev, ns, p, n, n_missing, sd, se, me])\n\n        self.descriptive_stats = pd.DataFrame(\n            descriptive_stats,\n            columns=[\n                self.var1,\n                self.lev,\n                \"p\",\n                \"n\",\n                \"n_missing\",\n                \"sd\",\n                \"se\",\n                \"me\",\n            ],\n        )\n\n        if self.alt_hyp == \"less\":\n            alt_hyp_sign = \"less than\"\n        elif self.alt_hyp == \"two-sided\":\n            alt_hyp_sign = \"not equal to\"\n        else:\n            alt_hyp_sign = \"greater than\"\n\n        def wald_ci(n1, p1, n2, p2, z):\n            # what R uses for a comparison of proportions\n            se = np.sqrt((p1 * (1 - p1) / n1) + (p2 * (1 - p2) / n2))\n            diff = p1 - p2\n            return [diff - z * se, diff + z * se]\n\n        comp_stats = []\n        for c in self.comb:\n            v1, v2 = c.split(\":\")\n            null_hyp = f\"{v1} = {v2}\"\n            alt_hyp = f\"{v1} {alt_hyp_sign} {v2}\"\n\n            x = self.data.loc[self.data[self.var1] == v1, self.var2].dropna()\n            y = self.data.loc[self.data[self.var1] == v2, self.var2].dropna()\n\n            c1 = np.sum(x == self.lev)\n            c2 = np.sum(y == self.lev)\n            n1 = len(x)\n            n2 = len(y)\n            p1 = c1 / n1\n            p2 = c2 / n2\n            diff = p1 - p2\n\n            pzt = ifelse(\n                self.alt_hyp == \"less\",\n                \"smaller\",\n                ifelse(self.alt_hyp == \"greater\", \"larger\", \"two-sided\"),\n            )\n\n            z_val, p_val = proportions_ztest([c1, c2], [n1, n2], alternative=pzt)\n            zc = stats.norm.ppf(self.conf)\n            if self.alt_hyp == \"less\":\n                ci = [-1, wald_ci(n1, p1, n2, p2, zc)[1]]\n            elif self.alt_hyp == \"two-sided\":\n                zc = stats.norm.ppf(1 - (1 - self.conf) / 2)\n                ci = wald_ci(n1, p1, n2, p2, zc)\n            else:\n                ci = [wald_ci(n1, p1, n2, p2, zc)[0], 1]\n\n            comp_stats.append(\n                [\n                    null_hyp,\n                    alt_hyp,\n                    diff,\n                    p_val,\n                    z_val**2,\n                    1,\n                    ci[0],\n                    ci[1],\n                    sig_stars([p_val])[0],\n                ]\n            )\n\n        cl = bu.ci_label(self.alt_hyp, self.conf)\n        self.comp_stats = pd.DataFrame(\n            comp_stats,\n            columns=[\n                \"Null hyp.\",\n                \"Alt. hyp.\",\n                \"diff\",\n                \"p.value\",\n                \"chisq.value\",\n                \"df\",\n                cl[0],\n                cl[1],\n                \"\",\n            ],\n        )\n\n        if self.adjust is not None:\n            if self.alt_hyp == \"two-sided\":\n                alpha = self.alpha\n            else:\n                alpha = self.alpha * 2\n            self.comp_stats[\"p.value\"] = multitest.multipletests(\n                self.comp_stats[\"p.value\"], method=self.adjust, alpha=alpha\n            )[1]\n            self.comp_stats[\"\"] = sig_stars(self.comp_stats[\"p.value\"])\n\n    def summary(self, extra=False, dec: int = 3) -> None:\n        comp_stats = self.comp_stats.copy()\n        if not extra:\n            comp_stats = comp_stats.iloc[:, [0, 1, 2, 3, -1]]\n\n        comp_stats[\"p.value\"] = ifelse(\n            comp_stats[\"p.value\"] < 0.001, \"< .001\", round(comp_stats[\"p.value\"], dec)\n        )\n        print(\"Pairwise proportion comparisons\")\n        print(f\"Data      : {self.name}\")\n        print(f\"Variables : {self.var1}, {self.var2}\")\n        print(f'Level     : \"{self.lev}\" in {self.var2}')\n        print(f\"Confidence: {self.conf}\")\n        print(f\"Adjustment: {self.adjust}\\n\")\n        print(self.descriptive_stats.round(dec).to_string(index=False), \"\\n\")\n        print(comp_stats.round(dec).to_string(index=False))\n        print(\"\\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\")\n\n    def plot(self, plots: str = \"bar\") -> None:\n        if plots == \"bar\":\n            data = self.data[[self.var1, self.var2]].copy()\n            data[self.var2] = ifelse(data[self.var2] == self.lev, 1.0, 0.0)\n            sns.barplot(\n                data=data,\n                y=self.var2,\n                x=self.var1,\n                # yerr=self.descriptive_stats[\"se\"], weird issue with se's ...\n            )\n        elif plots == \"dodge\":\n            data = self.data[[self.var1, self.var2]].copy()\n            pt = (\n                data.groupby(self.var1, observed=False)\n                .value_counts(normalize=True)\n                .reset_index()\n            )\n            sns.barplot(\n                data=pt,\n                y=\"proportion\",\n                x=self.var1,\n                hue=self.var2,\n                dodge=True,\n            )\n        else:\n            print(\"Invalid plot type\")\n"
+  ],
+  "raw_content": "from cmath import sqrt\nfrom typing import Union\n\nimport numpy as np\nimport pandas as pd\nimport polars as pl\nimport seaborn as sns\nfrom scipy import stats\nfrom statsmodels.stats import multitest\nfrom statsmodels.stats.proportion import proportions_ztest\n\nimport pyrsm.basics.utils as bu\nimport pyrsm.radiant.utils as ru\nfrom pyrsm.model.model import sig_stars\nfrom pyrsm.utils import check_dataframe, ifelse\n\n\nclass compare_props:\n    \"\"\"\n    Compare proportions across levels of a categorical variable in a Pandas\n    or Polars dataframe. See the notebook linked below for a worked example,\n    including the web UI:\n\n    https://github.com/vnijs/pyrsm/blob/main/examples/basics-compare-means.ipynb\n    \"\"\"\n\n    def __init__(\n        self,\n        data: pd.DataFrame | pl.DataFrame | dict[str, pd.DataFrame | pl.DataFrame],\n        var1: str,\n        var2: str,\n        lev: str,\n        comb: list[tuple[str, str]] = [],\n        alt_hyp: str = \"two-sided\",\n        conf: float = 0.95,\n        adjust: str = None,\n    ) -> None:\n        if isinstance(data, dict):\n            self.name = list(data.keys())[0]\n            self.data = data[self.name]\n        else:\n            self.data = data\n            self.name = \"Not provided\"\n\n        self.data = check_dataframe(self.data)\n        self.var1 = var1\n        self.var2 = var2\n        self.lev = lev\n        # self.comb = comb\n        self.alt_hyp = alt_hyp\n        self.conf = conf\n        self.alpha = 1 - self.conf\n        self.adjust = adjust\n\n        self.data[self.var1] = self.data[self.var1].astype(\"category\")\n        self.levels = list(self.data[self.var1].cat.categories)\n\n        if len(comb) == 0:\n            self.comb = ru.iterms(self.levels)\n        else:\n            self.comb = ifelse(isinstance(comb, str), [comb], comb)\n\n        descriptive_stats = []\n        for lev in self.levels:\n            subset = self.data.loc[\n                (self.data[self.var2] == self.lev) & (self.data[self.var1] == lev),\n                self.var2,\n            ]\n            ns = len(subset)\n            n_missing = subset.isna().sum()\n            n = len(self.data.loc[(self.data[self.var1] == lev), self.var2]) - n_missing\n            p = ns / n\n            sd = sqrt(p * (1 - p)).real\n            se = (sd / sqrt(n)).real\n            z_score = stats.norm.ppf(1 - self.alpha / 2)\n            me = (z_score * sd / sqrt(n)).real\n            descriptive_stats.append([lev, ns, p, n, n_missing, sd, se, me])\n\n        self.descriptive_stats = pd.DataFrame(\n            descriptive_stats,\n            columns=[\n                self.var1,\n                self.lev,\n                \"p\",\n                \"n\",\n                \"n_missing\",\n                \"sd\",\n                \"se\",\n                \"me\",\n            ],\n        )\n\n        if self.alt_hyp == \"less\":\n            alt_hyp_sign = \"less than\"\n        elif self.alt_hyp == \"two-sided\":\n            alt_hyp_sign = \"not equal to\"\n        else:\n            alt_hyp_sign = \"greater than\"\n\n        def wald_ci(n1, p1, n2, p2, z):\n            # what R uses for a comparison of proportions\n            se = np.sqrt((p1 * (1 - p1) / n1) + (p2 * (1 - p2) / n2))\n            diff = p1 - p2\n            return [diff - z * se, diff + z * se]\n\n        comp_stats = []\n        for c in self.comb:\n            v1, v2 = c.split(\":\")\n            null_hyp = f\"{v1} = {v2}\"\n            alt_hyp = f\"{v1} {alt_hyp_sign} {v2}\"\n\n            x = self.data.loc[self.data[self.var1] == v1, self.var2].dropna()\n            y = self.data.loc[self.data[self.var1] == v2, self.var2].dropna()\n\n            c1 = np.sum(x == self.lev)\n            c2 = np.sum(y == self.lev)\n            n1 = len(x)\n            n2 = len(y)\n            p1 = c1 / n1\n            p2 = c2 / n2\n            diff = p1 - p2\n\n            pzt = ifelse(\n                self.alt_hyp == \"less\",\n                \"smaller\",\n                ifelse(self.alt_hyp == \"greater\", \"larger\", \"two-sided\"),\n            )\n\n            z_val, p_val = proportions_ztest([c1, c2], [n1, n2], alternative=pzt)\n            zc = stats.norm.ppf(self.conf)\n            if self.alt_hyp == \"less\":\n                ci = [-1, wald_ci(n1, p1, n2, p2, zc)[1]]\n            elif self.alt_hyp == \"two-sided\":\n                zc = stats.norm.ppf(1 - (1 - self.conf) / 2)\n                ci = wald_ci(n1, p1, n2, p2, zc)\n            else:\n                ci = [wald_ci(n1, p1, n2, p2, zc)[0], 1]\n\n            comp_stats.append(\n                [\n                    null_hyp,\n                    alt_hyp,\n                    diff,\n                    p_val,\n                    z_val**2,\n                    1,\n                    ci[0],\n                    ci[1],\n                    sig_stars([p_val])[0],\n                ]\n            )\n\n        cl = bu.ci_label(self.alt_hyp, self.conf)\n        self.comp_stats = pd.DataFrame(\n            comp_stats,\n            columns=[\n                \"Null hyp.\",\n                \"Alt. hyp.\",\n                \"diff\",\n                \"p.value\",\n                \"chisq.value\",\n                \"df\",\n                cl[0],\n                cl[1],\n                \"\",\n            ],\n        )\n\n        if self.adjust is not None:\n            if self.alt_hyp == \"two-sided\":\n                alpha = self.alpha\n            else:\n                alpha = self.alpha * 2\n            self.comp_stats[\"p.value\"] = multitest.multipletests(\n                self.comp_stats[\"p.value\"], method=self.adjust, alpha=alpha\n            )[1]\n            self.comp_stats[\"\"] = sig_stars(self.comp_stats[\"p.value\"])\n\n    def summary(self, extra=False, dec: int = 3) -> None:\n        comp_stats = self.comp_stats.copy()\n        if not extra:\n            comp_stats = comp_stats.iloc[:, [0, 1, 2, 3, -1]]\n\n        comp_stats[\"p.value\"] = ifelse(\n            comp_stats[\"p.value\"] < 0.001, \"< .001\", round(comp_stats[\"p.value\"], dec)\n        )\n        print(\"Pairwise proportion comparisons\")\n        print(f\"Data      : {self.name}\")\n        print(f\"Variables : {self.var1}, {self.var2}\")\n        print(f'Level     : \"{self.lev}\" in {self.var2}')\n        print(f\"Confidence: {self.conf}\")\n        print(f\"Adjustment: {self.adjust}\\n\")\n        print(self.descriptive_stats.round(dec).to_string(index=False), \"\\n\")\n        print(comp_stats.round(dec).to_string(index=False))\n        print(\"\\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\")\n\n    def plot(self, plots: str = \"bar\") -> None:\n        if plots == \"bar\":\n            data = self.data[[self.var1, self.var2]].copy()\n            data[self.var2] = ifelse(data[self.var2] == self.lev, 1.0, 0.0)\n            sns.barplot(\n                data=data,\n                y=self.var2,\n                x=self.var1,\n                # yerr=self.descriptive_stats[\"se\"], weird issue with se's ...\n            )\n        elif plots == \"dodge\":\n            data = self.data[[self.var1, self.var2]].copy()\n            pt = (\n                data.groupby(self.var1, observed=False)\n                .value_counts(normalize=True)\n                .reset_index()\n            )\n            sns.barplot(\n                data=pt,\n                y=\"proportion\",\n                x=self.var1,\n                hue=self.var2,\n                dodge=True,\n            )\n        else:\n            print(\"Invalid plot type\")\n"
+}

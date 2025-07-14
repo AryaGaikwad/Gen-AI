@@ -1,7 +1,7 @@
 [
-  "What are some scenarios where LLMs can be useful in extracting structured data from unstructured text and images?",
-  "How can structured field-value pairs be extracted from scanned documents and forms using the .extract_data() method in chatlas?",
-  "What are the three things needed to use the .extract_data() method in the chatlas package?",
-  "How can the Shiny app scale efficiently to multiple concurrent users when using chatlas for data extraction?",
-  "In what scenario might a user want to manually correct or refine the extracted data in a Shiny app, and how can this be implemented?"
+  "How can I add a left-side sidebar to my Shiny app using ui.layout_sidebar and ui.sidebar functions?",
+  "How can I add a right-side sidebar to my Shiny app using ui.layout_sidebar and ui.sidebar functions?",
+  "What steps should I follow to add a sidebar within a card in my Shiny app?",
+  "How can I create a collapsed sidebar in my Shiny app using the open parameter in the ui.sidebar function?",
+  "What is the default position for the sidebar when using the ui.sidebar function in a Shiny app?"
 ]

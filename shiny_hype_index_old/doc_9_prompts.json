@@ -1,0 +1,7 @@
+[
+  "What are the different methods available for interacting with UI layouts in a Shiny app using the Shiny Testing API?",
+  "What methods does the Shiny Testing API provide for interacting with input values in a Shiny app?",
+  "How can I interact with value boxes in a Shiny app using the Shiny Testing API?",
+  "What are the available methods for interacting with navigation (tab) panels in a Shiny app using the Shiny Testing API?",
+  "What methods are provided by the Shiny Testing API for uploading and downloading files in a Shiny app?"
+]

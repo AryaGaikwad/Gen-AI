@@ -1,0 +1,7 @@
+[
+  "What are some examples of mutable objects in Python and why are they considered dangerous for Shiny applications?",
+  "How can mutability in Python objects cause unexpected behavior in reactive programming, specifically in Shiny?",
+  "What are some techniques for solving the problems caused by mutable objects in Shiny applications?",
+  "How can the \"copy on update\" technique be used to avoid mutating objects in Python and why is it advantageous over other approaches?",
+  "In the context of a Shiny app, why is it important to understand the difference between mutable and immutable objects in Python?"
+]

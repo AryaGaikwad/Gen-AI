@@ -166,95 +166,95 @@
   "toc": [
     {
       "title": "Shiny Core API",
-      "url": "api/core/#shiny-core-api"
+      "url": "api/core/index.html#shiny-core-api"
     },
     {
       "title": "Function reference",
-      "url": "api/core/#function-reference"
+      "url": "api/core/index.html#function-reference"
     },
     {
       "title": "Page containers",
-      "url": "api/core/#page-containers"
+      "url": "api/core/index.html#page-containers"
     },
     {
       "title": "UI Layouts",
-      "url": "api/core/#ui-layouts"
+      "url": "api/core/index.html#ui-layouts"
     },
     {
       "title": "UI Inputs",
-      "url": "api/core/#ui-inputs"
+      "url": "api/core/index.html#ui-inputs"
     },
     {
       "title": "Value boxes",
-      "url": "api/core/#value-boxes"
+      "url": "api/core/index.html#value-boxes"
     },
     {
       "title": "Navigation (tab) panels",
-      "url": "api/core/#navigation-tab-panels"
+      "url": "api/core/index.html#navigation-tab-panels"
     },
     {
       "title": "UI panels",
-      "url": "api/core/#ui-panels"
+      "url": "api/core/index.html#ui-panels"
     },
     {
       "title": "Uploads & downloads",
-      "url": "api/core/#uploads-downloads"
+      "url": "api/core/index.html#uploads-downloads"
     },
     {
       "title": "Chat interface",
-      "url": "api/core/#chat-interface"
+      "url": "api/core/index.html#chat-interface"
     },
     {
       "title": "Streaming markdown",
-      "url": "api/core/#streaming-markdown"
+      "url": "api/core/index.html#streaming-markdown"
     },
     {
       "title": "Custom UI",
-      "url": "api/core/#custom-ui"
+      "url": "api/core/index.html#custom-ui"
     },
     {
       "title": "Update inputs",
-      "url": "api/core/#update-inputs"
+      "url": "api/core/index.html#update-inputs"
     },
     {
       "title": "Update UI Layouts",
-      "url": "api/core/#update-ui-layouts"
+      "url": "api/core/index.html#update-ui-layouts"
     },
     {
       "title": "Rendering outputs",
-      "url": "api/core/#rendering-outputs"
+      "url": "api/core/index.html#rendering-outputs"
     },
     {
       "title": "Reactive programming",
-      "url": "api/core/#reactive-programming"
+      "url": "api/core/index.html#reactive-programming"
     },
     {
       "title": "Create and run applications",
-      "url": "api/core/#create-and-run-applications"
+      "url": "api/core/index.html#create-and-run-applications"
     },
     {
       "title": "Display messages",
-      "url": "api/core/#display-messages"
+      "url": "api/core/index.html#display-messages"
     },
     {
       "title": "Modules",
-      "url": "api/core/#modules"
+      "url": "api/core/index.html#modules"
     },
     {
       "title": "Developer facing tools",
-      "url": "api/core/#developer-facing-tools"
+      "url": "api/core/index.html#developer-facing-tools"
     },
     {
       "title": "Types",
-      "url": "api/core/#types"
+      "url": "api/core/index.html#types"
     },
     {
       "title": "Deprecated",
-      "url": "api/core/#deprecated"
+      "url": "api/core/index.html#deprecated"
     },
     {
       "title": "Experimental",
-      "url": "api/core/#experimental"
+      "url": "api/core/index.html#experimental"
     },
     {
       "title": "Shiny Core API",

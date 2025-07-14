@@ -283,27 +283,27 @@
   "toc": [
     {
       "title": "Basics",
-      "url": "docs/#basics"
+      "url": "docs/overview.html#basics"
     },
     {
       "title": "Components",
-      "url": "docs/#components"
+      "url": "docs/overview.html#components"
     },
     {
       "title": "Reactivity",
-      "url": "docs/#reactivity"
+      "url": "docs/overview.html#reactivity"
     },
     {
       "title": "Starter templates",
-      "url": "docs/#templates"
+      "url": "docs/overview.html#templates"
     },
     {
       "title": "Extensible foundation",
-      "url": "docs/#extensible"
+      "url": "docs/overview.html#extensible"
     },
     {
       "title": "Next steps",
-      "url": "docs/#next-steps"
+      "url": "docs/overview.html#next-steps"
     },
     {
       "title": "📌 Essentials"

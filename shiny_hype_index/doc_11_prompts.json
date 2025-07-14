@@ -1,7 +1,7 @@
 [
-  "What are some inspiring examples of apps that leverage Generative AI in useful ways?",
-  "How can Gen AI outcomes be made more reliable and reproducible?",
-  "What are the main advantages of using Shiny Assistant for building Shiny apps faster?",
-  "How can LLMs be utilized to enhance the verifiability and reproducibility of responses in Shiny apps?",
-  "What are some examples of applications where Chat() component's input suggestion feature can be particularly useful in guiding users through an experience?"
+  "How can I add a navigation bar to my Shiny Python app using the provided functions ui.page_navbar and ui.nav_panel?",
+  "How can I set the browser window title when adding a navbar to my Shiny Python app?",
+  "What is the purpose of the id argument in ui.page_navbar function in Shiny Python, and how can it be used?",
+  "How can I pin a navbar to the bottom of my Shiny Python app instead of having it at the top?",
+  "What are the steps to follow to define a navbar page layout with ui.page_navbar in Shiny Python?"
 ]

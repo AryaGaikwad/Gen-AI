@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.data.rst",
+    "path": "docs/pyrsm.data.rst",
+    "type": "file",
+    "size": 317,
+    "sha": "e17653a35be6c7be29ff98f98c94fcd6c9c9facd",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.data.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.data package\n==================\n\nSubpackages\n-----------\n\n.. toctree::\n   :maxdepth: 4\n\n   pyrsm.data.basics\n   pyrsm.data.data\n   pyrsm.data.design\n   pyrsm.data.model\n   pyrsm.data.multivariate\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.data package\n==================\n\nSubpackages\n-----------\n\n.. toctree::\n   :maxdepth: 4\n\n   pyrsm.data.basics\n   pyrsm.data.data\n   pyrsm.data.design\n   pyrsm.data.model\n   pyrsm.data.multivariate\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

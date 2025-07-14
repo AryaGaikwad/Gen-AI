@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "name": "__init__.py",
+    "path": "pyrsm/__init__.py",
+    "type": "file",
+    "size": 1317,
+    "sha": "1279a2ea6958789aad2f9edfb58ef5cb3915d0b3",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/__init__.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/pyrsm/__init__.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "from . import basics, model, multivariate"
+    },
+    {
+      "type": "import",
+      "text": "from .bins import *"
+    },
+    {
+      "type": "import",
+      "text": "from .example_data import *"
+    },
+    {
+      "type": "import",
+      "text": "from .notebook import *"
+    },
+    {
+      "type": "import",
+      "text": "from .props import *"
+    },
+    {
+      "type": "import",
+      "text": "from .stats import *"
+    },
+    {
+      "type": "import",
+      "text": "from .utils import *"
+    },
+    {
+      "type": "function",
+      "name": "_make_wrapper",
+      "text": "def _make_wrapper(func_name, module):"
+    },
+    {
+      "type": "function",
+      "name": "wrapper",
+      "text": "def wrapper(*args, **kwargs):"
+    }
+  ],
+  "code_examples": [
+    "__version__ = \"1.6.0\"\n\nfrom . import basics, model, multivariate\nfrom .bins import *\nfrom .example_data import *\nfrom .notebook import *\nfrom .props import *\nfrom .stats import *\nfrom .utils import *\n\n\n# Create wrapper functions with deprecation errors\ndef _make_wrapper(func_name, module):\n    def wrapper(*args, **kwargs):\n        raise DeprecationWarning(\n            f\"{func_name}() is deprecated. Use {module}.{func_name}() instead.\"\n        )\n    return wrapper\n\n# model functions that need wrappers (enforce use of .model)\nmodel_functions = [\n    \"distr_plot\",\n    \"make_train\",\n    \"cross_validation\",\n    \"regress\",\n    \"rforest\",\n    \"logistic\",\n    \"mlp\",\n    \"xgboost\",\n    \"gains_plot\"\n]\n\n# basics classes that need wrappers (enforce use of .basics)\nbasics_functions = [\n    \"central_limit_theorem\",\n    \"compare_means\",\n    \"compare_props\",\n    \"correlation\",\n    \"cross_tabs\",\n    \"goodness\",\n    \"prob_calc\",\n    \"single_mean\",\n    \"single_prop\"\n]\n\n# Create wrappers for model functions\nfor func_name in model_functions:\n    globals()[func_name] = _make_wrapper(func_name, \"model\")\n\n# Create wrappers for basics classes\nfor func_name in basics_functions:\n    globals()[func_name] = _make_wrapper(func_name, \"basics\")\n\n__all__ = [\"model\", \"basics\", \"multivariate\"] + model_functions + basics_functions\n"
+  ],
+  "raw_content": "__version__ = \"1.6.0\"\n\nfrom . import basics, model, multivariate\nfrom .bins import *\nfrom .example_data import *\nfrom .notebook import *\nfrom .props import *\nfrom .stats import *\nfrom .utils import *\n\n\n# Create wrapper functions with deprecation errors\ndef _make_wrapper(func_name, module):\n    def wrapper(*args, **kwargs):\n        raise DeprecationWarning(\n            f\"{func_name}() is deprecated. Use {module}.{func_name}() instead.\"\n        )\n    return wrapper\n\n# model functions that need wrappers (enforce use of .model)\nmodel_functions = [\n    \"distr_plot\",\n    \"make_train\",\n    \"cross_validation\",\n    \"regress\",\n    \"rforest\",\n    \"logistic\",\n    \"mlp\",\n    \"xgboost\",\n    \"gains_plot\"\n]\n\n# basics classes that need wrappers (enforce use of .basics)\nbasics_functions = [\n    \"central_limit_theorem\",\n    \"compare_means\",\n    \"compare_props\",\n    \"correlation\",\n    \"cross_tabs\",\n    \"goodness\",\n    \"prob_calc\",\n    \"single_mean\",\n    \"single_prop\"\n]\n\n# Create wrappers for model functions\nfor func_name in model_functions:\n    globals()[func_name] = _make_wrapper(func_name, \"model\")\n\n# Create wrappers for basics classes\nfor func_name in basics_functions:\n    globals()[func_name] = _make_wrapper(func_name, \"basics\")\n\n__all__ = [\"model\", \"basics\", \"multivariate\"] + model_functions + basics_functions\n"
+}

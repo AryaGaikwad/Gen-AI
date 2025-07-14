@@ -1,7 +1,7 @@
 [
-  "What are some limitations of Large Language Models (LLMs) that can be addressed by equipping them with the ability to call tools/functions?",
-  "How can a Shiny user display tool call information in the Shiny UI?",
-  "What are some benefits of combining tool calling with reactivity in a Shiny app?",
-  "How can a Shiny user customize the display of tool call results in their application?",
-  "Why is it important for a tool function to include type hints and a docstring when equipping an LLM with additional functions?"
+  "How can I add a left-side sidebar to my Shiny app using the ui.layout_sidebar and ui.sidebar functions?",
+  "How can I create a right-side sidebar in my Shiny app and control its position relative to the main content?",
+  "What steps should I follow to add a sidebar within a card in my Shiny app, including defining its contents?",
+  "How can I create a collapsed sidebar in my Shiny app that is initially closed when the app launches?",
+  "What is the purpose of the open parameter in the ui.sidebar function, and what are the different options available for it?"
 ]

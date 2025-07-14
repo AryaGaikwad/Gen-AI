@@ -2,7 +2,7 @@
   "metadata": {
     "title": "Sidebars – Shiny for Python",
     "description": "A sidebar layout creates a sidebar in your Shiny app, typically used for inputs, and a large main area, typically used for outputs.",
-    "url": "layouts/sidebars/"
+    "url": "layouts/sidebars"
   },
   "content": [
     {
@@ -240,90 +240,90 @@
   "toc": [
     {
       "title": "LAYOUTS",
-      "url": "layouts/index.html"
+      "url": "../../layouts/index.html"
     },
     {
       "title": "Navbars"
     },
     {
       "title": "Navbar at Top",
-      "url": "layouts/navbars/index.html#navbar-at-top"
+      "url": "../../layouts/navbars/index.html#navbar-at-top"
     },
     {
       "title": "Navbar at Bottom",
-      "url": "layouts/navbars/index.html#navbar-at-bottom"
+      "url": "../../layouts/navbars/index.html#navbar-at-bottom"
     },
     {
       "title": "Sidebars"
     },
     {
       "title": "Sidebar on Left",
-      "url": "layouts/sidebars/index.html#sidebar-on-the-left"
+      "url": "../../layouts/sidebars/index.html#sidebar-on-the-left"
     },
     {
       "title": "Sidebar on Right",
-      "url": "layouts/sidebars/index.html#sidebar-on-the-right"
+      "url": "../../layouts/sidebars/index.html#sidebar-on-the-right"
     },
     {
       "title": "Sidebar Within a Card",
-      "url": "layouts/sidebars/index.html#sidebar-within-a-card"
+      "url": "../../layouts/sidebars/index.html#sidebar-within-a-card"
     },
     {
       "title": "Collapsed Sidebar",
-      "url": "layouts/sidebars/index.html#collapsed-sidebar"
+      "url": "../../layouts/sidebars/index.html#collapsed-sidebar"
     },
     {
       "title": "Tabs"
     },
     {
       "title": "Tabset with Pill Navigation",
-      "url": "layouts/tabs/index.html#tabset-with-pill-navigation"
+      "url": "../../layouts/tabs/index.html#tabset-with-pill-navigation"
     },
     {
       "title": "Tabset with Pill List Navigation",
-      "url": "layouts/tabs/index.html#tabset-with-pill-list-navigation"
+      "url": "../../layouts/tabs/index.html#tabset-with-pill-list-navigation"
     },
     {
       "title": "Tabset with Tab Navigation",
-      "url": "layouts/tabs/index.html#tabset-with-tab-navigation"
+      "url": "../../layouts/tabs/index.html#tabset-with-tab-navigation"
     },
     {
       "title": "Card with a Tabbed Tabset",
-      "url": "layouts/tabs/index.html#card-with-a-tabbed-tabset"
+      "url": "../../layouts/tabs/index.html#card-with-a-tabbed-tabset"
     },
     {
       "title": "Card with a Pill Tabset",
-      "url": "layouts/tabs/index.html#card-with-a-pill-tabset"
+      "url": "../../layouts/tabs/index.html#card-with-a-pill-tabset"
     },
     {
       "title": "Vertically Collapsing Accordions",
-      "url": "layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+      "url": "../../layouts/tabs/index.html#vertically-collapsing-accordion-panels"
     },
     {
       "title": "Panels & Cards"
     },
     {
       "title": "Floating Panel",
-      "url": "layouts/panels-cards/index.html#floating-panel"
+      "url": "../../layouts/panels-cards/index.html#floating-panel"
     },
     {
       "title": "Content Divided by Cards",
-      "url": "layouts/panels-cards/index.html#content-divided-by-cards"
+      "url": "../../layouts/panels-cards/index.html#content-divided-by-cards"
     },
     {
       "title": "Arrange Elements"
     },
     {
       "title": "Grid Layouts",
-      "url": "layouts/arrange/index.html#grid-layouts"
+      "url": "../../layouts/arrange/index.html#grid-layouts"
     },
     {
       "title": "Column Nesting",
-      "url": "layouts/arrange/index.html#column-nesting"
+      "url": "../../layouts/arrange/index.html#column-nesting"
     },
     {
       "title": "Controlling for Page Size",
-      "url": "layouts/arrange/index.html#controlling-for-page-width-and-height"
+      "url": "../../layouts/arrange/index.html#controlling-for-page-width-and-height"
     }
   ]
 }

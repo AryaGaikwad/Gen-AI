@@ -1,0 +1,7 @@
+[
+  "What are the available distributions that can be used with the probability calculator in pyrsm?",
+  "How can I initialize the probability calculator class in pyrsm with a specific distribution and additional keyword arguments?",
+  "In the provided code example, what is the purpose of the `pc_dist` dictionary?",
+  "What parameters are required when initializing the probability calculator class with a specific distribution in pyrsm?",
+  "How are the distributions mapped to their corresponding abbreviations in the `pc_dist` dictionary in pyrsm?"
+]

@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "name": "CLAUDE.md",
+    "path": "CLAUDE.md",
+    "type": "file",
+    "size": 1144,
+    "sha": "c2c2b607957ca73095da43dda85011ed9d7f2dbf",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/CLAUDE.md",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/CLAUDE.md",
+    "description": "This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.",
+    "title": "CLAUDE.md"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "CLAUDE.md"
+    },
+    {
+      "type": "p",
+      "text": "This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository."
+    },
+    {
+      "type": "h2",
+      "text": "Build/Test Commands"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Run all tests: `python -m unittest discover -s tests`",
+        "Run single test: `python -m tests.test_file_name` (e.g., `python -m tests.test_utils`)",
+        "Lint code with ruff: `ruff check pyrsm/`",
+        "Format code with black: `black pyrsm/`",
+        "Check dependencies: `python check_versions.py`"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Package Management"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Use UV for package management: `uv add <package>` instead of pip install",
+        "For development: `uv pip install -e .` for editable installs",
+        "Dependencies are tracked in both pyproject.toml and uv.lock"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Code Style Guidelines"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Line length: 100 characters max (as per ruff config)",
+        "Use black for formatting",
+        "Use ruff for linting (E, F, I, UP rules enabled)",
+        "Function/variable names: snake_case",
+        "Class names: PascalCase",
+        "Import style: Use absolute imports; sort imports with ruff",
+        "Error handling: Allows bare excepts (E722 ignored in ruff)",
+        "Python target: 3.12+",
+        "In __init__.py files: star imports allowed (F403, F405 ignored in ruff)",
+        "Doc style: Use functions/class docstrings for documentation"
+      ]
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "# CLAUDE.md\n\nThis file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.\n\n## Build/Test Commands\n- Run all tests: `python -m unittest discover -s tests`\n- Run single test: `python -m tests.test_file_name` (e.g., `python -m tests.test_utils`)\n- Lint code with ruff: `ruff check pyrsm/`\n- Format code with black: `black pyrsm/`\n- Check dependencies: `python check_versions.py`\n\n## Package Management\n- Use UV for package management: `uv add <package>` instead of pip install\n- For development: `uv pip install -e .` for editable installs\n- Dependencies are tracked in both pyproject.toml and uv.lock\n\n## Code Style Guidelines\n- Line length: 100 characters max (as per ruff config)\n- Use black for formatting\n- Use ruff for linting (E, F, I, UP rules enabled)\n- Function/variable names: snake_case\n- Class names: PascalCase\n- Import style: Use absolute imports; sort imports with ruff\n- Error handling: Allows bare excepts (E722 ignored in ruff)\n- Python target: 3.12+\n- In __init__.py files: star imports allowed (F403, F405 ignored in ruff)\n- Doc style: Use functions/class docstrings for documentation"
+}

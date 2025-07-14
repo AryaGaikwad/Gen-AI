@@ -1,0 +1,178 @@
+{
+  "metadata": {
+    "title": "Welcome – Shiny for Python",
+    "description": "",
+    "url": "get-started/index.html"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Welcome"
+    },
+    {
+      "type": "p",
+      "text": "Shiny for Python: Effortless Python web applications"
+    },
+    {
+      "type": "p",
+      "text": "Create efficient, reactive, and robust web applications and dashboards."
+    },
+    {
+      "type": "code",
+      "text": "\nimport seaborn as sns\nfrom shiny.express import input, render, ui\n\ndf = sns.load_dataset(\"penguins\")\n\nui.input_slider(\"bins\", \"Number of Bins\", min=5, max=20, value=15, step=1)\n\n@render.plot(height=300)\ndef plot():\n    sns.histplot(data=df, x=\"body_mass_g\", bins=input.bins())\n\n"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n##| standalone: true\n##| components: [viewer]\n##| viewerHeight: 400px\n\nimport seaborn as sns\nfrom shiny.express import input, render, ui\n\ndf = sns.load_dataset(\"penguins\")\n\nui.input_slider(\"bins\", \"Number of Bins\", min=5, max=20, value=15, step=1)\n\n@render.plot(height=300)\ndef plot():\n    sns.histplot(data=df, x=\"body_mass_g\", bins=input.bins())\n"
+    },
+    {
+      "type": "h2",
+      "text": "Why Shiny?"
+    },
+    {
+      "type": "p",
+      "text": "Shiny for Python empowers you to bring your data to life with interactive applications that are easy to build, customize, and share."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Pure Python – no JS required Create sophisticated web apps in pure Python, using libraries you already know and love. Get started now by trying Shiny in your browser, asking Shiny Assistant to build you an app, or develop locally by installing and running a starter template.",
+        "Batteries Included Build delightful user interfaces using an extensive library of simple yet composable components and layouts. As your app grows, you’ll also appreciate advanced features like modules, theming, non-blocking tasks, bookmarking, and more.",
+        "Ready for AI Quickly build beautiful AI apps like chatbots and other streaming interfaces.",
+        "Efficiently scalable Reactivity enables Shiny to perform minimal updates, allowing you to develop sophisticated apps without the hassle of state management.",
+        "From demo to production-ready Shiny is great for one-off apps that help you demo a concept or quickly see your data. But Shiny apps aren’t toy apps–Shiny’s powerful reactive framework and extensible components mean your applications can evolve alongside your needs. Start simple, then customize and scale without switching frameworks.",
+        "Plays well with others Bring to life the Python packages you know and love with Shiny. Turn polars and pandas data frames into dynamic data grids. Breathe interactivity into any matplotlib or seaborn plot. Go further and build an app around sophisticated displays from altair, plotly, or any Jupyter Widget.",
+        "Deploy with confidence When it’s time to put your Shiny app on the web, you can choose to deploy on your own servers, on our hosting services, or even serverless with shinylive.",
+        "Open source Inspect, adapt, contribute, or join the forum or discord community! You can check out the code or make your own extensions."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Pure Python – no JS required Create sophisticated web apps in pure Python, using libraries you already know and love. Get started now by trying Shiny in your browser, asking Shiny Assistant to build you an app, or develop locally by installing and running a starter template."
+    },
+    {
+      "type": "p",
+      "text": "Batteries Included Build delightful user interfaces using an extensive library of simple yet composable components and layouts. As your app grows, you’ll also appreciate advanced features like modules, theming, non-blocking tasks, bookmarking, and more."
+    },
+    {
+      "type": "p",
+      "text": "Ready for AI Quickly build beautiful AI apps like chatbots and other streaming interfaces."
+    },
+    {
+      "type": "p",
+      "text": "Efficiently scalable Reactivity enables Shiny to perform minimal updates, allowing you to develop sophisticated apps without the hassle of state management."
+    },
+    {
+      "type": "p",
+      "text": "From demo to production-ready Shiny is great for one-off apps that help you demo a concept or quickly see your data. But Shiny apps aren’t toy apps–Shiny’s powerful reactive framework and extensible components mean your applications can evolve alongside your needs. Start simple, then customize and scale without switching frameworks."
+    },
+    {
+      "type": "p",
+      "text": "Plays well with others Bring to life the Python packages you know and love with Shiny. Turn polars and pandas data frames into dynamic data grids. Breathe interactivity into any matplotlib or seaborn plot. Go further and build an app around sophisticated displays from altair, plotly, or any Jupyter Widget."
+    },
+    {
+      "type": "p",
+      "text": "Deploy with confidence When it’s time to put your Shiny app on the web, you can choose to deploy on your own servers, on our hosting services, or even serverless with shinylive."
+    },
+    {
+      "type": "p",
+      "text": "Open source Inspect, adapt, contribute, or join the forum or discord community! You can check out the code or make your own extensions."
+    },
+    {
+      "type": "p",
+      "text": "Ready to dive deeper? Learn more about what makes Shiny unique."
+    },
+    {
+      "type": "h2",
+      "text": "Gallery and templates"
+    },
+    {
+      "type": "p",
+      "text": "Check out the Shiny Gallery for inspiration. Or kick start a new project with one of our starter templates."
+    },
+    {
+      "type": "h5",
+      "text": "Superzip explorer"
+    },
+    {
+      "type": "h5",
+      "text": "Restaurant tips dashboard"
+    },
+    {
+      "type": "h5",
+      "text": "Stock prices"
+    },
+    {
+      "type": "h5",
+      "text": "Respiratory Disease data"
+    },
+    {
+      "type": "h5",
+      "text": "AWS Community Builders Dashboard"
+    },
+    {
+      "type": "h5",
+      "text": "Identify Outliers"
+    },
+    {
+      "type": "h2",
+      "text": "Take Shiny for a spin"
+    },
+    {
+      "type": "p",
+      "text": "The next pages in this guide will help you install shiny, create and run your first application, help you find troubleshooting help, and deploy your app to the web (for free)."
+    },
+    {
+      "type": "p",
+      "text": "Or skip installation and try the shinylive playground in the browser!"
+    },
+    {
+      "type": "p",
+      "text": "Have a question? Join our community on our Discord server!"
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n##| standalone: true\n##| components: [viewer]\n##| viewerHeight: 400px\n\nimport seaborn as sns\nfrom shiny.express import input, render, ui\n\ndf = sns.load_dataset(\"penguins\")\n\nui.input_slider(\"bins\", \"Number of Bins\", min=5, max=20, value=15, step=1)\n\n@render.plot(height=300)\ndef plot():\n    sns.histplot(data=df, x=\"body_mass_g\", bins=input.bins())\n"
+  ],
+  "toc": [
+    {
+      "title": "Welcome",
+      "url": "get-started/index.html"
+    },
+    {
+      "title": "What is Shiny?",
+      "url": "get-started/what-is-shiny.html"
+    },
+    {
+      "title": "Installation",
+      "url": "get-started/install.html"
+    },
+    {
+      "title": "Create and Run",
+      "url": "get-started/create-run.html"
+    },
+    {
+      "title": "Debug, troubleshoot, & help",
+      "url": "get-started/debug.html"
+    },
+    {
+      "title": "Deploy"
+    },
+    {
+      "title": "Overview",
+      "url": "get-started/deploy.html"
+    },
+    {
+      "title": "Cloud hosting",
+      "url": "get-started/deploy-cloud.html"
+    },
+    {
+      "title": "Self-hosted deployments",
+      "url": "get-started/deploy-on-prem.html"
+    },
+    {
+      "title": "Shinylive: Shiny + WebAssembly",
+      "url": "get-started/shinylive.html"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "name": "README.md",
+    "path": "README.md",
+    "type": "file",
+    "size": 2589,
+    "sha": "174163ef894bc826fa1f1985882e668b095caf4f",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/README.md",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/README.md",
+    "description": "Python functions and classes for Customer Analytics at the Rady School of Management (RSM), University of California, San Diego (UCSD)",
+    "title": "PYRSM"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "PYRSM"
+    },
+    {
+      "type": "p",
+      "text": "Python functions and classes for Customer Analytics at the Rady School of Management (RSM), University of California, San Diego (UCSD)"
+    },
+    {
+      "type": "h2",
+      "text": "Install instructions"
+    },
+    {
+      "type": "p",
+      "text": "If you have python and pip3 install you can use the below to install the latest version of `pyrsm`:"
+    },
+    {
+      "type": "p",
+      "text": "`pip3 install --user --upgrade pyrsm`"
+    },
+    {
+      "type": "h2",
+      "text": "Example notebooks"
+    },
+    {
+      "type": "h3",
+      "text": "Data"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "[Load example datasets](examples/load-example-data.ipynb)",
+        "[Save and load notebook state files](examples/save-load-state.ipynb)"
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Basics"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "[Cross-tabs](examples/basics-cross-tabs.ipynb)",
+        "[Correlation](examples/basics-correlation.ipynb)"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Radiant"
+    },
+    {
+      "type": "p",
+      "text": "The examples above are (mostly) connected to the example data and analyses initially created for the family of Radiant R packages. See  https://radiant-rstats.github.io/docs/index.html for more details"
+    },
+    {
+      "type": "p",
+      "text": "&copy; Vincent Nijs (2025) <a rel=\"license\" href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\"><img alt=\"Creative Commons License\" style=\"border-width: 0\" src=\"images/by-nc-sa.png\"/></a>"
+    },
+    {
+      "type": "h2",
+      "text": "Links"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "[Pandas cheat sheet](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf)",
+        "[Pandas vs R](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html)",
+        "[Pandas vs R](https://cheatsheets.quantecon.org/stats-cheatsheet.html)",
+        "[Pandas vs R](https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07)",
+        "[Split-Appy-Combine in Pandas](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html)",
+        "[Split-Appy-Combine in Pandas](https://www.shanelynn.ie/summarising-aggregation-and-grouping-data-in-python-pandas/)",
+        "[\"assign\" in Pandas](http://queirozf.com/entries/mutate-for-pandas-dataframes-examples-with-assign)",
+        "[Condition count](https://stackoverflow.com/a/45752640/1974918)",
+        "[`value_counts` in Pandas](https://appdividend.com/2019/01/24/pandas-series-value_counts-tutorial-with-example/)",
+        "Convert column to string or categorical:",
+        "`df[\"zipcode\"] = df.zipcode.astype(str)`",
+        "`df[\"zipcode\"] = df.zipcode.astype('category')`"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Python Learning Resources"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Python for everyone (https://www.py4e.com)",
+        "Scientific computing with Python (https://www.freecodecamp.org/learn/scientific-computing-with-python/)",
+        "Data analysis with Python (https://www.freecodecamp.org/learn/data-analysis-with-python/)"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Python AND R"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "[Reticulate](https://rstudio.github.io/reticulate/articles/calling_python.html)",
+        "[rpy2](https://rpy2.github.io/doc/v3.3.x/html/notebooks.html)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "<!--"
+    },
+    {
+      "type": "h2",
+      "text": "Statistics"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "[Variance Inflation Factor](https://stackoverflow.com/questions/42658379/variance-inflation-factor-in-python)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "-->"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "# PYRSM\n\nPython functions and classes for Customer Analytics at the Rady School of Management (RSM), University of California, San Diego (UCSD)\n\n## Install instructions\n\nIf you have python and pip3 install you can use the below to install the latest version of `pyrsm`:\n\n`pip3 install --user --upgrade pyrsm`\n\n## Example notebooks\n\n### Data\n\n* [Load example datasets](examples/load-example-data.ipynb)\n* [Save and load notebook state files](examples/save-load-state.ipynb)\n\n### Basics\n\n* [Cross-tabs](examples/basics-cross-tabs.ipynb)\n* [Correlation](examples/basics-correlation.ipynb)\n\n## Radiant\n\nThe examples above are (mostly) connected to the example data and analyses initially created for the family of Radiant R packages. See  https://radiant-rstats.github.io/docs/index.html for more details\n\n&copy; Vincent Nijs (2025) <a rel=\"license\" href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\" target=\"_blank\"><img alt=\"Creative Commons License\" style=\"border-width: 0\" src=\"images/by-nc-sa.png\"/></a>\n\n## Links\n\n* [Pandas cheat sheet](https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf)\n* [Pandas vs R](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html) \n* [Pandas vs R](https://cheatsheets.quantecon.org/stats-cheatsheet.html)\n* [Pandas vs R](https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07)\n* [Split-Appy-Combine in Pandas](https://pandas.pydata.org/pandas-docs/stable/user_guide/groupby.html)\n* [Split-Appy-Combine in Pandas](https://www.shanelynn.ie/summarising-aggregation-and-grouping-data-in-python-pandas/)\n* [\"assign\" in Pandas](http://queirozf.com/entries/mutate-for-pandas-dataframes-examples-with-assign)\n* [Condition count](https://stackoverflow.com/a/45752640/1974918)\n* [`value_counts` in Pandas](https://appdividend.com/2019/01/24/pandas-series-value_counts-tutorial-with-example/)\n* Convert column to string or categorical:\n    - `df[\"zipcode\"] = df.zipcode.astype(str)`\n    - `df[\"zipcode\"] = df.zipcode.astype('category')`\n\n## Python Learning Resources\n\n* Python for everyone (https://www.py4e.com)\n* Scientific computing with Python (https://www.freecodecamp.org/learn/scientific-computing-with-python/)\n* Data analysis with Python (https://www.freecodecamp.org/learn/data-analysis-with-python/)\n\n## Python AND R\n\n* [Reticulate](https://rstudio.github.io/reticulate/articles/calling_python.html)\n* [rpy2](https://rpy2.github.io/doc/v3.3.x/html/notebooks.html)\n\n<!-- \n## Statistics\n\n* [Variance Inflation Factor](https://stackoverflow.com/questions/42658379/variance-inflation-factor-in-python) \n-->"
+}

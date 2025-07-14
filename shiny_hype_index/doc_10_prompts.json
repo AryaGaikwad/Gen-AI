@@ -1,7 +1,7 @@
 [
-  "What are some important UI components and layouts that can be used in Shiny for Python to create user interfaces like dashboards?",
-  "How can a user create a sidebar layout with multiple pages in Shiny for Python?",
-  "What are the benefits of using cards in Shiny for Python user interfaces and how can they be customized?",
-  "How can value boxes be used in Shiny for Python to highlight important summaries and what additional features do they support?",
-  "How can the filling behavior of content in Shiny for Python layouts be controlled, and what is the purpose of setting ui.page_opts(fillable=True)?"
+  "What methods are available for interacting with UI layouts in a Shiny app?",
+  "What methods can be used to interact with input values in a Shiny app?",
+  "How can value boxes be interacted with in a Shiny app?",
+  "What are the methods for interacting with navigation (tab) panels in a Shiny app?",
+  "What methods are available for uploading and downloading in a Shiny app?"
 ]

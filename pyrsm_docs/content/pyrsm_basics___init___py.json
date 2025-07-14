@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "name": "__init__.py",
+    "path": "pyrsm/basics/__init__.py",
+    "type": "file",
+    "size": 264,
+    "sha": "aeab2b554f9a66c65ca365894d46d71b12035ce0",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/__init__.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/pyrsm/basics/__init__.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "from .central_limit_theorem import *"
+    },
+    {
+      "type": "import",
+      "text": "from .compare_means import *"
+    },
+    {
+      "type": "import",
+      "text": "from .compare_props import *"
+    },
+    {
+      "type": "import",
+      "text": "from .correlation import *"
+    },
+    {
+      "type": "import",
+      "text": "from .cross_tabs import *"
+    },
+    {
+      "type": "import",
+      "text": "from .goodness import *"
+    },
+    {
+      "type": "import",
+      "text": "from .probability_calculator import *"
+    },
+    {
+      "type": "import",
+      "text": "from .single_mean import *"
+    },
+    {
+      "type": "import",
+      "text": "from .single_prop import *"
+    }
+  ],
+  "code_examples": [
+    "from .central_limit_theorem import *\nfrom .compare_means import *\nfrom .compare_props import *\nfrom .correlation import *\nfrom .cross_tabs import *\nfrom .goodness import *\nfrom .probability_calculator import *\nfrom .single_mean import *\nfrom .single_prop import *\n"
+  ],
+  "raw_content": "from .central_limit_theorem import *\nfrom .compare_means import *\nfrom .compare_props import *\nfrom .correlation import *\nfrom .cross_tabs import *\nfrom .goodness import *\nfrom .probability_calculator import *\nfrom .single_mean import *\nfrom .single_prop import *\n"
+}

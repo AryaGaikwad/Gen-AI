@@ -1,7 +1,7 @@
 [
-  "What is the main difference between Express and Core apps in terms of syntax modes?",
-  "How can you quickly identify if an app is an Express app?",
-  "What are the steps recommended in the translation guide when moving an Express app to Core?",
-  "How does Core handle UI components that take other components as children compared to Express?",
-  "In Core, why are layout components like ui.layout_columns() considered pure functions and not context managers?"
+  "What are the relevant functions for defining panels and cards in a Shiny app using Python?",
+  "How can I create a floating panel over a main image in a Shiny app using Python?",
+  "What steps should I follow to create an app with content separated into cards in Shiny for Python?",
+  "How can I control the appearance and functionality of each card in a Shiny app using Python?",
+  "What is the difference between ui.panel_fixed() and ui.panel_absolute() in a Shiny app using Python?"
 ]

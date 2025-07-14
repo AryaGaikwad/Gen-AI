@@ -1,0 +1,329 @@
+{
+  "metadata": {
+    "title": "Sidebars – Shiny for Python",
+    "description": "A sidebar layout creates a sidebar in your Shiny app, typically used for inputs, and a large main area, typically used for outputs.",
+    "url": "layouts/sidebars/"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Sidebars"
+    },
+    {
+      "type": "p",
+      "text": "A sidebar layout creates a sidebar in your Shiny app, typically used for inputs, and a large main area, typically used for outputs."
+    },
+    {
+      "type": "p",
+      "text": "A sidebar layout creates a sidebar, typically used for inputs, and a large main area, typically used for outputs."
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.layout_sidebar ui.layout_sidebar(sidebar, *args, fillable=True, fill=True, bg=None, fg=None, border=None, border_radius=None, border_color=None, gap=None, padding=None, height=None, **kwargs)",
+        "ui.sidebar ui.sidebar(*args, width=250, position='left', open='desktop', id=None, title=None, bg=None, fg=None, class_=None, max_height_mobile=None, gap=None, padding=None)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.layout_sidebar ui.layout_sidebar(sidebar, *args, fillable=True, fill=True, bg=None, fg=None, border=None, border_radius=None, border_color=None, gap=None, padding=None, height=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.sidebar ui.sidebar(*args, width=250, position='left', open='desktop', id=None, title=None, bg=None, fg=None, class_=None, max_height_mobile=None, gap=None, padding=None)"
+    },
+    {
+      "type": "h2",
+      "text": "Sidebar on the left"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.sidebar(bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\"  "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a left-side sidebar to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.layout_sidebar() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.layout_sidebar() creates a sidebar layout.",
+        "Pass ui.sidebar()as the first argument of ui.layout_sidebar() to create the sidebar. By default, the position parameter of ui.sidebar() is “left” and the sidebar will appear on the left.",
+        "Supply additional components (output components, cards, text, etc.) to ui.layout_sidebar() to define the contents of the main content area."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.layout_sidebar() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.layout_sidebar() creates a sidebar layout."
+    },
+    {
+      "type": "p",
+      "text": "Pass ui.sidebar()as the first argument of ui.layout_sidebar() to create the sidebar. By default, the position parameter of ui.sidebar() is “left” and the sidebar will appear on the left."
+    },
+    {
+      "type": "p",
+      "text": "Supply additional components (output components, cards, text, etc.) to ui.layout_sidebar() to define the contents of the main content area."
+    },
+    {
+      "type": "h2",
+      "text": "Sidebar on the right"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.sidebar(position=\"right\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a right-side sidebar to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.layout_sidebar() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.layout_sidebar() creates a sidebar layout.",
+        "Pass ui.sidebar()as the first argument of ui.layout_sidebar() to create the sidebar.",
+        "Pass position=\"right\" to ui.sidebar(). The position argument controls where the sidebar appears relative to the main content.",
+        "Supply components (e.g., inputs) to ui.sidebar() to define the sidebar’s contents. Supply additional components (e.g., output components, cards, etc.) to ui.layout_sidebar() to define the contents of the main content area."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.layout_sidebar() inside any Shiny UI page method (e.g., ui.page_fluid()). ui.layout_sidebar() creates a sidebar layout."
+    },
+    {
+      "type": "p",
+      "text": "Pass ui.sidebar()as the first argument of ui.layout_sidebar() to create the sidebar."
+    },
+    {
+      "type": "p",
+      "text": "Pass position=\"right\" to ui.sidebar(). The position argument controls where the sidebar appears relative to the main content."
+    },
+    {
+      "type": "p",
+      "text": "Supply components (e.g., inputs) to ui.sidebar() to define the sidebar’s contents. Supply additional components (e.g., output components, cards, etc.) to ui.layout_sidebar() to define the contents of the main content area."
+    },
+    {
+      "type": "h2",
+      "text": "Sidebar within a card"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():  \n    ui.card_header(\"Card with sidebar\")\n\n    with ui.layout_sidebar():  \n        with ui.sidebar(bg=\"#f8f8f8\"):  \n            \"Sidebar\"  \n\n        \"Card content\"  "
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to add a sidebar within a card to your app:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.card() to the UI of your app to create a card.",
+        "Pass ui.layout_sidebar() to ui.card() to define a sidebar layout within the card.",
+        "Add ui.sidebar() and additional elements to ui.layout_sidebar() to define the sidebar and main content as usual.",
+        "Add inputs or other components as desired to ui.sidebar() to define the sidebar’s contents."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Collapsed sidebar"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nwith ui.sidebar(open=\"closed\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"\n\n\"Main content\""
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "ui.sidebar() has an open parameter that defines whether the sidebar appears open or closed when the app launches. To create a sidebar that is initially closed, set the open parameter to \"closed\"."
+    },
+    {
+      "type": "p",
+      "text": "The other options for open are:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "\"desktop\": The default. The sidebar starts open on a desktop screen and closed on mobile.",
+        "\"open\": The sidebar starts open and can be closed.",
+        "\"always\": The sidebar is always open and cannot be closed."
+      ]
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.sidebar(bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\"  ",
+    "from shiny.express import ui\n\nwith ui.sidebar(bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\"  ",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n    \"Main content\",  \n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.sidebar(position=\"right\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\"",
+    "from shiny.express import ui\n\nwith ui.sidebar(position=\"right\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"  \n\n\"Main content\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(  \n    ui.sidebar(\"Sidebar\", position=\"right\", bg=\"#f8f8f8\"),  \n    \"Main content\",\n)  \n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 175\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():  \n    ui.card_header(\"Card with sidebar\")\n\n    with ui.layout_sidebar():  \n        with ui.sidebar(bg=\"#f8f8f8\"):  \n            \"Sidebar\"  \n\n        \"Card content\"  ",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.card():  \n    ui.card_header(\"Card with sidebar\")\n\n    with ui.layout_sidebar():  \n        with ui.sidebar(bg=\"#f8f8f8\"):  \n            \"Sidebar\"  \n\n        \"Card content\"  ",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.card(  \n        ui.card_header(\"Card with sidebar\"),\n        ui.layout_sidebar(  \n            ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\"),  \n            \"Card content\",  \n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 125\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nwith ui.sidebar(open=\"closed\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"\n\n\"Main content\"",
+    "from shiny.express import ui\n\nwith ui.sidebar(open=\"closed\", bg=\"#f8f8f8\"):  \n    \"Sidebar\"\n\n\"Main content\"",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_sidebar(\n    ui.sidebar(\"Sidebar\", bg=\"#f8f8f8\", open=\"closed\"),  \n    \"Main content\",\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "LAYOUTS",
+      "url": "layouts/index.html"
+    },
+    {
+      "title": "Navbars"
+    },
+    {
+      "title": "Navbar at Top",
+      "url": "layouts/navbars/index.html#navbar-at-top"
+    },
+    {
+      "title": "Navbar at Bottom",
+      "url": "layouts/navbars/index.html#navbar-at-bottom"
+    },
+    {
+      "title": "Sidebars"
+    },
+    {
+      "title": "Sidebar on Left",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-left"
+    },
+    {
+      "title": "Sidebar on Right",
+      "url": "layouts/sidebars/index.html#sidebar-on-the-right"
+    },
+    {
+      "title": "Sidebar Within a Card",
+      "url": "layouts/sidebars/index.html#sidebar-within-a-card"
+    },
+    {
+      "title": "Collapsed Sidebar",
+      "url": "layouts/sidebars/index.html#collapsed-sidebar"
+    },
+    {
+      "title": "Tabs"
+    },
+    {
+      "title": "Tabset with Pill Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-navigation"
+    },
+    {
+      "title": "Tabset with Pill List Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-pill-list-navigation"
+    },
+    {
+      "title": "Tabset with Tab Navigation",
+      "url": "layouts/tabs/index.html#tabset-with-tab-navigation"
+    },
+    {
+      "title": "Card with a Tabbed Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-tabbed-tabset"
+    },
+    {
+      "title": "Card with a Pill Tabset",
+      "url": "layouts/tabs/index.html#card-with-a-pill-tabset"
+    },
+    {
+      "title": "Vertically Collapsing Accordions",
+      "url": "layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+    },
+    {
+      "title": "Panels & Cards"
+    },
+    {
+      "title": "Floating Panel",
+      "url": "layouts/panels-cards/index.html#floating-panel"
+    },
+    {
+      "title": "Content Divided by Cards",
+      "url": "layouts/panels-cards/index.html#content-divided-by-cards"
+    },
+    {
+      "title": "Arrange Elements"
+    },
+    {
+      "title": "Grid Layouts",
+      "url": "layouts/arrange/index.html#grid-layouts"
+    },
+    {
+      "title": "Column Nesting",
+      "url": "layouts/arrange/index.html#column-nesting"
+    },
+    {
+      "title": "Controlling for Page Size",
+      "url": "layouts/arrange/index.html#controlling-for-page-width-and-height"
+    }
+  ]
+}

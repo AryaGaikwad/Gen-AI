@@ -1,0 +1,7 @@
+[
+  "What command should I use to run all tests in this repository?",
+  "What package management tool should I use instead of pip install?",
+  "What is the maximum recommended line length for code in this repository?",
+  "What rules are enabled when linting code with ruff?",
+  "How should I format function and variable names in this codebase?"
+]

@@ -1,7 +1,7 @@
 [
-  "Why is it important to use modules in Shiny for organizing a large code base?",
-  "How can functions in Shiny help improve code quality when building user interfaces?",
-  "Why do input and output IDs need to be unique across the entire Shiny application?",
-  "How can modules in Shiny help prevent naming conflicts and make code easier to manage?",
-  "What is the difference between creating and using modules in Shiny Express versus Shiny Core syntax?"
+  "What are the two core functions provided by Shiny for arranging elements into rows and columns, and what are their differences?",
+  "How can I create a responsive and highly customizable layout using Shiny's ui.layout_columns() function?",
+  "What questions should I ask myself to decide between using ui.layout_columns() and ui.layout_column_wrap() for arranging elements?",
+  "How can I customize column widths and create different layouts at various screen sizes using the ui.layout_columns() function?",
+  "What grid system is recommended for most Shiny applications, and how does it differ from the fixed and fillable grid systems in terms of layout and responsiveness?"
 ]

@@ -1,0 +1,7 @@
+[
+  "What libraries are being imported in the provided code example?",
+  "What is the purpose of the `iround` function in the code example?",
+  "What condition triggers a `ValueError` to be raised in the `check` function?",
+  "What is the role of the `ceil` and `floor` functions from the `math` module in this code snippet?",
+  "What is the significance of the comparison operations involving bounds in the `check` function?"
+]

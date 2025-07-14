@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.radiant.basics.rst",
+    "path": "docs/pyrsm.radiant.basics.rst",
+    "type": "file",
+    "size": 1731,
+    "sha": "a477d2785687ad1825762f0da7b28a0c044ae345",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.basics.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.radiant.basics.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.radiant.basics package\n============================\n\nSubmodules\n----------\n\npyrsm.radiant.basics.compare\\_means module\n------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.compare_means\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.compare\\_props module\n------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.compare_props\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.correlation module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.correlation\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.cross\\_tabs module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.cross_tabs\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.goodness module\n------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.goodness\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.probability\\_calculator module\n---------------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.probability_calculator\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.single\\_mean module\n----------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.single_mean\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.single\\_prop module\n----------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.single_prop\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant.basics\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.radiant.basics package\n============================\n\nSubmodules\n----------\n\npyrsm.radiant.basics.compare\\_means module\n------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.compare_means\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.compare\\_props module\n------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.compare_props\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.correlation module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.correlation\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.cross\\_tabs module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.cross_tabs\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.goodness module\n------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.goodness\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.probability\\_calculator module\n---------------------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.probability_calculator\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.single\\_mean module\n----------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.single_mean\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.basics.single\\_prop module\n----------------------------------------\n\n.. automodule:: pyrsm.radiant.basics.single_prop\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant.basics\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

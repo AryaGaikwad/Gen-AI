@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "name": "conf.py",
+    "path": "docs/conf.py",
+    "type": "file",
+    "size": 1022,
+    "sha": "219faf64ffbff7202afe5b75c14807e7388ad208",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/conf.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/conf.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "import os"
+    },
+    {
+      "type": "import",
+      "text": "import sys"
+    }
+  ],
+  "code_examples": [
+    "# Configuration file for the Sphinx documentation builder.\n#\n# For the full list of built-in configuration values, see the documentation:\n# https://www.sphinx-doc.org/en/master/usage/configuration.html\n\nimport os\nimport sys\nsys.path.insert(0, os.path.abspath('..'))\n\n\n# -- Project information -----------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information\n\nproject = 'pyrsm'\ncopyright = \"2025, Vincent Nijs\"\nauthor = 'Vincent Nijs'\nrelease = \"2025\"\n\n# -- General configuration ---------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration\n\nextensions = []\n\ntemplates_path = ['_templates']\nexclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']\n\n\n# -- Options for HTML output -------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output\n\nhtml_theme = 'alabaster'\nhtml_static_path = ['_static']\n"
+  ],
+  "raw_content": "# Configuration file for the Sphinx documentation builder.\n#\n# For the full list of built-in configuration values, see the documentation:\n# https://www.sphinx-doc.org/en/master/usage/configuration.html\n\nimport os\nimport sys\nsys.path.insert(0, os.path.abspath('..'))\n\n\n# -- Project information -----------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information\n\nproject = 'pyrsm'\ncopyright = \"2025, Vincent Nijs\"\nauthor = 'Vincent Nijs'\nrelease = \"2025\"\n\n# -- General configuration ---------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration\n\nextensions = []\n\ntemplates_path = ['_templates']\nexclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']\n\n\n# -- Options for HTML output -------------------------------------------------\n# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output\n\nhtml_theme = 'alabaster'\nhtml_static_path = ['_static']\n"
+}

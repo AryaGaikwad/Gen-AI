@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.data.multivariate.rst",
+    "path": "docs/pyrsm.data.multivariate.rst",
+    "type": "file",
+    "size": 192,
+    "sha": "beba6df2081cb086301c82fa40464036d3df9ce4",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.multivariate.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.data.multivariate.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.data.multivariate package\n===============================\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data.multivariate\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.data.multivariate package\n===============================\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data.multivariate\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

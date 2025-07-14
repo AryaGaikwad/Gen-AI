@@ -1,7 +1,7 @@
 [
-  "What are the basic mechanics behind Shiny apps in Python according to the provided documentation?",
-  "How can one include dynamic plots, tables, and interactive widgets in a Shiny Python application?",
-  "What layout components does Shiny provide to help with arranging multiple inputs and outputs?",
-  "How does Shiny handle reactivity and re-rendering of components based on dependencies changing?",
-  "What is the purpose of the shiny create CLI command and what can it help developers achieve when working with Shiny in Python?"
+  "How can I quickly change the layout of my Shiny app if it is overloaded with content?",
+  "What is the purpose of adding a navbar to a Shiny app?",
+  "How can I create a sidebar layout in my Shiny app and what are its typical uses?",
+  "What is the function of tabs in a Shiny app and how can they be used for navigation?",
+  "How can I use rows and columns to create a custom layout for different device sizes in my Shiny app?"
 ]

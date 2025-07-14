@@ -1,0 +1,7 @@
+[
+  "What Python libraries are being imported in the provided code example?",
+  "What does the 'get_installed_version' function do in the code example?",
+  "How does the 'parse_requirement' function handle the input 'req_string' in the code example?",
+  "What does the 'get_installed_version' function return if the package is not installed?",
+  "How is the 'parse_requirement' function handling markers or extras in the input 'req_string'?"
+]

@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "title": "Shiny for Python",
+    "description": "",
+    "url": "index.html"
+  },
+  "content": [
+    {
+      "type": "p",
+      "text": "Reactive data & AI apps in pure Python"
+    },
+    {
+      "type": "p",
+      "text": "Elegant, efficient, and ready for production"
+    },
+    {
+      "type": "p",
+      "text": "Get Started Shiny for AI"
+    },
+    {
+      "type": "p",
+      "text": "Quickly build attractive and scalable dashboards."
+    },
+    {
+      "type": "p",
+      "text": "Easily leverage AI to query data using natural language."
+    },
+    {
+      "type": "p",
+      "text": "Take your UI to the next-level with components like value boxes and dark mode."
+    },
+    {
+      "type": "p",
+      "text": "Create rich interactive data experiences with packages you already know like pandas and plotly."
+    },
+    {
+      "type": "p",
+      "text": "Combine the power of Python with reactivity to create sophisticated apps like this three-body problem simulator."
+    },
+    {
+      "type": "h3",
+      "text": "Reactive"
+    },
+    {
+      "type": "p",
+      "text": "Shiny eliminates the hassle of manual state management. Rather than requiring callback functions and state variables, Shiny automatically determines the best execution path for your app at runtime. This allows you to focus on delivering insights instead of troubleshooting execution issues."
+    },
+    {
+      "type": "h3",
+      "text": "Efficient"
+    },
+    {
+      "type": "p",
+      "text": "Shiny uses a reactive execution engine to minimize rerendering of your application. Outputs are rendered on-demand and only when their upstream components change, which means that Shiny can support everything from the simplest dashboard to full-featured web apps."
+    },
+    {
+      "type": "h3",
+      "text": "Robust"
+    },
+    {
+      "type": "p",
+      "text": "Shiny is built atop the modern Python web stack, leveraging Starlette and asyncio for robust web applications. It offers full support for CSS and JavaScript customization, enabling rich, interactive user experiences."
+    },
+    {
+      "type": "h2",
+      "text": "Getting started with Shiny is easy:"
+    },
+    {
+      "type": "p",
+      "text": "1"
+    },
+    {
+      "type": "code",
+      "text": "pip install shiny"
+    },
+    {
+      "type": "p",
+      "text": "2"
+    },
+    {
+      "type": "code",
+      "text": "shiny create --template dashboard-tips"
+    },
+    {
+      "type": "p",
+      "text": "3"
+    },
+    {
+      "type": "p",
+      "text": "Use your data and make the layout your own."
+    },
+    {
+      "type": "p",
+      "text": "Get Started and build your first Shiny app now!"
+    }
+  ],
+  "code_examples": [
+    "pip install shiny",
+    "pip install shiny",
+    "shiny create --template dashboard-tips",
+    "shiny create --template dashboard-tips"
+  ],
+  "toc": []
+}

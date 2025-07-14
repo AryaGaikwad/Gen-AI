@@ -1,0 +1,7 @@
+[
+  "What libraries are imported in the provided code example?",
+  "What is the purpose of the `single_prop` class in the code example?",
+  "What parameters are accepted by the `__init__` method of the `single_prop` class?",
+  "How can the `conf` parameter in the `single_prop` class be modified?",
+  "What are the possible alternative hypotheses that can be specified in the `single_prop` class?"
+]

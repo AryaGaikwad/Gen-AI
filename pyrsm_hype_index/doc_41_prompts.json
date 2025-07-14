@@ -1,0 +1,7 @@
+[
+  "What are the default values for the parameters in the ci_label function?",
+  "What values does the ci_label function return when alt is set to \"less\"?",
+  "How does the ci_label function handle cases where alt is not one of 'less', 'greater', or 'two-sided'?",
+  "What output does the ci_label function produce when alt is set to \"greater\"?",
+  "How are the confidence interval percentages calculated in the ci_label function when alt is set to \"two-sided\"?"
+]

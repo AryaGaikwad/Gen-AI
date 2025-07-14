@@ -1,0 +1,7 @@
+[
+  "What is the purpose of end-to-end testing in a Shiny app development process?",
+  "How does Playwright assist in automating interactions with web applications for Shiny development?",
+  "What steps are involved in writing a test for a basic Shiny app that includes a slider and text output?",
+  "How can one add tests to an existing Shiny app, and what prompts need to be answered during the process?",
+  "What are some common issues that may arise during Shiny app testing using Playwright, and how can they be troubleshooted?"
+]

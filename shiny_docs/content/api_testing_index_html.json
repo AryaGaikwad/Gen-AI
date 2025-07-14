@@ -106,51 +106,51 @@
   "toc": [
     {
       "title": "Shiny Testing API",
-      "url": "api/testing/#shiny-testing-api"
+      "url": "api/testing/index.html#shiny-testing-api"
     },
     {
       "title": "Function reference",
-      "url": "api/testing/#function-reference"
+      "url": "api/testing/index.html#function-reference"
     },
     {
       "title": "UI Layouts",
-      "url": "api/testing/#ui-layouts"
+      "url": "api/testing/index.html#ui-layouts"
     },
     {
       "title": "UI Inputs",
-      "url": "api/testing/#ui-inputs"
+      "url": "api/testing/index.html#ui-inputs"
     },
     {
       "title": "Value boxes",
-      "url": "api/testing/#value-boxes"
+      "url": "api/testing/index.html#value-boxes"
     },
     {
       "title": "Navigation (tab) panels",
-      "url": "api/testing/#navigation-tab-panels"
+      "url": "api/testing/index.html#navigation-tab-panels"
     },
     {
       "title": "Upload and download",
-      "url": "api/testing/#upload-and-download"
+      "url": "api/testing/index.html#upload-and-download"
     },
     {
       "title": "Chat interface",
-      "url": "api/testing/#chat-interface"
+      "url": "api/testing/index.html#chat-interface"
     },
     {
       "title": "Rendering Outputs",
-      "url": "api/testing/#rendering-outputs"
+      "url": "api/testing/index.html#rendering-outputs"
     },
     {
       "title": "Playwright Expect",
-      "url": "api/testing/#playwright-expect"
+      "url": "api/testing/index.html#playwright-expect"
     },
     {
       "title": "Pytest",
-      "url": "api/testing/#pytest"
+      "url": "api/testing/index.html#pytest"
     },
     {
       "title": "Run",
-      "url": "api/testing/#run"
+      "url": "api/testing/index.html#run"
     }
   ]
 }

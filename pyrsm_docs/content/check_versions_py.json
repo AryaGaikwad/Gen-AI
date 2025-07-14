@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "name": "check_versions.py",
+    "path": "check_versions.py",
+    "type": "file",
+    "size": 1366,
+    "sha": "a76818d064f65222d6cba53dce9c9a7e4b16b938",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/check_versions.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/check_versions.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "import tomli"
+    },
+    {
+      "type": "import",
+      "text": "from importlib.metadata import version"
+    },
+    {
+      "type": "import",
+      "text": "from packaging.requirements import Requirement"
+    },
+    {
+      "type": "function",
+      "name": "get_installed_version",
+      "text": "def get_installed_version(package_name):"
+    },
+    {
+      "type": "docstring",
+      "text": "Get installed version of a package, return None if not installed."
+    },
+    {
+      "type": "function",
+      "name": "parse_requirement",
+      "text": "def parse_requirement(req_string):"
+    },
+    {
+      "type": "docstring",
+      "text": "Parse requirement string to get package name."
+    }
+  ],
+  "code_examples": [
+    "import tomli\nfrom importlib.metadata import version\nfrom packaging.requirements import Requirement\n\ndef get_installed_version(package_name):\n    \"\"\"Get installed version of a package, return None if not installed.\"\"\"\n    try:\n        return version(package_name.lower())\n    except Exception:\n        return None\n\ndef parse_requirement(req_string):\n    \"\"\"Parse requirement string to get package name.\"\"\"\n    # Remove any markers or extras\n    req_string = req_string.split(';')[0].strip()\n    return Requirement(req_string).name\n\nif __name__ == \"__main__\":\n    # Read pyproject.toml\n    with open(\"pyproject.toml\", \"rb\") as f:\n        pyproject = tomli.load(f)\n\n    # Get dependencies list\n    dependencies = pyproject[\"project\"][\"dependencies\"]\n\n    # Print header\n    print(\"\\nDependency Versions Check\")\n    print(\"-\" * 60)\n    print(f\"{'Package':<30} {'Required':<20} {'Installed':<15}\")\n    print(\"-\" * 60)\n\n    # Check each dependency\n    for dep in dependencies:\n        try:\n            package_name = parse_requirement(dep)\n            installed_version = get_installed_version(package_name)\n            required = dep.replace(package_name, \"\").strip()\n            print(f\"{package_name:<30} {required:<20} {installed_version or 'Not installed':<15}\")\n        except Exception as e:\n            print(f\"Error parsing {dep}: {str(e)}\")\n\n    print(\"-\" * 60)\n"
+  ],
+  "raw_content": "import tomli\nfrom importlib.metadata import version\nfrom packaging.requirements import Requirement\n\ndef get_installed_version(package_name):\n    \"\"\"Get installed version of a package, return None if not installed.\"\"\"\n    try:\n        return version(package_name.lower())\n    except Exception:\n        return None\n\ndef parse_requirement(req_string):\n    \"\"\"Parse requirement string to get package name.\"\"\"\n    # Remove any markers or extras\n    req_string = req_string.split(';')[0].strip()\n    return Requirement(req_string).name\n\nif __name__ == \"__main__\":\n    # Read pyproject.toml\n    with open(\"pyproject.toml\", \"rb\") as f:\n        pyproject = tomli.load(f)\n\n    # Get dependencies list\n    dependencies = pyproject[\"project\"][\"dependencies\"]\n\n    # Print header\n    print(\"\\nDependency Versions Check\")\n    print(\"-\" * 60)\n    print(f\"{'Package':<30} {'Required':<20} {'Installed':<15}\")\n    print(\"-\" * 60)\n\n    # Check each dependency\n    for dep in dependencies:\n        try:\n            package_name = parse_requirement(dep)\n            installed_version = get_installed_version(package_name)\n            required = dep.replace(package_name, \"\").strip()\n            print(f\"{package_name:<30} {required:<20} {installed_version or 'Not installed':<15}\")\n        except Exception as e:\n            print(f\"Error parsing {dep}: {str(e)}\")\n\n    print(\"-\" * 60)\n"
+}

@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "name": "utils.py",
+    "path": "pyrsm/basics/utils.py",
+    "type": "file",
+    "size": 428,
+    "sha": "0662c32238f7b81d40f210ffd3e6bfc123e96a55",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/utils.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/pyrsm/basics/utils.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "function",
+      "name": "ci_label",
+      "text": "def ci_label(alt=\"two-sided\", conf=0.95, dec=3):"
+    }
+  ],
+  "code_examples": [
+    "def ci_label(alt=\"two-sided\", conf=0.95, dec=3):\n    if alt == \"less\":\n        return [\"0%\", f\"{round(100 * conf, dec)}%\"]\n    elif alt == \"greater\":\n        return [f\"{round(100 * (1 - conf), dec)}%\", \"100%\"]\n    elif alt == \"two-sided\":\n        val = 100 * (1 - conf) / 2\n        return [f\"{round(v, dec)}%\" for v in [val, 100 - val]]\n    else:\n        return \"Error: alt_hyp must be one of 'less', 'greater', or 'two-sided'\"\n"
+  ],
+  "raw_content": "def ci_label(alt=\"two-sided\", conf=0.95, dec=3):\n    if alt == \"less\":\n        return [\"0%\", f\"{round(100 * conf, dec)}%\"]\n    elif alt == \"greater\":\n        return [f\"{round(100 * (1 - conf), dec)}%\", \"100%\"]\n    elif alt == \"two-sided\":\n        val = 100 * (1 - conf) / 2\n        return [f\"{round(v, dec)}%\" for v in [val, 100 - val]]\n    else:\n        return \"Error: alt_hyp must be one of 'less', 'greater', or 'two-sided'\"\n"
+}

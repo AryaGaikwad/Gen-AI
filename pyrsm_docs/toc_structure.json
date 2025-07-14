@@ -1,0 +1,537 @@
+{
+  "structure": [
+    {
+      "title": "CLAUDE.md",
+      "path": "CLAUDE.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/CLAUDE.md",
+      "children": []
+    },
+    {
+      "title": "Using PYRSM with Claude Desktop",
+      "path": "CLAUDE_DESKTOP.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/CLAUDE_DESKTOP.md",
+      "children": []
+    },
+    {
+      "title": "PYRSM MCP Server",
+      "path": "MCP_README.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/MCP_README.md",
+      "children": []
+    },
+    {
+      "title": "PYRSM",
+      "path": "README.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/README.md",
+      "children": []
+    },
+    {
+      "title": "check_versions.py",
+      "path": "check_versions.py",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/check_versions.py",
+      "children": []
+    },
+    {
+      "title": "claude_generated_code.py",
+      "path": "claude_generated_code.py",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/claude_generated_code.py",
+      "children": []
+    },
+    {
+      "title": "claude_mcp_client.py",
+      "path": "claude_mcp_client.py",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/claude_mcp_client.py",
+      "children": []
+    },
+    {
+      "title": "conda",
+      "path": "conda",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/conda",
+      "children": [
+        {
+          "title": "pyrsm",
+          "path": "conda/pyrsm",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/conda/pyrsm",
+          "children": [
+            {
+              "title": "meta.yaml",
+              "path": "conda/pyrsm/meta.yaml",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/conda/pyrsm/meta.yaml",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "docs",
+      "path": "docs",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/docs",
+      "children": [
+        {
+          "title": "conf.py",
+          "path": "docs/conf.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/conf.py",
+          "children": []
+        },
+        {
+          "title": "index.rst",
+          "path": "docs/index.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/index.rst",
+          "children": []
+        },
+        {
+          "title": "modules.rst",
+          "path": "docs/modules.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/modules.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.basics.rst",
+          "path": "docs/pyrsm.basics.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.basics.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.basics.rst",
+          "path": "docs/pyrsm.data.basics.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.basics.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.data.rst",
+          "path": "docs/pyrsm.data.data.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.data.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.design.rst",
+          "path": "docs/pyrsm.data.design.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.design.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.model.rst",
+          "path": "docs/pyrsm.data.model.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.model.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.multivariate.rst",
+          "path": "docs/pyrsm.data.multivariate.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.multivariate.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.data.rst",
+          "path": "docs/pyrsm.data.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.design.rst",
+          "path": "docs/pyrsm.design.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.design.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.model.rst",
+          "path": "docs/pyrsm.model.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.model.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.radiant.basics.rst",
+          "path": "docs/pyrsm.radiant.basics.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.basics.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.radiant.data.rst",
+          "path": "docs/pyrsm.radiant.data.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.data.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.radiant.model.rst",
+          "path": "docs/pyrsm.radiant.model.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.model.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.radiant.rst",
+          "path": "docs/pyrsm.radiant.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.rst",
+          "children": []
+        },
+        {
+          "title": "pyrsm.rst",
+          "path": "docs/pyrsm.rst",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.rst",
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "examples",
+      "path": "examples",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/examples",
+      "children": [
+        {
+          "title": "basics",
+          "path": "examples/basics",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/basics",
+          "children": [
+            {
+              "title": "figures",
+              "path": "examples/basics/figures",
+              "type": "directory",
+              "url": "https://github.com/vnijs/pyrsm/tree/main/examples/basics/figures",
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "data",
+          "path": "examples/data",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/data",
+          "children": []
+        },
+        {
+          "title": "figures",
+          "path": "examples/figures",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/figures",
+          "children": []
+        },
+        {
+          "title": "mcp",
+          "path": "examples/mcp",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/mcp",
+          "children": [
+            {
+              "title": "basics",
+              "path": "examples/mcp/basics",
+              "type": "directory",
+              "url": "https://github.com/vnijs/pyrsm/tree/main/examples/mcp/basics",
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "model",
+          "path": "examples/model",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/model",
+          "children": [
+            {
+              "title": "figures",
+              "path": "examples/model/figures",
+              "type": "directory",
+              "url": "https://github.com/vnijs/pyrsm/tree/main/examples/model/figures",
+              "children": []
+            },
+            {
+              "title": "quarto",
+              "path": "examples/model/quarto",
+              "type": "directory",
+              "url": "https://github.com/vnijs/pyrsm/tree/main/examples/model/quarto",
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "multivariate",
+          "path": "examples/multivariate",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/examples/multivariate",
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "images",
+      "path": "images",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/images",
+      "children": []
+    },
+    {
+      "title": "PYRSM MCP Server Examples",
+      "path": "mcp_examples.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/mcp_examples.md",
+      "children": []
+    },
+    {
+      "title": "mcp_server.py",
+      "path": "mcp_server.py",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/mcp_server.py",
+      "children": []
+    },
+    {
+      "title": "PYRSM MCP Server Setup Guide",
+      "path": "mcp_setup_guide.md",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/mcp_setup_guide.md",
+      "children": []
+    },
+    {
+      "title": "pyproject.toml",
+      "path": "pyproject.toml",
+      "type": "file",
+      "url": "https://github.com/vnijs/pyrsm/blob/main/pyproject.toml",
+      "children": []
+    },
+    {
+      "title": "pyrsm",
+      "path": "pyrsm",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm",
+      "children": [
+        {
+          "title": "__init__.py",
+          "path": "pyrsm/__init__.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/__init__.py",
+          "children": []
+        },
+        {
+          "title": "basics",
+          "path": "pyrsm/basics",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/basics",
+          "children": [
+            {
+              "title": "__init__.py",
+              "path": "pyrsm/basics/__init__.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/__init__.py",
+              "children": []
+            },
+            {
+              "title": "central_limit_theorem.py",
+              "path": "pyrsm/basics/central_limit_theorem.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/central_limit_theorem.py",
+              "children": []
+            },
+            {
+              "title": "compare_means.py",
+              "path": "pyrsm/basics/compare_means.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/compare_means.py",
+              "children": []
+            },
+            {
+              "title": "compare_props.py",
+              "path": "pyrsm/basics/compare_props.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/compare_props.py",
+              "children": []
+            },
+            {
+              "title": "correlation.py",
+              "path": "pyrsm/basics/correlation.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/correlation.py",
+              "children": []
+            },
+            {
+              "title": "cross_tabs.py",
+              "path": "pyrsm/basics/cross_tabs.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/cross_tabs.py",
+              "children": []
+            },
+            {
+              "title": "goodness.py",
+              "path": "pyrsm/basics/goodness.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/goodness.py",
+              "children": []
+            },
+            {
+              "title": "probability_calculator.py",
+              "path": "pyrsm/basics/probability_calculator.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/probability_calculator.py",
+              "children": []
+            },
+            {
+              "title": "probability_calculator_functions.py",
+              "path": "pyrsm/basics/probability_calculator_functions.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/probability_calculator_functions.py",
+              "children": []
+            },
+            {
+              "title": "single_mean.py",
+              "path": "pyrsm/basics/single_mean.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/single_mean.py",
+              "children": []
+            },
+            {
+              "title": "single_prop.py",
+              "path": "pyrsm/basics/single_prop.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/single_prop.py",
+              "children": []
+            },
+            {
+              "title": "utils.py",
+              "path": "pyrsm/basics/utils.py",
+              "type": "file",
+              "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/utils.py",
+              "children": []
+            }
+          ]
+        },
+        {
+          "title": "bins.py",
+          "path": "pyrsm/bins.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/bins.py",
+          "children": []
+        },
+        {
+          "title": "data",
+          "path": "pyrsm/data",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/data",
+          "children": []
+        },
+        {
+          "title": "design",
+          "path": "pyrsm/design",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/design",
+          "children": []
+        },
+        {
+          "title": "example_data.py",
+          "path": "pyrsm/example_data.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/example_data.py",
+          "children": []
+        },
+        {
+          "title": "mcp",
+          "path": "pyrsm/mcp",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/mcp",
+          "children": []
+        },
+        {
+          "title": "model",
+          "path": "pyrsm/model",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/model",
+          "children": []
+        },
+        {
+          "title": "multivariate",
+          "path": "pyrsm/multivariate",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/multivariate",
+          "children": []
+        },
+        {
+          "title": "notebook.py",
+          "path": "pyrsm/notebook.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/notebook.py",
+          "children": []
+        },
+        {
+          "title": "props.py",
+          "path": "pyrsm/props.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/props.py",
+          "children": []
+        },
+        {
+          "title": "radiant",
+          "path": "pyrsm/radiant",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/radiant",
+          "children": []
+        },
+        {
+          "title": "shiny-app",
+          "path": "pyrsm/shiny-app",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/shiny-app",
+          "children": []
+        },
+        {
+          "title": "stats.py",
+          "path": "pyrsm/stats.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/stats.py",
+          "children": []
+        },
+        {
+          "title": "streamlet",
+          "path": "pyrsm/streamlet",
+          "type": "directory",
+          "url": "https://github.com/vnijs/pyrsm/tree/main/pyrsm/streamlet",
+          "children": []
+        },
+        {
+          "title": "utils.py",
+          "path": "pyrsm/utils.py",
+          "type": "file",
+          "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/utils.py",
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "tests",
+      "path": "tests",
+      "type": "directory",
+      "url": "https://github.com/vnijs/pyrsm/tree/main/tests",
+      "children": []
+    }
+  ],
+  "readme_files": [
+    [
+      "README_md",
+      "PYRSM"
+    ]
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "name": "central_limit_theorem.py",
+    "path": "pyrsm/basics/central_limit_theorem.py",
+    "type": "file",
+    "size": 3941,
+    "sha": "2e8c5c4b3ffe4f87826813d405fdc79e962f9034",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/pyrsm/basics/central_limit_theorem.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/pyrsm/basics/central_limit_theorem.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "from typing import Optional"
+    },
+    {
+      "type": "import",
+      "text": "import matplotlib"
+    },
+    {
+      "type": "import",
+      "text": "import matplotlib.pyplot as plt"
+    },
+    {
+      "type": "import",
+      "text": "import numpy as np"
+    },
+    {
+      "type": "import",
+      "text": "import pandas as pd"
+    },
+    {
+      "type": "import",
+      "text": "import seaborn as sns"
+    },
+    {
+      "type": "class",
+      "name": "central_limit_theorem",
+      "text": "class central_limit_theorem:"
+    },
+    {
+      "type": "function",
+      "name": "simulate",
+      "text": "def simulate(self) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "simulate_normal",
+      "text": "def simulate_normal(self) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "simulate_binomial",
+      "text": "def simulate_binomial(self) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "simulate_uniform",
+      "text": "def simulate_uniform(self) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "simulate_exponential",
+      "text": "def simulate_exponential(self) -> None:"
+    },
+    {
+      "type": "function",
+      "name": "plot_distribution",
+      "text": "def plot_distribution(self, samples: list[np.ndarray]) -> None:"
+    }
+  ],
+  "code_examples": [
+    "from typing import Optional\n\nimport matplotlib\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\nimport seaborn as sns\n\n\nclass central_limit_theorem:\n    def __init__(\n        self,\n        dist: str,\n        sample_size: int,\n        num_samples: int,\n        num_bins: int,\n        figsize: Optional[tuple[float, float]] = (10, 10),\n        **params: float,\n    ) -> None:\n        self.dist = dist\n        self.sample_size = sample_size\n        self.num_samples = num_samples\n        self.num_bins = max(1, min(num_bins, 50))\n        self.figsize = figsize\n        self.params = params\n\n    def simulate(self) -> None:\n        if self.dist == \"normal\":\n            self.simulate_normal()\n        elif self.dist == \"binomial\":\n            self.simulate_binomial()\n        elif self.dist == \"uniform\":\n            self.simulate_uniform()\n        elif self.dist == \"exponential\":\n            self.simulate_exponential()\n        else:\n            print(\"Invalid distribution\")\n\n    def simulate_normal(self) -> None:\n        mean = self.params[\"mean\"]\n        sd = self.params[\"sd\"]\n        samples = [\n            np.random.normal(loc=mean, scale=sd, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_binomial(self) -> None:\n        size = self.params[\"size\"]\n        prob = self.params[\"prob\"]\n\n        samples = [\n            np.random.binomial(n=size, p=prob, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_uniform(self) -> None:\n        minimum = self.params[\"min\"]\n        maximum = self.params[\"max\"]\n\n        samples = [\n            np.random.uniform(low=minimum, high=maximum, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_exponential(self) -> None:\n        rate = self.params[\"rate\"]\n\n        samples = [\n            np.random.exponential(scale=rate, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def plot_distribution(self, samples: list[np.ndarray]) -> None:\n        sample_means = [np.mean(sample) for sample in samples]\n\n        _, axes = plt.subplots(2, 2, figsize=self.figsize)\n        plt.subplots_adjust(wspace=0.2, hspace=0.2)\n\n        plt.axes(axes[0][0])\n        self._plot_distribution(x=samples[0], x_label=\"Histogram of sample #1\").plot()\n\n        plt.axes(axes[0][1])\n        self._plot_distribution(\n            x=samples[-1], x_label=\"Histogram of sample #\" + str(self.num_samples)\n        ).plot()\n\n        plt.axes(axes[1][0])\n        self._plot_distribution(\n            x=sample_means, x_label=\"Histogram of sample means\"\n        ).plot()\n\n        plt.axes(axes[1][1])\n        axes[1][1].set_ylabel(\"y\")\n        self._plot_distribution(\n            x=sample_means, x_label=\"Density of sample means\", density_plot=True\n        ).plot()\n\n    def _plot_distribution(\n        self, x: list[np.ndarray], x_label: str, density_plot: bool = False\n    ) -> matplotlib.axes.Axes:\n        stat = \"count\"\n        data = {x_label: x}\n\n        data = pd.DataFrame(data)\n        if density_plot:\n            return sns.kdeplot(data=data, x=x_label, fill=True)\n\n        return sns.histplot(\n            data=data,\n            x=x_label,\n            stat=stat,\n            bins=self.num_bins,\n        )\n\n\nif __name__ == \"__main__\":\n    clt = central_limit_theorem(\n        dist=\"normal\",\n        sample_size=1000,\n        num_samples=1000,\n        num_bins=30,\n        figsize=(10, 10),\n        mean=0,\n        sd=1,\n    )\n    clt.simulate()\n\n    clt = central_limit_theorem(\n        dist=\"binomial\",\n        sample_size=1000,\n        num_samples=1000,\n        num_bins=30,\n        figsize=(10, 10),\n        size=10,\n        prob=0.1,\n    )\n\n    clt.simulate()\n"
+  ],
+  "raw_content": "from typing import Optional\n\nimport matplotlib\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\nimport seaborn as sns\n\n\nclass central_limit_theorem:\n    def __init__(\n        self,\n        dist: str,\n        sample_size: int,\n        num_samples: int,\n        num_bins: int,\n        figsize: Optional[tuple[float, float]] = (10, 10),\n        **params: float,\n    ) -> None:\n        self.dist = dist\n        self.sample_size = sample_size\n        self.num_samples = num_samples\n        self.num_bins = max(1, min(num_bins, 50))\n        self.figsize = figsize\n        self.params = params\n\n    def simulate(self) -> None:\n        if self.dist == \"normal\":\n            self.simulate_normal()\n        elif self.dist == \"binomial\":\n            self.simulate_binomial()\n        elif self.dist == \"uniform\":\n            self.simulate_uniform()\n        elif self.dist == \"exponential\":\n            self.simulate_exponential()\n        else:\n            print(\"Invalid distribution\")\n\n    def simulate_normal(self) -> None:\n        mean = self.params[\"mean\"]\n        sd = self.params[\"sd\"]\n        samples = [\n            np.random.normal(loc=mean, scale=sd, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_binomial(self) -> None:\n        size = self.params[\"size\"]\n        prob = self.params[\"prob\"]\n\n        samples = [\n            np.random.binomial(n=size, p=prob, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_uniform(self) -> None:\n        minimum = self.params[\"min\"]\n        maximum = self.params[\"max\"]\n\n        samples = [\n            np.random.uniform(low=minimum, high=maximum, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def simulate_exponential(self) -> None:\n        rate = self.params[\"rate\"]\n\n        samples = [\n            np.random.exponential(scale=rate, size=self.sample_size)\n            for _ in range(self.num_samples)\n        ]\n\n        self.plot_distribution(samples)\n\n    def plot_distribution(self, samples: list[np.ndarray]) -> None:\n        sample_means = [np.mean(sample) for sample in samples]\n\n        _, axes = plt.subplots(2, 2, figsize=self.figsize)\n        plt.subplots_adjust(wspace=0.2, hspace=0.2)\n\n        plt.axes(axes[0][0])\n        self._plot_distribution(x=samples[0], x_label=\"Histogram of sample #1\").plot()\n\n        plt.axes(axes[0][1])\n        self._plot_distribution(\n            x=samples[-1], x_label=\"Histogram of sample #\" + str(self.num_samples)\n        ).plot()\n\n        plt.axes(axes[1][0])\n        self._plot_distribution(\n            x=sample_means, x_label=\"Histogram of sample means\"\n        ).plot()\n\n        plt.axes(axes[1][1])\n        axes[1][1].set_ylabel(\"y\")\n        self._plot_distribution(\n            x=sample_means, x_label=\"Density of sample means\", density_plot=True\n        ).plot()\n\n    def _plot_distribution(\n        self, x: list[np.ndarray], x_label: str, density_plot: bool = False\n    ) -> matplotlib.axes.Axes:\n        stat = \"count\"\n        data = {x_label: x}\n\n        data = pd.DataFrame(data)\n        if density_plot:\n            return sns.kdeplot(data=data, x=x_label, fill=True)\n\n        return sns.histplot(\n            data=data,\n            x=x_label,\n            stat=stat,\n            bins=self.num_bins,\n        )\n\n\nif __name__ == \"__main__\":\n    clt = central_limit_theorem(\n        dist=\"normal\",\n        sample_size=1000,\n        num_samples=1000,\n        num_bins=30,\n        figsize=(10, 10),\n        mean=0,\n        sd=1,\n    )\n    clt.simulate()\n\n    clt = central_limit_theorem(\n        dist=\"binomial\",\n        sample_size=1000,\n        num_samples=1000,\n        num_bins=30,\n        figsize=(10, 10),\n        size=10,\n        prob=0.1,\n    )\n\n    clt.simulate()\n"
+}

@@ -1,0 +1,7 @@
+[
+  "What modules are being imported in the provided code example?",
+  "What is the purpose of the 'single_mean' class in the code example?",
+  "What are the possible types for the 'data' attribute of the 'single_mean' class?",
+  "How can I check if a DataFrame is of the correct type for the hypothesis test?",
+  "What is the purpose of the 'sig_stars' function imported from 'pyrsm.model.model'?"
+]

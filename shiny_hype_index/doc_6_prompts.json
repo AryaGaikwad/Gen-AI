@@ -1,7 +1,7 @@
 [
-  "What are the different applications available in the Shiny Gallery for Python?",
-  "How can I access the source code for the NBA player stats app in the Shiny Gallery?",
-  "Where can I find the Real-time model scoring app in the Shiny Gallery and view its source code?",
-  "Is there an Airmass calculator application available in the Shiny Gallery for Python?",
-  "How can I view the app for the CPU usage monitor in the Shiny Gallery?"
+  "What is the difference between Shiny Templates and the gallery in terms of providing a starting point for app development?",
+  "What types of basic apps are included in the Shiny Templates collection?",
+  "How can Shiny Templates help in creating more sophisticated Generative AI applications?",
+  "What are the core components of dashboards in Shiny Templates?",
+  "How can Shiny Templates facilitate reactive file reading and streaming updates in apps?"
 ]

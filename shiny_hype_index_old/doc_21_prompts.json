@@ -1,0 +1,7 @@
+[
+  "What are some ways to customize the overall look and feel of a Shiny app?",
+  "How can the shinyswatch package be used to change the look of a Shiny app?",
+  "What are the advantages of adding custom CSS to a Shiny app beyond using shinyswatch?",
+  "In what scenarios would it be preferable to use utility classes over inline styles in a Shiny app?",
+  "How can local files like fonts, images, and CSS be served to a Shiny app for customization purposes?"
+]

@@ -1,0 +1,7 @@
+[
+  "What is the purpose of the \"correlation\" class in the Pyrsm package?",
+  "What are the required parameters for initializing the \"correlation\" class?",
+  "What are some of the libraries imported within the \"correlation\" class for data analysis?",
+  "How does the \"correlation\" class handle missing or non-numeric data in the Pandas dataframe?",
+  "Does the \"correlation\" class provide any specific statistical tests or metrics for the calculated correlations?"
+]

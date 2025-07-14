@@ -1,7 +1,7 @@
 [
-  "What are the main forms of reactive functions and dependencies covered in the Shiny documentation?",
-  "How does @reactive.calc differ from @render.* functions in Shiny?",
-  "What is the purpose of @reactive.effect in Shiny, and how does it handle side effects?",
-  "How can reactive values in Shiny be used to maintain state in an application?",
-  "Why should developers using Shiny be careful when using mutable objects as reactive values?"
+  "What function should I use to create a pillset with tabs and navigation in a Shiny app?",
+  "How can I add vertically collapsing accordion panels to my Shiny UI page using specific functions?",
+  "In what scenarios would I use a card with a tabbed tabset layout in a Shiny app?",
+  "What are the steps to create a Shiny app with a tabset and pill navigation layout?",
+  "How can I create a pill list navigation layout in a Shiny app and customize the displayed items?"
 ]

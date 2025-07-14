@@ -1,7 +1,7 @@
 [
-  "How can I programmatically update the UI based on user input in Shiny for Python?",
-  "What is the difference between dynamic UI, conditional UI, and updating inputs in Shiny for Python?",
-  "How can I hide UI elements based on a JavaScript condition in Shiny for Python?",
-  "When should I use @render.ui versus @render.express in Shiny for Python?",
-  "Is updating inputs or dynamic UI more efficient for updating UI components in Shiny for Python?"
+  "What function creates a pillset inside a card in Shiny for Python?",
+  "How can you control the appearance and content of each item in a tabset with pill navigation layout?",
+  "What steps are involved in adding vertically collapsing accordion panels to a Shiny app?",
+  "How can you create a Shiny app with a tab navigation layout using the provided functions?",
+  "What is the purpose of passing arguments to the nav items in the context of creating a pill list navigation layout in Shiny for Python?"
 ]

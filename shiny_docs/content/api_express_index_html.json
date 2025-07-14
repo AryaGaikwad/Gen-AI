@@ -174,91 +174,91 @@
   "toc": [
     {
       "title": "Shiny Express API",
-      "url": "api/express/#shiny-express-api"
+      "url": "api/express/index.html#shiny-express-api"
     },
     {
       "title": "Function reference",
-      "url": "api/express/#function-reference"
+      "url": "api/express/index.html#function-reference"
     },
     {
       "title": "Input components",
-      "url": "api/express/#input-components"
+      "url": "api/express/index.html#input-components"
     },
     {
       "title": "Output components",
-      "url": "api/express/#output-components"
+      "url": "api/express/index.html#output-components"
     },
     {
       "title": "Layouts and other UI tools",
-      "url": "api/express/#layouts-and-other-ui-tools"
+      "url": "api/express/index.html#layouts-and-other-ui-tools"
     },
     {
       "title": "Navigate multiple panels",
-      "url": "api/express/#navigate-multiple-panels"
+      "url": "api/express/index.html#navigate-multiple-panels"
     },
     {
       "title": "Chat interface",
-      "url": "api/express/#chat-interface"
+      "url": "api/express/index.html#chat-interface"
     },
     {
       "title": "Streaming markdown",
-      "url": "api/express/#streaming-markdown"
+      "url": "api/express/index.html#streaming-markdown"
     },
     {
       "title": "Reactive programming",
-      "url": "api/express/#reactive-programming"
+      "url": "api/express/index.html#reactive-programming"
     },
     {
       "title": "Reusable Express code",
-      "url": "api/express/#reusable-express-code"
+      "url": "api/express/index.html#reusable-express-code"
     },
     {
       "title": "Update inputs",
-      "url": "api/express/#update-inputs"
+      "url": "api/express/index.html#update-inputs"
     },
     {
       "title": "Update UI Layouts",
-      "url": "api/express/#update-ui-layouts"
+      "url": "api/express/index.html#update-ui-layouts"
     },
     {
       "title": "Display messages",
-      "url": "api/express/#display-messages"
+      "url": "api/express/index.html#display-messages"
     },
     {
       "title": "Modules",
-      "url": "api/express/#modules"
+      "url": "api/express/index.html#modules"
     },
     {
       "title": "UI panels",
-      "url": "api/express/#ui-panels"
+      "url": "api/express/index.html#ui-panels"
     },
     {
       "title": "Uploads & downloads",
-      "url": "api/express/#uploads-downloads"
+      "url": "api/express/index.html#uploads-downloads"
     },
     {
       "title": "Dynamic UI",
-      "url": "api/express/#dynamic-ui"
+      "url": "api/express/index.html#dynamic-ui"
     },
     {
       "title": "User Session",
-      "url": "api/express/#user-session"
+      "url": "api/express/index.html#user-session"
     },
     {
       "title": "Client Data",
-      "url": "api/express/#client-data"
+      "url": "api/express/index.html#client-data"
     },
     {
       "title": "UI as HTML",
-      "url": "api/express/#ui-as-html"
+      "url": "api/express/index.html#ui-as-html"
     },
     {
       "title": "Application-level settings",
-      "url": "api/express/#application-level-settings"
+      "url": "api/express/index.html#application-level-settings"
     },
     {
       "title": "Express developer tooling",
-      "url": "api/express/#express-developer-tooling"
+      "url": "api/express/index.html#express-developer-tooling"
     },
     {
       "title": "Shiny Express API",

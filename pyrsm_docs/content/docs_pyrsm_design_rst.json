@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.design.rst",
+    "path": "docs/pyrsm.design.rst",
+    "type": "file",
+    "size": 345,
+    "sha": "edb2573b5577834caac89844467cfcf792ad4ff6",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.design.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.design.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.design package\n====================\n\nSubmodules\n----------\n\npyrsm.design.sample\\_size module\n--------------------------------\n\n.. automodule:: pyrsm.design.sample_size\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.design\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.design package\n====================\n\nSubmodules\n----------\n\npyrsm.design.sample\\_size module\n--------------------------------\n\n.. automodule:: pyrsm.design.sample_size\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.design\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

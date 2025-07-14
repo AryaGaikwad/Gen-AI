@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.model.rst",
+    "path": "docs/pyrsm.model.rst",
+    "type": "file",
+    "size": 1183,
+    "sha": "5174d562d913a95343ec5b5612af201331b3288c",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.model.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.model.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.model package\n===================\n\nSubmodules\n----------\n\npyrsm.model.logistic module\n---------------------------\n\n.. automodule:: pyrsm.model.logistic\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.mlp module\n----------------------\n\n.. automodule:: pyrsm.model.mlp\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.model module\n------------------------\n\n.. automodule:: pyrsm.model.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.perf module\n-----------------------\n\n.. automodule:: pyrsm.model.perf\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.regress module\n--------------------------\n\n.. automodule:: pyrsm.model.regress\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.rforest module\n--------------------------\n\n.. automodule:: pyrsm.model.rforest\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.visualize module\n----------------------------\n\n.. automodule:: pyrsm.model.visualize\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.model package\n===================\n\nSubmodules\n----------\n\npyrsm.model.logistic module\n---------------------------\n\n.. automodule:: pyrsm.model.logistic\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.mlp module\n----------------------\n\n.. automodule:: pyrsm.model.mlp\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.model module\n------------------------\n\n.. automodule:: pyrsm.model.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.perf module\n-----------------------\n\n.. automodule:: pyrsm.model.perf\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.regress module\n--------------------------\n\n.. automodule:: pyrsm.model.regress\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.rforest module\n--------------------------\n\n.. automodule:: pyrsm.model.rforest\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.model.visualize module\n----------------------------\n\n.. automodule:: pyrsm.model.visualize\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

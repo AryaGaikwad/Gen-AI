@@ -1,0 +1,7 @@
+[
+  "What Python tool will Copilot Chat use to list available datasets in the PYRSM package?",
+  "How does Copilot Chat provide information about a specific dataset, including its shape and column names?",
+  "What type of analysis can Copilot Chat perform on data with a specific question using the `analyze_data` tool?",
+  "How does Copilot Chat analyze the correlation between specified columns in the data?",
+  "What information does Copilot Chat provide when generating sample data using the `generate_sample_data` tool?"
+]

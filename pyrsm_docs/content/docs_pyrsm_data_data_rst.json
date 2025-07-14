@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.data.data.rst",
+    "path": "docs/pyrsm.data.data.rst",
+    "type": "file",
+    "size": 168,
+    "sha": "52e1d1ac312a560a009eae3b14243179172455d8",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.data.data.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.data.data.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.data.data package\n=======================\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data.data\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.data.data package\n=======================\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.data.data\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

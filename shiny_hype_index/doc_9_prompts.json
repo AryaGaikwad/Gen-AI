@@ -1,7 +1,7 @@
 [
-  "What are the different methods available for interacting with UI layouts in a Shiny app using the Shiny Testing API?",
-  "What methods does the Shiny Testing API provide for interacting with input values in a Shiny app?",
-  "How can I interact with value boxes in a Shiny app using the Shiny Testing API?",
-  "What are the available methods for interacting with navigation (tab) panels in a Shiny app using the Shiny Testing API?",
-  "What methods are provided by the Shiny Testing API for uploading and downloading files in a Shiny app?"
+  "What is the difference between Shiny Express and Shiny Core in terms of structure and flexibility?",
+  "How can I create a value box to prominently display a value and label in Shiny?",
+  "What is the purpose of navigation (tab) panels in Shiny?",
+  "How can I programmatically update input values in Shiny using Shiny Core API?",
+  "What is the significance of the \"Deprecated\" and \"Experimental\" types mentioned in the documentation for Shiny Core API methods?"
 ]

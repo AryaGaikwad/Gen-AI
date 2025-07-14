@@ -1,0 +1,364 @@
+{
+  "metadata": {
+    "name": "MCP_README.md",
+    "path": "MCP_README.md",
+    "type": "file",
+    "size": 5309,
+    "sha": "4273a1d77f1814992f2e4859708645ee0a1b53ba",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/MCP_README.md",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/MCP_README.md",
+    "description": "This repository includes an MCP (Model Context Protocol) server for the PYRSM package, enabling easy interaction with the statistical analysis functionality through tools like GitHub Copilot Chat in V",
+    "title": "PYRSM MCP Server"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "PYRSM MCP Server"
+    },
+    {
+      "type": "p",
+      "text": "This repository includes an MCP (Model Context Protocol) server for the PYRSM package, enabling easy interaction with the statistical analysis functionality through tools like GitHub Copilot Chat in VS Code."
+    },
+    {
+      "type": "h2",
+      "text": "Features"
+    },
+    {
+      "type": "p",
+      "text": "The MCP server currently provides the following tools:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "**get_available_datasets**: Lists all available datasets in the PYRSM package",
+        "**load_dataset**: Loads a specific dataset by name",
+        "**generate_sample_data**: Creates sample data for statistical analysis",
+        "**single_mean_test**: Performs a single mean hypothesis test",
+        "**analyze_data**: Analyzes a dataset based on a natural language question"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Setup"
+    },
+    {
+      "type": "h3",
+      "text": "Prerequisites"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "VS Code with GitHub Copilot and GitHub Copilot Chat extensions",
+        "Python 3.12+",
+        "UV package manager"
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Installation"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install the required packages using UV:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "bash",
+      "text": "uv add \"mcp[cli]\""
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install PYRSM in development mode:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "bash",
+      "text": "uv pip install -e ."
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Create a `.vscode/mcp.json` file in your project directory with the following content:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "text": "{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Open the project in VS Code"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Usage"
+    },
+    {
+      "type": "h3",
+      "text": "Starting the Server"
+    },
+    {
+      "type": "p",
+      "text": "There are two ways to start the MCP server:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "**Through VS Code**:",
+        "VS Code will automatically detect the MCP server configuration in `.vscode/mcp.json`",
+        "Open GitHub Copilot Chat in VS Code",
+        "Enable the Agent mode (click on the robot icon in the chat input)",
+        "Choose \"PYRSM Statistical Analysis\" from the available MCP servers when prompted"
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "**Manually**:",
+        "Run the following command in the terminal:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "bash",
+      "text": "   uv run mcp dev mcp_server.py"
+    },
+    {
+      "type": "h3",
+      "text": "Using with GitHub Copilot Chat"
+    },
+    {
+      "type": "p",
+      "text": "Once the server is running, you can interact with it through GitHub Copilot Chat in VS Code."
+    },
+    {
+      "type": "p",
+      "text": "Here are some example prompts you can use:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Which datasets are available?\""
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Load the demand_uk dataset\""
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Is the demand column larger than 1750?\""
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Generate a sample dataset with 100 observations, a mean of 75, and a standard deviation of 10.\""
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Perform a single mean test to determine if the mean of the values is greater than 95.\""
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "\"Help me interpret the results of the single mean test.\""
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "Jupyter Notebook Integration"
+    },
+    {
+      "type": "p",
+      "text": "The MCP server includes special support for Jupyter notebooks in VS Code, allowing you to:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "List available datasets: Ask \"Which datasets are available?\"",
+        "Select a dataset: Say \"I want to use the [dataset name] dataset\"",
+        "Analyze data: Ask questions like \"Is the demand larger than 1750?\""
+      ]
+    },
+    {
+      "type": "p",
+      "text": "The server will generate code to be inserted into your Jupyter notebook cells, run the code, and show the results."
+    },
+    {
+      "type": "h4",
+      "text": "Jupyter Notebook Example Interactions"
+    },
+    {
+      "type": "p",
+      "text": "**Finding Available Datasets**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Which datasets are available?"
+    },
+    {
+      "type": "p",
+      "text": "**Loading a Specific Dataset**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Load the demand_uk dataset"
+    },
+    {
+      "type": "p",
+      "text": "**Analyzing Data**"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "Is the \"demand\" column larger than 1750?"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "What's the correlation between price and demand?"
+    },
+    {
+      "type": "h3",
+      "text": "Example Workflow"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Start a conversation with GitHub Copilot Chat",
+        "Enable the Agent mode (click on the robot icon in the chat input)",
+        "Select the PYRSM MCP server from the available tools",
+        "Ask Copilot to list available datasets:",
+        "Copilot will use the `get_available_datasets` tool to list the datasets",
+        "Ask Copilot to load a specific dataset:",
+        "Ask Copilot to analyze the data:",
+        "Copilot will generate and run code to answer your question, showing the results directly in your notebook"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "   Which datasets are available?"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "   Load the demand_uk dataset"
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "   Is the demand larger than 1750?"
+    },
+    {
+      "type": "h2",
+      "text": "Setting Up VS Code Integration"
+    },
+    {
+      "type": "p",
+      "text": "The PYRSM MCP server can be easily integrated with VS Code's native MCP support:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Create a `.vscode/mcp.json` file in your project with the following content:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "json",
+      "text": "{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Open VS Code Command Palette (Ctrl+Shift+P / Cmd+Shift+P) and type:"
+      ]
+    },
+    {
+      "type": "code",
+      "language": "",
+      "text": "   MCP: List Servers"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "You should see \"PYRSM Statistical Analysis\" in the list of available servers"
+      ]
+    },
+    {
+      "type": "ol",
+      "items": [
+        "In GitHub Copilot Chat, click on the robot icon to enable Agent mode, then select the PYRSM server from the list of available tools"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Extending the MCP Server"
+    },
+    {
+      "type": "p",
+      "text": "You can extend the server by adding more tools from the PYRSM package. To add a new tool:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add a new function decorator with `@mcp.tool()` in `mcp_server.py`",
+        "Define the function with appropriate parameters and return values",
+        "Restart the MCP server"
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Troubleshooting"
+    },
+    {
+      "type": "p",
+      "text": "If you encounter issues:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Make sure the MCP server is running",
+        "Check that VS Code can find the server configuration",
+        "Use Command Palette and \"MCP: List Servers\" to verify",
+        "Verify that all required packages are installed",
+        "Check the terminal output for any error messages from the MCP server",
+        "For Jupyter notebook integration, ensure that the notebook is open and cell execution is working",
+        "If VS Code doesn't detect the MCP server, try restarting VS Code"
+      ]
+    }
+  ],
+  "code_examples": [
+    "uv add \"mcp[cli]\"",
+    "uv pip install -e .",
+    "{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}",
+    "   uv run mcp dev mcp_server.py",
+    "Which datasets are available?",
+    "Load the demand_uk dataset",
+    "Is the \"demand\" column larger than 1750?",
+    "What's the correlation between price and demand?",
+    "   Which datasets are available?",
+    "   Load the demand_uk dataset",
+    "   Is the demand larger than 1750?",
+    "{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}",
+    "   MCP: List Servers"
+  ],
+  "raw_content": "# PYRSM MCP Server\n\nThis repository includes an MCP (Model Context Protocol) server for the PYRSM package, enabling easy interaction with the statistical analysis functionality through tools like GitHub Copilot Chat in VS Code.\n\n## Features\n\nThe MCP server currently provides the following tools:\n\n1. **get_available_datasets**: Lists all available datasets in the PYRSM package\n2. **load_dataset**: Loads a specific dataset by name\n3. **generate_sample_data**: Creates sample data for statistical analysis\n4. **single_mean_test**: Performs a single mean hypothesis test\n5. **analyze_data**: Analyzes a dataset based on a natural language question\n\n## Setup\n\n### Prerequisites\n\n- VS Code with GitHub Copilot and GitHub Copilot Chat extensions\n- Python 3.12+\n- UV package manager\n\n### Installation\n\n1. Install the required packages using UV:\n\n```bash\nuv add \"mcp[cli]\"\n```\n\n2. Install PYRSM in development mode:\n\n```bash\nuv pip install -e .\n```\n\n3. Create a `.vscode/mcp.json` file in your project directory with the following content:\n\n```json\n{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}\n```\n\n4. Open the project in VS Code\n\n## Usage\n\n### Starting the Server\n\nThere are two ways to start the MCP server:\n\n1. **Through VS Code**:\n   - VS Code will automatically detect the MCP server configuration in `.vscode/mcp.json`\n   - Open GitHub Copilot Chat in VS Code\n   - Enable the Agent mode (click on the robot icon in the chat input)\n   - Choose \"PYRSM Statistical Analysis\" from the available MCP servers when prompted\n\n2. **Manually**:\n   - Run the following command in the terminal:\n   ```bash\n   uv run mcp dev mcp_server.py\n   ```\n\n### Using with GitHub Copilot Chat\n\nOnce the server is running, you can interact with it through GitHub Copilot Chat in VS Code.\n\nHere are some example prompts you can use:\n\n1. \"Which datasets are available?\"\n\n2. \"Load the demand_uk dataset\"\n\n3. \"Is the demand column larger than 1750?\"\n\n4. \"Generate a sample dataset with 100 observations, a mean of 75, and a standard deviation of 10.\"\n\n5. \"Perform a single mean test to determine if the mean of the values is greater than 95.\"\n\n6. \"Help me interpret the results of the single mean test.\"\n\n### Jupyter Notebook Integration\n\nThe MCP server includes special support for Jupyter notebooks in VS Code, allowing you to:\n\n1. List available datasets: Ask \"Which datasets are available?\"\n2. Select a dataset: Say \"I want to use the [dataset name] dataset\"\n3. Analyze data: Ask questions like \"Is the demand larger than 1750?\"\n\nThe server will generate code to be inserted into your Jupyter notebook cells, run the code, and show the results.\n\n#### Jupyter Notebook Example Interactions\n\n**Finding Available Datasets**\n```\nWhich datasets are available?\n```\n\n**Loading a Specific Dataset**\n```\nLoad the demand_uk dataset\n```\n\n**Analyzing Data**\n```\nIs the \"demand\" column larger than 1750?\n```\n\n```\nWhat's the correlation between price and demand?\n```\n\n### Example Workflow\n\n1. Start a conversation with GitHub Copilot Chat\n2. Enable the Agent mode (click on the robot icon in the chat input)\n3. Select the PYRSM MCP server from the available tools\n4. Ask Copilot to list available datasets:\n   ```\n   Which datasets are available?\n   ```\n5. Copilot will use the `get_available_datasets` tool to list the datasets\n6. Ask Copilot to load a specific dataset:\n   ```\n   Load the demand_uk dataset\n   ```\n7. Ask Copilot to analyze the data:\n   ```\n   Is the demand larger than 1750?\n   ```\n8. Copilot will generate and run code to answer your question, showing the results directly in your notebook\n\n## Setting Up VS Code Integration\n\nThe PYRSM MCP server can be easily integrated with VS Code's native MCP support:\n\n1. Create a `.vscode/mcp.json` file in your project with the following content:\n\n```json\n{\n  \"servers\": {\n    \"PYRSM Statistical Analysis\": {\n      \"type\": \"stdio\",\n      \"command\": \"uv\",\n      \"args\": [\"run\", \"mcp\", \"dev\", \"mcp_server.py\"],\n      \"description\": \"MCP server for statistical analysis with PYRSM\"\n    }\n  }\n}\n```\n\n2. Open VS Code Command Palette (Ctrl+Shift+P / Cmd+Shift+P) and type:\n   ```\n   MCP: List Servers\n   ```\n\n3. You should see \"PYRSM Statistical Analysis\" in the list of available servers\n\n4. In GitHub Copilot Chat, click on the robot icon to enable Agent mode, then select the PYRSM server from the list of available tools\n\n## Extending the MCP Server\n\nYou can extend the server by adding more tools from the PYRSM package. To add a new tool:\n\n1. Add a new function decorator with `@mcp.tool()` in `mcp_server.py`\n2. Define the function with appropriate parameters and return values\n3. Restart the MCP server\n\n## Troubleshooting\n\nIf you encounter issues:\n\n1. Make sure the MCP server is running\n2. Check that VS Code can find the server configuration\n   - Use Command Palette and \"MCP: List Servers\" to verify\n3. Verify that all required packages are installed\n4. Check the terminal output for any error messages from the MCP server\n5. For Jupyter notebook integration, ensure that the notebook is open and cell execution is working\n6. If VS Code doesn't detect the MCP server, try restarting VS Code"
+}

@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "name": "mcp_server.py",
+    "path": "mcp_server.py",
+    "type": "file",
+    "size": 8300,
+    "sha": "41ec2425d141540b563da94147f880a1de03c8f0",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/mcp_server.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/mcp_server.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "docstring",
+      "text": "MCP Server for pyrsm package.\nThis server provides tools to perform statistical analysis using pyrsm.\n\nTo run:\n    mcp dev mcp_server.py"
+    },
+    {
+      "type": "import",
+      "text": "import io"
+    },
+    {
+      "type": "import",
+      "text": "import base64"
+    },
+    {
+      "type": "import",
+      "text": "import numpy as np"
+    },
+    {
+      "type": "import",
+      "text": "import pandas as pd"
+    },
+    {
+      "type": "import",
+      "text": "import matplotlib.pyplot as plt"
+    },
+    {
+      "type": "import",
+      "text": "from typing import Dict, List, Optional, Union, Literal, Any"
+    },
+    {
+      "type": "import",
+      "text": "from mcp.server.fastmcp import FastMCP"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.basics.single_mean import single_mean"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.example_data import load_data"
+    },
+    {
+      "type": "function",
+      "name": "get_available_datasets",
+      "text": "def get_available_datasets() -> Dict:"
+    },
+    {
+      "type": "docstring",
+      "text": "List all available datasets in the pyrsm package.\n    \n    Returns:\n        Dictionary containing information about the available datasets"
+    },
+    {
+      "type": "function",
+      "name": "load_dataset",
+      "text": "def load_dataset(dataset_name: str) -> Dict:"
+    },
+    {
+      "type": "docstring",
+      "text": "Load a specific dataset by name.\n    \n    Args:\n        dataset_name: Name of the dataset to load\n        \n    Returns:\n        Dictionary containing the dataset information and sample data"
+    },
+    {
+      "type": "function",
+      "name": "analyze_data",
+      "text": "def analyze_data(dataset_name: str, question: str) -> Dict:"
+    },
+    {
+      "type": "docstring",
+      "text": "Analyze a dataset based on a natural language question.\n    \n    Args:\n        dataset_name: Name of the dataset to analyze\n        question: The data analysis question to answer\n        \n    Returns:\n        Dictionary containing the analysis results and generated code"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.mcp.notebook_server import analyze_question"
+    },
+    {
+      "type": "function",
+      "name": "generate_sample_data",
+      "text": "def generate_sample_data(n: int = 50, mean: float = 100, std: float = 15, seed: int = 42) -> Dict:"
+    },
+    {
+      "type": "docstring",
+      "text": "Generate sample data for statistical analysis.\n    \n    Args:\n        n: Number of samples to generate\n        mean: Mean value of the normal distribution\n        std: Standard deviation of the normal distribution\n        seed: Random seed for reproducibility\n        \n    Returns:\n        Dictionary containing the generated data"
+    },
+    {
+      "type": "docstring",
+      "text": "Perform a single mean hypothesis test.\n    \n    Args:\n        data: Input data as a dictionary (if None, dataset_name must be provided)\n        dataset_name: Name of a dataset already loaded (if data is None)\n        var: Name of the variable/column to test\n        alt_hyp: Alternative hypothesis ('two-sided', 'greater', 'less')\n        conf: Confidence level (0-1)\n        comp_value: Comparison value for the test\n        include_plot: Whether to include a plot in the results\n        \n    Returns:\n        Dictionary containing the test results"
+    },
+    {
+      "type": "import",
+      "text": "import sys"
+    },
+    {
+      "type": "import",
+      "text": "import pyrsm as rsm"
+    },
+    {
+      "type": "import",
+      "text": "from pyrsm.basics.single_mean import single_mean"
+    }
+  ],
+  "code_examples": [
+    "\"\"\"\nMCP Server for pyrsm package.\nThis server provides tools to perform statistical analysis using pyrsm.\n\nTo run:\n    mcp dev mcp_server.py\n\"\"\"\n\nimport io\nimport base64\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom typing import Dict, List, Optional, Union, Literal, Any\n\nfrom mcp.server.fastmcp import FastMCP\n\nfrom pyrsm.basics.single_mean import single_mean\nfrom pyrsm.example_data import load_data\n\n# Initialize MCP server\nmcp = FastMCP(\"pyrsm\")\n\n# Dictionary to store loaded datasets in memory across calls\nsession_data = {}\n\n@mcp.tool()\ndef get_available_datasets() -> Dict:\n    \"\"\"\n    List all available datasets in the pyrsm package.\n    \n    Returns:\n        Dictionary containing information about the available datasets\n    \"\"\"\n    # Get all datasets\n    all_data, all_descriptions = load_data()\n    \n    # Format the result for display\n    datasets = []\n    \n    for name, data in all_data.items():\n        description = all_descriptions.get(name, \"No description available\")\n        \n        # Get just the first 100 characters of the description\n        short_description = description[:100] + \"...\" if len(description) > 100 else description\n        \n        datasets.append({\n            \"name\": name,\n            \"rows\": len(data),\n            \"columns\": len(data.columns),\n            \"description\": short_description,\n            \"column_names\": list(data.columns)\n        })\n    \n    return {\n        \"datasets\": datasets,\n        \"count\": len(datasets)\n    }\n\n@mcp.tool()\ndef load_dataset(dataset_name: str) -> Dict:\n    \"\"\"\n    Load a specific dataset by name.\n    \n    Args:\n        dataset_name: Name of the dataset to load\n        \n    Returns:\n        Dictionary containing the dataset information and sample data\n    \"\"\"\n    # Try to find which package the dataset is in\n    data = None\n    description = None\n    \n    for pkg in [\"data\", \"design\", \"basics\", \"model\", \"multivariate\"]:\n        try:\n            data, description = load_data(pkg=pkg, name=dataset_name)\n            break\n        except:\n            continue\n    \n    # If we can't find it by package, try loading it directly\n    if data is None:\n        try:\n            data, description = load_data(name=dataset_name)\n        except:\n            raise ValueError(f\"Dataset '{dataset_name}' not found\")\n    \n    # Store in session for future use\n    session_data[dataset_name] = data\n    \n    # Format the result\n    result = {\n        \"name\": dataset_name,\n        \"rows\": len(data),\n        \"columns\": len(data.columns),\n        \"column_names\": list(data.columns),\n        \"description\": description,\n        \"head\": data.head().to_dict(),\n        \"code_sample\": f\"import pyrsm as rsm\\n{dataset_name}, {dataset_name}_description = rsm.load_data(name='{dataset_name}')\"\n    }\n    \n    return result\n\n@mcp.tool()\ndef analyze_data(dataset_name: str, question: str) -> Dict:\n    \"\"\"\n    Analyze a dataset based on a natural language question.\n    \n    Args:\n        dataset_name: Name of the dataset to analyze\n        question: The data analysis question to answer\n        \n    Returns:\n        Dictionary containing the analysis results and generated code\n    \"\"\"\n    # Load the dataset if it's not already in session\n    if dataset_name not in session_data:\n        load_dataset(dataset_name)\n    \n    data = session_data[dataset_name]\n    \n    # Analyze the question and generate code\n    from pyrsm.mcp.notebook_server import analyze_question\n    \n    # Set the name attribute for the data\n    data.name = dataset_name\n    \n    # Generate code for the analysis\n    code, explanation = analyze_question(question, data)\n    \n    return {\n        \"dataset\": dataset_name,\n        \"question\": question,\n        \"explanation\": explanation,\n        \"generated_code\": code\n    }\n\n@mcp.tool()\ndef generate_sample_data(n: int = 50, mean: float = 100, std: float = 15, seed: int = 42) -> Dict:\n    \"\"\"\n    Generate sample data for statistical analysis.\n    \n    Args:\n        n: Number of samples to generate\n        mean: Mean value of the normal distribution\n        std: Standard deviation of the normal distribution\n        seed: Random seed for reproducibility\n        \n    Returns:\n        Dictionary containing the generated data\n    \"\"\"\n    np.random.seed(seed)\n    data = pd.DataFrame({\n        \"values\": np.random.normal(mean, std, n)\n    })\n    \n    # Store in session\n    dataset_name = f\"sample_data_{seed}\"\n    session_data[dataset_name] = data\n    \n    return {\n        \"name\": dataset_name,\n        \"data\": data.to_dict(),\n        \"summary\": {\n            \"mean\": float(data[\"values\"].mean()),\n            \"std\": float(data[\"values\"].std()),\n            \"min\": float(data[\"values\"].min()),\n            \"max\": float(data[\"values\"].max()),\n            \"n\": len(data),\n        },\n        \"code_sample\": f\"import pandas as pd\\nimport numpy as np\\n\\nnp.random.seed({seed})\\n{dataset_name} = pd.DataFrame({{\\n    \\\"values\\\": np.random.normal({mean}, {std}, {n})\\n}})\"\n    }\n\n@mcp.tool()\ndef single_mean_test(\n    data: Optional[Dict] = None,\n    dataset_name: Optional[str] = None,\n    var: str = \"values\",\n    alt_hyp: Literal[\"two-sided\", \"greater\", \"less\"] = \"two-sided\",\n    conf: float = 0.95,\n    comp_value: float = 0,\n    include_plot: bool = True\n) -> Dict:\n    \"\"\"\n    Perform a single mean hypothesis test.\n    \n    Args:\n        data: Input data as a dictionary (if None, dataset_name must be provided)\n        dataset_name: Name of a dataset already loaded (if data is None)\n        var: Name of the variable/column to test\n        alt_hyp: Alternative hypothesis ('two-sided', 'greater', 'less')\n        conf: Confidence level (0-1)\n        comp_value: Comparison value for the test\n        include_plot: Whether to include a plot in the results\n        \n    Returns:\n        Dictionary containing the test results\n    \"\"\"\n    # Determine the data source\n    if data is not None:\n        df = pd.DataFrame(data)\n    elif dataset_name is not None and dataset_name in session_data:\n        df = session_data[dataset_name]\n    else:\n        # If no data provided, generate sample data\n        sample_data = generate_sample_data()\n        df = pd.DataFrame(sample_data[\"data\"])\n        dataset_name = sample_data[\"name\"]\n    \n    # Set the name for code generation\n    df_name = dataset_name if dataset_name else \"data\"\n    \n    # Perform the test\n    sm_test = single_mean(df, var, alt_hyp, conf, comp_value)\n    \n    # Capture text output from summary method\n    buffer = io.StringIO()\n    import sys\n    original_stdout = sys.stdout\n    sys.stdout = buffer\n    sm_test.summary()\n    sys.stdout = original_stdout\n    summary_text = buffer.getvalue()\n    \n    # Generate code for the test\n    code = f\"\"\"\n# Single mean hypothesis test for {var}\nimport pyrsm as rsm\nfrom pyrsm.basics.single_mean import single_mean\n\n# Perform the test\ntest_result = single_mean({df_name}, \n                          var='{var}', \n                          alt_hyp='{alt_hyp}', \n                          conf={conf}, \n                          comp_value={comp_value})\n\n# Display summary\ntest_result.summary()\n\n# Create visualization\ntest_result.plot()\n\"\"\"\n    \n    # Create result dictionary\n    result = {\n        \"mean\": float(sm_test.mean),\n        \"t_value\": float(sm_test.t_val),\n        \"p_value\": float(sm_test.p_val),\n        \"confidence_interval\": [float(sm_test.ci[0]), float(sm_test.ci[1])],\n        \"standard_deviation\": float(sm_test.sd),\n        \"standard_error\": float(sm_test.se),\n        \"sample_size\": int(sm_test.n),\n        \"missing_values\": int(sm_test.n_missing),\n        \"degrees_freedom\": int(sm_test.df),\n        \"test_result\": \"Reject H0\" if sm_test.p_val < (1 - conf) else \"Fail to reject H0\",\n        \"summary_text\": summary_text,\n        \"generated_code\": code\n    }\n    \n    # Generate and include plot if requested\n    if include_plot:\n        plt.figure(figsize=(10, 6))\n        sm_test.plot()\n        \n        # Convert plot to base64 string\n        img_buffer = io.BytesIO()\n        plt.savefig(img_buffer, format='png')\n        img_buffer.seek(0)\n        img_str = base64.b64encode(img_buffer.read()).decode('utf-8')\n        plt.close()\n        \n        result[\"plot\"] = img_str\n    \n    return result\n\nif __name__ == \"__main__\":\n    mcp.run()"
+  ],
+  "raw_content": "\"\"\"\nMCP Server for pyrsm package.\nThis server provides tools to perform statistical analysis using pyrsm.\n\nTo run:\n    mcp dev mcp_server.py\n\"\"\"\n\nimport io\nimport base64\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom typing import Dict, List, Optional, Union, Literal, Any\n\nfrom mcp.server.fastmcp import FastMCP\n\nfrom pyrsm.basics.single_mean import single_mean\nfrom pyrsm.example_data import load_data\n\n# Initialize MCP server\nmcp = FastMCP(\"pyrsm\")\n\n# Dictionary to store loaded datasets in memory across calls\nsession_data = {}\n\n@mcp.tool()\ndef get_available_datasets() -> Dict:\n    \"\"\"\n    List all available datasets in the pyrsm package.\n    \n    Returns:\n        Dictionary containing information about the available datasets\n    \"\"\"\n    # Get all datasets\n    all_data, all_descriptions = load_data()\n    \n    # Format the result for display\n    datasets = []\n    \n    for name, data in all_data.items():\n        description = all_descriptions.get(name, \"No description available\")\n        \n        # Get just the first 100 characters of the description\n        short_description = description[:100] + \"...\" if len(description) > 100 else description\n        \n        datasets.append({\n            \"name\": name,\n            \"rows\": len(data),\n            \"columns\": len(data.columns),\n            \"description\": short_description,\n            \"column_names\": list(data.columns)\n        })\n    \n    return {\n        \"datasets\": datasets,\n        \"count\": len(datasets)\n    }\n\n@mcp.tool()\ndef load_dataset(dataset_name: str) -> Dict:\n    \"\"\"\n    Load a specific dataset by name.\n    \n    Args:\n        dataset_name: Name of the dataset to load\n        \n    Returns:\n        Dictionary containing the dataset information and sample data\n    \"\"\"\n    # Try to find which package the dataset is in\n    data = None\n    description = None\n    \n    for pkg in [\"data\", \"design\", \"basics\", \"model\", \"multivariate\"]:\n        try:\n            data, description = load_data(pkg=pkg, name=dataset_name)\n            break\n        except:\n            continue\n    \n    # If we can't find it by package, try loading it directly\n    if data is None:\n        try:\n            data, description = load_data(name=dataset_name)\n        except:\n            raise ValueError(f\"Dataset '{dataset_name}' not found\")\n    \n    # Store in session for future use\n    session_data[dataset_name] = data\n    \n    # Format the result\n    result = {\n        \"name\": dataset_name,\n        \"rows\": len(data),\n        \"columns\": len(data.columns),\n        \"column_names\": list(data.columns),\n        \"description\": description,\n        \"head\": data.head().to_dict(),\n        \"code_sample\": f\"import pyrsm as rsm\\n{dataset_name}, {dataset_name}_description = rsm.load_data(name='{dataset_name}')\"\n    }\n    \n    return result\n\n@mcp.tool()\ndef analyze_data(dataset_name: str, question: str) -> Dict:\n    \"\"\"\n    Analyze a dataset based on a natural language question.\n    \n    Args:\n        dataset_name: Name of the dataset to analyze\n        question: The data analysis question to answer\n        \n    Returns:\n        Dictionary containing the analysis results and generated code\n    \"\"\"\n    # Load the dataset if it's not already in session\n    if dataset_name not in session_data:\n        load_dataset(dataset_name)\n    \n    data = session_data[dataset_name]\n    \n    # Analyze the question and generate code\n    from pyrsm.mcp.notebook_server import analyze_question\n    \n    # Set the name attribute for the data\n    data.name = dataset_name\n    \n    # Generate code for the analysis\n    code, explanation = analyze_question(question, data)\n    \n    return {\n        \"dataset\": dataset_name,\n        \"question\": question,\n        \"explanation\": explanation,\n        \"generated_code\": code\n    }\n\n@mcp.tool()\ndef generate_sample_data(n: int = 50, mean: float = 100, std: float = 15, seed: int = 42) -> Dict:\n    \"\"\"\n    Generate sample data for statistical analysis.\n    \n    Args:\n        n: Number of samples to generate\n        mean: Mean value of the normal distribution\n        std: Standard deviation of the normal distribution\n        seed: Random seed for reproducibility\n        \n    Returns:\n        Dictionary containing the generated data\n    \"\"\"\n    np.random.seed(seed)\n    data = pd.DataFrame({\n        \"values\": np.random.normal(mean, std, n)\n    })\n    \n    # Store in session\n    dataset_name = f\"sample_data_{seed}\"\n    session_data[dataset_name] = data\n    \n    return {\n        \"name\": dataset_name,\n        \"data\": data.to_dict(),\n        \"summary\": {\n            \"mean\": float(data[\"values\"].mean()),\n            \"std\": float(data[\"values\"].std()),\n            \"min\": float(data[\"values\"].min()),\n            \"max\": float(data[\"values\"].max()),\n            \"n\": len(data),\n        },\n        \"code_sample\": f\"import pandas as pd\\nimport numpy as np\\n\\nnp.random.seed({seed})\\n{dataset_name} = pd.DataFrame({{\\n    \\\"values\\\": np.random.normal({mean}, {std}, {n})\\n}})\"\n    }\n\n@mcp.tool()\ndef single_mean_test(\n    data: Optional[Dict] = None,\n    dataset_name: Optional[str] = None,\n    var: str = \"values\",\n    alt_hyp: Literal[\"two-sided\", \"greater\", \"less\"] = \"two-sided\",\n    conf: float = 0.95,\n    comp_value: float = 0,\n    include_plot: bool = True\n) -> Dict:\n    \"\"\"\n    Perform a single mean hypothesis test.\n    \n    Args:\n        data: Input data as a dictionary (if None, dataset_name must be provided)\n        dataset_name: Name of a dataset already loaded (if data is None)\n        var: Name of the variable/column to test\n        alt_hyp: Alternative hypothesis ('two-sided', 'greater', 'less')\n        conf: Confidence level (0-1)\n        comp_value: Comparison value for the test\n        include_plot: Whether to include a plot in the results\n        \n    Returns:\n        Dictionary containing the test results\n    \"\"\"\n    # Determine the data source\n    if data is not None:\n        df = pd.DataFrame(data)\n    elif dataset_name is not None and dataset_name in session_data:\n        df = session_data[dataset_name]\n    else:\n        # If no data provided, generate sample data\n        sample_data = generate_sample_data()\n        df = pd.DataFrame(sample_data[\"data\"])\n        dataset_name = sample_data[\"name\"]\n    \n    # Set the name for code generation\n    df_name = dataset_name if dataset_name else \"data\"\n    \n    # Perform the test\n    sm_test = single_mean(df, var, alt_hyp, conf, comp_value)\n    \n    # Capture text output from summary method\n    buffer = io.StringIO()\n    import sys\n    original_stdout = sys.stdout\n    sys.stdout = buffer\n    sm_test.summary()\n    sys.stdout = original_stdout\n    summary_text = buffer.getvalue()\n    \n    # Generate code for the test\n    code = f\"\"\"\n# Single mean hypothesis test for {var}\nimport pyrsm as rsm\nfrom pyrsm.basics.single_mean import single_mean\n\n# Perform the test\ntest_result = single_mean({df_name}, \n                          var='{var}', \n                          alt_hyp='{alt_hyp}', \n                          conf={conf}, \n                          comp_value={comp_value})\n\n# Display summary\ntest_result.summary()\n\n# Create visualization\ntest_result.plot()\n\"\"\"\n    \n    # Create result dictionary\n    result = {\n        \"mean\": float(sm_test.mean),\n        \"t_value\": float(sm_test.t_val),\n        \"p_value\": float(sm_test.p_val),\n        \"confidence_interval\": [float(sm_test.ci[0]), float(sm_test.ci[1])],\n        \"standard_deviation\": float(sm_test.sd),\n        \"standard_error\": float(sm_test.se),\n        \"sample_size\": int(sm_test.n),\n        \"missing_values\": int(sm_test.n_missing),\n        \"degrees_freedom\": int(sm_test.df),\n        \"test_result\": \"Reject H0\" if sm_test.p_val < (1 - conf) else \"Fail to reject H0\",\n        \"summary_text\": summary_text,\n        \"generated_code\": code\n    }\n    \n    # Generate and include plot if requested\n    if include_plot:\n        plt.figure(figsize=(10, 6))\n        sm_test.plot()\n        \n        # Convert plot to base64 string\n        img_buffer = io.BytesIO()\n        plt.savefig(img_buffer, format='png')\n        img_buffer.seek(0)\n        img_str = base64.b64encode(img_buffer.read()).decode('utf-8')\n        plt.close()\n        \n        result[\"plot\"] = img_str\n    \n    return result\n\nif __name__ == \"__main__\":\n    mcp.run()"
+}

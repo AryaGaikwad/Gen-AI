@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.radiant.model.rst",
+    "path": "docs/pyrsm.radiant.model.rst",
+    "type": "file",
+    "size": 1058,
+    "sha": "7a66cf31d062717ae820c25ba475b164a269f9a8",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.model.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.radiant.model.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.radiant.model package\n===========================\n\nSubmodules\n----------\n\npyrsm.radiant.model.logistic module\n-----------------------------------\n\n.. automodule:: pyrsm.radiant.model.logistic\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.mlp module\n------------------------------\n\n.. automodule:: pyrsm.radiant.model.mlp\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.model\\_utils module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.model.model_utils\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.regress module\n----------------------------------\n\n.. automodule:: pyrsm.radiant.model.regress\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.rforest module\n----------------------------------\n\n.. automodule:: pyrsm.radiant.model.rforest\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.radiant.model package\n===========================\n\nSubmodules\n----------\n\npyrsm.radiant.model.logistic module\n-----------------------------------\n\n.. automodule:: pyrsm.radiant.model.logistic\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.mlp module\n------------------------------\n\n.. automodule:: pyrsm.radiant.model.mlp\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.model\\_utils module\n---------------------------------------\n\n.. automodule:: pyrsm.radiant.model.model_utils\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.regress module\n----------------------------------\n\n.. automodule:: pyrsm.radiant.model.regress\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.model.rforest module\n----------------------------------\n\n.. automodule:: pyrsm.radiant.model.rforest\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant.model\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

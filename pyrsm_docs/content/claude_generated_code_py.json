@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "name": "claude_generated_code.py",
+    "path": "claude_generated_code.py",
+    "type": "file",
+    "size": 1214,
+    "sha": "cae52486c17264ba5ef98015ea124166a702e423",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/claude_generated_code.py",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/claude_generated_code.py",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "import",
+      "text": "import pandas as pd"
+    },
+    {
+      "type": "import",
+      "text": "import matplotlib.pyplot as plt"
+    },
+    {
+      "type": "import",
+      "text": "import numpy as np"
+    },
+    {
+      "type": "import",
+      "text": "import pyrsm as rsm"
+    },
+    {
+      "type": "import",
+      "text": "import matplotlib.pyplot as plt"
+    }
+  ],
+  "code_examples": [
+    "# Generated code for: Is demand greater than 1750?\n# Dataset: demand_uk\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pyrsm as rsm\n\n# Load the dataset\ndemand_uk, demand_uk_description = rsm.load_data(name='demand_uk')\n\n\n# Check if values in 'demand' are greater than 1750.0\nimport matplotlib.pyplot as plt\n\n# Calculate basic statistics\ncolumn_data = demand_uk['demand']\nmean_value = column_data.mean()\ngreater_than_count = (column_data > 1750.0).sum()\npercentage = (greater_than_count / len(column_data)) * 100\n\n# Display results\nprint(f\"Mean of 'demand': {mean_value:.2f}\")\nprint(f\"Number of values > 1750.0: {greater_than_count} of {len(column_data)}\")\nprint(f\"Percentage greater than 1750.0: {percentage:.2f}%\")\n\n# Create a histogram to visualize the distribution\nplt.figure(figsize=(10, 6))\nplt.hist(column_data, bins=20, alpha=0.7, color='skyblue')\nplt.axvline(x=1750.0, color='red', linestyle='--', \n           label=f'Threshold: 1750.0')\nplt.axvline(x=mean_value, color='green', linestyle='-', \n           label=f'Mean: {mean_value:.2f}')\nplt.title(f\"Distribution of 'demand'\")\nplt.xlabel(f'demand')\nplt.ylabel('Frequency')\nplt.legend()\nplt.grid(True, alpha=0.3)\nplt.show()\n"
+  ],
+  "raw_content": "# Generated code for: Is demand greater than 1750?\n# Dataset: demand_uk\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pyrsm as rsm\n\n# Load the dataset\ndemand_uk, demand_uk_description = rsm.load_data(name='demand_uk')\n\n\n# Check if values in 'demand' are greater than 1750.0\nimport matplotlib.pyplot as plt\n\n# Calculate basic statistics\ncolumn_data = demand_uk['demand']\nmean_value = column_data.mean()\ngreater_than_count = (column_data > 1750.0).sum()\npercentage = (greater_than_count / len(column_data)) * 100\n\n# Display results\nprint(f\"Mean of 'demand': {mean_value:.2f}\")\nprint(f\"Number of values > 1750.0: {greater_than_count} of {len(column_data)}\")\nprint(f\"Percentage greater than 1750.0: {percentage:.2f}%\")\n\n# Create a histogram to visualize the distribution\nplt.figure(figsize=(10, 6))\nplt.hist(column_data, bins=20, alpha=0.7, color='skyblue')\nplt.axvline(x=1750.0, color='red', linestyle='--', \n           label=f'Threshold: 1750.0')\nplt.axvline(x=mean_value, color='green', linestyle='-', \n           label=f'Mean: {mean_value:.2f}')\nplt.title(f\"Distribution of 'demand'\")\nplt.xlabel(f'demand')\nplt.ylabel('Frequency')\nplt.legend()\nplt.grid(True, alpha=0.3)\nplt.show()\n"
+}

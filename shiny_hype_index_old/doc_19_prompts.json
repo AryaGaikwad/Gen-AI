@@ -1,0 +1,7 @@
+[
+  "How can I programmatically update the UI based on user input in Shiny for Python?",
+  "What is the difference between dynamic UI, conditional UI, and updating inputs in Shiny for Python?",
+  "How can I hide UI elements based on a JavaScript condition in Shiny for Python?",
+  "When should I use @render.ui versus @render.express in Shiny for Python?",
+  "Is updating inputs or dynamic UI more efficient for updating UI components in Shiny for Python?"
+]

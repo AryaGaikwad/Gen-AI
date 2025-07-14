@@ -1,0 +1,7 @@
+[
+  "What are the three types of UI components provided by Shiny for Python?",
+  "How are input components in Shiny typically defined and used in the code?",
+  "What is a requirement for output components in Shiny when using a function decorated by a @render.* decorator?",
+  "How does one arrange two sliders in a row using layout components in Shiny for Python?",
+  "How are display messages like notifications and modals typically managed in Shiny applications?"
+]

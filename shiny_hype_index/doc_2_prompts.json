@@ -1,7 +1,7 @@
 [
-  "How can I quickly build beautiful AI apps like chatbots using Shiny for Python?",
-  "What options do I have for deploying my Shiny app once it's ready for production?",
-  "Is it possible to create sophisticated web apps in pure Python without requiring JavaScript with Shiny?",
-  "How does the reactivity feature in Shiny help in developing sophisticated web applications efficiently?",
-  "What are some examples of Python packages that can be integrated with Shiny to enhance data visualization capabilities?"
+  "What are the benefits of using Shiny for Python in terms of building web applications?",
+  "How does Shiny for Python handle scalability and reactivity in web application development?",
+  "Can Shiny for Python be used to create AI applications, such as chatbots and streaming interfaces?",
+  "How can Shiny for Python help in transitioning a demo application into a production-ready application without changing frameworks?",
+  "What deployment options are available for Shiny applications built with Python, according to the documentation?"
 ]

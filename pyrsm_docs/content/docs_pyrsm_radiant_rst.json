@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "pyrsm.radiant.rst",
+    "path": "docs/pyrsm.radiant.rst",
+    "type": "file",
+    "size": 608,
+    "sha": "9e731230732dd174c5227f58628f37de1bd1a848",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/pyrsm.radiant.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/pyrsm.radiant.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "pyrsm.radiant package\n=====================\n\nSubpackages\n-----------\n\n.. toctree::\n   :maxdepth: 4\n\n   pyrsm.radiant.basics\n   pyrsm.radiant.data\n   pyrsm.radiant.model\n\nSubmodules\n----------\n\npyrsm.radiant.radiant module\n----------------------------\n\n.. automodule:: pyrsm.radiant.radiant\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.utils module\n--------------------------\n\n.. automodule:: pyrsm.radiant.utils\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": "pyrsm.radiant package\n=====================\n\nSubpackages\n-----------\n\n.. toctree::\n   :maxdepth: 4\n\n   pyrsm.radiant.basics\n   pyrsm.radiant.data\n   pyrsm.radiant.model\n\nSubmodules\n----------\n\npyrsm.radiant.radiant module\n----------------------------\n\n.. automodule:: pyrsm.radiant.radiant\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\npyrsm.radiant.utils module\n--------------------------\n\n.. automodule:: pyrsm.radiant.utils\n   :members:\n   :undoc-members:\n   :show-inheritance:\n\nModule contents\n---------------\n\n.. automodule:: pyrsm.radiant\n   :members:\n   :undoc-members:\n   :show-inheritance:\n"
+}

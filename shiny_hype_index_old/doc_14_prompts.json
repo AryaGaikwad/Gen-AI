@@ -1,0 +1,7 @@
+[
+  "What are some limitations of Large Language Models (LLMs) that can be addressed by equipping them with the ability to call tools/functions?",
+  "How can a Shiny user display tool call information in the Shiny UI?",
+  "What are some benefits of combining tool calling with reactivity in a Shiny app?",
+  "How can a Shiny user customize the display of tool call results in their application?",
+  "Why is it important for a tool function to include type hints and a docstring when equipping an LLM with additional functions?"
+]

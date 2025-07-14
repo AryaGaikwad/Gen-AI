@@ -1,0 +1,7 @@
+[
+  "What are the three general approaches to addressing the problem of large language models not having the necessary information to answer a user's question?",
+  "What is the core concept of Retrieval-Augmented Generation (RAG) in the context of providing additional context to a large language model?",
+  "What are the two main factors that determine similarity when implementing RAG for a user query?",
+  "Which embedding model is used in the basic example for implementing RAG, and why is it chosen?",
+  "How can a user scale up the basic RAG example to better match their use case, in terms of embedding model, similarity metric, and document storage/retrieval efficiency?"
+]

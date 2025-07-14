@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Shiny Layouts – Shiny for Python",
+    "description": "",
+    "url": "layouts/"
+  },
+  "content": [
+    {
+      "type": "h2",
+      "text": "Shiny Layouts"
+    },
+    {
+      "type": "p",
+      "text": "Layouts allow the simplest or most complicated app to be useable and scalable. Is it bursting at the seams with content? Quickly change the layout for a fresh start. Fill these layouts with Shiny Components to make your app reactive and interactive."
+    },
+    {
+      "type": "h2",
+      "text": "Navbars"
+    },
+    {
+      "type": "p",
+      "text": "A navbar adds a navigation bar to your app, allowing users to easily navigate your app."
+    },
+    {
+      "type": "p",
+      "text": "Learn Navbars"
+    },
+    {
+      "type": "h2",
+      "text": "Sidebars"
+    },
+    {
+      "type": "p",
+      "text": "A sidebar layout creates a sidebar, typically used for inputs, and a large main area, typically used for outputs."
+    },
+    {
+      "type": "p",
+      "text": "Learn Sidebars"
+    },
+    {
+      "type": "h2",
+      "text": "Tabs"
+    },
+    {
+      "type": "p",
+      "text": "Tabs and navigation allow you to create apps that have multiple pages."
+    },
+    {
+      "type": "p",
+      "text": "Learn Tabs"
+    },
+    {
+      "type": "h2",
+      "text": "Panels & Cards"
+    },
+    {
+      "type": "p",
+      "text": "Use panels and cards to define areas of related content."
+    },
+    {
+      "type": "p",
+      "text": "Learn Panels & Cards"
+    },
+    {
+      "type": "h2",
+      "text": "Arrange Elements"
+    },
+    {
+      "type": "p",
+      "text": "Use rows and columns to create your own layout for every device size."
+    },
+    {
+      "type": "p",
+      "text": "Arrange Elements"
+    }
+  ],
+  "code_examples": [],
+  "toc": []
+}

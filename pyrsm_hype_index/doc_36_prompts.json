@@ -1,0 +1,7 @@
+[
+  "What libraries are being imported in the provided code example?",
+  "What is the purpose of the 'goodness' class in the code example?",
+  "What parameters are accepted by the __init__ method of the 'goodness' class?",
+  "What type of data can be passed to the 'data' parameter in the __init__ method of the 'goodness' class?",
+  "What is the default value for the 'probs' parameter in the __init__ method of the 'goodness' class?"
+]

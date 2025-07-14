@@ -1,0 +1,7 @@
+[
+  "What modules are being imported in the provided code example?",
+  "What is the purpose of the 'compare_means' class in the code example?",
+  "Where can I find a notebook with a worked example of the comparison of means hypothesis testing using this class?",
+  "What is the role of the 'sig_stars' function from the 'model' module in the provided code?",
+  "How are the 'check_dataframe' and 'ifelse' functions being utilized in the 'compare_means' class?"
+]

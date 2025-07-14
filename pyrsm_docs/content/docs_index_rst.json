@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "name": "index.rst",
+    "path": "docs/index.rst",
+    "type": "file",
+    "size": 492,
+    "sha": "085c61000973cfb9c33224143f4691b92a7434ab",
+    "url": "https://github.com/vnijs/pyrsm/blob/main/docs/index.rst",
+    "download_url": "https://raw.githubusercontent.com/vnijs/pyrsm/main/docs/index.rst",
+    "description": ""
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": ".. pyrsm documentation master file, created by\n   sphinx-quickstart on Tue Oct 15 23:06:59 2024.\n   You can adapt this file completely to your liking, but it should at least\n   contain the root `toctree` directive.\n\npyrsm documentation\n===================\n\nAdd your content using ``reStructuredText`` syntax. See the\n`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_\ndocumentation for details.\n\n\n.. toctree::\n   :maxdepth: 2\n   :caption: Contents:\n\n"
+    }
+  ],
+  "code_examples": [],
+  "raw_content": ".. pyrsm documentation master file, created by\n   sphinx-quickstart on Tue Oct 15 23:06:59 2024.\n   You can adapt this file completely to your liking, but it should at least\n   contain the root `toctree` directive.\n\npyrsm documentation\n===================\n\nAdd your content using ``reStructuredText`` syntax. See the\n`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_\ndocumentation for details.\n\n\n.. toctree::\n   :maxdepth: 2\n   :caption: Contents:\n\n"
+}

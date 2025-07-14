@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "title": "Panels and cards – Shiny for Python",
+    "description": "Use panels and cards to define areas of related content in your Shiny app.",
+    "url": "layouts/panels-cards"
+  },
+  "content": [
+    {
+      "type": "h1",
+      "text": "Panels and cards"
+    },
+    {
+      "type": "p",
+      "text": "Use panels and cards to define areas of related content in your Shiny app."
+    },
+    {
+      "type": "p",
+      "text": "Use panels and cards to define areas of related content."
+    },
+    {
+      "type": "h2",
+      "text": "Relevant Functions"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "ui.card ui.card(*args, full_screen=False, height=None, max_height=None, min_height=None, fill=True, class_=None, **kwargs)",
+        "ui.card_footer ui.card_footer(*args, **kwargs)",
+        "ui.card_header ui.card_header(*args, container=tags.div, **kwargs)",
+        "ui.panel_absolute ui.panel_absolute(*args, top=None, left=None, right=None, bottom=None, width=None, height=None, draggable=False, fixed=False, cursor='auto', **kwargs)",
+        "ui.panel_fixed ui.panel_fixed(*args, **kwargs)",
+        "ui.panel_well ui.panel_well(*args, **kwargs)"
+      ]
+    },
+    {
+      "type": "p",
+      "text": "ui.card ui.card(*args, full_screen=False, height=None, max_height=None, min_height=None, fill=True, class_=None, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.card_footer ui.card_footer(*args, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.card_header ui.card_header(*args, container=tags.div, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.panel_absolute ui.panel_absolute(*args, top=None, left=None, right=None, bottom=None, width=None, height=None, draggable=False, fixed=False, cursor='auto', **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.panel_fixed ui.panel_fixed(*args, **kwargs)"
+    },
+    {
+      "type": "p",
+      "text": "ui.panel_well ui.panel_well(*args, **kwargs)"
+    },
+    {
+      "type": "h2",
+      "text": "Floating panel"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from functools import partial\n\nfrom htmltools import css\nfrom shiny.express import ui\nfrom shiny.ui import page_fillable\n\npage_style = css(\n    background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n    background_repeat=\"no-repeat\",\n    background_size=\"cover\",\n    background_position=\"center bottom\",\n)\n\nui.page_opts(page_fn=partial(page_fillable, style=page_style))\n\nwith ui.panel_absolute(  \n    width=\"300px\",  \n    right=\"50px\",  \n    top=\"50px\",  \n    draggable=True,  \n):  \n    with ui.panel_well():\n        ui.h2(\"Draggable panel\")\n        \"Move this panel anywhere you want.\""
+    },
+    {
+      "type": "code",
+      "text": "from htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to create an app that has a panel floating over a main image."
+    },
+    {
+      "type": "p",
+      "text": "First, to create the floating panel:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Pass ui.panel_absolute() as the second argument of your Shiny UI page method, after ui.img(). Pass elements that you want to appear inside the panel to ui.panel_absolute().",
+        "Position the panel using the top, bottom, left, and/or right parameters. Set the size of the panel using the height and/or width parameters.",
+        "If you want the panel to be draggable, set the draggable parameter to True."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Pass ui.panel_absolute() as the second argument of your Shiny UI page method, after ui.img(). Pass elements that you want to appear inside the panel to ui.panel_absolute()."
+    },
+    {
+      "type": "p",
+      "text": "Position the panel using the top, bottom, left, and/or right parameters. Set the size of the panel using the height and/or width parameters."
+    },
+    {
+      "type": "p",
+      "text": "If you want the panel to be draggable, set the draggable parameter to True."
+    },
+    {
+      "type": "p",
+      "text": "In the example above, we used CSS to add a scaling background image to the page. You can also use ui.img() to create this effect:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Pass ui.img() to any Shiny UI page method (e.g., ui.page_fluid()). ui.img() creates an image.",
+        "Pass the path or URL of your desired image to ui.img()’s src parameter. Set additional parameters to control the appearance of the image (e.g., width and height)."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Pass ui.img() to any Shiny UI page method (e.g., ui.page_fluid()). ui.img() creates an image."
+    },
+    {
+      "type": "p",
+      "text": "Pass the path or URL of your desired image to ui.img()’s src parameter. Set additional parameters to control the appearance of the image (e.g., width and height)."
+    },
+    {
+      "type": "p",
+      "text": "See also: ui.panel_fixed(). ui.panel_fixed() is equivalent to calling ui.panel_absolute() with fixed=True (i.e., the panel does not scroll with the rest of the page)."
+    },
+    {
+      "type": "h2",
+      "text": "Content divided by cards"
+    },
+    {
+      "type": "code",
+      "text": "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Express",
+        "Core"
+      ]
+    },
+    {
+      "type": "code",
+      "text": "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns():  \n    with ui.card():  \n        ui.card_header(\"Card 1 header\")\n        ui.p(\"Card 1 body\")\n        ui.input_slider(\"slider\", \"Slider\", 0, 10, 5)\n\n    with ui.card():  \n        ui.card_header(\"Card 2 header\")\n        ui.p(\"Card 2 body\")\n        ui.input_text(\"text\", \"Add text\", \"\")"
+    },
+    {
+      "type": "code",
+      "text": "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+    },
+    {
+      "type": "p",
+      "text": "Cards are general purpose containers used to group related UI elements together with a border and optional padding."
+    },
+    {
+      "type": "p",
+      "text": "Follow these steps to create an app with content separated into cards:"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Add ui.card() inside any Shiny UI page method (e.g., ui.page_fluid()) to create a card. Add additional cards by adding additional calls to ui.card().",
+        "Define the contents of each card. Inside ui.card(), pass elements that you would like to appear inside the card (e.g., inputs, text). You can also use ui.card_header() and ui.card_footer() to create a card header and footer.",
+        "Control the appearance and functionality of each card by passing additional arguments to ui.card(). For example, you can set full_screen to True to allow the user to expand the card to fullscreen, or control the height of the card with the height parameter."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Add ui.card() inside any Shiny UI page method (e.g., ui.page_fluid()) to create a card. Add additional cards by adding additional calls to ui.card()."
+    },
+    {
+      "type": "p",
+      "text": "Define the contents of each card. Inside ui.card(), pass elements that you would like to appear inside the card (e.g., inputs, text). You can also use ui.card_header() and ui.card_footer() to create a card header and footer."
+    },
+    {
+      "type": "p",
+      "text": "Control the appearance and functionality of each card by passing additional arguments to ui.card(). For example, you can set full_screen to True to allow the user to expand the card to fullscreen, or control the height of the card with the height parameter."
+    }
+  ],
+  "code_examples": [
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from functools import partial\n\nfrom htmltools import css\nfrom shiny.express import ui\nfrom shiny.ui import page_fillable\n\npage_style = css(\n    background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n    background_repeat=\"no-repeat\",\n    background_size=\"cover\",\n    background_position=\"center bottom\",\n)\n\nui.page_opts(page_fn=partial(page_fillable, style=page_style))\n\nwith ui.panel_absolute(  \n    width=\"300px\",  \n    right=\"50px\",  \n    top=\"50px\",  \n    draggable=True,  \n):  \n    with ui.panel_well():\n        ui.h2(\"Draggable panel\")\n        \"Move this panel anywhere you want.\"",
+    "from functools import partial\n\nfrom htmltools import css\nfrom shiny.express import ui\nfrom shiny.ui import page_fillable\n\npage_style = css(\n    background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n    background_repeat=\"no-repeat\",\n    background_size=\"cover\",\n    background_position=\"center bottom\",\n)\n\nui.page_opts(page_fn=partial(page_fillable, style=page_style))\n\nwith ui.panel_absolute(  \n    width=\"300px\",  \n    right=\"50px\",  \n    top=\"50px\",  \n    draggable=True,  \n):  \n    with ui.panel_well():\n        ui.h2(\"Draggable panel\")\n        \"Move this panel anywhere you want.\"",
+    "from htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from htmltools import css\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.panel_absolute(  \n        ui.panel_well(\n            ui.panel_title(\"Draggable panel\"),\n            \"Move this panel anywhere you want.\",\n        ),\n        width=\"300px\",  \n        right=\"50px\",  \n        top=\"50px\",  \n        draggable=True,  \n    ),  \n    style=css(\n        background_image=\"url(https://unsplash.com/photos/XKXGghL7GQc/download?force=true&w=1920)\",\n        background_repeat=\"no-repeat\",\n        background_size=\"cover\",\n        background_position=\"center bottom\",\n    ),\n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [viewer]\n#| layout: horizontal\n#| viewerHeight: 320\n\n## file: app.py\nfrom shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)\n",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns():  \n    with ui.card():  \n        ui.card_header(\"Card 1 header\")\n        ui.p(\"Card 1 body\")\n        ui.input_slider(\"slider\", \"Slider\", 0, 10, 5)\n\n    with ui.card():  \n        ui.card_header(\"Card 2 header\")\n        ui.p(\"Card 2 body\")\n        ui.input_text(\"text\", \"Add text\", \"\")",
+    "from shiny.express import ui\n\nui.page_opts(fillable=True)\n\nwith ui.layout_columns():  \n    with ui.card():  \n        ui.card_header(\"Card 1 header\")\n        ui.p(\"Card 1 body\")\n        ui.input_slider(\"slider\", \"Slider\", 0, 10, 5)\n\n    with ui.card():  \n        ui.card_header(\"Card 2 header\")\n        ui.p(\"Card 2 body\")\n        ui.input_text(\"text\", \"Add text\", \"\")",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)",
+    "from shiny import App, ui\n\napp_ui = ui.page_fillable(\n    ui.layout_columns(  \n        ui.card(  \n            ui.card_header(\"Card 1 header\"),\n            ui.p(\"Card 1 body\"),\n            ui.input_slider(\"slider\", \"Slider\", 0, 10, 5),\n        ),  \n        ui.card(  \n            ui.card_header(\"Card 2 header\"),\n            ui.p(\"Card 2 body\"),\n            ui.input_text(\"text\", \"Add text\", \"\"),\n        ),  \n    )  \n)\n\n\ndef server(input, output, session):\n    pass\n\n\napp = App(app_ui, server)"
+  ],
+  "toc": [
+    {
+      "title": "LAYOUTS",
+      "url": "../../layouts/index.html"
+    },
+    {
+      "title": "Navbars"
+    },
+    {
+      "title": "Navbar at Top",
+      "url": "../../layouts/navbars/index.html#navbar-at-top"
+    },
+    {
+      "title": "Navbar at Bottom",
+      "url": "../../layouts/navbars/index.html#navbar-at-bottom"
+    },
+    {
+      "title": "Sidebars"
+    },
+    {
+      "title": "Sidebar on Left",
+      "url": "../../layouts/sidebars/index.html#sidebar-on-the-left"
+    },
+    {
+      "title": "Sidebar on Right",
+      "url": "../../layouts/sidebars/index.html#sidebar-on-the-right"
+    },
+    {
+      "title": "Sidebar Within a Card",
+      "url": "../../layouts/sidebars/index.html#sidebar-within-a-card"
+    },
+    {
+      "title": "Collapsed Sidebar",
+      "url": "../../layouts/sidebars/index.html#collapsed-sidebar"
+    },
+    {
+      "title": "Tabs"
+    },
+    {
+      "title": "Tabset with Pill Navigation",
+      "url": "../../layouts/tabs/index.html#tabset-with-pill-navigation"
+    },
+    {
+      "title": "Tabset with Pill List Navigation",
+      "url": "../../layouts/tabs/index.html#tabset-with-pill-list-navigation"
+    },
+    {
+      "title": "Tabset with Tab Navigation",
+      "url": "../../layouts/tabs/index.html#tabset-with-tab-navigation"
+    },
+    {
+      "title": "Card with a Tabbed Tabset",
+      "url": "../../layouts/tabs/index.html#card-with-a-tabbed-tabset"
+    },
+    {
+      "title": "Card with a Pill Tabset",
+      "url": "../../layouts/tabs/index.html#card-with-a-pill-tabset"
+    },
+    {
+      "title": "Vertically Collapsing Accordions",
+      "url": "../../layouts/tabs/index.html#vertically-collapsing-accordion-panels"
+    },
+    {
+      "title": "Panels & Cards"
+    },
+    {
+      "title": "Floating Panel",
+      "url": "../../layouts/panels-cards/index.html#floating-panel"
+    },
+    {
+      "title": "Content Divided by Cards",
+      "url": "../../layouts/panels-cards/index.html#content-divided-by-cards"
+    },
+    {
+      "title": "Arrange Elements"
+    },
+    {
+      "title": "Grid Layouts",
+      "url": "../../layouts/arrange/index.html#grid-layouts"
+    },
+    {
+      "title": "Column Nesting",
+      "url": "../../layouts/arrange/index.html#column-nesting"
+    },
+    {
+      "title": "Controlling for Page Size",
+      "url": "../../layouts/arrange/index.html#controlling-for-page-width-and-height"
+    }
+  ]
+}
